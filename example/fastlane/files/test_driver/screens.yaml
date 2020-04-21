@@ -1,0 +1,104 @@
+ios:
+  5.5inch:
+    size: 1242x2208
+    resize: 75%
+    resources:
+      statusbar: resources/ios/1242/statusbar_black.png
+      statusbar black: resources/ios/1242/statusbar_black.png
+      statusbar white: resources/ios/1242/statusbar_black.png
+      frame: resources/ios/phones/iPhone_7_Plus_Silver.png
+    offset: -0-0
+    devices:
+      #      - iPhone 6 Plus
+      #      - iPhone 6s Plus
+      - iPhone 7 Plus
+      #      - iPhone 8 Plus
+  5.8inch:
+    size: 1125x2436
+    resize: 87%
+    resources:
+      statusbar: resources/ios/1125/statusbar_white.png
+      statusbar black: resources/ios/1125/statusbar_black.png
+      statusbar white: resources/ios/1125/statusbar_white.png
+      frame: resources/ios/phones/Apple iPhone X Silver.png
+    offset: -0-0
+    devices:
+      - iPhone X
+      - iPhone XS
+      - iPhone Xs
+  6.5inch:
+    size: 1242x2688
+    resize: 87%
+    resources:
+      statusbar: resources/ios/6.5inch/statusbar_white.png
+      statusbar black: resources/ios/6.5inch/statusbar_black.png
+      statusbar white: resources/ios/6.5inch/statusbar_white.png
+      frame: resources/ios/phones/Apple iPhone XS Max Silver.png
+    offset: -0-2
+    devices:
+      - iPhone XS Max
+      - iPhone Xs Max
+  12.9inch:
+    size: 2048x2732
+    resize: 86%
+    resources:
+      statusbar: resources/ios/2048/statusbar_white.png
+      statusbar black: resources/ios/2048/statusbar_white.png
+      statusbar white: resources/ios/2048/statusbar_white.png
+      frame: resources/ios/phones/iPad_Pro_Silver.png
+    offset: -0-0
+    devices:
+      - iPad Pro (12.9-inch) (2nd generation)
+  12.9inch_3rd_generation:
+    size: 2048x2732
+    resize: 91.25%
+    resources:
+      statusbar: resources/ios/2048/statusbar_white.png
+      statusbar black: resources/ios/2048/statusbar_white.png
+      statusbar white: resources/ios/2048/statusbar_white.png
+      frame: resources/ios/phones/iPad_Pro_Space_Grey_3rd_Generation.png
+    offset: -3+2
+    devices:
+      - iPad Pro (12.9-inch) (3rd generation)
+android:
+  5.2inch:
+    size: 1080x1920
+    resize: 80%
+    resources:
+      statusbar: resources/android/1080/statusbar.png
+      statusbar black: resources/android/1080/statusbar.png
+      statusbar white: resources/android/1080/statusbar.png
+      navbar: resources/android/1080/navbar.png
+      frame: resources/android/phones/Nexus_5X.png
+    offset: -4-9
+    destName: phone
+    devices:
+      - Nexus 5X
+  #     destName: sevenInch
+  #     destName: tenInch
+  5.7inch:
+    size: 1440x2560
+    resize: 80%
+    resources:
+      statusbar: resources/android/1440/statusbar.png
+      statusbar black: resources/android/1440/statusbar.png
+      statusbar white: resources/android/1440/statusbar.png
+      navbar: resources/android/1440/navbar_black.png
+      frame: resources/android/phones/Nexus 6P.png
+    offset: -3+8
+    destName: phone
+    devices:
+      - Nexus 6P
+  8.9inch:
+    size: 1536x2048
+    resize: 80%
+    resources:
+      statusbar: resources/android/1536/statusbar.png
+      statusbar black: resources/android/1536/statusbar.png
+      statusbar white: resources/android/1536/statusbar.png
+      navbar: resources/android/1536/navigationbar.png
+      frame: resources/android/tablets/Nexus 9.png
+    offset: +0+0
+    destName: tenInch
+    devices:
+      - Nexus 9

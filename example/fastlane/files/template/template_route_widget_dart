@@ -1,0 +1,32 @@
+import 'package:flutter/widgets.dart';
+import 'package:mx_core/mx_core.dart';
+
+import 'route.dart';
+
+/// 儲存所有 route 對應的 page widget
+class RouteWidget implements RouteWidgetBase {
+
+  static final _singleton = RouteWidget._internal();
+
+  static RouteWidget getInstance() => _singleton;
+
+  factory RouteWidget() => _singleton;
+
+  RouteWidget._internal();
+
+  @override
+  List<String> pageList = [
+  ];
+
+  @override
+  Widget getPage(RouteData data) {
+    final widgetOption = data.copyWith(RouteDataType.widget);
+    final blocOption = data.copyWith(RouteDataType.bloc);
+    final child = AppRoute.getPage(widgetOption);
+    switch (data.route) {
+      default:
+        print("找無對應的 page, ${data.route}");
+        return null;
+    }
+  }
+}

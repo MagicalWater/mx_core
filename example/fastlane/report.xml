@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: merge_env" time="0.008891">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: gem_install" time="0.331507">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: pull_script" time="21.961981">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

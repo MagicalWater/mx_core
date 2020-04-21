@@ -1,0 +1,7 @@
+class Images {
+  Images._internal();
+}
+
+class ${project}Images {
+  ${project}Images._internal();
+}

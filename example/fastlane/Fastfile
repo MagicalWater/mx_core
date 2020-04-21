@@ -1,0 +1,474 @@
+fastlane_require 'json'
+fastlane_require 'spaceship'
+fastlane_require 'rubygems'
+
+isWindows = Actions::PlatformAction.is_windows
+isMac = Actions::PlatformAction.is_mac
+
+# windows 需要設置 cmd 為 65001 代表 utf8
+# 設置 ssh 的權限為可讀取
+
+if isWindows
+  sh "chcp 65001"
+  system "cmd /c icacls ssh/id_lottery51 /c /t /inheritance:d"
+  system "cmd /c icacls ssh/id_lottery51 /c /t /grant %username%:F"
+  system 'cmd /c icacls ssh/id_lottery51 /c /t /remove Administrator "Authenticated Users" BUILTIN\Administrators BUILTIN Everyone System Users'
+else
+  system "chmod 600 ssh/id_lottery51"
+end
+puts "系統為 windows? #{isWindows}, 為 mac? #{isMac}"
+envHash = merge_env()
+
+before_all do |_lane, _options|
+
+end
+
+desc '列出所有腳本版本'
+lane :list_version do
+  pull_script(method: 1)
+end
+
+desc '檢查腳本版本'
+lane :check_version do
+  # 安裝需求套件
+  # 安裝 configure_extensions
+  gem_install(plugin_name: "configure_extensions")
+  gem_install(plugin_name: "rmagick")
+  # 更新腳本
+  pull_script(method: 2)
+end
+
+desc '更新 腳本, 並且安裝必要套件, 可接受參數 verion - 指定版本, clear - 本地檔案完整清除'
+lane :update_script do |params|
+  # 安裝需求套件
+  # 安裝 configure_extensions
+  gem_install(plugin_name: "configure_extensions")
+  # 更新腳本
+  pull_script(method: 3, version: params[:version], clear: params.key?(:clear))
+end
+
+desc '隱藏 - 期貨app已暫停, 根據 rbs/.backend_app.env 進行app資訊的創建與更新'
+private_lane :backend_app do
+  system "ruby rbs/backend_app.rb -env=.backend_app.env"
+end
+
+desc '隱藏 - 期貨app已暫停, 隨機註冊一個正式環境的帳號'
+private_lane :random_account do
+  system "ruby rbs/random_signup_account.rb"
+end
+
+private_lane :parse_flavor_string do |params|
+  flavorString = params[:flavor]
+  Actions::BuildApkAction.parse_flavor(flavorString)
+end
+
+desc '初始構建專案'
+lane :construct_project do
+  project_construct
+end
+
+desc '自動生成 Route(三大組件) / assets / json, 最後會自動執行 build_runner'
+lane :auto_generate do
+  json_bean_convert_generate
+  assets_generate
+  routes_generate(enforce_command: true)
+end
+
+desc '封裝好快速執行 build_runner build的指令'
+lane :build_runner do
+  isWindows = Actions::PlatformAction.is_windows
+  if isWindows
+    system 'cd ../ & flutter packages pub run build_runner build --delete-conflicting-outputs & cd fastlane/'
+  else
+    system 'cd ../; flutter packages pub run build_runner build --delete-conflicting-outputs; cd fastlane/;'
+  end
+end
+
+desc '封裝好快速執行 build_runner clean的指令'
+lane :build_runner_clean do
+  isWindows = Actions::PlatformAction.is_windows
+  if isWindows
+    system 'cd ../ & flutter packages pub run build_runner clean & cd fastlane/'
+  else
+    system 'cd ../; flutter packages pub run build_runner clean; cd fastlane/;'
+  end
+end
+
+desc '自動偵測並生成 Routes 裡的 page 以及 widget'
+private_lane :route_generate do
+  routes_generate(enforce_command: false)
+end
+
+desc '自動偵測並生成對於 jsonBean 轉換類 BeanConverter'
+private_lane :json_bean_generate do
+  json_bean_convert_generate
+end
+
+desc '自動偵測並生成對於 assets/images 的資源檔'
+private_lane :asset_generate do
+  assets_generate
+end
+
+platform :ios do
+
+  userName = envHash['ios_account_name']
+  userPass = envHash['ios_account_password']
+  bundleId = envHash['ios_app_bundle_id']
+  appName = envHash['ios_app_name']
+  appIcon = envHash['ios_app_icon']
+  outputPath = envHash['ios_output']
+  certOutputPath = envHash['ios_cert_output']
+
+  # 證書method (appstore / adhoc / development / Enterprise / developer_id)
+  # 默認創建 appstore 以及 development 各一個
+  desc '自動證書管理'
+  lane :auto_match_cert do |params|
+
+    method = params[:method]
+
+    if method.nil?
+      # 沒有輸入代表開發階段, 將賦予 release 跟 profile 開發證書
+      method = "development"
+    end
+
+    # 先創建 app id
+    produce(
+      company_name: appName,
+      username: userName,
+      app_identifier: bundleId,
+      app_name: appName,
+      skip_itc: true,
+      enable_services: {
+        push_notification: "on",
+      }
+    )
+
+    # 註冊測試裝置
+    register_devices(
+      devices_file: "./fastlane/files/devices_ios.txt",
+      username: userName
+    )
+
+    # 刪除資料夾 ./export/ios/development
+    # 刪除資料夾 ./export/ios/appstore
+
+    devCerPath = File.expand_path("../export/ios/development", Dir.pwd)
+    appstoreCerPath = File.expand_path("../export/ios/appstore", Dir.pwd)
+
+    FileUtils.rm_rf(devCerPath)
+    FileUtils.rm_rf(appstoreCerPath)
+
+    # 進行證書匹配
+    match(
+      storage_mode: "git",
+      git_url: "https://github.com/i2xc/Base-APP-Certficate.git",
+      git_branch: userName,
+      username: userName,
+      type: "development",
+      app_identifier: bundleId,
+      readonly: false,
+      generate_apple_certs: true,
+      output_path: "./export/ios/development"
+    )
+
+    match(
+      storage_mode: "git",
+      git_url: "https://github.com/i2xc/Base-APP-Certficate.git",
+      git_branch: userName,
+      username: userName,
+      type: "appstore",
+      app_identifier: bundleId,
+      readonly: false,
+      generate_apple_certs: true,
+      output_path: "./export/ios/appstore"
+    )
+
+    # 取得 team id
+    info = get_account_info
+    teamId = info[1]
+
+    # 自動同步bundle 以及 開發帳號
+    # 關閉自動簽名
+    automatic_code_signing(
+      path: "ios/Runner.xcodeproj",
+      use_automatic_signing: false,
+      team_id: teamId,
+      targets: "Runner",
+      bundle_identifier: bundleId,
+      code_sign_identity: "iPhone Distribution",
+    )
+
+    # 取得 dev 的 profile path
+    # 取得 appstore 的 profile path
+    devProfileList = Dir.glob("#{devCerPath}/*.mobileprovision")
+    appstoreProfileList = Dir.glob("#{appstoreCerPath}/*.mobileprovision")
+
+    devProfile = devProfileList.select{ |i| i[/_#{bundleId}\.mobileprovision$/] }.first
+    appstoreProfile = appstoreProfileList.select{ |i| i[/_#{bundleId}\.mobileprovision$/] }.first
+
+    # 使用 match 的方式不能使用自動簽名
+
+    if method == "development"
+      sign_manually(mode: "Debug|Release|Profile", path: devProfile, development: true)
+    else
+      sign_manually(mode: "Debug", path: devProfile, development: true)
+      sign_manually(mode: "Release|Profile", path: appstoreProfile, development: false)
+    end
+
+  end
+
+  # 接受三個參數
+  # export => 輸出路徑(不包含檔名)
+  # method => 輸出method (app-store / ad-hoc / package / enterprise / development / developer-id)
+  desc '輸出ipa'
+  lane :export_ipa do |params|
+
+    exportPath = params[:export]
+    exportMethod = params[:method]
+
+    if !(exportPath.nil?) && !(exportMethod.nil?)
+      FileUtils.mkdir_p(File.dirname(exportPath))
+
+      gym(
+        output_directory: exportPath,
+        scheme: "Runner",
+        workspace: "ios/Runner.xcworkspace",   # 可省略
+        configuration: "Release",              # Debug or Release
+        clean: false,                           #清空上次打包信息
+        silent: true, # 隱藏打包時不必要的訊息
+        export_xcargs: "-allowProvisioningUpdates",
+        export_method: exportMethod,
+      )
+    end
+  end
+
+  desc '更新 ios 包名/app名稱'
+  lane :update_app do
+    set_app_info_ios(
+      ios_name: appName,
+      ios_bundle_id: bundleId,
+      ios_icon: appIcon,
+    )
+  end
+
+  desc '啟動遠程推送設定'
+  private_lane :enable_remote_push do
+    Actions::XcodeParseAction.enable_remote_push()
+  end
+
+  desc '在 iTunes Connect 以及 AppDeveloper 建立 App, 並且註冊測試裝置'
+  lane :create_itunes_app do
+
+    # 取得 company
+    info = get_account_info
+    company = info[0]
+
+    # 建立app專案
+    produce(
+      company_name: company,
+      username: userName,
+      app_identifier: bundleId,
+      sku: bundleId,
+      app_name: appName,
+      language: 'Simplified Chinese',
+      app_version: '1.0',
+      enable_services: {
+        push_notification: "on",
+      }
+    )
+
+    # 註冊測試裝置
+    register_devices(
+      devices_file: "./fastlane/files/devices_ios.txt",
+      username: userName
+    )
+
+  end
+
+
+  desc '創建/取得 推送證書'
+  lane :generate_push_cert do
+    # 推送證書
+    get_push_certificate(
+      development: true,
+      pem_name: "aps_development",
+      username: userName,
+      app_identifier: bundleId,
+      output_path: certOutputPath,
+      p12_password: "aa1234",
+    )
+    get_push_certificate(
+      development: false,
+      pem_name: "aps",
+      username: userName,
+      app_identifier: bundleId,
+      output_path: certOutputPath,
+      p12_password: "aa1234",
+    )
+  end
+
+  desc '創建 p8 key'
+  private_lane :generate_p8_key do
+    fastlane_require 'spaceship'
+    Spaceship::Portal.login(userName, userPass)
+
+    keys = Spaceship::Portal::Key.all
+    keys.each do |key|
+      key.revoke!
+    end
+
+    key = Spaceship::Portal::Key.create(name: 'PushKey', apns: true)
+    File.write(".#{certOutputPath}/push_key.p8", key.download)
+  end
+
+  desc '指定開發者帳號, 開啟自動簽名'
+  lane :sign_auto do
+    # 取得 team id
+    info = get_account_info
+    teamId = info[1]
+
+    # 自動同步bundle 以及 帳號
+    automatic_code_signing(
+      path: "ios/Runner.xcodeproj",
+      use_automatic_signing: true,
+      team_id: teamId,
+      targets: "Runner",
+      bundle_identifier: bundleId,
+    )
+  end
+
+  desc '指定開發者帳號, 關閉自動簽名'
+  private_lane :sign_manually do |params|
+
+    isDevelopment = params[:development]
+    buildMode = params[:mode]
+    profilePath = params[:path]
+
+    codeSign = ""
+    if isDevelopment
+      codeSign = "iPhone Developer"
+    else
+      codeSign = "iPhone Distribution"
+    end
+
+    update_project_provisioning(
+      xcodeproj: "./ios/Runner.xcodeproj",
+      profile: profilePath,
+      build_configuration: buildMode,
+      code_signing_identity: codeSign,
+    )
+
+  end
+
+  # 接受參數
+  # ipa => ipa檔案路徑
+  desc '上傳 ipa 至 appstore'
+  lane :upload_appstore do |params|
+  
+    # 取得 team id
+    info = get_account_info
+    teamId = info[1]
+    
+    ipaPath = params[:ipa]
+  
+    deliver(
+      ipa: ipaPath,
+      app_identifier: bundleId,
+      username: userName,
+      skip_screenshots: true,
+      skip_metadata: true,
+      team_id: teamId,
+    )
+  end 
+
+  desc '取得帳號的 team id, 以及公司名稱'
+  private_lane :get_account_info do
+    fastlane_require 'spaceship'
+    clientTunes = Spaceship::Tunes.login(userName, userPass)
+    client = Spaceship::Portal.login(userName, userPass)
+
+    infos = []
+
+    infos << "client:\n#{client.user_details_data}"
+
+    strClientTunes = ""
+    clientTunes.teams.each do |team|
+        infos << "itunes team:\n#{team['contentProvider']['name']} (#{team['contentProvider']['contentProviderId']})"
+        infos << "itunes info:\n#{team}"
+    end
+
+    results = []
+
+    client.teams.each do |team|
+        infos << "dev team:\n#{team['name']} (#{team['teamId']})"
+        infos << "dev info:\n#{team}"
+        results << "#{team['name']}"
+        results << "#{team['teamId']}"
+    end
+
+    FileUtils.mkdir_p('infos')
+    File.write('infos/account_info.txt', "#{infos.join("\n")}")
+
+    results
+  end
+
+  desc '輸出帳號的開發者相關資訊'
+  lane :export_account_info do |params|
+    fastlane_require 'spaceship'
+    client = Spaceship::Portal.login(userName, userPass)
+
+    exportPath = params[:export]
+    if !(exportPath.nil?)
+      FileUtils.mkdir_p(File.dirname(exportPath))
+      File.write(exportPath, JSON.pretty_generate(client.teams.first))
+    end
+
+  end
+
+end
+
+platform :android do
+
+  appDefault = envHash['android_default']
+  outputPath = envHash['android_output']
+  appCmsResPath = ENV['APPCMS_RESOURCES']
+  appIcon = envHash['android_app_icon']
+
+  desc '更新 android 包名/app名稱'
+  lane :update_app do
+    info = parse_flavor_string(flavor: appDefault)
+    set_app_info_android(android_name: info['name'], android_bundle_id: info['id'], android_icon: appIcon)
+  end
+
+  desc '打包 apk'
+  private_lane :release do
+    build_apk(outputPath: outputPath, env_hash: envHash)
+  end
+
+  desc '設置 key 資訊'
+  lane :update_key do |options|
+
+    specialFlavor = options[:flavor]
+    index = options[:index]
+    nameCN = options[:name_cn]
+    nameEN = options[:name_en]
+
+    # 打印出 可以選擇的 index, 假如三筆都是空的話
+    if index.nil? && nameCN.nil? && nameEN.nil?
+      if specialFlavor.nil?
+        set_key_info(index_need: "-1")
+        set_key_info()
+      else
+        specialFlavor = "android_#{specialFlavor}"
+        appFlavor = envHash[specialFlavor]
+        info = parse_flavor_string(flavor: appFlavor)
+        nameEN = info['key']
+        puts "解析: #{appFlavor}"
+        set_key_info(name_cn: nameCN, name_en: nameEN, index: index, index_need: "-1")
+      end
+    else
+      set_key_info(name_cn: nameCN, name_en: nameEN, index: index, index_need: "-1")
+    end
+  end
+end
+

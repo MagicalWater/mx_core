@@ -1,0 +1,163 @@
+// Imports the Flutter Driver API
+import 'package:flutter_driver/flutter_driver.dart';
+import 'package:test/test.dart';
+import 'package:screenshots/config.dart';
+import 'package:screenshots/capture_screen.dart';
+import 'test_finders.dart';
+
+void main() {
+  group('自動截圖模式', () {
+    print("打印群組測試");
+
+    FlutterDriver driver;
+
+    final Map config = Config("test_driver/screenshots.yaml").config;
+
+    /// 連接 Flutter driver
+    setUpAll(() async {
+      driver = await FlutterDriver.connect();
+    });
+
+    /// 當測試完後, 斷開連接
+    tearDownAll(() async {
+      driver?.close();
+    });
+
+//    test('starts at 0', () async {
+//      // 用 `driver.getText` 来判断 counter 初始化是 0
+//      expect(await driver.getText(counterTextFinder), "0");
+//    });
+
+    /// 是否找到 對應的元件, timeout 為等待時間
+    Future<bool> isPresent(
+      SerializableFinder byValueKey,
+      FlutterDriver driver, {
+      Duration timeout = const Duration(seconds: 1),
+    }) async {
+      try {
+        await driver.waitFor(byValueKey, timeout: timeout);
+        return true;
+      } catch (exception) {
+        return false;
+      }
+    }
+
+    /// 等待元件
+    /// @param waitFind - 找到元件後, 等待的時間
+    Future<SerializableFinder> waitWidget({
+      String valueKey,
+      String valueText,
+      int waitFind = 2,
+      bool usedKey = true,
+    }) async {
+      SerializableFinder findWidget;
+      if (!usedKey && valueText != null && valueText.isNotEmpty) {
+        findWidget = find.text(valueText);
+      } else {
+        findWidget = find.byValueKey(valueKey);
+      }
+
+      bool isFind = await isPresent(
+        findWidget,
+        driver,
+        timeout: Duration(seconds: 2),
+      );
+
+//      expect(actual, matcher)
+      if (isFind) {
+        print("進入 $valueKey, $valueText 了");
+        return findWidget;
+      } else {
+        await Future.delayed(Duration(seconds: waitFind), null);
+        print("尚未偵測到, 繼續輪詢 - $valueKey, $valueText");
+        return await waitWidget(
+          valueKey: valueKey,
+          valueText: valueText,
+          usedKey: !usedKey,
+        );
+      }
+    }
+
+    /// 等待準備好
+    Future waitStandby(Stream stream) async {
+      await stream.first;
+    }
+
+    /// 等待元件準備好並且拍照
+    Future waitScreenShot({
+      String findKey,
+      String findText,
+      String name,
+      bool tap,
+    }) async {
+      var finder = await waitWidget(valueKey: findKey, valueText: findText);
+      await driver.tap(finder);
+      await Future.delayed(Duration(seconds: 5), null);
+      await screenshot(driver, config, name);
+    }
+
+    test('進入首頁檢測', () async {
+      print("等待進入首頁");
+
+      await waitScreenShot(
+        findKey: TestFinders.homeButton,
+        findText: TestFinders.homeText,
+        name: "home",
+        tap: false,
+      );
+
+      print("等待進入新聞");
+
+      await waitScreenShot(
+        findKey: TestFinders.newsButton,
+        findText: TestFinders.homeText,
+        name: "news",
+        tap: true,
+      );
+
+      print("等待進入貼吧");
+
+      await waitScreenShot(
+        findKey: TestFinders.forumButton,
+        findText: TestFinders.forumText,
+        name: "forum",
+        tap: true,
+      );
+
+      print("等待進入行情");
+
+      await waitScreenShot(
+        findKey: TestFinders.quotationButton,
+        findText: TestFinders.quotationText,
+        name: "quotation",
+        tap: true,
+      );
+
+      print("等待進入行情詳細");
+
+      await waitScreenShot(
+        findKey: TestFinders.quotationFirst,
+        name: "chart",
+        tap: true,
+      );
+
+//      print("返回上一頁");
+//      await driver.tap(find.byType("WillPopScope"));
+      // 然后，判断是否增加了 1
+//      expect(await driver.getText(counterTextFinder), "1");
+    });
+
+//    test('點擊底部按鈕', () async {
+//
+//      final buttonFinder = find.byValueKey('Messaging');
+//
+//      print("點擊按鈕");
+//
+//      // 首先，点击按钮
+//      await driver.tap(buttonFinder);
+//
+//      // 然后，判断是否增加了 1
+////      expect(await driver.getText(counterTextFinder), "1");
+//    });
+  }, timeout: Timeout(Duration(minutes: 2)));
+}

@@ -1,0 +1,35 @@
+---
+name: mx_core_example
+description: Demonstrates how to use the mx_core plugin.
+publish_to: none
+environment:
+  sdk: ">=2.2.0 <3.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: "^0.1.2"
+  flutter_localizations:
+    sdk: flutter
+  json_annotation: "^3.0.0"
+  annotation_route: "^0.0.2"
+  xson_annotation: "^1.0.0"
+  type_translator: "^1.0.2+1"
+dependency_overrides:
+  image: 2.1.7
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mx_core:
+    path: "../"
+  mx_json:
+    git:
+      url: git@github.com:3rdpay/AppCore-Flutter.git
+      path: mx_json
+  json_serializable: "^3.2.2"
+  build_runner: "^1.6.8"
+flutter:
+  uses-material-design: true
+  assets:
+  - assets/images/
+  - assets/jsons/
+version: 1.1.0+13

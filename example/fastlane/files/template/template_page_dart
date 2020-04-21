@@ -1,0 +1,38 @@
+import 'package:flutter/material.dart';
+import 'package:annotation_route/route.dart';
+import 'package:mx_core/mx_core.dart';
+import 'package:${project}/router/route.dart';
+import 'package:${project}/bloc/page/${path}${lower_line}_bloc.dart';
+import 'package:${project}/bloc/application_bloc.dart';
+
+@ARoute(url: Pages.${ori})
+class ${upper_camel}Page extends StatefulWidget {
+  final RouteOption option;
+
+  ${upper_camel}Page(this.option): super();
+
+  @override
+  _${upper_camel}PageState createState() => _${upper_camel}PageState();
+}
+
+class _${upper_camel}PageState extends State<${upper_camel}Page> {
+  ${upper_camel}Bloc bloc;
+
+  @override
+  void initState() {
+    bloc = BlocProvider.of<${upper_camel}Bloc>(context);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LoadProvider(
+      loadStream: bloc.loadStream,
+      child: PageScaffold(
+        haveAppBar: true,
+        title: "${upper_camel}",
+        child: Container(),
+      ),
+    );
+  }
+}

@@ -1,0 +1,16 @@
+[
+  1,
+  {
+    "inputType": {
+      "name": "TextInputType.text",
+      "signed": null,
+      "decimal": null
+    },
+    "obscureText": false,
+    "autocorrect": true,
+    "actionLabel": null,
+    "inputAction": "TextInputAction.done",
+    "textCapitalization": "TextCapitalization.none",
+    "keyboardAppearance": "Brightness.dark"
+  }
+]

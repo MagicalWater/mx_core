@@ -1,0 +1,106 @@
+        buildConfigField "String", "PLATFORM_CODE", "\"xiaomi\""
+        manifestPlaceholders = [pkgName: applicationId]
+    }
+
+    signingConfigs {
+        release {
+            def appResourcePath = "$System.env.APP_RESOURCES"
+            if (appResourcePath == "null") {
+                throw new GradleException("""
+尚未設定環境變數 APP_RESOURCES
+設置方式
+    1. clone倉庫 https://github.com/i2xc/App-Resources
+    2. 並設置環境變數 key = APP_RESOURCES, value = 倉庫路徑
+""")
+            }
+
+            def gradleProperties = new Properties()
+            def gradlePropertiesFile = rootProject.file('key.properties')
+            if (gradlePropertiesFile.exists()) {
+                gradlePropertiesFile.withReader('UTF-8') { reader ->
+                    gradleProperties.load(reader)
+                }
+            } else {
+                throw new GradleException("""
+找不到 key.properties
+設置方式
+    1. 執行 fastlane android update_key
+    2. 選擇設置的 key
+""")
+            }
+            def storePath = appResourcePath + gradleProperties['storeFile']
+            storeFile file(storePath)
+            storePassword gradleProperties['storePassword']
+            keyAlias gradleProperties['keyAlias']
+            keyPassword gradleProperties['keyPassword']
+            println("key file path: ${storeFile}")
+            println("key file password: ${storePassword}")
+            println("key alias: ${keyAlias}")
+            println("key password: ${keyPassword}")
+        }
+    }
+
+    buildTypes {
+        debug {
+	    shrinkResources false
+            signingConfig signingConfigs.release
+        }
+        release {
+	    shrinkResources false
+            minifyEnabled false
+            useProguard true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app"
+
+    productFlavors {
+        all { flavor ->
+            def flavorName = flavor.name.toLowerCase()
+            applicationId "com.bbsdvsdvsdvb.dvsdvsdv"
+            def fullAppId = applicationId
+            if (flavorName != "tonone") {
+                applicationIdSuffix "." + flavorName
+                fullAppId = applicationId + applicationIdSuffix
+            }
+            dimension "app"
+            manifestPlaceholders = [pkgName: fullAppId]
+        }
+
+        //預設無渠道
+        toNone { buildConfigField "String", "PLATFORM_CODE", "\"none\"" }
+        //百度
+        toBaidu { buildConfigField "String", "PLATFORM_CODE", "\"baidu\"" }
+        //華為
+        toHuawei { buildConfigField "String", "PLATFORM_CODE", "\"huawei\"" }
+        //豌豆莢
+        toWangoujia { buildConfigField "String", "PLATFORM_CODE", "\"wang\"" }
+        //小米
+        toXiaomi { buildConfigField "String", "PLATFORM_CODE", "\"xiaomi\"" }
+        //360
+        to360 { buildConfigField "String", "PLATFORM_CODE", "\"360\"" }
+        //魅族
+        toMeizu { buildConfigField "String", "PLATFORM_CODE", "\"meizu\"" }
+        //聯想
+        toLenovo { buildConfigField "String", "PLATFORM_CODE", "\"lenovo\"" }
+        //N多
+        toNduo { buildConfigField "String", "PLATFORM_CODE", "\"nduo\"" }
+        //錘子
+        toSmartisan { buildConfigField "String", "PLATFORM_CODE", "\"smart\"" }
+        //木螞蟻
+        toMumayi { buildConfigField "String", "PLATFORM_CODE", "\"mumayi\"" }
+        //搜狗
+        toSogou { buildConfigField "String", "PLATFORM_CODE", "\"sogou\"" }
+        //金立
+        toGionee { buildConfigField "String", "PLATFORM_CODE", "\"gionee\"" }
+        //應用寶
+        toQQ { buildConfigField "String", "PLATFORM_CODE", "\"qq\"" }
+        //安智
+        toAnzhi { buildConfigField "String", "PLATFORM_CODE", "\"anzhi\"" }
+        //VIVO
+        toVV { buildConfigField "String", "PLATFORM_CODE", "\"vivo\"" }
+        //OPPO
+        toPP { buildConfigField "String", "PLATFORM_CODE", "\"oppo\"" }
+    }
