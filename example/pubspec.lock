@@ -391,7 +391,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "3.4.6+2"
+    version: "3.4.7+1"
   mx_json:
     dependency: "direct dev"
     description:

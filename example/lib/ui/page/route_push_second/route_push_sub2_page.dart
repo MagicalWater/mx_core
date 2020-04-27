@@ -44,7 +44,9 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page> {
             Expanded(
               child: PageSwitcher(
                 stream: bloc.subPageStream,
-                scale: true,
+//                scale: true,
+                opacity: true,
+
               ),
             ),
           ],

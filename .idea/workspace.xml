@@ -10,20 +10,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/flex.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/arrow_container_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/arrow_container_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/span_grid_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/span_grid_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/ui/page/test_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/test_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_layout/axis.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_layout/axis.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_layout/clipper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_layout/clipper.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_layout/delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_layout/delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_layout/layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_layout/layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_layout/space.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_layout/space.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/layout.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/option.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/option.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/particle_animation/bomb_animation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/particle_animation/bomb_animation.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mx_core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mx_core.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -47,7 +51,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ZhbQ4vlOVhznajdYa9J7hWkrvX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -55,11 +59,11 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -90,14 +94,13 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Flutter.ios_debug">
+  <component name="RunManager" selected="Flutter.android_debug">
     <configuration name="main_example.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="filePath" value="$PROJECT_DIR$/example/lib/main_example.dart" />
       <option name="workingDirectory" value="$PROJECT_DIR$/example" />
       <method v="2" />
     </configuration>
     <configuration name="android_debug" type="FlutterRunConfigurationType" factoryName="Flutter" singleton="false">
-      <option name="buildFlavor" value="tonone" />
       <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
       <method v="2" />
     </configuration>
@@ -174,6 +177,11 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
   </component>
   <component name="masterDetails">
     <states>

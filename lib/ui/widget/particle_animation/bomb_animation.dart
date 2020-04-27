@@ -105,6 +105,8 @@ class _BombAnimationState extends State<BombAnimation> {
 
     isBoomOut = true;
 
+    print('基礎左上角: $offset');
+
     var screenSize = MediaQuery.of(context).size;
     var activeRect = Rect.fromLTWH(
         -offset.dx, -offset.dy, screenSize.width, screenSize.height);

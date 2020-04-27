@@ -34,20 +34,19 @@ class _TestPageState extends State<TestPage>
           onPressed: () {
             Popup.showRoute(
               context,
-              builder: (controller) => SafeArea(
-                child: Container(
-                  color: Colors.blueAccent,
-                  child: TextField(),
-                ),
+              builder: (controller) => Container(
+                color: Colors.blueAccent,
+                child: Text('aaaa'),
               ),
               option: PopupOption(
-                width: 100,
-                height: 100,
+                bottom: 100,
+                right: 100,
                 maskColor: Colors.redAccent.withAlpha(100),
                 alignment: Alignment.bottomRight,
               ),
               onTapSpace: (controller) {
                 print('點擊空白處');
+                controller.remove();
               },
               onTapBack: (controller) {
                 print('點擊返回');

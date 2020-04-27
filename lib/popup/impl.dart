@@ -9,8 +9,9 @@ import 'package:mx_core/util/screen_util.dart';
 
 import 'arrow_style.dart';
 import 'controller.dart';
-import 'layout.dart';
 import 'option.dart';
+
+part 'layout.dart';
 
 part 'rule.dart';
 
@@ -25,7 +26,7 @@ typedef Widget PopupWidgetBuilder(
 /// [Popup.showRoute] - 以 route 方式顯示彈跳視窗(無法使用穿透點擊, 可以視為一個新的頁面, 只是仍然渲染背景)
 /// [Popup.showOverlay] - 以 overlay entry 方式顯示彈跳視窗(可使用穿透點擊)
 /// [Popup.showArrow] - 箭頭彈跳視窗, 核心為 [Popup.showOverlay]
-class Popup {
+  class Popup {
   Popup._();
 
   /// [option] - 彈窗屬性
@@ -66,49 +67,51 @@ class Popup {
 
     var controller = RouteController(context);
 
+    var child = builder(controller);
+
     var childGesture = GestureDetector(
       onTap: () {},
-      child: builder(controller),
+      child: child,
     );
 
-    var layout = PopupLayout(
-      backgroundColor: Colors.transparent,
-      margin: EdgeInsets.only(left: option?.left ?? 0, top: option?.top ?? 0),
-      width: option?.width,
-      height: option?.height,
-      alignment: option?.alignment ?? Alignment.topLeft,
-      onTap: () {
-        if (onTapSpace != null) {
-          onTapSpace(controller);
-        }
-      },
-      rootBuilder: (context, child) {
-        return AnimatedComb.quick(
-          sync: backgroundSync,
-          color: Comb.color(
-            begin: Colors.transparent,
-            end: option?.maskColor ?? Colors.transparent,
+    var layout = _PopupLayout(
+      child: Material(
+        type: MaterialType.transparency,
+        child: GestureDetector(
+          onTap: () {
+            if (onTapSpace != null) {
+              onTapSpace(controller);
+            }
+          },
+          child: AnimatedComb.quick(
+            sync: backgroundSync,
+            color: Comb.color(
+              begin: Colors.transparent,
+              end: option?.maskColor ?? Colors.transparent,
+            ),
+            child: WillPopScope(
+              onWillPop: () async {
+                if (onTapBack != null) {
+                  onTapBack(controller);
+                } else {
+                  controller.remove();
+                }
+                return false;
+              },
+              child: Container(
+                padding: option?.getOverlayPadding(child is ShiftAnimation),
+                child: animated != null
+                    ? AnimatedComb(
+                        alignment: option?.alignment ?? FractionalOffset.center,
+                        child: childGesture,
+                        sync: childSync,
+                        animatedList: animated,
+                      )
+                    : childGesture,
+              ),
+            ),
           ),
-          child: child,
-        );
-      },
-      child: WillPopScope(
-        onWillPop: () async {
-          if (onTapBack != null) {
-            onTapBack(controller);
-          } else {
-            controller.remove();
-          }
-          return false;
-        },
-        child: animated != null
-            ? AnimatedComb(
-                alignment: option?.alignment ?? FractionalOffset.center,
-                child: childGesture,
-                sync: childSync,
-                animatedList: animated,
-              )
-            : childGesture,
+        ),
       ),
     );
     Navigator.of(context).push(layout);
@@ -163,9 +166,11 @@ class Popup {
       }
     };
 
+    var child = builder(controller);
+
     var childGesture = GestureDetector(
       onTap: () {},
-      child: builder(controller),
+      child: child,
     );
 
     var entry = OverlayEntry(
@@ -187,12 +192,7 @@ class Popup {
                   end: option?.maskColor ?? Colors.transparent,
                 ),
                 child: Container(
-                  padding: _getOverlayPadding(
-                    context,
-                    alignment: option?.alignment,
-                    width: option?.width,
-                    height: option?.height,
-                  ),
+                  padding: option?.getOverlayPadding(child is SafeArea),
                   child: _DetectWidget(
                     child: animated != null
                         ? AnimatedComb(
@@ -549,88 +549,6 @@ class Popup {
     } else {
       return Rect.zero;
     }
-  }
-
-  static EdgeInsetsGeometry _getOverlayPadding(
-    BuildContext context, {
-    Alignment alignment = Alignment.center,
-    double width,
-    double height,
-  }) {
-    if (width == null && height == null) return null;
-
-//    print("取得 width/height 應該有的 padding~~~: $width,$height");
-
-    var remainWidth = Screen.width;
-    var remainHeight =
-        Screen.height - Screen.statusBarHeight - Screen.bottomBarHeight;
-
-    var widgetWidth = width ?? remainWidth;
-    var widgetHeight = height ?? remainHeight;
-
-    double paddingLeft = 0;
-    double paddingTop = 0;
-    double paddingRight = 0;
-    double paddingBottom = 0;
-
-    if (alignment == Alignment.topLeft) {
-      // 對齊上左
-      paddingRight = remainWidth - widgetWidth;
-      paddingBottom = remainHeight - widgetHeight;
-    } else if (alignment == Alignment.topCenter) {
-      // 對齊上中
-      paddingLeft = (remainWidth - widgetWidth) / 2;
-      paddingRight = paddingLeft;
-      paddingBottom = remainHeight - widgetHeight;
-    } else if (alignment == Alignment.topRight) {
-      // 對齊上右
-      paddingLeft = remainWidth - widgetWidth;
-      paddingBottom = remainHeight - widgetHeight;
-    } else if (alignment == Alignment.centerLeft) {
-      // 對齊中左
-      paddingRight = remainWidth - widgetWidth;
-      paddingTop = (remainHeight - widgetHeight) / 2;
-      paddingBottom = paddingTop;
-    } else if (alignment == Alignment.center) {
-      // 對齊中
-      paddingLeft = (remainWidth - widgetWidth) / 2;
-      paddingRight = paddingLeft;
-      paddingTop = (remainHeight - widgetHeight) / 2;
-      paddingBottom = paddingTop;
-    } else if (alignment == Alignment.centerRight) {
-      // 對齊中右
-      paddingLeft = remainWidth - widgetWidth;
-      paddingTop = (remainHeight - widgetHeight) / 2;
-      paddingBottom = paddingTop;
-    } else if (alignment == Alignment.bottomLeft) {
-      // 對齊下左
-      paddingRight = remainWidth - widgetWidth;
-      paddingTop = remainHeight - widgetHeight;
-    } else if (alignment == Alignment.bottomCenter) {
-      // 對齊下中
-      paddingLeft = (remainWidth - widgetWidth) / 2;
-      paddingRight = paddingLeft;
-      paddingTop = remainHeight - widgetHeight;
-    } else if (alignment == Alignment.bottomRight) {
-      // 對齊下右
-      paddingLeft = remainWidth - widgetWidth;
-      paddingTop = remainHeight - widgetHeight;
-    }
-
-    paddingLeft = max(paddingLeft, 0.0);
-    paddingTop = max(paddingTop, 0.0);
-    paddingRight = max(paddingRight, 0.0);
-    paddingBottom = max(paddingBottom, 0.0);
-
-    var p = EdgeInsets.only(
-      left: paddingLeft,
-      top: paddingTop,
-      right: paddingRight,
-      bottom: paddingBottom,
-    );
-
-//    print("取得 width/height 應該有的 padding: $p");
-    return p;
   }
 }
 
