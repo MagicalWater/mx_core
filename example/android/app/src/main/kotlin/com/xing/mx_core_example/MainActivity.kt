@@ -8,6 +8,5 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         GeneratedPluginRegistrant.registerWith(this)
-//        FlutterChannel.registerWith(registrarFor(FlutterChannel::class.java.name))
     }
 }

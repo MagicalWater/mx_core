@@ -10,6 +10,9 @@ class HorizontalMarquee extends StatefulWidget {
   /// 每次跑馬燈啟動的間隔時間
   final Duration interval;
 
+  /// 跑馬燈滾動到下個條目的動畫時間
+  final Duration nextDuration;
+
   /// 是否自動啟動跑馬燈
   final bool auto;
 
@@ -35,6 +38,7 @@ class HorizontalMarquee extends StatefulWidget {
     this.onEnd,
     this.velocity = 100,
     this.interval = const Duration(milliseconds: 1000),
+    this.nextDuration = const Duration(milliseconds: 500),
   }) : super(key: key);
 
   @override
@@ -108,7 +112,7 @@ class _HorizontalMarqueeState extends State<HorizontalMarquee>
   Widget build(BuildContext context) {
     if (widgetRect == null) {
       // 尚未取得元件的寬高, 先取得元件寬高在進行後續處理
-      return ListView(
+      return getShaderMask(child: ListView(
         physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
@@ -117,7 +121,7 @@ class _HorizontalMarqueeState extends State<HorizontalMarquee>
             child: widget.children[0],
           ),
         ],
-      );
+      ),);
     } else if (!isAllSizeGet) {
       // 取得元件寬高, 但需要再取得底下所有元件寬高計算位置
       List<Widget> rectChildren = [];
@@ -160,7 +164,7 @@ class _HorizontalMarqueeState extends State<HorizontalMarquee>
 
         rectChildren.add(widgetChain);
       });
-      return ListView(
+      return getShaderMask(child: ListView(
         physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [
@@ -169,22 +173,46 @@ class _HorizontalMarqueeState extends State<HorizontalMarquee>
             children: rectChildren,
           ),
         ],
-      );
+      ),);
     } else {
       // 一切準備好, 可以開始進行跑馬燈的顯示
-      return ListView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: scrollController,
-        children: widget.children
-            .map((e) => Container(
-                  alignment: Alignment.centerLeft,
-                  constraints: BoxConstraints(minWidth: widgetRect.width),
-                  child: e,
-                ))
-            .toList(),
-        scrollDirection: Axis.horizontal,
+      return getShaderMask(
+        child: ListView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: scrollController,
+          children: widget.children
+              .map((e) =>
+              Container(
+                alignment: Alignment.centerLeft,
+                constraints: BoxConstraints(minWidth: widgetRect.width),
+                child: e,
+              ))
+              .toList(),
+          scrollDirection: Axis.horizontal,
+        ),
       );
     }
+  }
+
+  Widget getShaderMask({Widget child}) {
+    return child;
+//    return ShaderMask(
+//      shaderCallback: (Rect bounds) {
+//        return LinearGradient(
+//          begin: Alignment.centerLeft,
+//          end: Alignment.centerRight,
+//          colors: <Color>[
+//            Colors.transparent,
+//            Colors.white,
+//            Colors.white,
+//            Colors.transparent,
+//          ],
+//          stops: [0, 0.01, 0.99, 1],
+//        ).createShader(bounds.shift(Offset(-bounds.left, -bounds.top)));
+//      },
+//      blendMode: BlendMode.dstIn,
+//      child: child,
+//    );
   }
 
   /// 開始滾動
@@ -247,7 +275,6 @@ class _HorizontalMarqueeState extends State<HorizontalMarquee>
 //        print("下個節點: ${nextRect.left}");
         var nextPosition = nextRect.left;
 //        var nextDistance = nextPosition - startDistance;
-        var nextDuration = Duration(milliseconds: 400);
 
 //        print("newxt = ${nextRect.left}");
 
@@ -256,7 +283,7 @@ class _HorizontalMarqueeState extends State<HorizontalMarquee>
 
         await scrollController.animateTo(
           nextPosition,
-          duration: nextDuration,
+          duration: widget.nextDuration,
           curve: Curves.easeOut,
         );
 

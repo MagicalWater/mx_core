@@ -6,28 +6,6 @@ import 'widget/widget.dart';
 /// 動畫集合
 class Loading {
 
-  /// 運球動畫
-  static BallSpring ball({
-    int springMultiple = 1,
-    int ballCount = 1,
-    int delayInterval = 100,
-    double size = 50,
-    int duration = 500,
-    BoxDecoration decoration,
-    Color color,
-    Axis direction = Axis.horizontal,
-  }) =>
-      BallSpring(
-        ballCount: ballCount,
-        delayInterval: delayInterval,
-        springMultiple: springMultiple,
-        size: size,
-        duration: duration,
-        color: color,
-        direction: direction,
-        decoration: decoration,
-      );
-
   /// 拉伸位移
   static Spring spring({
     int springMultiple = 1,

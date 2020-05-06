@@ -56,8 +56,8 @@ class _CoordinateLayoutPageState extends State<CoordinateLayoutPage> {
                 buildIntroduction(content),
                 CoordinateLayout(
                   segmentCount: 4,
-                  xSpace: 4,
-                  ySpace: 4,
+                  horizontalSpace: 4,
+                  verticalSpace: 4,
                   estimatedHeight: 1000,
                   children: [
                     buildAxisItem(x: 0, y: 0, ySpan: 3),

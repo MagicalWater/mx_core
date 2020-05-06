@@ -26,9 +26,6 @@ class Pages {
   /// 倒數計時
   static const timer = "/timer";
 
-  /// SliverView 列表元件
-  static const sliver = "/sliver";
-
   /// 動畫核心
   static const animatedCore = "/animatedCore";
 

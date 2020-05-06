@@ -16,7 +16,8 @@ class SpanGridPage extends StatefulWidget {
   _SpanGridPageState createState() => _SpanGridPageState();
 }
 
-class _SpanGridPageState extends State<SpanGridPage> {
+class _SpanGridPageState extends State<SpanGridPage>
+    with TickerProviderStateMixin {
   SpanGridBloc bloc;
 
   StreamController<List<String>> urlStreamController =
@@ -39,7 +40,8 @@ class _SpanGridPageState extends State<SpanGridPage> {
     });
 
 //    Future.delayed(Duration(seconds: 2)).then((_) {
-//      imageUrl.insert(2, 'https://img.ltn.com.tw/Upload/news/600/2019/02/14/phpxB7gOg.jpg');
+//      imageUrl.insert(
+//          2, 'https://img.ltn.com.tw/Upload/news/600/2019/02/14/phpxB7gOg.jpg');
 //      urlStreamController.add(imageUrl);
 //    });
 
@@ -66,54 +68,37 @@ class _SpanGridPageState extends State<SpanGridPage> {
                       print('點點背景');
                     },
                     child: SpanGrid(
-                      align: AlignType.free,
-                      direction: Axis.vertical,
-                      segmentCount: 2,
-                      horizontalSpace: 0,
-                      verticalSpace: 10,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            print('點事件11');
-                          },
-                          child: SpanColumn(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Image.network(
-                                snapshot.data[0],
-                                fit: BoxFit.contain,
-                              ),
-                              Container(
-                                color: Colors.indigo,
-                                child: Text("抬頭～～"),
-                              ),
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            print('點事件22');
-                          },
-                          child: SpanColumn(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Image.network(
-                                snapshot.data[1],
-                                fit: BoxFit.contain,
-                              ),
-                              Container(
-                                color: Colors.indigo,
-                                child: Text("抬頭～～"),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                        align: AlignType.max,
+                        direction: Axis.vertical,
+                        segmentCount: 2,
+                        horizontalSpace: 10,
+                        verticalSpace: 10,
+                        children: snapshot.data
+                            .map((e) => GestureDetector(
+                                  onTap: () {
+                                    print('點事件11');
+                                  },
+                                  child: SpanColumn(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Image.network(
+                                        e,
+                                        fit: BoxFit.contain,
+                                      ),
+                                      Expanded(
+                                        child: Container(),
+                                      ),
+                                      Container(
+                                        color: Colors.indigo,
+                                        child: Text("抬頭～～"),
+                                      ),
+                                    ],
+                                  ),
+                                ))
+                            .toList()),
                   ),
                 ),
               );

@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:mx_core/router/router.dart';
 import 'package:mx_core/ui/widget/refresh_view/refresh_view.dart';
-import 'package:mx_core/ui/widget/sliver_view.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'bloc_provider.dart';
@@ -66,31 +65,13 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
     return _lazyLoadSubject.stream;
   }
 
-  /// 列表 SliverView subject 以及 stream
-  Stream<SliverState> get sliverStateStream {
-    return _lazySliverStateSubject.stream;
-  }
-
   /// 刷新元件 [RefreshView] 的狀態流
   Stream<RefreshState> get refreshStream {
     return _lazyRefreshStateSubject.stream;
   }
 
-  /// 列表當前的狀態
-  SliverState get currentSliverState {
-    return _sliverStateSubject.value ?? SliverState.emptyBody;
-  }
-
   /// 子頁面監聽串流
   BehaviorSubject<RouteData> _subPageSubject;
-
-  /// 列表 SliverView loading 狀態串流
-  BehaviorSubject<SliverState> _sliverStateSubject;
-
-  /// 列表 SliverView loading 狀態串流
-  BehaviorSubject<SliverState> get _lazySliverStateSubject {
-    return _sliverStateSubject ??= BehaviorSubject();
-  }
 
   /// 設置刷新元件 [RefreshView] 的狀態
   BehaviorSubject<RefreshState> _refreshStateSubject;
@@ -104,11 +85,6 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
 
   BehaviorSubject<bool> get _lazyLoadSubject {
     return _loadSubject ??= BehaviorSubject();
-  }
-
-  /// 設定列表 loading 狀態
-  void setSliverState(SliverState state) {
-    _lazySliverStateSubject.add(state);
   }
 
   /// 將刷新狀態設置為讀取中
@@ -229,10 +205,6 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
     await _subPageSubject?.drain();
     await _subPageSubject?.close();
     _subPageSubject = null;
-
-    await _sliverStateSubject?.drain();
-    await _sliverStateSubject?.close();
-    _sliverStateSubject = null;
 
     await _loadSubject?.drain();
     await _loadSubject?.close();

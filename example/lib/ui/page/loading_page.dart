@@ -48,7 +48,7 @@ class _LoadingPageState extends State<LoadingPage> {
                 child: GridView.count(
                   crossAxisCount: 3,
                   children:
-                  LoadingType.values.map((e) => buildLoading(e)).toList(),
+                      LoadingType.values.map((e) => buildLoading(e)).toList(),
                   mainAxisSpacing: 20,
                   crossAxisSpacing: 20,
                 ),
@@ -62,15 +62,12 @@ class _LoadingPageState extends State<LoadingPage> {
 
   Widget buildLoading(LoadingType type) {
     switch (type) {
-      case LoadingType.ball:
-        return buildBall();
-        break;
       case LoadingType.spring:
         return buildSpring();
         break;
       case LoadingType.roundSpring:
         return buildRoundSpring();
-      break;
+        break;
       case LoadingType.circle:
         return buildCircle();
         break;
@@ -78,41 +75,12 @@ class _LoadingPageState extends State<LoadingPage> {
     return Container();
   }
 
-  Widget buildBall() {
-    return Container(
-      color: Colors.black,
-      alignment: Alignment.center,
-      child: Loading.ball(
-        ballCount: 1,
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            colors: [
-              Color(0xffcca068),
-              Color(0xff8c6018),
-            ],
-          ),
-        ),
-        size: 20,
-        delayInterval: 125,
-        duration: 500,
-        direction: Axis.vertical,
-      ),
-    );
-  }
-
   Widget buildSpring() {
     return Container(
       color: Colors.black,
       alignment: Alignment.center,
       child: Loading.spring(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            colors: [
-              Color(0xffcca068),
-              Color(0xff8c6018),
-            ],
-          ),
-        ),
+        color: Color(0xffac8048),
         size: 20,
         duration: 500,
       ),
@@ -125,14 +93,7 @@ class _LoadingPageState extends State<LoadingPage> {
       alignment: Alignment.center,
       child: Loading.roundSpring(
         ballCount: 2,
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            colors: [
-              Color(0xffcca068),
-              Color(0xff8c6018),
-            ],
-          ),
-        ),
+        color: Color(0xffac8048),
         size: 20,
         duration: 1000,
       ),
@@ -144,14 +105,7 @@ class _LoadingPageState extends State<LoadingPage> {
       color: Colors.black,
       alignment: Alignment.center,
       child: Loading.circle(
-        decoration: BoxDecoration(
-          gradient: RadialGradient(
-            colors: [
-              Color(0xffcca068),
-              Color(0xff8c6018),
-            ],
-          ),
-        ),
+        color: Color(0xffac8048),
         size: 50,
         duration: 1000,
         headCount: 1,
@@ -161,7 +115,6 @@ class _LoadingPageState extends State<LoadingPage> {
 }
 
 enum LoadingType {
-  ball,
   spring,
   roundSpring,
   circle,

@@ -33,7 +33,6 @@ class _IntroductionPageState extends State<IntroductionPage> {
     PageInfo(Pages.marquee, "跑馬燈"),
     PageInfo(Pages.particleAnimation, "粒子動畫"),
     PageInfo(Pages.timer, "倒數計時"),
-    PageInfo(Pages.sliver, "狀態式列表"),
     PageInfo(Pages.animatedCore, "動畫核心"),
     PageInfo(Pages.arrowContainer, "箭頭容器"),
     PageInfo(Pages.arrowPopup, "箭頭彈窗"),

@@ -10,6 +10,7 @@ import 'package:mx_core_example/bloc/page/lib_ease_refresh_bloc.dart';
 import 'package:mx_core_example/bloc/page/load_provider_bloc.dart';
 import 'package:mx_core_example/bloc/page/loading_bloc.dart';
 import 'package:mx_core_example/bloc/page/marquee_bloc.dart';
+import 'package:mx_core_example/bloc/page/normal_popup_bloc.dart';
 import 'package:mx_core_example/bloc/page/particle_animation_bloc.dart';
 import 'package:mx_core_example/bloc/page/refresh_view_bloc.dart';
 import 'package:mx_core_example/bloc/page/route_push_entry_bloc.dart';
@@ -19,19 +20,17 @@ import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub2/rout
 import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub2_bloc.dart';
 import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub3_bloc.dart';
 import 'package:mx_core_example/bloc/page/route_push_second_bloc.dart';
-import 'package:mx_core_example/bloc/page/sliver_bloc.dart';
+import 'package:mx_core_example/bloc/page/route_push_third_bloc.dart';
+import 'package:mx_core_example/bloc/page/span_grid_bloc.dart';
 import 'package:mx_core_example/bloc/page/stateful_button_bloc.dart';
 import 'package:mx_core_example/bloc/page/test_bloc.dart';
 import 'package:mx_core_example/bloc/page/timer_bloc.dart';
 import 'package:mx_core_example/bloc/page/wave_progress_bloc.dart';
 
 import 'route.dart';
-import 'package:mx_core_example/bloc/page/span_grid_bloc.dart';
-import 'package:mx_core_example/bloc/page/route_push_third_bloc.dart';
-import 'package:mx_core_example/bloc/page/normal_popup_bloc.dart';
+
 /// 儲存所有 route 對應的 page widget
 class RouteWidget implements RouteWidgetBase {
-
   static final _singleton = RouteWidget._internal();
 
   static RouteWidget getInstance() => _singleton;
@@ -50,7 +49,6 @@ class RouteWidget implements RouteWidgetBase {
     Pages.marquee,
     Pages.particleAnimation,
     Pages.timer,
-    Pages.sliver,
     Pages.animatedCore,
     Pages.arrowContainer,
     Pages.arrowPopup,
@@ -116,11 +114,6 @@ class RouteWidget implements RouteWidgetBase {
         return BlocProvider(
           child: child,
           bloc: TimerBloc(blocOption),
-        );
-      case Pages.sliver:
-        return BlocProvider(
-          child: child,
-          bloc: SliverBloc(blocOption),
         );
       case Pages.animatedCore:
         return BlocProvider(

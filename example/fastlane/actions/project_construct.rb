@@ -17,7 +17,7 @@ module Fastlane
         # plugin 專案不加入
         if projectType != 'plugin'
           # 放置與本地溝通基礎channel
-          place_native_channel()
+          # place_native_channel()
 
           # 加入網路安全性設定
           add_network_config()
@@ -26,7 +26,7 @@ module Fastlane
           add_webview_flutter_need_ios()
 
           # 加入 android 的 gradle 配置(包含渠道等等)
-          add_flavor_to_android_gradle()
+          add_setting_to_android_gradle()
 
           # 添加混淆配置
           add_obfuscate()
@@ -96,92 +96,92 @@ module Fastlane
       end
 
       # 放置 native channel code
-      def self.place_native_channel()
+      # def self.place_native_channel()
 
-        # 1. 處理flutter端的channel
-        FileUtils.cp "./fastlane/files/native_channel.dart", "./lib/native_channel.dart"
+      #   # 1. 處理flutter端的channel
+      #   FileUtils.cp "./fastlane/files/native_channel.dart", "./lib/native_channel.dart"
 
-        # 2. 處理android端的channel
+      #   # 2. 處理android端的channel
 
-        # 安著的 manifest 路徑
-        manifestFilePath = "android/app/src/main/AndroidManifest.xml"
-        androidKotlinPath = "android/app/src/main/kotlin"
+      #   # 安著的 manifest 路徑
+      #   manifestFilePath = "android/app/src/main/AndroidManifest.xml"
+      #   androidKotlinPath = "android/app/src/main/kotlin"
 
-        # 先取得 application id
-        applicationId = ParseXmlAction.read(
-          xml_path: manifestFilePath,
-          node_array: ["manifest"],
-          label: "package",
-        )
+      #   # 先取得 application id
+      #   applicationId = ParseXmlAction.read(
+      #     xml_path: manifestFilePath,
+      #     node_array: ["manifest"],
+      #     label: "package",
+      #   )
 
-        # 從 application id 取得實體路徑
-        applicationIdPath = applicationId.gsub('.', '/')
-        targetFolderPath = "#{androidKotlinPath}/#{applicationIdPath}"
-        FileUtils.mkdir_p(targetFolderPath)
+      #   # 從 application id 取得實體路徑
+      #   applicationIdPath = applicationId.gsub('.', '/')
+      #   targetFolderPath = "#{androidKotlinPath}/#{applicationIdPath}"
+      #   FileUtils.mkdir_p(targetFolderPath)
 
-        # 將檔案寫入到android
-        sourceFilePath = "./fastlane/files/FlutterChannel.kt"
-        targetFilePath = "#{targetFolderPath}/FlutterChannel.kt"
-        content = "package #{applicationId}" + File.read(sourceFilePath, :encoding => 'UTF-8')
-        File.write(targetFilePath, content)
+      #   # 將檔案寫入到android
+      #   sourceFilePath = "./fastlane/files/FlutterChannel.kt"
+      #   targetFilePath = "#{targetFolderPath}/FlutterChannel.kt"
+      #   content = "package #{applicationId}" + File.read(sourceFilePath, :encoding => 'UTF-8')
+      #   File.write(targetFilePath, content)
 
-        # 在android上的MainActivity.kt增加code
-        # 搜索 import 區域, 並插入缺少 import 的 widget
-        targetFilePath = "#{targetFolderPath}/MainActivity.kt"
-        content = File.read(targetFilePath, :encoding => 'UTF-8')
-        content = content.gsub(/(import .+(\s)+)+/) { |c|
-          addText = ""
-          if !(c.include?('io.flutter.plugin.common.PluginRegistry'))
-            # 需要加入
-            addText = "import io.flutter.plugin.common.PluginRegistry\n"
-          end
-          c + addText
-        }
+      #   # 在android上的MainActivity.kt增加code
+      #   # 搜索 import 區域, 並插入缺少 import 的 widget
+      #   targetFilePath = "#{targetFolderPath}/MainActivity.kt"
+      #   content = File.read(targetFilePath, :encoding => 'UTF-8')
+      #   content = content.gsub(/(import .+(\s)+)+/) { |c|
+      #     addText = ""
+      #     if !(c.include?('io.flutter.plugin.common.PluginRegistry'))
+      #       # 需要加入
+      #       addText = "import io.flutter.plugin.common.PluginRegistry\n"
+      #     end
+      #     c + addText
+      #   }
 
-        # 在 GeneratedPluginRegistrant.registerWith(this) 下面加入
-        # FlutterChannel.registerWith(registrarFor(FlutterChannel::class.java.name))
-        content = content.gsub(/(?<=GeneratedPluginRegistrant\.registerWith\(this\))(.|\s)*?(?=})/) { |c|
-          addText = ""
-          if !(c.include?('FlutterChannel.registerWith(registrarFor(FlutterChannel::class.java.name))'))
-            # 需要加入
-            addText = "FlutterChannel.registerWith(registrarFor(FlutterChannel::class.java.name))\n"
-          end
-          c + addText
-        }
-        File.write(targetFilePath, content)
+      #   # 在 GeneratedPluginRegistrant.registerWith(this) 下面加入
+      #   # FlutterChannel.registerWith(registrarFor(FlutterChannel::class.java.name))
+      #   content = content.gsub(/(?<=GeneratedPluginRegistrant\.registerWith\(this\))(.|\s)*?(?=})/) { |c|
+      #     addText = ""
+      #     if !(c.include?('FlutterChannel.registerWith(registrarFor(FlutterChannel::class.java.name))'))
+      #       # 需要加入
+      #       addText = "FlutterChannel.registerWith(registrarFor(FlutterChannel::class.java.name))\n"
+      #     end
+      #     c + addText
+      #   }
+      #   File.write(targetFilePath, content)
 
-        # 3. 處理ios端的channel
+      #   # 3. 處理ios端的channel
 
-        # 將檔案寫入到ios
-        fileName = "FlutterChannel.swift"
-        targetPath = "ios/Runner"
-        FileUtils.mkdir_p("#{targetPath}/flutter")
-        FileUtils.cp "./fastlane/files/FlutterChannel.swift", "ios/Runner/flutter/FlutterChannel.swift"
+      #   # 將檔案寫入到ios
+      #   fileName = "FlutterChannel.swift"
+      #   targetPath = "ios/Runner"
+      #   FileUtils.mkdir_p("#{targetPath}/flutter")
+      #   FileUtils.cp "./fastlane/files/FlutterChannel.swift", "ios/Runner/flutter/FlutterChannel.swift"
 
-        # 修改AppDelegate.swift的程式碼
-        # 在 GeneratedPluginRegistrant.register(with: self) 下面加入
-        # FlutterChannel.register(with: self.window.rootViewController as! FlutterViewController)
-        targetFilePath = "ios/Runner/AppDelegate.swift"
-        content = File.read(targetFilePath, :encoding => 'UTF-8')
+      #   # 修改AppDelegate.swift的程式碼
+      #   # 在 GeneratedPluginRegistrant.register(with: self) 下面加入
+      #   # FlutterChannel.register(with: self.window.rootViewController as! FlutterViewController)
+      #   targetFilePath = "ios/Runner/AppDelegate.swift"
+      #   content = File.read(targetFilePath, :encoding => 'UTF-8')
 
-        content = content.gsub(/(?<=GeneratedPluginRegistrant\.register\(with: self\))(.|\s)*?(?=return)/) { |c|
-          addText = ""
-          if !(c.include?('FlutterChannel.register(with: self.window.rootViewController as! FlutterViewController)'))
-            # 需要加入
-            addText = "\nFlutterChannel.register(with: self.window.rootViewController as! FlutterViewController)\n"
-          end
-          c + addText
-        }
-        File.write(targetFilePath, content)
+      #   content = content.gsub(/(?<=GeneratedPluginRegistrant\.register\(with: self\))(.|\s)*?(?=return)/) { |c|
+      #     addText = ""
+      #     if !(c.include?('FlutterChannel.register(with: self.window.rootViewController as! FlutterViewController)'))
+      #       # 需要加入
+      #       addText = "\nFlutterChannel.register(with: self.window.rootViewController as! FlutterViewController)\n"
+      #     end
+      #     c + addText
+      #   }
+      #   File.write(targetFilePath, content)
 
-        # 將 加入的 channel 添加到xcode配置
-        XcodeParseAction.add_flutter_file_to_xcode()
+      #   # 將 加入的 channel 添加到xcode配置
+      #   XcodeParseAction.add_flutter_file_to_xcode()
 
-      end
+      # end
 
 
       # 加入 flavor/簽名/application id 配置到android gradle
-      def self.add_flavor_to_android_gradle()
+      def self.add_setting_to_android_gradle()
 
         # 修改 gradle 的配置
         gradlePath = "android/app/build.gradle"
@@ -270,9 +270,6 @@ module Fastlane
             # 略過
           elsif targetPath == 'lib/bloc/application_bloc.dart' && File.exist?(targetPath)
             # 假如檔案是 bloc/application_bloc.dart, 檢查到檔案已存在則略過
-            # 略過
-          elsif targetPath == 'lib/localization/localization.dart' && File.exist?(targetPath)
-            # 假如檔案是 localization/localization.dart, 檢查到檔案已存在則略過
             # 略過
           else
             File.write(targetPath, text)

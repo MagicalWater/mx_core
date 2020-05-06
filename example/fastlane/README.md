@@ -15,11 +15,6 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
-### list_version
-```
-fastlane list_version
-```
-列出所有腳本版本
 ### check_version
 ```
 fastlane check_version

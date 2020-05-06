@@ -84,7 +84,7 @@ abstract class RoutePageBase {
   });
 
   /// 取得子頁面的串流
-  Stream<RouteData> getSubPageStream([String page]);
+//  Stream<RouteData> getSubPageStream([String page]);
 
   /// 註冊子頁面監聽
   void registerSubPageListener(String page, RouteHandler handler);

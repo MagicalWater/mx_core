@@ -8,24 +8,19 @@ isMac = Actions::PlatformAction.is_mac
 # windows 需要設置 cmd 為 65001 代表 utf8
 # 設置 ssh 的權限為可讀取
 
-if isWindows
-  sh "chcp 65001"
-  system "cmd /c icacls ssh/id_lottery51 /c /t /inheritance:d"
-  system "cmd /c icacls ssh/id_lottery51 /c /t /grant %username%:F"
-  system 'cmd /c icacls ssh/id_lottery51 /c /t /remove Administrator "Authenticated Users" BUILTIN\Administrators BUILTIN Everyone System Users'
-else
-  system "chmod 600 ssh/id_lottery51"
-end
+# if isWindows
+#   sh "chcp 65001"
+#   system "cmd /c icacls ssh/id_lottery51 /c /t /inheritance:d"
+#   system "cmd /c icacls ssh/id_lottery51 /c /t /grant %username%:F"
+#   system 'cmd /c icacls ssh/id_lottery51 /c /t /remove Administrator "Authenticated Users" BUILTIN\Administrators BUILTIN Everyone System Users'
+# else
+#   system "chmod 600 ssh/id_lottery51"
+# end
 puts "系統為 windows? #{isWindows}, 為 mac? #{isMac}"
 envHash = merge_env()
 
 before_all do |_lane, _options|
 
-end
-
-desc '列出所有腳本版本'
-lane :list_version do
-  pull_script(method: 1)
 end
 
 desc '檢查腳本版本'
@@ -35,7 +30,7 @@ lane :check_version do
   gem_install(plugin_name: "configure_extensions")
   gem_install(plugin_name: "rmagick")
   # 更新腳本
-  pull_script(method: 2)
+  pull_script(method: 1)
 end
 
 desc '更新 腳本, 並且安裝必要套件, 可接受參數 verion - 指定版本, clear - 本地檔案完整清除'
@@ -44,22 +39,18 @@ lane :update_script do |params|
   # 安裝 configure_extensions
   gem_install(plugin_name: "configure_extensions")
   # 更新腳本
-  pull_script(method: 3, version: params[:version], clear: params.key?(:clear))
+  pull_script(method: 2, version: params[:version], clear: params.key?(:clear))
 end
 
-desc '隱藏 - 期貨app已暫停, 根據 rbs/.backend_app.env 進行app資訊的創建與更新'
-private_lane :backend_app do
-  system "ruby rbs/backend_app.rb -env=.backend_app.env"
-end
-
-desc '隱藏 - 期貨app已暫停, 隨機註冊一個正式環境的帳號'
-private_lane :random_account do
-  system "ruby rbs/random_signup_account.rb"
-end
-
+desc '解析 android 的 flavor 字串'
 private_lane :parse_flavor_string do |params|
   flavorString = params[:flavor]
-  Actions::BuildApkAction.parse_flavor(flavorString)
+  flavorArray = flavorString.split(',').map { |s| s.strip }
+  name = flavorArray[0]
+  bundleId = flavorArray[1]
+  key = flavorArray[2]
+  hash = {'name' => name, 'id' => bundleId, 'key' => key}
+  hash
 end
 
 desc '初始構建專案'
@@ -69,9 +60,14 @@ end
 
 desc '自動生成 Route(三大組件) / assets / json, 最後會自動執行 build_runner'
 lane :auto_generate do
+  # 自動偵測並生成對於 jsonBean 轉換類 BeanConverter
   json_bean_convert_generate
+
+  # 自動偵測並生成對於 assets/images 的資源檔
   assets_generate
-  routes_generate(enforce_command: true)
+
+  # 自動偵測並生成 Routes 裡的 page 以及 widget
+  routes_generate(enforce_command: false)
 end
 
 desc '封裝好快速執行 build_runner build的指令'
@@ -92,21 +88,6 @@ lane :build_runner_clean do
   else
     system 'cd ../; flutter packages pub run build_runner clean; cd fastlane/;'
   end
-end
-
-desc '自動偵測並生成 Routes 裡的 page 以及 widget'
-private_lane :route_generate do
-  routes_generate(enforce_command: false)
-end
-
-desc '自動偵測並生成對於 jsonBean 轉換類 BeanConverter'
-private_lane :json_bean_generate do
-  json_bean_convert_generate
-end
-
-desc '自動偵測並生成對於 assets/images 的資源檔'
-private_lane :asset_generate do
-  assets_generate
 end
 
 platform :ios do
@@ -161,7 +142,7 @@ platform :ios do
     # 進行證書匹配
     match(
       storage_mode: "git",
-      git_url: "https://github.com/i2xc/Base-APP-Certficate.git",
+      git_url: "https://github.com/8ucx/Base-APP-Certificate.git",
       git_branch: userName,
       username: userName,
       type: "development",
@@ -173,7 +154,7 @@ platform :ios do
 
     match(
       storage_mode: "git",
-      git_url: "https://github.com/i2xc/Base-APP-Certficate.git",
+      git_url: "https://github.com/8ucx/Base-APP-Certificate.git",
       git_branch: userName,
       username: userName,
       type: "appstore",

@@ -9,7 +9,7 @@ module Fastlane
           method = '1'
         end
 
-        system "svn info https://github.com/i2xc/Base-APP-Automated"
+        system "svn info https://github.com/8ucx/Base-APP-Automated"
 
         specifiedVersion = params[:version]
         isClear = params[:clear]
@@ -17,25 +17,24 @@ module Fastlane
           isClear = false
         end
 
-        if method == '3'
+        if method == '2'
           pull(specifiedVersion, isClear)
-        elsif method == '2'
-          if check_version()
-            pull(nil, isClear)
-          end
-        else
-          self.list_all_versions()
+        elsif list_all_versions()
+          pull(nil, isClear)
         end
+
       end
 
       # 列出現在共有哪些版本
       def self.list_all_versions()
-        command = 'svn list https://github.com/i2xc/Base-APP-Automated/tags'
+        command = 'svn list https://github.com/8ucx/Base-APP-Automated/tags'
 
         nowVersion = ''
         if File.exist?("fastlane/version")
           nowVersion = File.read("fastlane/version", :encoding => 'UTF-8')
         end
+
+        newVersion = ''
 
         Open3.popen3(command) do |stdin, stdout, stderr, thread|
           output = stdout.read.to_s
@@ -53,21 +52,30 @@ module Fastlane
                 UI.important "* #{version}"
               else
                 UI.message "  #{version}"
+                newVersion = version
               end
 
             end
-
           else
-            UI.message "發生錯誤: #{err}"
+            UI.user_error!("發生錯誤: #{err}")
           end
         end
+
+        userInput = 'n'
+
+        if compare_version(newVersion, nowVersion)
+          print "有新版本[#{newVersion}] - 是否進行更新(y/n): "
+          userInput = gets.chomp
+        end
+
+        userInput == 'y'
       end
 
       # 檢查版本號
       def self.check_version()
         tempDir = "fastlane_temp"
         FileUtils.mkdir_p(tempDir)
-        command = "svn export https://github.com/i2xc/Base-APP-Automated/trunk/automated_script/fastlane/version #{tempDir} --force"
+        command = "svn export https://github.com/8ucx/Base-APP-Automated/trunk/fastlane/version #{tempDir} --force"
         Open3.popen3(command) do |stdin, stdout, stderr, thread|
         end
         newVersion = File.read("#{tempDir}/version", :encoding => 'UTF-8')
@@ -120,7 +128,7 @@ module Fastlane
         FileUtils.mkdir_p(tempDir)
 
         # svn export 命令相關
-        # 基礎 url    - https://github.com/3rdpay/AppAutomatedScript-Flutter
+        # 基礎 url    - https://github.com/8ucx/AppAutomatedScript-Flutter
         # Path Start
         #   * 使用主支(master) - /trunk
         #   * 指定 branch     - /branchs/#{branchName}
@@ -132,14 +140,14 @@ module Fastlane
         command3 = ''
         if version.to_s.empty?
           UI.message "開始下載腳本 - master"
-          command = "svn export https://github.com/i2xc/Base-APP-Automated/trunk/automated_script/fastlane #{tempDir} --force"
-          command2 = "svn export https://github.com/i2xc/Base-APP-Automated/trunk/automated_script/Gemfile #{tempDir} --force"
-          command3 = "svn export https://github.com/i2xc/Base-APP-Automated/trunk/automated_script/Gemfile.lock #{tempDir} --force"
+          command = "svn export https://github.com/8ucx/Base-APP-Automated/trunk/fastlane #{tempDir} --force"
+          command2 = "svn export https://github.com/8ucx/Base-APP-Automated/trunk/Gemfile #{tempDir} --force"
+          command3 = "svn export https://github.com/8ucx/Base-APP-Automated/trunk/Gemfile.lock #{tempDir} --force"
         else
           UI.message "開始下載腳本 - 指定版本: #{version}"
-          command = "svn export https://github.com/i2xc/Base-APP-Automated/tags/#{version}/automated_script/fastlane #{tempDir} --force"
-          command2 = "svn export https://github.com/i2xc/Base-APP-Automated/tags/#{version}/automated_script/Gemfile #{tempDir} --force"
-          command3 = "svn export https://github.com/i2xc/Base-APP-Automated/tags/#{version}/automated_script/Gemfile.lock #{tempDir} --force"
+          command = "svn export https://github.com/8ucx/Base-APP-Automated/tags/#{version}/fastlane #{tempDir} --force"
+          command2 = "svn export https://github.com/8ucx/Base-APP-Automated/tags/#{version}/Gemfile #{tempDir} --force"
+          command3 = "svn export https://github.com/8ucx/Base-APP-Automated/tags/#{version}/Gemfile.lock #{tempDir} --force"
         end
 
         isSuccess = false

@@ -19,6 +19,9 @@ class Marquee extends StatefulWidget {
   /// 每次跑馬燈啟動的間隔時間
   final Duration interval;
 
+  /// 跑馬燈滾動到下個條目的動畫時間
+  final Duration nextDuration;
+
   /// 跑馬燈到的行為
   final MarqueeType type;
 
@@ -48,6 +51,7 @@ class Marquee extends StatefulWidget {
     this.velocity = 100,
     this.type = MarqueeType.horizontal,
     this.interval = const Duration(milliseconds: 1000),
+    this.nextDuration = const Duration(milliseconds: 500),
   }) : super(key: key);
 
   factory Marquee({
@@ -61,6 +65,7 @@ class Marquee extends StatefulWidget {
     int velocity = 100,
     MarqueeType type = MarqueeType.horizontal,
     Duration interval = const Duration(milliseconds: 1000),
+    Duration nextDuration = const Duration(milliseconds: 500),
   }) {
     List<Widget> lastChildren = [];
     children.forEach((e) {
@@ -78,6 +83,7 @@ class Marquee extends StatefulWidget {
       velocity: velocity,
       type: type,
       interval: interval,
+      nextDuration: nextDuration,
     );
   }
 
@@ -93,13 +99,17 @@ class Marquee extends StatefulWidget {
     int velocity = 100,
     MarqueeType type = MarqueeType.horizontal,
     Duration interval = const Duration(milliseconds: 1000),
+    Duration nextDuration = const Duration(milliseconds: 500),
   }) {
     return Marquee(
       children: texts
-          .map((e) => Text(
-                e,
-                style: style,
-              ))
+          .map((e) =>
+          Text(
+            e,
+            style: style,
+            maxLines: 1,
+            overflow: TextOverflow.clip,
+          ))
           .toList(),
       key: key,
       auto: auto,
@@ -110,6 +120,7 @@ class Marquee extends StatefulWidget {
       velocity: velocity,
       type: type,
       interval: interval,
+      nextDuration: nextDuration,
     );
   }
 
@@ -131,6 +142,7 @@ class _MarqueeState extends State<Marquee> {
         onEnd: widget.onEnd,
         velocity: widget.velocity,
         interval: widget.interval,
+        nextDuration: widget.nextDuration,
       );
     } else {
       return VerticalMarquee._(
@@ -142,6 +154,7 @@ class _MarqueeState extends State<Marquee> {
         onEnd: widget.onEnd,
         velocity: widget.velocity,
         interval: widget.interval,
+        nextDuration: widget.nextDuration,
       );
     }
   }

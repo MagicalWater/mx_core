@@ -3,11 +3,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mx_core/mx_core.dart';
 
 import 'bloc/application_bloc.dart';
-import 'generated/i18n.dart';
-import 'router/route.dart';
+import 'generated/l10n.dart';
+import 'router/route_widget.dart';
+import 'router/routes.dart';
 
 void main() {
-
   // 設定基底初始化
   ProjectCore.setting(
     // 設計稿尺寸
@@ -26,7 +26,7 @@ void main() {
       title,
       style: TextStyle(
         color: Colors.white,
-        fontSize: getScaleA(16, context),
+        fontSize: 16.scaleSp,
       ),
     );
     return PreferredSize(
@@ -39,7 +39,7 @@ void main() {
         title: titleWidget,
         iconTheme: IconThemeData(
           color: Colors.black,
-          size: getScaleA(20, context),
+          size: 20.scaleA,
         ),
         actions: actions,
       ),
@@ -71,13 +71,8 @@ class App extends StatelessWidget {
           S.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
         ],
-        localeResolutionCallback: S.delegate.resolution(
-          // 當找不到對應語系時的默認語系
-          fallback: S.delegate.supportedLocales.first,
-          // 是否需要精確到國家
-          withCountry: false,
-        ),
         supportedLocales: S.delegate.supportedLocales,
         home: ApplicationBloc.getInstance().getPage(
           Pages.exLaunch,

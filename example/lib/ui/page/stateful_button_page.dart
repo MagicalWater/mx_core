@@ -1,4 +1,5 @@
 import 'package:annotation_route/route.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/stateful_button_bloc.dart';
@@ -70,6 +71,12 @@ class _StatefulButtonPageState extends State<StatefulButtonPage> {
         ),
         loadStyle: StateStyle(color: Colors.white, size: 60),
         onTap: (controller) {
+          print('當前狀態: ${controller.isLoading}');
+          if (controller.isLoading) {
+            BotToast.showText(text: '正在讀取中, 請稍候');
+            return;
+          }
+          print('點點中');
           controller.setLoad(true);
           Future.delayed(Duration(seconds: 3)).then((_) {
             controller.setLoad(false);

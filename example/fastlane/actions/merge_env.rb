@@ -36,7 +36,8 @@ module Fastlane
         specialText = %{
 # 注意事項
 # 將 App-Resources 倉庫 clone 回來
-# git@github.com:3rdpay/App-Resources.git
+# https://github.com/MagicalWater/Base-APP-Automated
+# git@github.com:MagicalWater/Base-APP-Automated.git
 # 在環境變數加入
 # key = APP_RESOURCES
 # value = 路徑

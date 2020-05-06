@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  bot_toast:
+    dependency: "direct main"
+    description:
+      name: bot_toast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   build:
     dependency: transitive
     description:
@@ -391,7 +398,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "3.4.7+1"
+    version: "3.4.9+1"
   mx_json:
     dependency: "direct dev"
     description:

@@ -30,6 +30,7 @@ part 'translate_value.dart';
 /// [Comb.translate] - 位移動畫
 /// [Comb.translateX] - x軸位移動畫
 /// [Comb.translateY] - y軸位移動畫
+/// [Comb.size] - size動畫
 /// [Comb.width] - 寬度size動畫
 /// [Comb.height] - 高度size動畫
 /// [Comb.color] - 背景色變換動畫
@@ -136,6 +137,23 @@ abstract class Comb<T> {
         x != null ? ScaleType.all : ScaleType.height,
         begin: Size(x ?? 0, begin),
         end: Size(x ?? 0, end),
+        delayed: delay,
+        duration: duration,
+        curve: curve,
+      );
+
+  /// size動畫
+  static CombSize size({
+    Size begin,
+    Size end,
+    int delay,
+    int duration,
+    Curve curve,
+  }) =>
+      CombSize._(
+        SizeType.all,
+        begin: begin,
+        end: end,
         delayed: delay,
         duration: duration,
         curve: curve,

@@ -59,14 +59,18 @@ class StatefulButton extends StatefulWidget {
 
 class _StatefulButtonState extends State<StatefulButton>
     implements StatefulButtonController {
-  /// 當前是否正在讀取中
-  bool _isLoading;
+  /// 當前是否正在開放狀態[非讀取]
+  bool _isStandby;
 
   /// 真正控制 loading 狀態的控制器
   AnimatedSyncTick _controller;
 
   /// 監聽 load stream 的訂閱
   StreamSubscription _loadSubscription;
+
+  /// 當前是否讀取中
+  @override
+  bool get isLoading => !_isStandby;
 
   /// 讀取的 style
   StateStyle get _loadStyle {
@@ -90,12 +94,12 @@ class _StatefulButtonState extends State<StatefulButton>
 
   @override
   void initState() {
-    _isLoading = widget.initLoad ?? false;
-    _controller = AnimatedSyncTick.identity(initToggle: _isLoading);
+    _isStandby = !widget.initLoad;
+    _controller = AnimatedSyncTick.identity(initToggle: _isStandby);
     // 如果有 load 狀態 stream, 進行監聽
     if (widget.loadStream != null) {
       _loadSubscription = widget.loadStream.listen((enable) {
-        _isLoading = enable;
+        _isStandby = !enable;
         _syncLoadState();
       });
     }
@@ -130,7 +134,7 @@ class _StatefulButtonState extends State<StatefulButton>
               switchOutCurve: Interval(0.7, 1.0),
             ),
             onTap: () {
-              if (widget.onTap != null && !_isLoading) {
+              if (widget.onTap != null) {
                 widget.onTap(this);
               }
             },
@@ -156,19 +160,13 @@ class _StatefulButtonState extends State<StatefulButton>
 
   /// 同步讀取狀態顯示
   void _syncLoadState() {
-    _controller.toggle(!_isLoading);
-  }
-
-  /// 當前是否讀取中
-  @override
-  bool isLoading() {
-    return _isLoading;
+    _controller.toggle(_isStandby);
   }
 
   /// 設置按鈕讀取狀態
   @override
   void setLoad(bool load) {
-    _isLoading = load;
+    _isStandby = !load;
     _syncLoadState();
   }
 
@@ -185,7 +183,7 @@ abstract class StatefulButtonController {
   void setLoad(bool load);
 
   /// 當前是否讀取中
-  bool isLoading();
+  bool get isLoading;
 }
 
 /// 讀取狀態時的 loading style

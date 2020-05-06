@@ -10,6 +10,9 @@ class VerticalMarquee extends StatefulWidget {
   /// 每次跑馬燈啟動的間隔時間
   final Duration interval;
 
+  /// 跑馬燈滾動到下個條目的動畫時間
+  final Duration nextDuration;
+
   /// 是否自動啟動跑馬燈
   final bool auto;
 
@@ -35,6 +38,7 @@ class VerticalMarquee extends StatefulWidget {
     this.onEnd,
     this.velocity = 100,
     this.interval = const Duration(milliseconds: 1000),
+    this.nextDuration = const Duration(milliseconds: 500),
   }) : super(key: key);
 
   @override
@@ -200,7 +204,6 @@ class _VerticalMarqueeState extends State<VerticalMarquee>
         // 現在位於結尾, 需要讓下個列表 standby
         // 操作 mainScrollController 至下個列表的位置
         var nextPosition = widgetHeight * (i + 1);
-        var nextDuration = Duration(milliseconds: 400);
 
         // 檢查是否可滑動
         if (!(await waitScrollControllerAttach())) return;
@@ -208,7 +211,7 @@ class _VerticalMarqueeState extends State<VerticalMarquee>
         // 滾動視圖到下個列表
         await mainScrollController.animateTo(
           nextPosition,
-          duration: nextDuration,
+          duration: widget.nextDuration,
           curve: Curves.easeOut,
         );
 

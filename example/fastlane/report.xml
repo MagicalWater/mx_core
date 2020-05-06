@@ -5,12 +5,12 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: merge_env" time="0.015403">
+      <testcase classname="fastlane.lanes" name="0: merge_env" time="0.009624">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: pull_script" time="12.561255">
+      <testcase classname="fastlane.lanes" name="1: set_app_info_ios" time="6.833742">
         
       </testcase>
     

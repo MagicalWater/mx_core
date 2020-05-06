@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'flat_load_provider.dart';
-//import 'load_provider.dart';
+import 'load_provider.dart';
 
 /// 漸變顏色角度
 AlignmentGeometry _defaultLinearBgBegin = Alignment.topCenter;

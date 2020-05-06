@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:annotation_route/route.dart';
+import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
-import 'package:mx_core_example/router/route.dart';
-import 'package:mx_core_example/bloc/page/route_push_second_bloc.dart';
 import 'package:mx_core_example/bloc/application_bloc.dart';
+import 'package:mx_core_example/bloc/page/route_push_second_bloc.dart';
+import 'package:mx_core_example/router/route.dart';
 import 'package:mx_core_example/ui/page/introduction_page.dart';
 
 @ARoute(url: Pages.routePushSecond)
@@ -54,30 +54,13 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   color: Colors.transparent,
                 ),
                 Expanded(
-                  child: StreamBuilder<RouteData>(
+                  child: PageSwitcher(
                     stream: bloc.subPageStream,
-                    builder: (context, snapshot) {
-                      Widget child;
-                      if (!snapshot.hasData) {
-                        child = Container();
-                      } else {
-                        child = appBloc.getSubPage(snapshot.data);
-                      }
-                      return AnimatedSwitcher(
-                        duration: Duration(milliseconds: 500),
-                        child: child,
-                        transitionBuilder:
-                            (Widget child, Animation<double> animation) {
-                          return AxisTransition(
-                            position: animation,
-                            child: FadeTransition(
-                              opacity: animation,
-                              child: child,
-                            ),
-                          );
-                        },
-                      );
-                    },
+                    emptyWidget: Container(),
+                    opacity: false,
+                    slide: true,
+                    slideIn: TransDirection.left,
+                    slideOut: TransDirection.right,
                   ),
                 ),
               ],

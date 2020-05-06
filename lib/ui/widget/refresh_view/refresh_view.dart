@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../flat_load_provider.dart';
-//import '../load_provider.dart';
+import '../load_provider.dart';
 
 part 'easy_refresh_style.dart';
 

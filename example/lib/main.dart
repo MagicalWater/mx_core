@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -55,11 +56,13 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-//    WebView();
-    Slider;
     return LoadProvider(
       root: true,
       child: MaterialApp(
+        builder: BotToastInit(),
+        navigatorObservers: [
+          BotToastNavigatorObserver(),
+        ],
         debugShowCheckedModeBanner: false,
         onGenerateTitle: (context) {
           return 'MxCore範例';
@@ -88,118 +91,46 @@ class BB extends StatefulWidget {
   _BBState createState() => _BBState();
 }
 
-class _BBState extends State<BB>  {
+class _BBState extends State<BB> with SingleTickerProviderStateMixin {
+  double w = 100, h = 100;
 
   @override
   void initState() {
-
+    Future.delayed(Duration(seconds: 2)).then((_) {
+      setState(() {
+        w = 50;
+        h = 50;
+      });
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SafeArea(
         child: Container(
-          color: Colors.green,
-          child: CCRender(
-            child: Container(
-              color: Colors.amber,
-              width: 100,
-              height: 100,
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.red),
+                ),
+                child: AnimatedSize(
+                  duration: Duration(seconds: 2),
+                  child: Container(
+                    width: w,
+                    height: h,
+                  ),
+                  vsync: this,
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
-  }
-}
-
-class CCRender extends SingleChildRenderObjectWidget {
-  CCRender({Widget child}) : super(child: child);
-
-  @override
-  RenderObject createRenderObject(BuildContext context) {
-    return CCBox();
-  }
-}
-
-class CCBox extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
-  @override
-  void performLayout() {
-    print('performLayout');
-    child.layout(constraints, parentUsesSize: true);
-    print('child = ${child.size}');
-    size = Size(50, 50);
-    print('設置完畢');
-  }
-
-  @override
-  void performResize() {
-    print('performResize');
-    super.performResize();
-  }
-
-  @override
-  void paint(PaintingContext context, Offset offset) {
-    final childParentData = child.parentData as BoxParentData;
-    context.paintChild(child, childParentData.offset + offset);
-  }
-
-  @override
-  double getMaxIntrinsicHeight(double width) {
-    var compute = super.getMaxIntrinsicHeight(width);
-    print('getMaxIntrinsicHeight - 來源: $width, 結果: $compute');
-    return compute;
-  }
-
-  @override
-  double getMaxIntrinsicWidth(double height) {
-    var compute = super.getMaxIntrinsicWidth(height);
-    print('getMaxIntrinsicWidth - 來源: $height, 結果: $compute');
-    return compute;
-  }
-
-  @override
-  double getMinIntrinsicHeight(double width) {
-    var compute = super.getMinIntrinsicHeight(width);
-    print('getMinIntrinsicHeight - 來源: $width, 結果: $compute');
-    return compute;
-  }
-
-  @override
-  double getMinIntrinsicWidth(double height) {
-    var compute = super.getMinIntrinsicWidth(height);
-    print('getMinIntrinsicWidth - 來源: $height, 結果: $compute');
-    return compute;
-  }
-
-  @override
-  double computeMaxIntrinsicHeight(double width) {
-    var compute = super.computeMaxIntrinsicHeight(width);
-    print('computeMaxIntrinsicHeight - 來源: $width, 結果: $compute');
-    return compute;
-  }
-
-  @override
-  double computeMaxIntrinsicWidth(double height) {
-    var compute = super.computeMaxIntrinsicWidth(height);
-    print('computeMaxIntrinsicWidth - 來源: $height, 結果: $compute');
-    return compute;
-  }
-
-  @override
-  double computeMinIntrinsicHeight(double width) {
-    var compute = super.computeMinIntrinsicHeight(width);
-    print('computeMinIntrinsicHeight - 來源: $width, 結果: $compute');
-    return compute;
-  }
-
-  @override
-  double computeMinIntrinsicWidth(double height) {
-    var compute = super.computeMinIntrinsicWidth(height);
-    print('computeMinIntrinsicWidth - 來源: $height, 結果: $compute');
-    return compute;
   }
 }

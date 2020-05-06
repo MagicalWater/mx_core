@@ -66,10 +66,10 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// 取得 [page] 的子頁面跳轉命令串流
   /// </p> 若 [page] 為空, 則監聽所有的子頁面
   /// </p> 此處設計為接到此串流通知的要再進行顯示元件的動作
-  Stream<RouteData> getSubPageStream([String page]) {
-    return _subPageSubject.stream
-        .where((data) => RouteCompute.isSubPage(page, data.route));
-  }
+//  Stream<RouteData> getSubPageStream([String page]) {
+//    return _subPageSubject.stream
+//        .where((data) => RouteCompute.isSubPage(page, data.route));
+//  }
 
   /// 註冊子頁面監聽
   @override
@@ -162,6 +162,9 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
           );
 
           var handle = e.handler(routeData);
+          if (handle) {
+            _subPageSubject.add(routeData);
+          }
           return handle;
         }
         return false;
@@ -270,12 +273,15 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     var isBackObservableAdded = navigator.widget.observers
         .any((detect) => detect is _DetectPageActionObservable);
     if (!isBackObservableAdded) {
-      var detect = _DetectPageActionObservable(onDetectPop: (name) {
-        if ((_pageHistory.last?.route ?? '') == name) {
+      var detect = _DetectPageActionObservable(
+        onDetectPop: (name) {
+          if ((_pageHistory.last?.route ?? '') == name) {
 //          print("檢測到非 code 返回, 刪除歷史紀錄");
-          _pageHistory.removeLast();
-        }
-      });
+            _pageHistory.removeLast();
+            _pageSubject.add(_pageHistory.last);
+          }
+        },
+      );
       navigator.widget.observers.add(detect);
     }
 
@@ -299,6 +305,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 
     if (removeUntil != null) {
       _pageHistory.add(routeData);
+      _pageSubject.add(routeData);
       var result = await navigator.pushAndRemoveUntil(pageRoute(), (rt) {
         var name = rt.settings.name;
         if (name == '/') {
@@ -318,10 +325,12 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     } else if (replaceCurrent) {
       _pageHistory.removeLast();
       _pageHistory.add(routeData);
+      _pageSubject.add(routeData);
       return await navigator.pushReplacement(pageRoute());
     } else {
 //      print("添加到歷史: ${routeData.route}");
       _pageHistory.add(routeData);
+      _pageSubject.add(routeData);
       return navigator.push(pageRoute());
     }
   }
@@ -399,8 +408,9 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 class _DetectPageActionObservable extends NavigatorObserver {
   /// 回退檢測觸發
   final ValueCallback<String> onDetectPop;
+  final ValueCallback<String> onDetectPush;
 
-  _DetectPageActionObservable({this.onDetectPop});
+  _DetectPageActionObservable({this.onDetectPush, this.onDetectPop});
 
   /// 回退
   @override
@@ -408,5 +418,12 @@ class _DetectPageActionObservable extends NavigatorObserver {
     print("檢測到回退: ${route.settings.name}, ${previousRoute.settings.name}");
     onDetectPop(route.settings.name);
     super.didPop(route, previousRoute);
+  }
+
+  @override
+  void didPush(Route route, Route previousRoute) {
+    print('檢測到頁面推進: ${route.settings.name}, ${previousRoute.settings.name}');
+//    onDetectPop(route.settings.name);
+    super.didPush(route, previousRoute);
   }
 }

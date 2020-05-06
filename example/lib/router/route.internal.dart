@@ -32,7 +32,6 @@ import 'package:mx_core_example/ui/page/route_push_second/route_push_sub1_page.d
 import 'package:mx_core_example/ui/page/coordinate_layout_page.dart';
 import 'package:mx_core_example/ui/page/introduction_page.dart';
 import 'package:mx_core_example/ui/page/marquee_page.dart';
-import 'package:mx_core_example/ui/page/sliver_page.dart';
 
 class ARouterInternalImpl extends ARouterInternal {
   ARouterInternalImpl();
@@ -115,9 +114,6 @@ class ARouterInternalImpl extends ARouterInternal {
     ],
     '/marquee': [
       {'clazz': MarqueePage}
-    ],
-    '/sliver': [
-      {'clazz': SliverPage}
     ]
   };
 
@@ -194,8 +190,6 @@ class ARouterInternalImpl extends ARouterInternal {
         return new IntroductionPage(option);
       case MarqueePage:
         return new MarqueePage(option);
-      case SliverPage:
-        return new SliverPage(option);
       default:
         return null;
     }

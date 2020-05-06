@@ -23,10 +23,10 @@ class CoordinateLayout extends StatefulWidget {
   final double rowHeight;
 
   /// y軸每列空隙
-  final double ySpace;
+  final double verticalSpace;
 
   /// x軸每行空隙
-  final double xSpace;
+  final double horizontalSpace;
 
   /// 最後一個 child 是否自動填滿剩下的寬度
   final bool lastFillWidth;
@@ -42,8 +42,8 @@ class CoordinateLayout extends StatefulWidget {
     @required this.segmentCount,
     @required this.children,
     this.rowHeight,
-    this.xSpace,
-    this.ySpace,
+    this.horizontalSpace,
+    this.verticalSpace,
     this.lastFillWidth = false,
     this.estimatedHeight,
   }) {
@@ -148,8 +148,8 @@ class _CoordinateLayoutState extends State<CoordinateLayout> {
     var newDelegate = _CoordinateDelegate(
       segmentCount: widget.segmentCount,
       items: widget.children,
-      ySpace: widget.ySpace,
-      xSpace: widget.xSpace,
+      ySpace: widget.verticalSpace,
+      xSpace: widget.horizontalSpace,
       rowHeight: widget.rowHeight,
       isDataDifference: isDataDifference,
       lastFillWidth: widget.lastFillWidth,

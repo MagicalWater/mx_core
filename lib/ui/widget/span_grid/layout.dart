@@ -220,9 +220,11 @@ class SplitBox extends RenderBox
           fullSpan: false,
         );
 
-        adjustmentInfo.forEach((e) {
-          print('子元件需求: $e');
-        });
+//        print('子元件數量: ${adjustmentInfo.length}');
+//
+//        adjustmentInfo.forEach((e) {
+//          print('子元件需求: $e');
+//        });
 
         // 對齊最大的size, 因此需要再次確認layout
         Size maxSize;
