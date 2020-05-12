@@ -85,6 +85,8 @@ class WebSocketUtil {
   Iterable<String> _protocols;
   Map<String, dynamic> _headers;
 
+  StreamSubscription _streamSubscription;
+
   /// 連接伺服器
   /// [autoRetry] 第一次連線失敗後是否自動嘗試重新連線
   Future<bool> connect({
@@ -94,7 +96,6 @@ class WebSocketUtil {
     bool failRetry = true,
   }) async {
     disconnect();
-    print("開始連接");
 
     _statusSubject.add(SocketStatus.tryConnect);
 
@@ -119,6 +120,9 @@ class WebSocketUtil {
       }
 
       return false;
+    } catch (e) {
+      print('其餘錯誤: $e');
+      return false;
     }
 
     _url = url;
@@ -130,10 +134,9 @@ class WebSocketUtil {
 
     _startPingPeriodic();
 
-    /// 監聽訊息
-    _webSocket.listen((data) {
-      print("WebSocket 監聽: $data");
-
+    // 監聽訊息
+    _streamSubscription = _webSocket.listen((data) {
+//      print("WebSocket 監聽: $data");
       /// 接收到資料, 重設 pingpong 倒數計時器
       _startPingPeriodic();
       _dataSubject.add(data);
@@ -164,6 +167,8 @@ class WebSocketUtil {
 
   /// 斷開連接
   Future<Null> disconnect({int closeCode, String closeReason}) async {
+    print('關閉 socket');
+    await _streamSubscription?.cancel();
     await _webSocket?.close(closeCode, closeReason);
     _webSocket = null;
     _cancelCountdown();
@@ -180,7 +185,8 @@ class WebSocketUtil {
   }) {
     _cancelCountdown();
     print(
-        "WebSocketUtil 將在 ${retryInterval.inSeconds} 秒後嘗試重新連接: $_nowRetryCount/$errorRetry");
+        "WebSocketUtil 將在 ${retryInterval
+            .inSeconds} 秒後嘗試重新連接: $_nowRetryCount/$errorRetry");
     _nowRetryCount += 1;
     _retrySubscription = Observable.timer('', retryInterval).listen((_) async {
       var success = await connect(
@@ -217,7 +223,7 @@ class WebSocketUtil {
         _startPongCountdown();
       });
     } else {
-      print("WebSocketUtil: pingInterval 或 onPing 是 null, 不進行 ping 間隔保活");
+//      print("WebSocketUtil: pingInterval 或 onPing 是 null, 不進行 ping 間隔保活");
     }
   }
 

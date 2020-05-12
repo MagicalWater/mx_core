@@ -26,7 +26,7 @@ typedef Widget PopupWidgetBuilder(
 /// [Popup.showRoute] - 以 route 方式顯示彈跳視窗(無法使用穿透點擊, 可以視為一個新的頁面, 只是仍然渲染背景)
 /// [Popup.showOverlay] - 以 overlay entry 方式顯示彈跳視窗(可使用穿透點擊)
 /// [Popup.showArrow] - 箭頭彈跳視窗, 核心為 [Popup.showOverlay]
-  class Popup {
+class Popup {
   Popup._();
 
   /// [option] - 彈窗屬性

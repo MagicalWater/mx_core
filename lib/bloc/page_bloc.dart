@@ -191,7 +191,8 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
 
   @mustCallSuper
   @override
-  void dispose() async {
+  Future<void> dispose() async {
+    print('頁面 dispose = $route');
     // 取消子頁面監聽
     if (route != null && route.isNotEmpty) {
       routeMixinImpl?.unregisterSubPageListener(route);

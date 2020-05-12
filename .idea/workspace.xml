@@ -10,88 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/example_lib_main_dart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/example_lib_main_dart.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/xing/mx_core_example/FlutterChannel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/xing/mx_core_example/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/xing/mx_core_example/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.android.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/.backend_app.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.ios.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.merge.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/Fastfile" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/Fastfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/build_apk.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/merge_env.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/merge_env.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/package_android.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/package_ios.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/project_construct.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/project_construct.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/pull_script.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/pull_script.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/yaml_parse.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/yaml_parse.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/files/FlutterChannel.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/files/FlutterChannel.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/files/native_channel.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/ex_main_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/project_construct/ex_main_dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/ui/dialog/ex_dialog_dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/infos/account_info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/infos/account_info.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/jars/credentials.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/rbs/backend_app.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/rbs/random_signup_account.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/report.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/ssh/id_lottery51" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/fastlane/version" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/version" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner/flutter/FlutterChannel.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/sliver_bloc.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/route.internal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route.internal.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/animated_core_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/animated_core_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/coordinate_layout_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/coordinate_layout_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/loading_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/loading_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/sliver_page.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/span_grid_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/span_grid_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/stateful_button_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/stateful_button_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin_base.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/comb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/comb.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_controller.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_core.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/animated_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/collection_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/delay_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/direction_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/opacity_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/rotate_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/scale_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/size_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animated_value/translate_value.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animation/animation.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/flat_load_provider.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/load_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/load_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/loading/loading.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/loading/loading.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/loading/widget/ball_spring.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/loading/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/loading/widget/widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/marquee/horizontal_marquee.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/marquee/horizontal_marquee.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/marquee/marquee.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/marquee/marquee.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/marquee/vertical_marquee.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/marquee/vertical_marquee.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_scaffold.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/sliver_view.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/stateful_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/stateful_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mx_core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mx_core.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/assist_touch_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/assist_touch_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

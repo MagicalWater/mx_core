@@ -66,7 +66,9 @@ class PageSwitcher extends StatelessWidget {
             }
             if (scale) {
               widgetChain = ScaleTransition(
-                scale: animation,
+                scale: Tween<double>(begin: 0.8, end: 1.0).animate(
+                    CurvedAnimation(
+                        parent: animation, curve: Curves.easeInOutSine)),
                 child: widgetChain,
               );
             }

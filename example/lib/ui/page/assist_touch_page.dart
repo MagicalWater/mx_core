@@ -51,6 +51,18 @@ class _AssistTouchPageState extends State<AssistTouchPage> {
           children: <Widget>[
             buildIntroduction(content),
             buildAssistTouch(),
+//            RaisedButton(
+//              onPressed: () {
+//                Popup.showOverlay(
+//                  context,
+//                  hitRule: HitRule.childIntercept,
+//                  builder: (controller) {
+//                    return buildAssistTouch();
+//                  }
+//                );
+//              },
+//              child: Text('點我跳輔助按鈕'),
+//            ),
           ],
         ),
       ),
