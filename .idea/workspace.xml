@@ -10,9 +10,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/assist_touch_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/assist_touch_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner/AppDelegate.swift" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner/AppDelegate.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/animated_core_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/animated_core_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/arrow_container_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/arrow_container_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/arrow_popup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/arrow_popup_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/assist_touch_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/assist_touch_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/coordinate_layout_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/coordinate_layout_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/lib_ease_refresh_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/lib_ease_refresh_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/load_provider_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/load_provider_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/loading_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/loading_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/marquee_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/marquee_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/normal_popup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/normal_popup_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/particle_animation_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/particle_animation_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/refresh_view_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/refresh_view_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_entry_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_entry_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub1_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub1_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_a_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_a_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub3_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub3_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_third_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_third_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/span_grid_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/span_grid_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/stateful_button_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/stateful_button_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/test_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/test_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/timer_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/timer_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/wave_progress_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/wave_progress_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_content.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/polling/polling_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/polling/polling_base.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/focus_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/focus_layout.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/network_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/network_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/web_socket_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/web_socket_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

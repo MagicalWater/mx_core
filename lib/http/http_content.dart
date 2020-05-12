@@ -77,7 +77,7 @@ class HttpContent with HttpContentMixin {
 
   /// 使用此 http_content 發起 request
   /// [onReceiveProgress] 為下載進度監聽, 只在 [method] 為 [HttpMethod.download] 時有效
-  Observable<ServerResponse> connect({ProgressCallback onReceiveProgress}) =>
+  Stream<ServerResponse> connect({ProgressCallback onReceiveProgress}) =>
       HttpUtil.getInstance().connect(
         this,
         onReceiveProgress: onReceiveProgress,

@@ -22,10 +22,6 @@ dev_dependencies:
     sdk: flutter
   mx_core:
     path: "../"
-  mx_json:
-    git:
-      url: git@github.com:3rdpay/AppCore-Flutter.git
-      path: mx_json
   json_serializable: "^3.2.2"
   build_runner: "^1.6.8"
 flutter:

@@ -5,7 +5,7 @@ class NetworkUtil {
   NetworkUtil._();
 
   /// 取得外網ip
-  static Observable<String> getPublicIP() {
+  static Stream<String> getPublicIP() {
     var ip = HttpUtil.getInstance().get("https://api.ipify.org");
     return ip.map((response) => response.getString());
   }

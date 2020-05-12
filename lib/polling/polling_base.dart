@@ -22,7 +22,7 @@ abstract class PollingBase {
   void start() {
     print("開始倒數");
     end();
-    _subscription = Observable.timer('', interval).listen((_) async {
+    _subscription = TimerStream('', interval).listen((_) async {
       print("時間到了 給我立刻輪詢");
       await onPolling();
       start();

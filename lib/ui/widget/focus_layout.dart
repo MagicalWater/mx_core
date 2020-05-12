@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui' as ui show window;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,7 +52,7 @@ class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
   }
 
   void _syncSystemUi() {
-    MediaQueryData mediaQuery = MediaQueryData.fromWindow(ui.window);
+//    MediaQueryData mediaQuery = MediaQueryData.fromWindow(ui.window);
     if (_currentFocus) {
       _debounceSubject.add(true);
     } else {
@@ -62,12 +61,13 @@ class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
   }
 
   void _delaySet() {
-    _subscription = Observable(_debounceSubject.stream).debounce((data) {
+    _subscription = _debounceSubject.stream.debounce((data) {
       if (countdownDebounce.status != TimerStatus.active) {
         countdownDebounce.start();
-        return Observable.just(data);
+        return Stream.value(data);
       }
-      return Observable.timer(data, countdownDebounce.remainingTime);
+
+      return TimerStream(data, countdownDebounce.remainingTime);
     }).doOnData((data) {
       if (data) {
         print('配置全螢幕');

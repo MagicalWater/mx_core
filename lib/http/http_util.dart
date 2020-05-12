@@ -119,7 +119,7 @@ class HttpUtil {
     _dio.interceptors.add(interceptor);
   }
 
-  Observable<ServerResponse> get(
+  Stream<ServerResponse> get(
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
@@ -139,7 +139,7 @@ class HttpUtil {
     );
   }
 
-  Observable<ServerResponse> post(
+  Stream<ServerResponse> post(
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
@@ -162,7 +162,7 @@ class HttpUtil {
     );
   }
 
-  Observable<ServerResponse> put(
+  Stream<ServerResponse> put(
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
@@ -186,7 +186,7 @@ class HttpUtil {
     );
   }
 
-  Observable<ServerResponse> delete(
+  Stream<ServerResponse> delete(
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
@@ -209,7 +209,7 @@ class HttpUtil {
     );
   }
 
-  Observable<ServerResponse> download(
+  Stream<ServerResponse> download(
     String url, {
     @required String savePath,
     Map<String, dynamic> queryParams = const {},
@@ -236,7 +236,7 @@ class HttpUtil {
   }
 
   /// 將 request 外層包裹 Observable, 並處理相關錯誤
-  Observable<ServerResponse> _packageRequest({
+  Stream<ServerResponse> _packageRequest({
     Future<Response<dynamic>> request,
     String url,
     String savePath,
@@ -244,7 +244,7 @@ class HttpUtil {
     Map<String, dynamic> headers = const {},
     dynamic bodyData,
   }) {
-    var observable = Observable.fromFuture(request).handleError((error) {
+    var observable = Stream.fromFuture(request).handleError((error) {
       throw _handleError(error, url, queryParams, headers, bodyData);
     }, test: (error) {
       // 只捕捉 DioError, 其餘不捕捉
@@ -268,7 +268,7 @@ class HttpUtil {
   }
 
   /// 使用 HttpContent 進行 request 呼叫
-  Observable<ServerResponse> connect(
+  Stream<ServerResponse> connect(
     HttpContent content, {
     ProgressCallback onReceiveProgress,
   }) {

@@ -7,9 +7,4 @@ class RoutePushSecondBloc extends PageBloc {
 
   @override
   RouteData defaultSubPage() => RouteData(subPages()[0]);
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }

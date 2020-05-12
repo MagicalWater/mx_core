@@ -314,7 +314,7 @@ class _RefreshViewState extends State<RefreshView> {
     _isDebounceActive = true;
     _disableSubscription?.cancel();
     _disableSubscription =
-        Observable.timer(null, Duration(seconds: 1)).listen((_) {
+        TimerStream(null, Duration(seconds: 1)).listen((_) {
       _disableSubscription = null;
       _isDebounceActive = false;
     });
@@ -343,14 +343,14 @@ class _RefreshViewState extends State<RefreshView> {
     _stateSubject.add(widget.initState);
     _updateEasyRefresh();
 
-    _stateStreamSubscription = Observable(widget.stateStream).doOnData((e) {
+    _stateStreamSubscription = widget.stateStream.doOnData((e) {
       _handleRefreshState(e);
     }).debounce((e) {
       _activeDebounce();
       if (e.isLoading || !_isDebounceActive) {
-        return Observable.just(e);
+        return Stream.value(e);
       } else {
-        return Observable.timer(e, Duration(seconds: 1));
+        return TimerStream(e, Duration(seconds: 1));
       }
     }).listen((data) {
 //      print("資料傳遞");

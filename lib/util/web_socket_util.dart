@@ -132,19 +132,19 @@ class WebSocketUtil {
     _statusSubject.add(SocketStatus.connect);
     print("連接成功");
 
-    _startPingPeriodic();
+    _startPingPeriodic(url);
 
     // 監聽訊息
     _streamSubscription = _webSocket.listen((data) {
 //      print("WebSocket 監聽: $data");
       /// 接收到資料, 重設 pingpong 倒數計時器
-      _startPingPeriodic();
+      _startPingPeriodic(url);
       _dataSubject.add(data);
     }, onError: (error) {
       print("WebSocket 錯誤: $error");
       _errorSubject.add(error);
       if (errorRetry > 0) {
-        retryConnect();
+        retryConnect(url: url);
       } else {
         disconnect();
       }
@@ -185,10 +185,9 @@ class WebSocketUtil {
   }) {
     _cancelCountdown();
     print(
-        "WebSocketUtil 將在 ${retryInterval
-            .inSeconds} 秒後嘗試重新連接: $_nowRetryCount/$errorRetry");
+        "WebSocketUtil 將在 ${retryInterval.inSeconds} 秒後嘗試重新連接: $_nowRetryCount/$errorRetry");
     _nowRetryCount += 1;
-    _retrySubscription = Observable.timer('', retryInterval).listen((_) async {
+    _retrySubscription = TimerStream('', retryInterval).listen((_) async {
       var success = await connect(
         url: url,
         protocols: protocols,
@@ -211,16 +210,16 @@ class WebSocketUtil {
   }
 
   /// 開始 ping 倒數
-  void _startPingPeriodic() {
+  void _startPingPeriodic(String url) {
     _cancelCountdown();
     if (pingInterval != null && pongTimeout != null && onPing != null) {
-      _pingSubscription = Observable.timer('', pingInterval).listen((_) {
+      _pingSubscription = TimerStream('', pingInterval).listen((_) {
         /// 請外部發送 ping
         onPing();
 
         /// 等待 pong
         print("等待心跳");
-        _startPongCountdown();
+        _startPongCountdown(url);
       });
     } else {
 //      print("WebSocketUtil: pingInterval 或 onPing 是 null, 不進行 ping 間隔保活");
@@ -228,11 +227,11 @@ class WebSocketUtil {
   }
 
   /// 開始 pong timeout 倒數
-  void _startPongCountdown() {
-    _pongSubscription = Observable.timer('', pongTimeout).listen((_) {
+  void _startPongCountdown(String url) {
+    _pongSubscription = TimerStream('', pongTimeout).listen((_) {
       print("WebSocketUtil pong timeout: 斷線");
       if (errorRetry > 0) {
-        retryConnect();
+        retryConnect(url: url);
       } else {
         disconnect();
       }
