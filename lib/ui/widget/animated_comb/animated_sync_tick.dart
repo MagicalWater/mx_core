@@ -18,7 +18,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   Map<int, _AnimatedComb> _animatedMap = {};
 
   /// 儲存動畫群組列表解析後的 data
-  Map<int, _AnimationData> _animatedParseMap = {};
+  Map<int, AnimationData> _animatedParseMap = {};
 
   /// 動畫開關初始值
   /// 當 [type] 為 [AnimatedBehavior.toggle] 時有效
@@ -131,9 +131,9 @@ class AnimatedSyncTick implements AnimatedCombController {
       ..addStatusListener(_statusListener);
   }
 
-  /// 取得 [_AnimationData]
-  _AnimationData _getAnimationData(int id) {
-    return _animatedParseMap[id];
+  /// 取得 [AnimationData]
+  AnimationData _getAnimationData(int id) {
+    return _animatedParseMap[id]..current._toggle = _currentToggle;
   }
 
   /// 註冊動畫, 回傳一個註冊的 id
@@ -243,7 +243,7 @@ class AnimatedSyncTick implements AnimatedCombController {
     return _currentUnique++;
   }
 
-  /// 解析所有動畫, 將 [List<Comb>] 轉為 [_AnimationData]
+  /// 解析所有動畫, 將 [List<Comb>] 轉為 [AnimationData]
   /// 並且依照需要花費的時間, 重新設置 [AnimationController] 的時長
   void _settingAnimated() {
     var totalMilliseconds = _getTotalDuration();
@@ -277,15 +277,15 @@ class AnimatedSyncTick implements AnimatedCombController {
     return maxDuration;
   }
 
-  /// 將 [List<Comb>] 轉為 [_AnimationData]
+  /// 將 [List<Comb>] 轉為 [AnimationData]
   /// 首先依照動畫時間分割執行時段
-  /// 最後生成對應的 [_AnimationData]
-  _AnimationData _convertToAnimatedData(
+  /// 最後生成對應的 [AnimationData]
+  AnimationData _convertToAnimatedData(
     int totalDuration,
     _AnimatedComb animatedComb,
     int id,
   ) {
-    var animationData = _AnimationData();
+    var animationData = AnimationData();
 
     // 實際開始時間
     double start = 0;
@@ -354,13 +354,13 @@ class AnimatedSyncTick implements AnimatedCombController {
     return animationData;
   }
 
-  /// 把動畫加入到 [_AnimationData]
-  /// 會依照動畫的類型以及屬性加入到 [_AnimationData] 底下的對應變數
+  /// 把動畫加入到 [AnimationData]
+  /// 會依照動畫的類型以及屬性加入到 [AnimationData] 底下的對應變數
   /// [value] - 動畫屬性
   /// [start], [end] - 動畫開始/結束時間(為佔整體時間的比例, 並非是真正意義上的時間)
   /// [delayPercent] - 動畫延遲百分比
   Future<void> _addCombToAnimationData({
-    _AnimationData animationData,
+    AnimationData animationData,
     Comb value,
     double start,
     double end,
@@ -625,8 +625,97 @@ class _AnimatedComb {
   });
 }
 
+class AnimValue {
+  /// 偏移
+  Offset get offset => _offset;
+
+  /// 旋轉
+  double get rotateZ => _rotateZ;
+
+  /// 水平翻轉
+  double get rotateY => _rotateY;
+
+  /// 垂直翻轉
+  double get rotateX => _rotateX;
+
+  /// 縮放
+  Size get scale => _scale;
+
+  /// 透明
+  double get opacity => _opacity;
+
+  /// size
+  Size get size => _size;
+
+  /// 顏色
+  Color get color => _color;
+
+  /// 動畫 toggle
+  bool get toggle => _toggle;
+
+  Offset _offset;
+  double _rotateZ;
+  double _rotateY;
+  double _rotateX;
+  Size _scale;
+  double _opacity;
+  Size _size;
+  Color _color;
+  bool _toggle;
+  Alignment _alignment;
+
+  /// 將動畫數值組裝為元件
+  Widget component(Widget child) {
+    var childChain = child;
+
+    var transform = Matrix4.identity();
+
+    if (rotateX != null) {
+      transform.rotateX(rotateX);
+    }
+
+    if (rotateY != null) {
+      transform.rotateY(rotateY);
+    }
+
+    if (rotateZ != null) {
+      transform.rotateZ(rotateZ);
+    }
+
+    if (offset != null) {
+      transform.translate(offset.dx, offset.dy);
+    }
+
+    if (scale != null) {
+      transform.scale(scale.width, scale.height);
+    }
+
+    // 添加透明動畫
+    childChain = Opacity(
+      opacity: opacity ?? 1,
+      child: childChain,
+    );
+
+    // 添加 size 動畫
+    childChain = Container(
+      color: color,
+      width: size?.width,
+      height: size?.height,
+      child: childChain,
+    );
+
+    childChain = Transform(
+      alignment: _alignment,
+      transform: transform,
+      child: childChain,
+    );
+
+    return childChain;
+  }
+}
+
 /// List<Comb> 轉化而成的真正執行動畫的類別
-class _AnimationData {
+class AnimationData {
   /// 縮放動畫列表, 用 Size 的方式實現x, y的分別控制
   @protected
   List<AnimationBinder<Size>> _scaleList = [];
@@ -659,53 +748,11 @@ class _AnimationData {
   @protected
   List<AnimationBinder<Color>> _colorList = [];
 
-  /// 當前偏移
-  Offset currentOffset;
+  /// 當前動畫數值
+  AnimValue current = AnimValue();
 
-  /// 當前動畫的最後偏移
-  Offset lastAnimOffset;
-
-  /// 當前旋轉
-  double currentRotateZ;
-
-  /// 當前動畫的最後旋轉
-  double lastAnimRotateZ;
-
-  /// 當前水平翻轉
-  double currentRotateY;
-
-  /// 當前動畫的最後翻轉
-  double lastAnimRotateY;
-
-  /// 當前垂直翻轉
-  double currentRotateX;
-
-  /// 當前動畫的最後翻轉
-  double lastAnimRotateX;
-
-  /// 當前縮放
-  Size currentScale;
-
-  /// 當前動畫的最後縮放
-  Size lastAnimScale;
-
-  /// 當前透明
-  double currentOpacity;
-
-  /// 當前動畫的最後透明
-  double lastAnimOpacity;
-
-  /// 當前size
-  Size currentSize;
-
-  /// 當前動畫的最後size
-  Size lastAnimSize;
-
-  /// 當前顏色
-  Color currentColor;
-
-  /// 當前動畫的最後顏色
-  Color lastAnimColor;
+  /// 當前動畫最後數值
+  AnimValue _last = AnimValue();
 
   /// 同步 [AnimationController] 的 value
   void syncTickValue(double t) {
@@ -727,8 +774,8 @@ class _AnimationData {
       var first = scaleAnimComb.first;
       switch (first.scaleType) {
         case ScaleType.all:
-          currentScale = first.animation.value;
-          lastAnimScale = first.endValue;
+          current._scale = first.animation.value;
+          _last._scale = first.endValue;
           break;
         case ScaleType.width:
           var second = scaleAnimComb.firstWhere(
@@ -736,17 +783,17 @@ class _AnimationData {
             orElse: () => null,
           );
           if (second != null) {
-            currentScale = Size(
+            current._scale = Size(
               first.animation.value.width,
               second.animation.value.height,
             );
-            lastAnimScale = Size(
+            _last._scale = Size(
               first.endValue.width,
               second.endValue.height,
             );
           } else {
-            currentScale = first.animation.value;
-            lastAnimScale = first.endValue;
+            current._scale = first.animation.value;
+            _last._scale = first.endValue;
           }
           break;
         case ScaleType.height:
@@ -755,30 +802,30 @@ class _AnimationData {
             orElse: () => null,
           );
           if (second != null) {
-            currentScale = Size(
+            current._scale = Size(
               second.animation.value.width,
               first.animation.value.height,
             );
-            lastAnimScale = Size(
+            _last._scale = Size(
               second.endValue.width,
               first.endValue.height,
             );
           } else {
-            currentScale = first.animation.value;
-            lastAnimScale = first.endValue;
+            current._scale = first.animation.value;
+            _last._scale = first.endValue;
           }
           break;
       }
     } else {
-      currentScale = lastAnimScale;
+      current._scale = _last._scale;
     }
 
     if (sizeAnimComb.isNotEmpty) {
       var first = sizeAnimComb.first;
       switch (first.sizeType) {
         case SizeType.all:
-          currentSize = first.animation.value;
-          lastAnimSize = first.endValue;
+          current._size = first.animation.value;
+          _last._size = first.endValue;
           break;
         case SizeType.width:
           var second = sizeAnimComb.firstWhere(
@@ -786,17 +833,17 @@ class _AnimationData {
             orElse: () => null,
           );
           if (second != null) {
-            currentSize = Size(
+            current._size = Size(
               first.animation.value.width,
               second.animation.value.height,
             );
-            lastAnimSize = Size(
+            _last._size = Size(
               first.endValue.width,
               second.endValue.height,
             );
           } else {
-            currentSize = first.animation.value;
-            lastAnimSize = first.endValue;
+            current._size = first.animation.value;
+            _last._size = first.endValue;
           }
           break;
         case SizeType.height:
@@ -805,58 +852,58 @@ class _AnimationData {
             orElse: () => null,
           );
           if (second != null) {
-            currentSize = Size(
+            current._size = Size(
               second.animation.value.width,
               first.animation.value.height,
             );
-            lastAnimSize = Size(
+            _last._size = Size(
               second.endValue.width,
               first.endValue.height,
             );
           } else {
-            currentSize = first.animation.value;
-            lastAnimSize = first.endValue;
+            current._size = first.animation.value;
+            _last._size = first.endValue;
           }
           break;
       }
     } else {
-      currentSize = lastAnimSize;
+      current._size = _last._size;
     }
 
     if (rotateXAnim != null) {
-      currentRotateX = rotateXAnim.animation.value;
-      lastAnimRotateX = rotateXAnim.endValue;
+      current._rotateX = rotateXAnim.animation.value;
+      _last._rotateX = rotateXAnim.endValue;
     } else {
-      currentRotateX = lastAnimRotateX;
+      current._rotateX = _last._rotateX;
     }
 
     if (rotateYAnim != null) {
-      currentRotateY = rotateYAnim.animation.value;
-      lastAnimRotateY = rotateYAnim.endValue;
+      current._rotateY = rotateYAnim.animation.value;
+      _last._rotateY = rotateYAnim.endValue;
     } else {
-      currentRotateY = lastAnimRotateY;
+      current._rotateY = _last._rotateY;
     }
 
     if (rotateZAnim != null) {
-      currentRotateZ = rotateZAnim.animation.value;
-      lastAnimRotateZ = rotateZAnim.endValue;
+      current._rotateZ = rotateZAnim.animation.value;
+      _last._rotateZ = rotateZAnim.endValue;
     } else {
-      currentRotateZ = lastAnimRotateZ;
+      current._rotateZ = _last._rotateZ;
     }
 
     if (colorAnim != null) {
-      currentColor = colorAnim.animation.value;
-      lastAnimColor = colorAnim.endValue;
+      current._color = colorAnim.animation.value;
+      _last._color = colorAnim.endValue;
     } else {
-      currentColor = lastAnimColor;
+      current._color = _last._color;
     }
 
     if (offsetAnimComb.isNotEmpty) {
       var first = offsetAnimComb.first;
       switch (first.transType) {
         case TransType.all:
-          currentOffset = first.animation.value;
-          lastAnimOffset = first.endValue;
+          current._offset = first.animation.value;
+          _last._offset = first.endValue;
           break;
         case TransType.x:
           var second = offsetAnimComb.firstWhere(
@@ -864,17 +911,17 @@ class _AnimationData {
             orElse: () => null,
           );
           if (second != null) {
-            currentOffset = Offset(
+            current._offset = Offset(
               first.animation.value.dx,
               second.animation.value.dy,
             );
-            lastAnimOffset = Offset(
+            _last._offset = Offset(
               first.endValue.dx,
               second.endValue.dy,
             );
           } else {
-            currentOffset = first.animation.value;
-            lastAnimOffset = first.endValue;
+            current._offset = first.animation.value;
+            _last._offset = first.endValue;
           }
           break;
         case TransType.y:
@@ -883,29 +930,29 @@ class _AnimationData {
             orElse: () => null,
           );
           if (second != null) {
-            currentOffset = Offset(
+            current._offset = Offset(
               second.animation.value.dx,
               first.animation.value.dy,
             );
-            lastAnimOffset = Offset(
+            _last._offset = Offset(
               second.endValue.dx,
               first.endValue.dy,
             );
           } else {
-            currentOffset = first.animation.value;
-            lastAnimOffset = first.endValue;
+            current._offset = first.animation.value;
+            _last._offset = first.endValue;
           }
           break;
       }
     } else {
-      currentOffset = lastAnimOffset;
+      current._offset = _last._offset;
     }
 
     if (opacityAnim != null) {
-      currentOpacity = opacityAnim.animation.value.clamp(0.0, 1.0);
-      lastAnimOpacity = opacityAnim.endValue.clamp(0.0, 1.0);
+      current._opacity = opacityAnim.animation.value.clamp(0.0, 1.0);
+      _last._opacity = opacityAnim.endValue.clamp(0.0, 1.0);
     } else {
-      currentOpacity = lastAnimOpacity;
+      current._opacity = _last._opacity;
     }
   }
 }

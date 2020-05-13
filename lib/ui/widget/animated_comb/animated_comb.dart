@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -15,14 +14,18 @@ part 'animated_sync_tick.dart';
 
 part 'shift_animation.dart';
 
-typedef ToggleWidgetBuilder = Widget Function(
+typedef CombWidgetBuilder = Widget Function(
   BuildContext context,
-  bool toggle,
+  AnimValue value,
 );
 
 /// 多動畫組合
 class AnimatedComb extends StatefulWidget {
+  /// 固定式 child
   final Widget child;
+
+  /// 可根據動畫數值以及toggle值自訂不同的 child
+  final CombWidgetBuilder builder;
 
   /// 動畫列表 - 整個列表動畫是串連的行為
   /// <p>主要由以下幾種動畫構成</p>
@@ -79,15 +82,13 @@ class AnimatedComb extends StatefulWidget {
   /// 若需要多個元件同步 tick, 則直接呼叫 AnimatedSyncTick 建構子
   final AnimatedSyncTick animatedSyncTick;
 
-  /// toggle 的行為模式中,可根據 toggle 值設定不同的 child
-  final ToggleWidgetBuilder toggleBuilder;
-
   /// 動畫類型
   final AnimatedType type;
 
   AnimatedComb._({
     Key key,
-    @required this.child,
+    this.child,
+    this.builder,
     this.multipleAnimationController = false,
     this.animatedSyncTick,
     this.type,
@@ -97,15 +98,16 @@ class AnimatedComb extends StatefulWidget {
     this.alignment = FractionalOffset.center,
     this.onTap,
     this.onTapAfterAnimated,
-    this.toggleBuilder,
     @required this.animatedList,
-  }) : super(key: key);
+  })  : assert(child != null || builder != null),
+        super(key: key);
 
   /// 可深層訂製動畫組合
   /// [sync] 以及 [type] 皆有值時, 以 [sync.type] 為主
   factory AnimatedComb({
     Key key,
-    @required Widget child,
+    Widget child,
+    CombWidgetBuilder builder,
     AnimatedSyncTick sync,
     AnimatedType type,
     bool multipleAnimationController = false,
@@ -115,12 +117,12 @@ class AnimatedComb extends StatefulWidget {
     Alignment alignment = FractionalOffset.center,
     VoidCallback onTap,
     VoidCallback onTapAfterAnimated,
-    ToggleWidgetBuilder toggleBuilder,
     @required List<Comb> animatedList,
   }) {
     return AnimatedComb._(
       key: key,
       child: child,
+      builder: builder,
       multipleAnimationController: multipleAnimationController,
       animatedSyncTick: sync,
       type: type,
@@ -130,7 +132,6 @@ class AnimatedComb extends StatefulWidget {
       alignment: alignment,
       onTap: onTap,
       onTapAfterAnimated: onTapAfterAnimated,
-      toggleBuilder: toggleBuilder,
       animatedList: animatedList,
     );
   }
@@ -139,7 +140,8 @@ class AnimatedComb extends StatefulWidget {
   /// [sync] 以及 [type] 皆有值時, 以 [sync.type] 為主
   factory AnimatedComb.quick({
     Key key,
-    @required Widget child,
+    Widget child,
+    CombWidgetBuilder builder,
     AnimatedSyncTick sync,
     AnimatedType type,
     bool multipleAnimationController = false,
@@ -149,7 +151,6 @@ class AnimatedComb extends StatefulWidget {
     Alignment alignment = FractionalOffset.center,
     VoidCallback onTap,
     VoidCallback onTapAfterAnimated,
-    ToggleWidgetBuilder toggleBuilder,
     CombRotate rotate,
     CombOpacity opacity,
     CombScale scale,
@@ -168,6 +169,7 @@ class AnimatedComb extends StatefulWidget {
     return AnimatedComb(
       key: key,
       child: child,
+      builder: builder,
       multipleAnimationController: multipleAnimationController,
       sync: sync,
       curve: curve,
@@ -177,7 +179,6 @@ class AnimatedComb extends StatefulWidget {
       alignment: alignment,
       onTap: onTap,
       onTapAfterAnimated: onTapAfterAnimated,
-      toggleBuilder: toggleBuilder,
       animatedList: [Comb.parallel(animatedList: animateList)],
     );
   }
@@ -278,55 +279,15 @@ abstract class _CombState extends State<AnimatedComb>
   Widget build(BuildContext context) {
     Widget childChain;
 
-    if (_currentAnimatedTick.type == AnimatedType.toggle &&
-        widget.toggleBuilder != null) {
-      childChain =
-          widget.toggleBuilder(context, _currentAnimatedTick._currentToggle);
+    var animValue =
+        _currentAnimatedTick._getAnimationData(_syncAnimateId).current;
+    animValue._alignment = widget.alignment;
+
+    if (widget.builder != null) {
+      childChain = widget.builder(context, animValue);
     } else {
-      childChain = widget.child;
+      childChain = animValue.component(widget.child);
     }
-
-    var animationData = _currentAnimatedTick._getAnimationData(_syncAnimateId);
-
-    Matrix4 transform = Matrix4.identity();
-
-    if (animationData.currentRotateX != null) {
-      transform.rotateX(animationData.currentRotateX);
-    }
-
-    if (animationData.currentRotateY != null) {
-      transform.rotateY(animationData.currentRotateY);
-    }
-
-    if (animationData.currentRotateZ != null) {
-      transform.rotateZ(animationData.currentRotateZ);
-    }
-
-    if (animationData.currentOffset != null) {
-      transform.translate(
-          animationData.currentOffset.dx, animationData.currentOffset.dy);
-    }
-
-    if (animationData.currentScale != null) {
-      transform.scale(
-          animationData.currentScale.width, animationData.currentScale.height);
-    }
-
-    childChain = _appendTransform(childChain, transform, widget.alignment);
-
-    // 添加透明動畫
-    childChain = Opacity(
-      opacity: animationData.currentOpacity ?? 1,
-      child: childChain,
-    );
-
-    // 添加 size 動畫
-    childChain = Container(
-      color: animationData.currentColor,
-      width: animationData.currentSize?.width,
-      height: animationData.currentSize?.height,
-      child: childChain,
-    );
 
     // 檢查並添加點擊行為
     if (_currentAnimatedTick.type == AnimatedType.tap) {
@@ -350,19 +311,6 @@ abstract class _CombState extends State<AnimatedComb>
     }
 
     return childChain;
-  }
-
-  /// 添加一個動畫數值到 Transform 元件
-  Widget _appendTransform(
-    Widget child,
-    Matrix4 transform,
-    Alignment alignment,
-  ) {
-    return Transform(
-      alignment: alignment,
-      transform: transform,
-      child: child,
-    );
   }
 }
 
@@ -397,7 +345,7 @@ class _MultipleCombState extends _CombState with TickerProviderStateMixin {
   void dispose() {
     switch (_syncTickBindingType) {
       case _SyncTickBindingType.outsideSelf:
-      // 由外部自行處理
+        // 由外部自行處理
         break;
       case _SyncTickBindingType.outsideNeedReset:
         _currentAnimatedTick._reset();

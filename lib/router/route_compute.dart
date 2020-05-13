@@ -26,6 +26,10 @@ class RouteCompute {
 
   /// 取得 [route] 的根節點 route, 即是祖父節點
   static String getAncestorRoute(String route) {
+//    print('rr = $route');
+//    if (route == null) {
+//      print(StackTrace.current);
+//    }
     return "/${split(route)[1]}";
   }
 

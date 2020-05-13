@@ -87,7 +87,7 @@ class ServicePatternClassParser extends ApiParser {
         ..optionalParameters.addAll(optionalParams)
         ..body = _getMethodContent(element.name, element.parameters, method)
         ..returns = codeBuilder.refer(
-          'Observable<ServerResponse>',
+          'Stream<ServerResponse>',
           'package:mx_core/mx_core.dart',
         );
     });

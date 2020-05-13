@@ -50,6 +50,15 @@ void main() {
     );
   });
 
+//  ApplicationBloc.getInstance().pageStream.listen((e) {
+//    print('''
+//監聽大頁面跳轉
+//===
+//最新 - ${e.route}
+//歷史 - ${ApplicationBloc.getInstance().pageHistory.map((el) => el.route).toList()}
+//    ''');
+//  });
+
   runApp(App());
 }
 

@@ -113,9 +113,9 @@ class _StatefulButtonState extends State<StatefulButton>
         sync: _controller,
         curve: Curves.elasticOut,
         type: AnimatedType.toggle,
-        toggleBuilder: (context, toggle) {
-          return MaterialLayer.single(
-            tapStyle: toggle
+        builder: (context, anim) {
+          var child = MaterialLayer.single(
+            tapStyle: anim.toggle
                 ? widget.tapStyle
                 : TapFeedback(
                     highlightColor: Colors.transparent,
@@ -123,7 +123,7 @@ class _StatefulButtonState extends State<StatefulButton>
                   ),
             layer: LayerProperties(decoration: widget.decoration),
             child: AnimatedSwitcher(
-              child: toggle
+              child: anim.toggle
                   ? (widget.child ?? Container())
                   : Loading.circle(
                       size: _loadStyle.size * 3 / 4,
@@ -139,6 +139,7 @@ class _StatefulButtonState extends State<StatefulButton>
               }
             },
           );
+          return anim.component(child);
         },
         animatedList: [
           Comb.width(
