@@ -113,6 +113,18 @@ class _IntroductionPageState extends State<IntroductionPage> {
   void _handleIntroductionTap(String page) {
     ApplicationBloc.getInstance().pushPage(page, context);
   }
+
+  @override
+  void deactivate() {
+    print('deactivate');
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    print('dispose');
+    super.dispose();
+  }
 }
 
 /// 構建說明文字

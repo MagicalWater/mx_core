@@ -5,7 +5,7 @@ import 'constraints.dart';
 import 'layout.dart';
 import 'parent_data.dart';
 
-class Span extends ParentDataWidget<SpanGrid> {
+class Span extends ParentDataWidget<AlignGridParentData> {
   /// 當true時, 代表此元件不參與size競爭, 而是跟隨著給定的 size
   final bool fill;
 
@@ -24,6 +24,9 @@ class Span extends ParentDataWidget<SpanGrid> {
       ..fill = fill
       ..span = span;
   }
+
+  @override
+  Type get debugTypicalAncestorWidgetClass => SpanGrid;
 }
 
 class _Expanded extends SingleChildRenderObjectWidget {
@@ -37,9 +40,8 @@ class _Expanded extends SingleChildRenderObjectWidget {
 
 class ExpandedRenderBox extends RenderBox
     with RenderObjectWithChildMixin<RenderBox> {
-
   @override
-  bool hitTestChildren(BoxHitTestResult result, { Offset position }) {
+  bool hitTestChildren(BoxHitTestResult result, {Offset position}) {
     if (child != null) {
       final BoxParentData childParentData = child.parentData;
       return result.addWithPaintOffset(

@@ -1,7 +1,9 @@
 import 'route_compute.dart';
 
+/// 路由
 abstract class RouteOption {
   String route;
+
   String targetSubRoute;
 
   Map<String, dynamic> get query;
@@ -39,6 +41,9 @@ class RouteData extends RouteOption {
 
   RouteDataType type;
 
+  /// 是否為回退 route
+  bool isPop;
+
   @override
   Map<String, dynamic> get query =>
       (type ?? RouteDataType.widget) == RouteDataType.widget
@@ -50,7 +55,7 @@ class RouteData extends RouteOption {
     this.targetSubRoute,
     this.widgetQuery,
     this.blocQuery,
-  });
+  }) : this.isPop = false;
 
   RouteData copyWith(RouteDataType type) {
     var data = RouteData(
@@ -58,7 +63,9 @@ class RouteData extends RouteOption {
       targetSubRoute: targetSubRoute,
       widgetQuery: widgetQuery,
       blocQuery: blocQuery,
-    )..type = type;
+    )
+      ..type = type
+      ..isPop = isPop;
     return data;
   }
 }

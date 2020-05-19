@@ -6,6 +6,7 @@ import 'package:mx_core/mx_core.dart';
 
 import 'bloc/application_bloc.dart';
 import 'router/route.dart';
+import 'package:path/path.dart';
 
 void main() {
 //  print("螢幕高: ${Screen.height}");
@@ -50,14 +51,11 @@ void main() {
     );
   });
 
-//  ApplicationBloc.getInstance().pageStream.listen((e) {
-//    print('''
-//監聽大頁面跳轉
-//===
-//最新 - ${e.route}
-//歷史 - ${ApplicationBloc.getInstance().pageHistory.map((el) => el.route).toList()}
-//    ''');
-//  });
+  ApplicationBloc.getInstance().allPageStream.listen((e) {
+    print('''
+歷史 - ${ApplicationBloc.getInstance().allPageHistory.map((el) => el.route).toList()}
+    ''');
+  });
 
   runApp(App());
 }

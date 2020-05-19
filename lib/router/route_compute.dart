@@ -33,6 +33,20 @@ class RouteCompute {
     return "/${split(route)[1]}";
   }
 
+  /// 取得 route 頁面層級
+  static int getRouteLevel(String route) {
+    return split(route).length - 1;
+  }
+
+  /// 取得 route 的上個節點路徑
+  static String getParentRoute(String route) {
+    if (isAncestorRoute(route)) {
+      print('根節點沒有父親: $route');
+      return null;
+    }
+    return "${(split(route)..removeLast()).join('/').substring(1)}";
+  }
+
   /// 檢查 [sub] 是否為 [parent] 的子頁面
   /// [depth] 代表 [sub] 是否為 [parent] 下得第 [depth] 層子頁面
   /// 例如

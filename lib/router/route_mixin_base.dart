@@ -31,6 +31,7 @@ abstract class RouteMixinBase {
     BuildContext context,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
+    bool replaceCurrent = false,
   });
 
   /// 發起頁面跳轉

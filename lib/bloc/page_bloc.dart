@@ -244,6 +244,7 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
           data.targetSubRoute,
           pageQuery: data.widgetQuery,
           blocQuery: data.blocQuery,
+          checkToHistory: !data.isPop,
         );
       } else if (defaultRoute != null) {
         // 需要跳轉預設子頁面
@@ -346,7 +347,11 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   bool setSubPage(String route,
           {BuildContext context,
           Map<String, dynamic> pageQuery,
-          Map<String, dynamic> blocQuery}) =>
+          Map<String, dynamic> blocQuery,
+          bool replaceCurrent = false}) =>
       routeMixinImpl?.setSubPage(route,
-          context: context, pageQuery: pageQuery, blocQuery: blocQuery);
+          context: context,
+          pageQuery: pageQuery,
+          blocQuery: blocQuery,
+          replaceCurrent: replaceCurrent);
 }

@@ -32,6 +32,8 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
     super.initState();
   }
 
+  var count = 0;
+
   @override
   Widget build(BuildContext context) {
     return LoadProvider(
@@ -47,7 +49,13 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
               children: <Widget>[
                 buildIntroduction(content),
                 _buildButton("點擊切換子頁面", () {
-                  bloc.setSubPageToNext();
+                  count++;
+                  if (count > 4) {
+                    print('回退');
+                    ApplicationBloc.getInstance().popSubPage(underRoute: Pages.routePushSecond, context: context);
+                  } else {
+                    bloc.setSubPageToNext();
+                  }
                 }),
                 Divider(
                   height: 16,
