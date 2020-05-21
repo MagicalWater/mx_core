@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 3.5.2+1
+version: 3.6.0+1
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -54,6 +54,8 @@ dependencies:
   device_info: ^0.4.2+1
 
   package_info: ^0.4.0+16
+
+  decimal: ^0.3.5
 
 dependency_overrides:
   image: 2.1.7

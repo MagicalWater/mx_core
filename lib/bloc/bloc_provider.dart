@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mx_core/bloc/page_bloc.dart';
 
 abstract class BlocBase {
   Future<void> dispose();
 }
 
-class BlocProvider<T extends BlocBase> extends StatefulWidget {
+class BlocProvider<T extends PageBloc> extends StatefulWidget {
   BlocProvider({
     Key key,
     @required this.child,
@@ -17,7 +18,7 @@ class BlocProvider<T extends BlocBase> extends StatefulWidget {
   @override
   _BlocProviderState<T> createState() => _BlocProviderState<T>();
 
-  static T of<T extends BlocBase>(BuildContext context) {
+  static T of<T extends PageBloc>(BuildContext context) {
     final type = _typeOf<BlocProvider<T>>();
     BlocProvider<T> provider = context.ancestorWidgetOfExactType(type);
     return provider?.bloc;
@@ -26,7 +27,15 @@ class BlocProvider<T extends BlocBase> extends StatefulWidget {
   static Type _typeOf<T>() => T;
 }
 
-class _BlocProviderState<T> extends State<BlocProvider<BlocBase>> {
+class _BlocProviderState<T> extends State<BlocProvider<PageBloc>> {
+  @override
+  void didChangeDependencies() {
+    widget.bloc
+        .registerSubPageStream(defaultRoute: widget.bloc.defaultSubPage());
+    super.didChangeDependencies();
+  }
+
+
   @override
   void dispose() {
     widget.bloc?.dispose();

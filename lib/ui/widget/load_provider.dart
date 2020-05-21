@@ -8,8 +8,7 @@ import 'package:mx_core/mx_core.dart';
 LoadController _rootLoadController;
 
 /// 設置根節點的 load 顯示與否
-Future<void> setRootLoad(
-  bool show, {
+Future<void> setRootLoad(bool show, {
   LoadStyle style,
 }) async {
   if (_rootLoadController == null) {
@@ -139,7 +138,7 @@ class _LoadProviderState extends State<LoadProvider>
           left: _showPos?.dx,
           top: _showPos?.dy,
           right:
-              hasPos ? (Screen.width - (_showPos.dx + _showSize.width)) : null,
+          hasPos ? (Screen.width - (_showPos.dx + _showSize.width)) : null,
           bottom: hasPos
               ? (Screen.height - (_showPos.dy + _showSize.height))
               : null,
@@ -149,10 +148,6 @@ class _LoadProviderState extends State<LoadProvider>
               child: AnimatedComb.quick(
                 alignment: Alignment.center,
                 child: loadAttach,
-                color: Comb.color(
-                  begin: Colors.transparent,
-                  end: _currentStyle.maskColor ?? Colors.transparent,
-                ),
                 sync: _animatedSync,
                 scale: Comb.scale(
                   begin: Size.zero,
@@ -165,11 +160,30 @@ class _LoadProviderState extends State<LoadProvider>
       },
     );
 
+    var stackWidget = <Widget>[];
+    stackWidget.add(widget.child);
+    if (_currentStyle.maskColor != null) {
+      Widget backBuilder = Positioned.fill(
+        child: IgnorePointer(
+          ignoring: true,
+          child: AnimatedComb.quick(
+            alignment: Alignment.center,
+            child: Container(),
+            color: Comb.color(
+              begin: Colors.transparent,
+              end: _currentStyle.maskColor ?? Colors.transparent,
+            ),
+            sync: _animatedSync,
+          ),
+        ),
+      );
+      stackWidget.add(backBuilder);
+    }
+
+    stackWidget.add(streamBuilder);
+
     var stack = Stack(
-      children: <Widget>[
-        widget.child,
-        streamBuilder,
-      ],
+      children: stackWidget,
     );
 
     if (widget.root) {

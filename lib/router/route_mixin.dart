@@ -11,8 +11,9 @@ MixinRouteBuilder _defaultRouteBuilder;
 class _SubPageHandler {
   String route;
   RouteHandler handler;
+  int hashCode;
 
-  _SubPageHandler(this.route, this.handler);
+  _SubPageHandler(this.route, this.handler, this.hashCode);
 }
 
 enum PopType {
@@ -40,14 +41,9 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// 大頁面跳轉紀錄
   List<String> get _pageHistory {
     var history = <String>[];
-    _allPageHistory.reversed.forEach((e) {
-      var ancestor = RouteCompute.getAncestorRoute(e.route);
-      if (history.isNotEmpty) {
-        if (ancestor != history.first) {
-          history.insert(0, ancestor);
-        }
-      } else {
-        history.add(ancestor);
+    _allPageHistory.forEach((e) {
+      if (RouteCompute.isAncestorRoute(e.route)) {
+        history.add(e.route);
       }
     });
     return history;
@@ -184,13 +180,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     // 並且跳轉的頁面 route 為同級層, 則刪除當前頁面並取代
     //
     // 2.
-    // 加入的頁面是當前最後一個頁面的子頁面, 也會取代當前的頁面
+    // 加入的頁面是當前最後一個頁面的子頁面, 且當前的子頁面並非祖父頁面, 也會取代當前的頁面
     var isParentSame = RouteCompute.getParentRoute(data.route) ==
         RouteCompute.getParentRoute(lastRoute);
     if (replaceCurrent && isParentSame) {
       // 父親相同
       _allPageHistory.removeLast();
-    } else if (RouteCompute.isSubPage(lastRoute, data.route)) {
+    } else if (RouteCompute.isSubPage(lastRoute, data.route) &&
+        !RouteCompute.isAncestorRoute(lastRoute)) {
       // 是父子頁面關西, 同樣繼承 route query
       _allPageHistory.removeLast();
     }
@@ -201,15 +198,16 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 
   /// 註冊子頁面監聽
   @override
-  void registerSubPageListener(String page, RouteHandler handler) {
+  void registerSubPageListener(String page, RouteHandler handler,
+      int hashCode) {
     var handlers = _subPageListener.where((e) => e.route == page);
-    _SubPageHandler subPageHandler;
     if (handlers.isNotEmpty) {
       // 已經有存在監聽的 callback, 取代
-      print("警告 - 當前已存在相同的 page 子頁面 監聽, 將取代已有");
-      subPageHandler = handlers.first;
+      print("警告 - 當前已存在相同的 page 子頁面 監聽, 將取代已有: $page");
+      handlers.first.hashCode = hashCode;
+      handlers.first.handler = handler;
     } else {
-      subPageHandler = _SubPageHandler(page, handler);
+      _SubPageHandler subPageHandler = _SubPageHandler(page, handler, hashCode);
       _subPageListener.add(subPageHandler);
 
       // 先依照字母排序
@@ -229,14 +227,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 
   /// 取消註冊子頁面監聽
   @override
-  void unregisterSubPageListener(String page) {
-    _subPageListener.removeWhere((e) => e.route == page);
+  void unregisterSubPageListener(String page, int hashCode) {
+    _subPageListener.removeWhere((e) =>
+    e.route == page && e.hashCode == hashCode);
   }
 
   /// 發出顯示子頁面命令
   @override
-  bool setSubPage(
-    String route, {
+  bool setSubPage(String route, {
     BuildContext context,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
@@ -244,7 +242,8 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     bool checkToHistory = true,
   }) {
     // 先檢查要跳轉的子頁面, 是否於當前的大頁面之下
-    if (checkToHistory && !RouteCompute.isSubPage(currentPage, route, depth: null)) {
+    if (checkToHistory &&
+        !RouteCompute.isSubPage(currentPage, route, depth: null)) {
       // 不在當前大頁面, 因此先呼叫 pushPage, 並且把子頁面請求帶入 RouteOption 放在 bloc 底下
       if (context == null) {
         print(
@@ -281,7 +280,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         } else if (RouteCompute.isSubPage(e.route, route, depth: null)) {
           // 有親子關西, 取得下個路由節點
           var nextRoute =
-              RouteCompute.getNextRoute(parent: e.route, sub: route);
+          RouteCompute.getNextRoute(parent: e.route, sub: route);
 
           // 取得 [e.route] 到 route 的下一個 route
           var routeData = RouteData(
@@ -335,15 +334,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// [popUtil] - pop 直到返回true
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   @override
-  Future<T> popAndPushPage<T>(
-    String route,
-    BuildContext context, {
-    String subRoute,
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
-    bool Function(String route) popUntil,
-    Object result,
-  }) {
+  Future<T> popAndPushPage<T>(String route,
+      BuildContext context, {
+        String subRoute,
+        Map<String, dynamic> pageQuery,
+        Map<String, dynamic> blocQuery,
+        bool Function(String route) popUntil,
+        Object result,
+      }) {
     print("頁面返回並跳頁, 首先頁面返回");
     popPage(context, popUntil: popUntil, result: result);
     return pushPage(
@@ -359,8 +357,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// [popUtil] - pop 直到返回true
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   @override
-  bool popPage(
-    BuildContext context, {
+  bool popPage(BuildContext context, {
     bool Function(String route) popUntil,
     Object result,
   }) {
@@ -374,9 +371,8 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
           name = _entryPointRouteAlias;
         }
         var isKeep = popUntil(name);
-        var lastPageRoute = _pageHistory.last;
-        if (!isKeep && lastPageRoute == name) {
-          _removePage(lastPageRoute);
+        if (!isKeep) {
+          _removeLastPage();
         }
         return isKeep;
       });
@@ -384,7 +380,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       return true;
     } else {
       // 返回單個頁面
-      _removePage(_pageHistory.last);
+      _removeLastPage();
       _allPageSubject.add(_allPageHistory.last);
       navigator.pop(result);
       return true;
@@ -397,38 +393,38 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// [removeUtil] - 刪除舊頁面直到返回true
   /// [builder] - 自定義構建 PageRoute
   @override
-  Future<T> pushPage<T>(
-    String route,
-    BuildContext context, {
-    String subRoute,
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
-    bool replaceCurrent = false,
-    bool Function(String route) removeUntil,
-    MixinRouteBuilder<T> builder,
-  }) async {
+  Future<T> pushPage<T>(String route,
+      BuildContext context, {
+        String subRoute,
+        Map<String, dynamic> pageQuery,
+        Map<String, dynamic> blocQuery,
+        bool replaceCurrent = false,
+        bool Function(String route) removeUntil,
+        MixinRouteBuilder<T> builder,
+      }) async {
 //    print("頁面跳轉: $route");
 
     if (!RouteCompute.isAncestorRoute(route)) {
       throw '只有根路由才可以進行 pushPage, 若要跳轉子頁面請改用 setSubPage';
-    } else if (currentPage == route) {
-      // 當前大頁面顯示中, 呼叫 update option
-      print('當前大頁面顯示中, 不進行跳轉改由更新');
-      _subPageListener.any((e) {
-        if (e.route == route) {
-          // 如果是當前正在顯示的頁面, 則直接呼叫handler
-          var routeData = RouteData(
-            route,
-            widgetQuery: pageQuery,
-            blocQuery: blocQuery,
-          );
-          var handle = e.handler(routeData);
-          return handle;
-        }
-        return false;
-      });
-      return Future.value();
     }
+//    else if (currentPage == route) {
+//      // 當前大頁面顯示中, 呼叫 update option
+//      print('當前大頁面顯示中, 不進行跳轉改由更新');
+//      _subPageListener.any((e) {
+//        if (e.route == route) {
+//          // 如果是當前正在顯示的頁面, 則直接呼叫handler
+//          var routeData = RouteData(
+//            route,
+//            widgetQuery: pageQuery,
+//            blocQuery: blocQuery,
+//          );
+//          var handle = e.handler(routeData);
+//          return handle;
+//        }
+//        return false;
+//      });
+//      return Future.value();
+//    }
 
     var navigator = Navigator.of(context);
 
@@ -439,14 +435,16 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       var detect = _DetectPageActionObservable(
         onDetectPop: (name) {
           var lastPage = _pageHistory.last;
-          print('最後: ${lastPage}, 歷史: ${allPageHistory.map((e) => e.route).toList()}, 以及: ${_pageHistory}');
+//          print('最後: ${lastPage}, 歷史: ${allPageHistory.map((e) => e.route).toList()}, 以及: ${_pageHistory}');
           if (lastPage == name) {
 //          print("檢測到非 code 返回, 刪除歷史紀錄");
             // allPageHistory 一直刪除直到大頁面被刪除
-            _removePage(lastPage);
+            _removeLastPage();
             _allPageSubject.add(_allPageHistory.last);
           }
-          print('返回後結果: ${lastPage}, $name, 歷史: ${_allPageHistory.map((e) => e.route).toList()}');
+          print('返回後結果: ${lastPage}, $name, 歷史: ${_allPageHistory.map((e) =>
+          e
+              .route).toList()}');
         },
       );
       navigator.widget.observers.add(detect);
@@ -479,18 +477,20 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
           name = _entryPointRouteAlias;
         }
         var isKeep = removeUntil(name);
+        print('${name} 是否保留 - ${isKeep}, 歷史: ${_pageHistory}, ${_allPageHistory
+            .map((e) => e.route)}');
 
         // 倒數第二個大頁面routeData
-        var lastSecondRoute = _pageHistory[_pageHistory.length - 2];
-        if (!isKeep && lastSecondRoute == name) {
-          // 刪除到倒數第二個大頁面結束
-          _removePage(lastSecondRoute);
+//        var lastSecondRoute = _pageHistory[_pageHistory.length - 2];
+        if (!isKeep) {
+          // 刪除最後一個大頁面
+          _removeLastSecondPage();
         }
         return isKeep;
       });
       return result;
     } else if (replaceCurrent) {
-      _removePage(currentPage);
+      _removeLastPage();
       _allPageHistory.add(routeData);
       _allPageSubject.add(routeData);
       return await navigator.pushReplacement(pageRoute());
@@ -503,28 +503,50 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   }
 
   /// 自歷史紀錄刪除大頁面
-  void _removePage(String page) {
+  void _removeLastPage() {
     if (_allPageHistory.isEmpty) {
       return;
     }
-    var lastData = _allPageHistory.last;
-    while (lastData != null &&
-        RouteCompute.getAncestorRoute(lastData.route) == page) {
-      _allPageHistory.removeLast();
-      if (_allPageHistory.isEmpty) {
-        return;
+    var lastData = _allPageHistory.removeLast();
+    var isAncestor = RouteCompute.isAncestorRoute(lastData.route);
+    while (!isAncestor) {
+      lastData = _allPageHistory.removeLast();
+      isAncestor = RouteCompute.isAncestorRoute(lastData.route);
+    }
+  }
+
+  void _removeLastSecondPage() {
+    if (_allPageHistory.isEmpty) {
+      return;
+    }
+
+    var isFirst = true;
+    int removeBegin = 0,
+        removeEnd;
+    for (var i = _allPageHistory.length - 1; i >= 0; i--) {
+      var lastRoute = _allPageHistory[i];
+      if (isFirst) {
+        var isAncestorRoute = RouteCompute.isAncestorRoute(lastRoute.route);
+        if (isAncestorRoute) {
+          removeEnd = i;
+          isFirst = false;
+        }
       } else {
-        lastData = _allPageHistory.last;
+        var isAncestorRoute = RouteCompute.isAncestorRoute(lastRoute.route);
+        if (isAncestorRoute) {
+          removeBegin = i;
+          break;
+        }
       }
     }
+    _allPageHistory.removeRange(removeBegin, removeEnd);
   }
 
   /// 單純取得頁面
   /// [subRoute] - 取得的頁面會自動加子頁面設為此
   /// [entryPoint] 表示此頁面是否為入口頁, 即是 MaterialApp 的 home
   @override
-  Widget getPage(
-    String route, {
+  Widget getPage(String route, {
     String subRoute,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
@@ -545,14 +567,13 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     return routeWidgetImpl.getPage(data);
   }
 
-  PageRoute<T> _getRoute<T>(
-    String route,
-    BuildContext context, {
-    String subRoute,
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
-    MixinRouteBuilder<T> builder,
-  }) {
+  PageRoute<T> _getRoute<T>(String route,
+      BuildContext context, {
+        String subRoute,
+        Map<String, dynamic> pageQuery,
+        Map<String, dynamic> blocQuery,
+        MixinRouteBuilder<T> builder,
+      }) {
     var page = routeWidgetImpl.getPage(
       RouteData(
         route,

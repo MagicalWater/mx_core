@@ -13,12 +13,8 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// 由此宣告頁面的 route
   final String route;
 
-  PageBloc(
-    this.route,
-    this.option,
-  ) {
-    _registerSubPageStream(defaultRoute: defaultSubPage());
-  }
+  PageBloc(this.route,
+      this.option,);
 
   /// 子頁面命令監聽串流
   Stream<RouteData> get subPageStream => _subPageSubject?.stream;
@@ -158,7 +154,6 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   }
 
   /// 此頁面的預設子頁面
-  @protected
   RouteData defaultSubPage() => null;
 
   /// 是否接受處理子頁面的跳轉
@@ -194,7 +189,10 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   Future<void> dispose() async {
     // 取消子頁面監聽
     if (route != null && route.isNotEmpty) {
-      routeMixinImpl?.unregisterSubPageListener(route);
+      if (route == '/main') {
+        print('註銷子頁面監聽: $hashCode');
+      }
+      routeMixinImpl?.unregisterSubPageListener(route, hashCode);
     }
 
     await _refreshStateSubject?.drain();
@@ -222,7 +220,7 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
 
   /// 註冊 [page] 的子頁面監聽
   /// [defaultSubPage] - 預設子頁面
-  void _registerSubPageStream({RouteData defaultRoute}) {
+  void registerSubPageStream({RouteData defaultRoute}) {
     if (_subPageSubject != null) {
       print("已註冊, 禁止再次註冊監聽子頁面");
       return;
@@ -232,9 +230,16 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
 //      if (subPages().isNotEmpty) {
       _subPageSubject = BehaviorSubject();
 
+      if (route == '/main') {
+        print('註冊子頁面監聽: $hashCode, $route');
+      }
+
       routeMixinImpl.registerSubPageListener(route, (RouteData data) {
+        if (route == '/main') {
+          print('取得子頁面跳轉: $hashCode');
+        }
         return _dispatchSubPage(data);
-      });
+      }, hashCode,);
 
 //        print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
       if (option.nextRoute != null && option is RouteData) {
@@ -247,6 +252,7 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
           checkToHistory: !data.isPop,
         );
       } else if (defaultRoute != null) {
+        print('跳轉預設子頁面: ${defaultRoute.route}');
         // 需要跳轉預設子頁面
         routeMixinImpl.setSubPage(
           defaultRoute.route,
@@ -305,11 +311,11 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   @override
   Future<T> popAndPushPage<T>(String route, BuildContext context,
-          {String subRoute,
-          Map<String, dynamic> pageQuery,
-          Map<String, dynamic> blocQuery,
-          popUntil,
-          Object result}) =>
+      {String subRoute,
+        Map<String, dynamic> pageQuery,
+        Map<String, dynamic> blocQuery,
+        popUntil,
+        Object result}) =>
       routeMixinImpl?.popAndPushPage(route, context,
           pageQuery: pageQuery,
           blocQuery: blocQuery,
@@ -318,7 +324,7 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
 
   @override
   bool popPage(BuildContext context,
-          {bool Function(String route) popUntil, Object result}) =>
+      {bool Function(String route) popUntil, Object result}) =>
       routeMixinImpl?.popPage(context, popUntil: popUntil, result: result);
 
   /// 發起大頁面跳轉
@@ -328,12 +334,12 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// [builder] - 自定義構建 PageRoute
   @override
   Future<T> pushPage<T>(String route, BuildContext context,
-          {String subRoute,
-          Map<String, dynamic> pageQuery,
-          Map<String, dynamic> blocQuery,
-          bool replaceCurrent = false,
-          bool Function(String route) removeUntil,
-          MixinRouteBuilder builder}) =>
+      {String subRoute,
+        Map<String, dynamic> pageQuery,
+        Map<String, dynamic> blocQuery,
+        bool replaceCurrent = false,
+        bool Function(String route) removeUntil,
+        MixinRouteBuilder builder}) =>
       routeMixinImpl?.pushPage(route, context,
           subRoute: subRoute,
           pageQuery: pageQuery,
@@ -345,10 +351,10 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// 跳轉子頁面
   @override
   bool setSubPage(String route,
-          {BuildContext context,
-          Map<String, dynamic> pageQuery,
-          Map<String, dynamic> blocQuery,
-          bool replaceCurrent = false}) =>
+      {BuildContext context,
+        Map<String, dynamic> pageQuery,
+        Map<String, dynamic> blocQuery,
+        bool replaceCurrent = false}) =>
       routeMixinImpl?.setSubPage(route,
           context: context,
           pageQuery: pageQuery,
