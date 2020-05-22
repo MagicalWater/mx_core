@@ -19,22 +19,32 @@ class BlocProvider<T extends PageBloc> extends StatefulWidget {
   _BlocProviderState<T> createState() => _BlocProviderState<T>();
 
   static T of<T extends PageBloc>(BuildContext context) {
-    final type = _typeOf<BlocProvider<T>>();
-    BlocProvider<T> provider = context.ancestorWidgetOfExactType(type);
-    return provider?.bloc;
+//    BlocProvider<T> provider = context.findAncestorWidgetOfExactType();
+    _BlocProviderState<T> providerState = context.findAncestorStateOfType();
+    return providerState?._currentBloc;
   }
-
-  static Type _typeOf<T>() => T;
 }
 
-class _BlocProviderState<T> extends State<BlocProvider<PageBloc>> {
+class _BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
+  T _currentBloc;
+
   @override
-  void didChangeDependencies() {
+  void initState() {
+    _currentBloc = widget.bloc;
     widget.bloc
         .registerSubPageStream(defaultRoute: widget.bloc.defaultSubPage());
-    super.didChangeDependencies();
+    super.initState();
   }
 
+  @override
+  void didUpdateWidget(BlocProvider<PageBloc> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   @override
   void dispose() {

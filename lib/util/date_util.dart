@@ -42,7 +42,9 @@ class DateUtil {
     DateTime date,
     int year,
   }) {
-    var y = year ?? date?.year ?? DateTime.now().year;
+    var y = year ?? date?.year ?? DateTime
+        .now()
+        .year;
     if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) {
       return true;
     } else {
@@ -85,7 +87,7 @@ class DateUtil {
   static bool isToday(int milliseconds, {bool isUtc = false}) {
     if (milliseconds == null || milliseconds == 0) return false;
     DateTime old =
-        DateTime.fromMillisecondsSinceEpoch(milliseconds, isUtc: isUtc);
+    DateTime.fromMillisecondsSinceEpoch(milliseconds, isUtc: isUtc);
     DateTime now = isUtc ? DateTime.now().toUtc() : DateTime.now().toLocal();
     return old.year == now.year && old.month == now.month && old.day == now.day;
   }
@@ -93,6 +95,12 @@ class DateUtil {
   /// 是否同年
   static bool yearIsEqual(DateTime date1, DateTime date2) {
     return date1.year == date2.year;
+  }
+
+  /// 是否同一天
+  static bool dayIsEqual(DateTime date1, DateTime date2) {
+    return date1.year == date2.year && date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   /// 取得兩個時間的差距
@@ -118,7 +126,7 @@ class DateUtil {
         /// 兩個日期的差距年份
         var years = List.generate(
           endDate.year - startDate.year,
-          (index) {
+              (index) {
             return startYear + index;
           },
         );
