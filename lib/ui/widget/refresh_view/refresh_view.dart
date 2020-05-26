@@ -61,6 +61,9 @@ class RefreshView extends StatefulWidget {
   /// 中間的讀取圓圈風格
   final RefreshLoadStyle loadStyle;
 
+  /// loading 延遲關閉時間
+  final Duration loadingDebounce;
+
   RefreshView._({
     Key key,
     EasyRefreshStyle easyRefreshStyle,
@@ -71,6 +74,7 @@ class RefreshView extends StatefulWidget {
     this.placeStyle,
     this.placeBuilder,
     this.loadStyle,
+    this.loadingDebounce,
   }) : this._easyRefresh = easyRefreshStyle;
 
   /// EasyRefresh 的默認構建
@@ -94,6 +98,7 @@ class RefreshView extends StatefulWidget {
     bool topBouncing = true,
     bool bottomBouncing = true,
     RefreshLoadStyle loadStyle,
+    Duration loadingDebounce,
     @required Widget child,
   }) {
     var refresh = EasyRefreshStyle(
@@ -149,6 +154,7 @@ class RefreshView extends StatefulWidget {
     bool topBouncing = true,
     bool bottomBouncing = true,
     RefreshLoadStyle loadStyle,
+    Duration loadingDebounce,
     @required List<Widget> slivers,
   }) {
     var refresh = EasyRefreshStyle.custom(
@@ -181,6 +187,7 @@ class RefreshView extends StatefulWidget {
       placeStyle: placeStyle,
       placeBuilder: placeBuilder,
       loadStyle: loadStyle,
+      loadingDebounce: loadingDebounce,
     );
   }
 
@@ -202,6 +209,7 @@ class RefreshView extends StatefulWidget {
     bool bottomBouncing = true,
     @required EasyRefreshChildBuilder builder,
     RefreshLoadStyle loadStyle,
+    Duration loadingDebounce,
   }) {
     var refresh = EasyRefreshStyle.builder(
       taskIndependence: taskIndependence,
@@ -223,6 +231,7 @@ class RefreshView extends StatefulWidget {
       placeStyle: placeStyle,
       placeBuilder: placeBuilder,
       loadStyle: loadStyle,
+      loadingDebounce: loadingDebounce,
     );
   }
 
@@ -297,24 +306,24 @@ class _RefreshViewState extends State<RefreshView> {
   Stream<bool> get debounceLoadStream {
     return _stateSubject.stream.map((e) {
 //        print("接收到資料: ${e.isLoading}");
-      var isLoading = false;
-      switch (e.type) {
-        case RefreshType.refresh:
-          isLoading = e.isLoading;
-          break;
-        case RefreshType.loadMore:
-          isLoading = e.isLoading && !e.bounce;
-          break;
-      }
-      return isLoading;
+//      var isLoading = false;
+      return e.centerLoad;
+//      switch (e.type) {
+//        case RefreshType.refresh:
+//          isLoading = e.isLoading;
+//          break;
+//        case RefreshType.loadMore:
+//          isLoading = e.isLoading && !e.bounce;
+//          break;
+//      }
+//      return isLoading;
     }).distinct();
   }
 
   void _activeDebounce() {
     _isDebounceActive = true;
     _disableSubscription?.cancel();
-    _disableSubscription =
-        TimerStream(null, Duration(seconds: 1)).listen((_) {
+    _disableSubscription = TimerStream(null, Duration(seconds: 1)).listen((_) {
       _disableSubscription = null;
       _isDebounceActive = false;
     });
@@ -343,16 +352,23 @@ class _RefreshViewState extends State<RefreshView> {
     _stateSubject.add(widget.initState);
     _updateEasyRefresh();
 
-    _stateStreamSubscription = widget.stateStream.doOnData((e) {
+    var dataHandleStream = widget.stateStream.doOnData((e) {
       _handleRefreshState(e);
-    }).debounce((e) {
-      _activeDebounce();
-      if (e.isLoading || !_isDebounceActive) {
-        return Stream.value(e);
-      } else {
-        return TimerStream(e, Duration(seconds: 1));
-      }
-    }).listen((data) {
+    });
+
+    if (widget.loadingDebounce != null &&
+        widget.loadingDebounce > Duration.zero) {
+      dataHandleStream = dataHandleStream.debounce((e) {
+        _activeDebounce();
+        if (e.isLoading || !_isDebounceActive) {
+          return Stream.value(e);
+        } else {
+          return TimerStream(e, Duration(seconds: 1));
+        }
+      });
+    }
+
+    _stateStreamSubscription = dataHandleStream.listen((data) {
 //      print("資料傳遞");
       _stateSubject.add(data);
     });
@@ -661,7 +677,11 @@ class RefreshState {
   /// 是否正在刷新/加載中
   final bool isLoading;
 
+  /// 上方下拉loading顯示 / 下方上拉loading顯示
   final bool bounce;
+
+  /// 中間的 loading 顯示
+  final bool centerLoad;
 
   /// 重置刷新狀態
   final bool resetRefresh;
@@ -678,6 +698,7 @@ class RefreshState {
         this.noMore = false,
         this.isLoading = false,
         this.bounce = true,
+        this.centerLoad = true,
         this.type = RefreshType.refresh,
         this.resetRefresh = false,
         this.resetLoadMore = false,
@@ -686,9 +707,11 @@ class RefreshState {
   /// 設置讀取狀態
   /// * [type] - 讀取的類型, 刷新或加載更多
   /// * [bounce] - 是否顯示對應的下拉刷新或者上拉加載, 若 false 則只有中間的 loading
+  /// * [centerLoad] - 中央的 loading 顯示, 預設加載更多不會顯示
   RefreshState.loading({
     this.type = RefreshType.refresh,
     this.bounce = true,
+    this.centerLoad = false,
   })  : this.empty = false,
         this.success = true,
         this.noMore = false,
@@ -707,7 +730,8 @@ class RefreshState {
   })  : this.isLoading = false,
         this.bounce = true,
         this.type = RefreshType.refresh,
-        this.resetRefresh = false;
+        this.resetRefresh = false,
+        this.centerLoad = false;
 
   /// 設置加載更多的結果
   RefreshState.loadMore({
@@ -719,7 +743,8 @@ class RefreshState {
         this.bounce = true,
         this.type = RefreshType.loadMore,
         this.resetLoadMore = false,
-        this.noLoadMore = null;
+        this.noLoadMore = null,
+        this.centerLoad = false;
 }
 
 /// 狀態類型

@@ -13,8 +13,10 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// 由此宣告頁面的 route
   final String route;
 
-  PageBloc(this.route,
-      this.option,);
+  PageBloc(
+    this.route,
+    this.option,
+  );
 
   /// 子頁面命令監聽串流
   Stream<RouteData> get subPageStream => _subPageSubject?.stream;
@@ -86,21 +88,24 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// 將刷新狀態設置為讀取中
   /// 此狀態的設置並不會觸發 [RefreshView] 的 onRefresh 方法
   /// * [bounce] 是否顯示頂部 loading, 若 false 則只顯示中間
-  void refreshing([bool bounce = false]) {
+  void refreshing({bool bounce = false, bool center = true}) {
     var state = RefreshState.loading(
       type: RefreshType.refresh,
       bounce: bounce,
+      centerLoad: center,
     );
     _lazyRefreshStateSubject.add(state);
   }
 
   /// 設置為正在加載更多中
   /// 此狀態的設置並不會觸發 [RefreshView] 的 onLoadMore 方法
-  /// * [bounce] 是否顯示底部 loading, 若 false 則只顯示中間
-  void loadingMore([bool bounce = false]) {
+  /// * [bounce] 是否顯示底部 loading
+  /// * [center] 是否顯示中間 loading
+  void loadingMore({bool bounce = true, bool center = false}) {
     var state = RefreshState.loading(
       type: RefreshType.loadMore,
       bounce: bounce,
+      centerLoad: center,
     );
     _lazyRefreshStateSubject.add(state);
   }
@@ -234,12 +239,16 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
         print('註冊子頁面監聽: $hashCode, $route');
       }
 
-      routeMixinImpl.registerSubPageListener(route, (RouteData data) {
-        if (route == '/main') {
-          print('取得子頁面跳轉: $hashCode');
-        }
-        return _dispatchSubPage(data);
-      }, hashCode,);
+      routeMixinImpl.registerSubPageListener(
+        route,
+        (RouteData data) {
+          if (route == '/main') {
+            print('取得子頁面跳轉: $hashCode');
+          }
+          return _dispatchSubPage(data);
+        },
+        hashCode,
+      );
 
 //        print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
       if (option.nextRoute != null && option is RouteData) {
@@ -311,11 +320,11 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   @override
   Future<T> popAndPushPage<T>(String route, BuildContext context,
-      {String subRoute,
-        Map<String, dynamic> pageQuery,
-        Map<String, dynamic> blocQuery,
-        popUntil,
-        Object result}) =>
+          {String subRoute,
+          Map<String, dynamic> pageQuery,
+          Map<String, dynamic> blocQuery,
+          popUntil,
+          Object result}) =>
       routeMixinImpl?.popAndPushPage(route, context,
           pageQuery: pageQuery,
           blocQuery: blocQuery,
@@ -324,7 +333,7 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
 
   @override
   bool popPage(BuildContext context,
-      {bool Function(String route) popUntil, Object result}) =>
+          {bool Function(String route) popUntil, Object result}) =>
       routeMixinImpl?.popPage(context, popUntil: popUntil, result: result);
 
   /// 發起大頁面跳轉
@@ -334,12 +343,12 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// [builder] - 自定義構建 PageRoute
   @override
   Future<T> pushPage<T>(String route, BuildContext context,
-      {String subRoute,
-        Map<String, dynamic> pageQuery,
-        Map<String, dynamic> blocQuery,
-        bool replaceCurrent = false,
-        bool Function(String route) removeUntil,
-        MixinRouteBuilder builder}) =>
+          {String subRoute,
+          Map<String, dynamic> pageQuery,
+          Map<String, dynamic> blocQuery,
+          bool replaceCurrent = false,
+          bool Function(String route) removeUntil,
+          MixinRouteBuilder builder}) =>
       routeMixinImpl?.pushPage(route, context,
           subRoute: subRoute,
           pageQuery: pageQuery,
@@ -351,10 +360,10 @@ abstract class PageBloc implements RouteMixinBase, BlocBase {
   /// 跳轉子頁面
   @override
   bool setSubPage(String route,
-      {BuildContext context,
-        Map<String, dynamic> pageQuery,
-        Map<String, dynamic> blocQuery,
-        bool replaceCurrent = false}) =>
+          {BuildContext context,
+          Map<String, dynamic> pageQuery,
+          Map<String, dynamic> blocQuery,
+          bool replaceCurrent = false}) =>
       routeMixinImpl?.setSubPage(route,
           context: context,
           pageQuery: pageQuery,
