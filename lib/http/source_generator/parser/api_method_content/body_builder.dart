@@ -70,14 +70,21 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
           """;
           break;
         case ApiFieldType.listString:
+//          text += """
+//          $field.forEach((e) => content.addBody(${keyText}value: e,));
+//          """;
           text += """
-          $field.forEach((e) => content.addBody(${keyText}value: e,));
+          content.addBody(${keyText}value: $field,);
           """;
           break;
         case ApiFieldType.listFileInfo:
-          text += """
-          $field.forEach((e) => content.addBody(${keyText}filename: \"\${e.filename}\", filepath: \"\${e.filepath}\",));
-          """;
+        // body 目前不支持添加陣列檔案
+//          text += """
+//          $field.forEach((e) => content.addBody(${keyText}filename: \"\${e.filename}\", filepath: \"\${e.filepath}\",));
+//          """;
+//          text += """
+//          content.addBody(${keyText}filename: \"\${$field.filename}\", filepath: \"\${$field.filepath}\",);
+//          """;
           break;
       }
     } else {

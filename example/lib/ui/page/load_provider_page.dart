@@ -37,9 +37,9 @@ class _LoadProviderPageState extends State<LoadProviderPage> {
   Widget build(BuildContext context) {
     return LoadProvider(
       style: LoadStyle(
-        tapThrough: true,
         maskColor: Colors.blueAccent.withAlpha(100),
       ),
+      tapThrough: true,
       onCreated: (controller) {
         loadController = controller;
       },

@@ -10,18 +10,18 @@ import '../load_provider.dart';
 part 'easy_refresh_style.dart';
 
 typedef RefreshBuilder = Widget Function(
-  BuildContext context,
-  RefreshState state,
-  PlaceStyle place,
-);
+    BuildContext context,
+    RefreshState state,
+    PlaceStyle place,
+    );
 
 typedef RefreshHeaderBuilder = Header Function(
-  BuildContext context,
-);
+    BuildContext context,
+    );
 
 typedef RefreshFooterBuilder = Footer Function(
-  BuildContext context,
-);
+    BuildContext context,
+    );
 
 /// 預設 header
 RefreshHeaderBuilder _defaultHeaderBuilder;
@@ -92,6 +92,7 @@ class RefreshView extends StatefulWidget {
     ScrollController scrollController,
     Header header,
     Footer footer,
+    Widget emptyWidget,
     bool firstRefresh,
     Widget firstRefreshWidget,
     int headerIndex,
@@ -106,6 +107,7 @@ class RefreshView extends StatefulWidget {
       scrollController: scrollController,
       header: header,
       footer: footer,
+      emptyWidget: emptyWidget,
       firstRefresh: firstRefresh,
       firstRefreshWidget: firstRefreshWidget,
       headerIndex: headerIndex,
@@ -137,6 +139,7 @@ class RefreshView extends StatefulWidget {
     RefreshBuilder placeBuilder,
     VoidCallback onRefresh,
     VoidCallback onLoadMore,
+    Widget emptyWidget,
     bool taskIndependence = false,
     Header header,
     int headerIndex,
@@ -168,6 +171,7 @@ class RefreshView extends StatefulWidget {
       primary: primary,
       shrinkWrap: shrinkWrap,
       center: center,
+      emptyWidget: emptyWidget,
       anchor: anchor,
       cacheExtent: cacheExtent,
       semanticChildCount: semanticChildCount,
@@ -376,6 +380,7 @@ class _RefreshViewState extends State<RefreshView> {
     super.initState();
   }
 
+  
   /// 處理刷新/加載狀態
   void _handleRefreshState(RefreshState state) {
 //    print("準備處理狀態: ${state.isLoading}");
@@ -497,21 +502,21 @@ class _RefreshViewState extends State<RefreshView> {
           ? null
           : () async {
 //              print("發出刷新");
-              if (_cancelOutRefreshCount == 0) {
-                _isRefreshing = true;
-                widget.onRefresh();
-              }
-              _cancelOutRefreshCount = 0;
-            },
+        if (_cancelOutRefreshCount == 0) {
+          _isRefreshing = true;
+          widget.onRefresh();
+        }
+        _cancelOutRefreshCount = 0;
+      },
       onLoad: widget.onLoad == null
           ? null
           : () async {
-              if (_cancelOutLoadMoreCount == 0) {
-                _isLoadingMore = true;
-                widget.onLoad();
-              }
-              _cancelOutLoadMoreCount = 0;
-            },
+        if (_cancelOutLoadMoreCount == 0) {
+          _isLoadingMore = true;
+          widget.onLoad();
+        }
+        _cancelOutLoadMoreCount = 0;
+      },
     );
 
     // 當滿足以下條件, 則需要加入滑動監聽
@@ -712,7 +717,8 @@ class RefreshState {
     this.type = RefreshType.refresh,
     this.bounce = true,
     this.centerLoad = false,
-  })  : this.empty = false,
+  })
+      : this.empty = false,
         this.success = true,
         this.noMore = false,
         this.isLoading = true,
@@ -727,7 +733,8 @@ class RefreshState {
     this.noMore = false,
     this.resetLoadMore = true,
     this.noLoadMore,
-  })  : this.isLoading = false,
+  })
+      : this.isLoading = false,
         this.bounce = true,
         this.type = RefreshType.refresh,
         this.resetRefresh = false,
@@ -739,7 +746,8 @@ class RefreshState {
     this.empty = false,
     this.noMore = false,
     this.resetRefresh = false,
-  })  : this.isLoading = false,
+  })
+      : this.isLoading = false,
         this.bounce = true,
         this.type = RefreshType.loadMore,
         this.resetLoadMore = false,

@@ -30,7 +30,7 @@ class EasyRefreshStyle {
   /// 空视图
   /// 当不为null时,只会显示空视图
   /// 保留[headerIndex]以上的内容
-  final emptyWidget;
+  final Widget emptyWidget;
 
   /// 顶部回弹(onRefresh为null时生效)
   final bool topBouncing;

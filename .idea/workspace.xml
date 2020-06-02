@@ -10,21 +10,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/load_provider_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/load_provider_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/page_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_content.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/body_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/body_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/header_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/header_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/load_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/load_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/easy_refresh_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/easy_refresh_style.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/timer/timer_core.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/timer/timer_core.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/load_provider_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/load_provider_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_content.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/header_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/header_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/load_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/load_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/easy_refresh_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/easy_refresh_style.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/timer/timer_core.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/timer/timer_core.dart" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

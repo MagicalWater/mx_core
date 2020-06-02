@@ -51,8 +51,11 @@ class HeaderBuilder extends ParamContentBuilder<HeaderContent> {
           """;
         break;
       case ApiFieldType.listString:
+//        text += """
+//          $field.forEach((e) => content.addHeader(\"$key\", value: e));
+//          """;
         text += """
-          $field.forEach((e) => content.addHeader(\"$key\", value: e));
+          content.addHeader(\"$key\", value: $field);
           """;
         break;
       case ApiFieldType.file:

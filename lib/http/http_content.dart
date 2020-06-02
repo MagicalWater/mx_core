@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:rxdart/rxdart.dart';
-
 import 'http_query_mixin.dart';
 import 'http_util.dart';
 import 'http_value.dart';
@@ -17,7 +15,7 @@ class HttpContent with HttpContentMixin {
   /// 此參數只在 Method 為 download 時有效, 下載木調
   String saveInPath;
 
-  Uri get uri => Uri(scheme: scheme, host: host, path: path, port: port);
+  Uri get uri => Uri(scheme: scheme, host: host, path: path, port: port, queryParameters: queryParams);
 
   String get url => uri.toString();
 

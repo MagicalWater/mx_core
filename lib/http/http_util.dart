@@ -139,6 +139,27 @@ class HttpUtil {
     );
   }
 
+  Stream<ServerResponse> getUri(
+    Uri uri, {
+    Map<String, dynamic> headers = const {},
+    ContentType contentType,
+  }) {
+    print("[GET請求]: $uri");
+    Future<Response<dynamic>> request = _dio.getUri(
+      uri,
+      options: Options(
+        headers: headers,
+        contentType: contentType?.value,
+      ),
+    );
+    return _packageRequest(
+      request: request,
+      url: '${uri.scheme}://${uri.host}${uri.path}',
+      queryParams: uri.queryParametersAll,
+      headers: headers,
+    );
+  }
+
   Stream<ServerResponse> post(
     String url, {
     Map<String, dynamic> queryParams = const {},
@@ -274,9 +295,8 @@ class HttpUtil {
   }) {
     switch (content.method) {
       case HttpMethod.get:
-        return get(
-          content.url,
-          queryParams: content.queryParams,
+        return getUri(
+          content.uri,
           headers: content.headers,
           contentType: content.contentType,
         );

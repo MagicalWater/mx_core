@@ -29,6 +29,9 @@ class TimerCore {
   /// 設定總倒數時間
   Duration _totalTime;
 
+  /// 經過時間
+  Duration get elapsedTime => _totalTime - _remainingTime;
+
   /// 剩餘的倒數時間
   Duration _remainingTime;
 
@@ -59,7 +62,8 @@ class TimerCore {
     if (this._remainingTime.inMilliseconds > this._totalTime.inMilliseconds) {
       // 剩餘時間不得超過總時間
       print(
-          "剩餘時間(${this._remainingTime})不得超過總時間(${this._totalTime}), 強制將剩餘時間設定為總時間");
+          "剩餘時間(${this._remainingTime})不得超過總時間(${this
+              ._totalTime}), 強制將剩餘時間設定為總時間");
       this._remainingTime = this._totalTime;
     }
 
@@ -87,7 +91,8 @@ class TimerCore {
     if (this._remainingTime.inMilliseconds > this._totalTime.inMilliseconds) {
       // 剩餘時間不得超過總時間
       print(
-          "此次修改剩餘時間(${this._remainingTime})將會超過總時間(${this._totalTime}), 強制將剩餘時間設定為總時間");
+          "此次修改剩餘時間(${this._remainingTime})將會超過總時間(${this
+              ._totalTime}), 強制將剩餘時間設定為總時間");
       this._remainingTime = this._totalTime;
     }
 
@@ -167,7 +172,9 @@ class TimerCore {
 
   /// 發送狀態變更事件
   void _sendTickEvent() {
-    _timerEventSubject.add(TickData(status: _status, time: _remainingTime));
+    _timerEventSubject.add(TickData(status: _status,
+        elapsedTime: elapsedTime,
+        remainingTime: _remainingTime));
   }
 
   /// 執行剩餘時間倒數計時
@@ -220,7 +227,8 @@ enum TimerStatus {
 /// 計時 tick 資料
 class TickData {
   final TimerStatus status;
-  final Duration time;
+  final Duration remainingTime;
+  final Duration elapsedTime;
 
-  TickData({this.status, this.time});
+  TickData({this.status, this.elapsedTime, this.remainingTime});
 }

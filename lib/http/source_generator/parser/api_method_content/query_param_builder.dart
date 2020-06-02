@@ -50,8 +50,11 @@ class QueryParamBuilder extends ParamContentBuilder<QueryParamContent> {
           """;
         break;
       case ApiFieldType.listString:
+//        text += """
+//          $field.forEach((e) => content.addQueryParam(\"$key\", value: e));
+//          """;
         text += """
-          $field.forEach((e) => content.addQueryParam(\"$key\", value: e));
+          content.addQueryParam(\"$key\", value: $field);
           """;
         break;
       case ApiFieldType.file:

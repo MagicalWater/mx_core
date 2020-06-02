@@ -8,7 +8,8 @@ import 'package:mx_core/mx_core.dart';
 LoadController _rootLoadController;
 
 /// 設置根節點的 load 顯示與否
-Future<void> setRootLoad(bool show, {
+Future<void> setRootLoad(
+  bool show, {
   LoadStyle style,
 }) async {
   if (_rootLoadController == null) {
@@ -29,9 +30,6 @@ class LoadStyle {
   /// loading 元件的顏色
   final Color color;
 
-  /// 點擊穿透, 默認 false
-  final bool tapThrough;
-
   /// 顯示/隱藏的動畫時間
   final Duration animationDuration;
 
@@ -41,7 +39,6 @@ class LoadStyle {
   LoadStyle({
     this.size = 50,
     this.color = Colors.blueAccent,
-    this.tapThrough = false,
     this.animationDuration = const Duration(milliseconds: 500),
     this.maskColor,
   });
@@ -51,6 +48,9 @@ class LoadProvider extends StatefulWidget {
   final Widget child;
   final void Function(LoadController controller) onCreated;
   final Stream<bool> loadStream;
+
+  /// 點擊穿透, 默認 false
+  final bool tapThrough;
 
   /// 顯示的load樣式
   final LoadStyle style;
@@ -64,6 +64,7 @@ class LoadProvider extends StatefulWidget {
     this.child,
     this.style,
     this.onCreated,
+    this.tapThrough = false,
     this.loadStream,
     this.root = false,
   });
@@ -124,9 +125,12 @@ class _LoadProviderState extends State<LoadProvider>
       builder: (context, snapshot) {
         Widget loadAttach;
         if (snapshot.data) {
-          loadAttach = Loading.circle(
-            color: _currentStyle.color ?? Colors.blueAccent,
-            size: _currentStyle.size ?? 50,
+          loadAttach = Container(
+            color: Colors.transparent,
+            child: Loading.circle(
+              color: _currentStyle.color ?? Colors.blueAccent,
+              size: _currentStyle.size ?? 50,
+            ),
           );
         } else {
           loadAttach = Container();
@@ -138,12 +142,12 @@ class _LoadProviderState extends State<LoadProvider>
           left: _showPos?.dx,
           top: _showPos?.dy,
           right:
-          hasPos ? (Screen.width - (_showPos.dx + _showSize.width)) : null,
+              hasPos ? (Screen.width - (_showPos.dx + _showSize.width)) : null,
           bottom: hasPos
               ? (Screen.height - (_showPos.dy + _showSize.height))
               : null,
           child: IgnorePointer(
-            ignoring: !_currentShow || _currentStyle.tapThrough,
+            ignoring: !_currentShow || widget.tapThrough,
             child: Center(
               child: AnimatedComb.quick(
                 alignment: Alignment.center,
