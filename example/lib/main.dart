@@ -51,9 +51,9 @@ void main() {
     );
   });
 
-  ApplicationBloc.getInstance().allPageStream.listen((e) {
+  ApplicationBloc.getInstance().pageStream.listen((e) {
     print('''
-歷史 - ${ApplicationBloc.getInstance().allPageHistory.map((el) => el.route).toList()}
+歷史 - ${ApplicationBloc.getInstance().pageHistory.map((el) => el.route).toList()}
     ''');
   });
 
