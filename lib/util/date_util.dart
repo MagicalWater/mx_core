@@ -103,6 +103,13 @@ class DateUtil {
         date1.day == date2.day;
   }
 
+  /// 是否同一分鐘
+  static bool minuteIsEqual(DateTime date1, DateTime date2) {
+    return date1.year == date2.year && date1.month == date2.month &&
+        date1.day == date2.day && date1.hour == date2.hour &&
+        date1.minute == date2.minute;
+  }
+
   /// 取得兩個時間的差距
   static int getDiff(DateTime date1, DateTime date2, DateType type) {
     var duration = date2.difference(date1);

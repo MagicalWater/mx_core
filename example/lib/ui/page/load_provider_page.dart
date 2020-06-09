@@ -66,10 +66,7 @@ class _LoadProviderPageState extends State<LoadProviderPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
-            colors: [
-              Color(0xff8c6018),
-              Color(0xff8c6018),
-            ],
+            colors: [Color(0xff8c6018), Color(0xff8c6018)],
           ),
         ),
       ),

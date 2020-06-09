@@ -51,6 +51,11 @@ class PageSwitcher extends StatelessWidget {
         if (!snapshot.hasData) {
           return emptyWidget ?? Container();
         }
+        if (!opacity && !scale && !slide) {
+          return customBuilder == null
+              ? routeMixinImpl.getSubPage(snapshot.data)
+              : customBuilder(context, snapshot.data);
+        }
         return AnimatedSwitcher(
           duration: Duration(milliseconds: duration),
           child: customBuilder == null
@@ -74,7 +79,8 @@ class PageSwitcher extends StatelessWidget {
             }
             if (slide) {
               widgetChain = AxisTransition(
-                position: animation,
+                position: CurvedAnimation(
+                    parent: animation, curve: Curves.easeOutSine),
                 child: widgetChain,
                 slideIn: slideIn,
                 slideOut: slideOut,
