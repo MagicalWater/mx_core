@@ -10,6 +10,7 @@ export 'marquee/marquee.dart';
 export 'material_layer.dart';
 export 'page_scaffold.dart';
 export 'page_switcher.dart';
+export 'page_switcher2.dart';
 export 'particle_animation/particle.dart';
 export 'rect_provider.dart';
 export 'refresh_view/refresh_view.dart';

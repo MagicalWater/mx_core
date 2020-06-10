@@ -88,8 +88,8 @@ abstract class RoutePageBase {
 //  Stream<RouteData> getSubPageStream([String page]);
 
   /// 註冊子頁面監聽
-  void registerSubPageListener(String page, RouteHandler handler, int hashCode);
+  void registerSubPageListener(PageBlocInterface page);
 
   /// 取消註冊子頁面監聽
-  void unregisterSubPageListener(String page, int hashCode);
+  void unregisterSubPageListener(PageBlocInterface page);
 }

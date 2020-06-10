@@ -50,9 +50,15 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                 buildIntroduction(content),
                 _buildButton("點擊切換子頁面", () {
                   count++;
-                  if (count > 4) {
+                  bloc.setSubPageToNext();
+                  return;
+                  if (count > 5) {
                     print('回退');
-                    ApplicationBloc.getInstance().popSubPage(underRoute: Pages.routePushSecond, context: context);
+                    if (!ApplicationBloc.getInstance().canPopSubPage(route: Pages.routePushSecond)) {
+                      print('不可以回退');
+                      return;
+                    }
+                    ApplicationBloc.getInstance().popSubPage(route: Pages.routePushSecond, context: context);
                   } else {
                     bloc.setSubPageToNext();
                   }
@@ -62,13 +68,10 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   color: Colors.transparent,
                 ),
                 Expanded(
-                  child: PageSwitcher(
-                    stream: bloc.subPageStream,
+                  child: PageSwitcher2(
+                    routes: bloc.subPages(),
+                    stream: bloc.subPageHistoryStream,
                     emptyWidget: Container(),
-                    opacity: false,
-                    slide: true,
-                    slideIn: TransDirection.left,
-                    slideOut: TransDirection.right,
                   ),
                 ),
               ],

@@ -16,6 +16,7 @@ class RoutePushSub2Page extends StatefulWidget {
 
 class _RoutePushSub2PageState extends State<RoutePushSub2Page> {
   RoutePushSub2Bloc bloc;
+  int counter = 0;
 
   @override
   void initState() {
@@ -35,18 +36,18 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page> {
         child: Column(
           children: <Widget>[
             Text(
-              "子頁面2",
+              "子頁面2 = $counter",
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             _buildButton("切換子頁面 A/B", () {
               bloc.setSubPageToNext();
+//              counter++;
+//              setState(() {});
             }),
             Expanded(
-              child: PageSwitcher(
-                stream: bloc.subPageStream,
-//                scale: true,
-                opacity: true,
-
+              child: PageSwitcher2(
+                routes: bloc.subPages(),
+                stream: bloc.subPageHistoryStream,
               ),
             ),
           ],

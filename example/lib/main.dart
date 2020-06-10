@@ -9,6 +9,7 @@ import 'router/route.dart';
 import 'package:path/path.dart';
 
 void main() {
+
 //  print("螢幕高: ${Screen.height}");
 
 //  timeDilation = 25;
@@ -54,6 +55,7 @@ void main() {
   ApplicationBloc.getInstance().pageStream.listen((e) {
     print('''
 歷史 - ${ApplicationBloc.getInstance().pageHistory.map((el) => el.route).toList()}
+當前 - ${ApplicationBloc.getInstance().currentDetailPage}
     ''');
   });
 
