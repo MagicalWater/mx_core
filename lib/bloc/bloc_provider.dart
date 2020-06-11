@@ -48,7 +48,7 @@ class _BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
 
   @override
   void dispose() {
-    widget.bloc?.dispose();
+    _currentBloc?.dispose();
     super.dispose();
   }
 

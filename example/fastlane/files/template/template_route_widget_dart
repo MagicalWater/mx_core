@@ -19,7 +19,7 @@ class RouteWidget implements RouteWidgetBase {
   ];
 
   @override
-  Widget getPage(RouteData data) {
+  Widget getPage(RouteData data, {Key key}) {
     final widgetOption = data.copyWith(RouteDataType.widget);
     final blocOption = data.copyWith(RouteDataType.bloc);
     final child = AppRoute.getPage(widgetOption);

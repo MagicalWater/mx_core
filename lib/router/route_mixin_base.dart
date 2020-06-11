@@ -10,7 +10,7 @@ typedef MixinRouteBuilder<T> = PageRoute<T> Function(
 abstract class RouteWidgetBase {
   List<String> pageList;
 
-  Widget getPage(RouteData data);
+  Widget getPage(RouteData data, {Key key});
 }
 
 /// 子頁面監聽 func
@@ -23,7 +23,7 @@ abstract class RouteMixinBase {
   bool isPageShowing(String page);
 
   /// 取得子頁面
-  Widget getSubPage(RouteData data);
+  Widget getSubPage(RouteData data, {Key key});
 
   /// 設定子頁面
   bool setSubPage(
@@ -31,7 +31,7 @@ abstract class RouteMixinBase {
     BuildContext context,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
-    bool replaceCurrent = false,
+    bool forceNew = false,
   });
 
   /// 發起頁面跳轉
@@ -82,13 +82,23 @@ abstract class RoutePageBase {
     String subRoute,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
+    Key key,
   });
 
   /// 取得子頁面的串流
 //  Stream<RouteData> getSubPageStream([String page]);
 
   /// 註冊子頁面監聽
-  void registerSubPageListener(PageBlocInterface page);
+  void registerSubPageListener(
+    PageBlocInterface page,
+    bool Function(RouteData data) isHandleRoute,
+    bool Function(
+      RouteData data,
+      bool Function(String route) popUntil,
+    )
+        dispatchSubPage,
+    String Function() popSubPage,
+  );
 
   /// 取消註冊子頁面監聽
   void unregisterSubPageListener(PageBlocInterface page);

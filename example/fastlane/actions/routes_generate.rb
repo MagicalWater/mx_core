@@ -145,7 +145,7 @@ module Fastlane
         }
 
         # 搜索 _getPage 方法實體, 並插入缺少的 page
-        content = content.gsub(/  Widget getPage\(RouteData data\) \{(\s|.)+?\n  \}/) { |c|
+        content = content.gsub(/  Widget getPage\(RouteData data, \{Key key\}\) \{(\s|.)+?\n  \}/) { |c|
 
           # 一個一個檢查 Page 是否存在
           addText = ""
@@ -162,6 +162,7 @@ module Fastlane
         return BlocProvider(
           child: child,
           bloc: #{convertName['upper_camel']}Bloc(blocOption),
+          key: key,
         );
 }
             end

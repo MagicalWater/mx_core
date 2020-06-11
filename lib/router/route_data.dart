@@ -44,6 +44,9 @@ class RouteData extends RouteOption {
   /// 是否為回退 route
   bool isPop;
 
+  /// 是否強制建立新元件
+  bool forceNew;
+
   @override
   Map<String, dynamic> get query =>
       (type ?? RouteDataType.widget) == RouteDataType.widget
@@ -55,7 +58,8 @@ class RouteData extends RouteOption {
     this.targetSubRoute,
     this.widgetQuery,
     this.blocQuery,
-  }) : this.isPop = false;
+  })  : this.isPop = false,
+        this.forceNew = false;
 
   RouteData copyWith(RouteDataType type) {
     var data = RouteData(
@@ -65,7 +69,8 @@ class RouteData extends RouteOption {
       blocQuery: blocQuery,
     )
       ..type = type
-      ..isPop = isPop;
+      ..isPop = isPop
+      ..forceNew = forceNew;
     return data;
   }
 }

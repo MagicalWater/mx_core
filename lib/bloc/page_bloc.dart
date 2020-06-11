@@ -115,13 +115,19 @@ abstract class PageBloc
   /// [defaultSubPage] - 預設子頁面
   void registerSubPageStream({RouteData defaultRoute}) {
     if (_historyPageSubject != null) {
-      print("已註冊, 禁止再次註冊監聽子頁面");
+      print("已註冊, 禁止再次註冊監聽子頁面: $route, $hashCode");
       return;
     }
     if (route != null && route.isNotEmpty) {
       _historyPageSubject = BehaviorSubject();
 
-      routeMixinImpl.registerSubPageListener(this);
+      print('註冊頁面: $route, $hashCode');
+      routeMixinImpl.registerSubPageListener(
+        this,
+        _isHandleRoute,
+        _dispatchSubPage,
+        _popSubPage,
+      );
 
 //        print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
       if (option.nextRoute != null && option is RouteData) {
@@ -132,7 +138,6 @@ abstract class PageBloc
           data.targetSubRoute,
           pageQuery: data.widgetQuery,
           blocQuery: data.blocQuery,
-          checkToHistory: !data.isPop,
         );
       } else if (defaultRoute != null) {
         print('跳轉預設子頁面: ${defaultRoute.route}');
@@ -148,11 +153,15 @@ abstract class PageBloc
     }
   }
 
+  bool _isHandleRoute(RouteData data) {
+    return subPages().contains(data.route) && isSubPageHandle(data);
+  }
+
   /// 子頁面跳轉分發
-  @override
-  bool dispatchSubPage(RouteData data) {
-    if (subPages().contains(data.route) && isSubPageHandle(data)) {
+  bool _dispatchSubPage(RouteData data, bool Function(String route) popUntil) {
+    if (_isHandleRoute(data)) {
       // 在此確認是否處理此子頁面的跳轉
+      print('接收跳轉請求: ${data.route}');
 
       // 判斷頁面是否已經存在歷史裡面
       var findHistoryIndex =
@@ -168,6 +177,9 @@ abstract class PageBloc
           currentHistory =
               currentHistory.sublist(currentHistory.length - cachePageCount);
         }
+
+        if (popUntil != null) {}
+
         _historyPageSubject.add(currentHistory);
       } else {
         _historyPageSubject.add([data]);
@@ -177,11 +189,10 @@ abstract class PageBloc
     return false;
   }
 
-  @override
-  String popSubPage() {
+  String _popSubPage() {
     if (subPageHistory.length >= 2) {
       _historyPageSubject.value.removeLast();
-      print('剩餘子頁面: ${_historyPageSubject.value.map((e) => e.route)}');
+//      print('剩餘子頁面: ${_historyPageSubject.value.map((e) => e.route)}');
       _historyPageSubject.add(_historyPageSubject.value);
       return _historyPageSubject.value.last.route;
     }

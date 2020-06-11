@@ -1,58 +1,12 @@
+import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mx_core/mx_core.dart';
 
-///// 頁面切換元件
-///// 直接將 PageBloc 的 subPageStream 傳入即可
-//class PageSwitcher2 extends StatelessWidget {
-//  final List<String> routes;
-//  final Stream<List<RouteData>> stream;
-//
-//  /// 當尚未有 route 傳入時, 所顯示的空元件
-//  /// 默認為 Container()
-//  final Widget emptyWidget;
-//
-//  final int duration;
-//
-//  PageSwitcher2({
-//    this.routes,
-//    this.stream,
-//    this.duration = 300,
-//    this.emptyWidget,
-//  });
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return StreamBuilder<List<RouteData>>(
-//      stream: stream,
-//      builder: (context, snapshot) {
-//        if (!snapshot.hasData) {
-//          return emptyWidget ?? Container();
-//        }
-//        var routeDatas = snapshot.data;
-//        var index = routes.indexWhere((element) => element == routeDatas.last.route);
-//        var children = routes.map((e) {
-//          var finded = routeDatas.firstWhere((element) => element.route == e,
-//              orElse: () => null);
-//          if (finded != null) {
-//            return routeMixinImpl.getSubPage(finded);
-//          } else {
-//            return Container();
-//          }
-//        }).toList();
-//        return IndexedStack(
-//          index: index,
-//          children: children,
-//        );
-//      },
-//    );
-//  }
-//}
-//
-//import 'package:flutter/material.dart';
-
+/// 頁面切換元件
+/// 直接將 PageBloc 的 subPageStream 以及 routes 傳入即可
 class PageSwitcher2 extends StatefulWidget {
   final List<String> routes;
   final Stream<List<RouteData>> stream;
@@ -61,14 +15,108 @@ class PageSwitcher2 extends StatefulWidget {
   /// 默認為 Container()
   final Widget emptyWidget;
 
-  final int duration;
+  final Duration duration;
 
-  PageSwitcher2({
+  /// 縮放係數 - 0~1, 1代表不縮放
+  final double scaleIn;
+
+  /// 透明係數 - 0~1, 1代表不透明
+  final double opacityIn;
+
+  /// 位移係數
+  final Offset translateIn;
+
+  /// 縮放係數 - 0~1, 1代表不縮放
+  final double scaleOut;
+
+  /// 透明係數 - 0~1, 1代表不透明
+  final double opacityOut;
+
+  /// 位移係數
+  final Offset translateOut;
+
+  /// 動畫差值器
+  final Curve curve;
+
+  /// 動畫總開關
+  final bool animateEnabled;
+
+  /// 動畫陰影
+  final BoxShadow animatedShadow;
+
+  /// 對齊方向
+  final Alignment alignment;
+
+  /// 轉場動畫貯列排序
+  final StackConfig stackConfig;
+
+  PageSwitcher2._({
     this.routes,
     this.stream,
-    this.duration = 300,
+    this.duration = const Duration(milliseconds: 300),
     this.emptyWidget,
+    this.scaleIn = 1,
+    this.opacityIn = 0,
+    this.translateIn = Offset.zero,
+    this.scaleOut,
+    this.opacityOut,
+    this.translateOut,
+    this.curve = Curves.easeOutSine,
+    this.alignment = Alignment.center,
+    this.stackConfig = const StackConfig(),
+    this.animateEnabled = true,
+    this.animatedShadow = const BoxShadow(
+      color: Colors.black,
+      blurRadius: 1,
+      spreadRadius: 1,
+    ),
   });
+
+  factory PageSwitcher2({
+    List<String> routes,
+    Stream<List<RouteData>> stream,
+    Duration duration = const Duration(milliseconds: 300),
+    Widget emptyWidget,
+    double scaleIn = 1,
+    double opacityIn = 0,
+    Offset translateIn = Offset.zero,
+    double scaleOut,
+    double opacityOut,
+    Offset translateOut,
+    Curve curve = Curves.easeOutSine,
+    Alignment alignment = Alignment.center,
+    StackConfig stackConfig = const StackConfig(),
+    bool animateEnabled = true,
+    BoxShadow animatedShadow =
+        const BoxShadow(color: Colors.black, blurRadius: 1, spreadRadius: 1),
+  }) {
+    if (scaleOut == null && scaleIn != null) {
+      scaleOut = scaleIn;
+    }
+    if (opacityOut == null && opacityIn != null) {
+      opacityOut = opacityIn;
+    }
+    if (translateOut == null && translateIn != null) {
+      translateOut = translateIn;
+    }
+    return PageSwitcher2._(
+      routes: routes,
+      stream: stream,
+      duration: duration,
+      emptyWidget: emptyWidget,
+      scaleIn: scaleIn,
+      scaleOut: scaleOut,
+      opacityIn: opacityIn,
+      opacityOut: opacityOut,
+      translateIn: translateIn,
+      translateOut: translateOut,
+      curve: curve,
+      alignment: alignment,
+      stackConfig: stackConfig,
+      animateEnabled: animateEnabled,
+      animatedShadow: animatedShadow,
+    );
+  }
 
   @override
   _PageSwitcher2State createState() => _PageSwitcher2State();
@@ -76,68 +124,169 @@ class PageSwitcher2 extends StatefulWidget {
 
 class _PageSwitcher2State extends State<PageSwitcher2>
     with TickerProviderStateMixin {
+  Map<String, ValueKey<int>> cacheKey = {};
+
   GlobalKey _boundaryKey = GlobalKey();
   List<Widget> _showChildren;
   int showIndex;
 
-  ui.Image _translationImage;
+  /// 當前的轉場是 push 或 pop 嗎
+  bool _transitionPush;
+  ui.Image _transitionImage;
 
   AnimationController _controller;
-  Animation<double> _forwardAnimation;
-  Animation<double> _reversedAnimation;
+  Animation<double> _fadeIn;
+  Animation<double> _scaleIn;
+  Animation<Offset> _translateIn;
+
+  Animation<double> _fadeOut;
+  Animation<double> _scaleOut;
+  Animation<Offset> _translateOut;
+
+  StreamSubscription _subscription;
+
+  /// 是否有縮放
+  bool get haveScaleIn => widget.scaleIn != null && widget.scaleIn != 1;
+
+  bool get haveOpacityIn => widget.opacityIn != null && widget.opacityIn != 1;
+
+  bool get haveTranslateIn =>
+      widget.translateIn != null && widget.translateIn != Offset.zero;
+
+  bool get haveScaleOut => widget.scaleOut != null && widget.scaleOut != 1;
+
+  bool get haveOpacityOut =>
+      widget.opacityOut != null && widget.opacityOut != 1;
+
+  bool get haveTranslateOut =>
+      widget.translateOut != null && widget.translateOut != Offset.zero;
+
+  /// 是否有轉場動畫
+  bool get haveTransition =>
+      haveScaleIn ||
+      haveOpacityIn ||
+      haveScaleOut ||
+      haveOpacityOut ||
+      haveTranslateIn ||
+      haveTranslateOut;
 
   @override
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
-    );
-    _forwardAnimation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.ease,
-      ),
-    );
-    _reversedAnimation = Tween(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.ease,
-      ),
-    );
-
-    widget.stream.listen((event) {
-      var routeDatas = event;
-      showIndex = widget.routes
-          .indexWhere((element) => element == routeDatas.last.route);
-      _showChildren = widget.routes.map((e) {
-        var finded = routeDatas.firstWhere((element) => element.route == e,
-            orElse: () => null);
-        if (finded != null) {
-          return routeMixinImpl.getSubPage(finded);
-        } else {
-          return Container();
+      duration: widget.duration,
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          _controller.reset();
+          _transitionImage = null;
+          setState(() {});
         }
-      }).toList();
-      cacheCapture();
+      });
+
+    _updateSetting();
+
+    _subscription = widget.stream.listen((event) {
+      if (widget.animateEnabled && haveTransition) {
+        _cacheCapture(event);
+      } else {
+        _syncData(event);
+        setState(() {});
+      }
     });
     super.initState();
   }
 
+  void _updateSetting() {
+    var curve = CurvedAnimation(
+      parent: _controller,
+      curve: widget.curve,
+    );
+
+    _fadeIn = haveOpacityIn
+        ? Tween(begin: widget.opacityIn, end: 1.0).animate(curve)
+        : null;
+    _fadeOut = haveOpacityOut
+        ? Tween(begin: 1.0, end: widget.opacityOut).animate(curve)
+        : null;
+
+    _scaleIn = haveScaleIn
+        ? Tween(begin: widget.scaleIn, end: 1.0).animate(curve)
+        : null;
+    _scaleOut = haveScaleOut
+        ? Tween(begin: 1.0, end: widget.scaleOut).animate(curve)
+        : null;
+
+    _translateIn = haveTranslateIn
+        ? Tween(begin: widget.translateIn, end: Offset.zero).animate(curve)
+        : null;
+    _translateOut = haveTranslateOut
+        ? Tween(begin: Offset.zero, end: widget.translateOut).animate(curve)
+        : null;
+  }
+
+  @override
+  void didUpdateWidget(PageSwitcher2 oldWidget) {
+    _controller.duration = widget.duration;
+    if (oldWidget.scaleIn != widget.scaleIn ||
+        oldWidget.scaleOut != widget.scaleOut ||
+        oldWidget.opacityIn != widget.opacityIn ||
+        oldWidget.opacityOut != widget.opacityOut) {
+      _updateSetting();
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
   /// 先將當前元件的圖片擷取下來
-  void cacheCapture() async {
-    _translationImage = null;
-    setState(() {});
-    _controller.reset();
+  void _cacheCapture(List<RouteData> datas) async {
     if (_boundaryKey.currentContext == null) {
+      _transitionImage = null;
+      _syncData(datas);
+      setState(() {});
       return;
     }
-    print('動畫啟動');
+
     RenderRepaintBoundary boundary =
         _boundaryKey.currentContext.findRenderObject();
-    _translationImage = await boundary.toImage(pixelRatio: 1);
+    _transitionImage = await boundary.toImage(pixelRatio: 1);
+
+    _syncData(datas);
+
+    if (_controller.isAnimating) {
+      _controller.reset();
+    }
     await _controller.forward();
-    _translationImage = null;
-    setState(() {});
+  }
+
+  void _syncData(List<RouteData> datas) {
+    showIndex =
+        widget.routes.indexWhere((element) => element == datas.last.route);
+    _transitionPush = !datas.last.isPop;
+    _showChildren = widget.routes.map((e) {
+      var finded = datas.firstWhere(
+        (element) => element.route == e,
+        orElse: () => null,
+      );
+      if (finded != null) {
+        ValueKey<int> key;
+        if (finded.forceNew && finded.route == datas.last.route) {
+          var showIndex = cacheKey[finded.route]?.value ?? 0;
+          showIndex++;
+          print('加 key: $showIndex');
+          key = ValueKey(showIndex);
+          cacheKey[finded.route] = key;
+        } else {
+          print('不加 key');
+          key = cacheKey[finded.route];
+        }
+        return routeMixinImpl.getSubPage(finded, key: key);
+      } else {
+        return Container();
+      }
+    }).toList();
   }
 
   @override
@@ -146,56 +295,127 @@ class _PageSwitcher2State extends State<PageSwitcher2>
       return Container();
     }
 
-    var showWidget = RepaintBoundary(
-      key: _boundaryKey,
-      child: IndexedStack(
-        index: showIndex,
-        children: _showChildren,
-      ),
+    Widget oldDownWidget;
+    Widget oldUpWidget;
+
+    Widget newWidget = IndexedStack(
+      index: showIndex,
+      children: _showChildren,
     );
 
-    if (_translationImage != null) {
-      var imageWidget = CustomPaint(
+    if (_transitionImage != null) {
+      var config =
+          _transitionPush ? widget.stackConfig.push : widget.stackConfig.pop;
+
+      BoxDecoration boxShadow;
+      if (widget.animatedShadow != null) {
+        boxShadow = BoxDecoration(
+          color: Colors.transparent,
+          boxShadow: [widget.animatedShadow],
+        );
+      }
+
+      Widget targetShowOldWidget;
+
+      targetShowOldWidget = CustomPaint(
         painter: _ImagePainter(
-          image: _translationImage,
+          image: _transitionImage,
         ),
       );
 
-      var oldAnim = AnimatedBuilder(
-        animation: _reversedAnimation,
-        builder: (context, child) {
-          return Opacity(
-            opacity: _reversedAnimation.value,
-            child: ScaleTransition(
-              scale: Tween(begin: 1.0, end: 0.8).animate(_reversedAnimation),
-              child: imageWidget,
-            ),
-          );
-        },
+      var oldMatrix = Matrix4.identity();
+
+      if (haveTranslateOut) {
+        oldMatrix.translate(_translateOut.value.dx, _translateOut.value.dy);
+      }
+
+      if (haveScaleOut) {
+        oldMatrix.scale(_scaleOut.value, _scaleOut.value);
+      }
+
+      targetShowOldWidget = Container(
+        decoration: config == StackSort.oldUp ? boxShadow : null,
+        transform: oldMatrix,
+        child: targetShowOldWidget,
       );
 
-      var newAnim = AnimatedBuilder(
-        animation: _forwardAnimation,
-        builder: (context, child) {
-          return Opacity(
-            opacity: _forwardAnimation.value,
-            child: ScaleTransition(
-              scale: Tween(begin: 0.8, end: 1.0).animate(_forwardAnimation),
-              child: showWidget,
-            ),
-          );
-        },
+      if (haveOpacityOut) {
+        targetShowOldWidget = Opacity(
+          opacity: _fadeOut.value,
+          child: targetShowOldWidget,
+        );
+      }
+
+      if (haveTranslateOut) {
+        targetShowOldWidget = Transform.translate(
+          offset: _translateOut.value,
+          child: targetShowOldWidget,
+        );
+      }
+
+      var newMatrix = Matrix4.identity();
+      if (haveTranslateIn) {
+        newMatrix.translate(_translateIn.value.dx, _translateIn.value.dy);
+      }
+      if (haveScaleIn) {
+        newMatrix.scale(_scaleIn.value, _scaleIn.value);
+      }
+
+      newWidget = Opacity(
+        opacity: haveOpacityIn ? _fadeIn.value : 1,
+        child: Container(
+          decoration: config == StackSort.oldDown && boxShadow != null
+              ? boxShadow
+              : BoxDecoration(color: Colors.transparent),
+          alignment: widget.alignment,
+          transform: newMatrix,
+          child: newWidget,
+        ),
       );
 
-      return Stack(
-        children: <Widget>[
-          oldAnim,
-          newAnim,
-        ],
+      targetShowOldWidget = Positioned.fill(child: targetShowOldWidget);
+
+      switch (config) {
+        case StackSort.oldDown:
+          oldDownWidget = targetShowOldWidget;
+          break;
+        case StackSort.oldUp:
+          oldUpWidget = targetShowOldWidget;
+          break;
+      }
+
+      oldDownWidget ??= Container();
+    } else {
+      oldDownWidget = Container();
+
+      newWidget = Opacity(
+        opacity: 1,
+        child: Container(
+          decoration: BoxDecoration(color: Colors.transparent),
+          alignment: widget.alignment,
+          transform: Matrix4.identity(),
+          child: newWidget,
+        ),
       );
     }
 
-    return showWidget;
+    return RepaintBoundary(
+      key: _boundaryKey,
+      child: Stack(
+        children: <Widget>[
+          oldDownWidget,
+          newWidget,
+          if (oldUpWidget != null) oldUpWidget,
+        ],
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    _controller.dispose();
+    super.dispose();
   }
 }
 
@@ -213,6 +433,27 @@ class _ImagePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
+    if (oldDelegate is _ImagePainter) {
+      return oldDelegate.image != image;
+    }
     return true;
   }
+}
+
+class StackConfig {
+  final StackSort push;
+  final StackSort pop;
+
+  const StackConfig({
+    this.push = StackSort.oldUp,
+    this.pop = StackSort.oldUp,
+  });
+}
+
+enum StackSort {
+  /// 老元件排序在上面
+  oldDown,
+
+  /// 老元件排序在下面
+  oldUp,
 }

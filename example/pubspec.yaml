@@ -14,7 +14,7 @@ dependencies:
   annotation_route: "^0.0.2"
   xson_annotation: "^1.0.0"
   type_translator: "^1.0.2+1"
-  bot_toast: ^3.0.0
+  bot_toast: "^3.0.0"
 dependency_overrides:
   image: 2.1.7
 dev_dependencies:

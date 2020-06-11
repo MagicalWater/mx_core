@@ -6,10 +6,8 @@ import 'package:mx_core/mx_core.dart';
 
 import 'bloc/application_bloc.dart';
 import 'router/route.dart';
-import 'package:path/path.dart';
 
 void main() {
-
 //  print("螢幕高: ${Screen.height}");
 
 //  timeDilation = 25;
@@ -101,17 +99,34 @@ class BB extends StatefulWidget {
 }
 
 class _BBState extends State<BB> with SingleTickerProviderStateMixin {
-  double w = 100, h = 100;
+  AnimationController controller;
 
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 2)).then((_) {
-      setState(() {
-        w = 50;
-        h = 50;
+    controller = AnimationController(
+      duration: Duration(seconds: 1),
+      lowerBound: 0,
+      upperBound: 300,
+      vsync: this,
+    )..addListener(() {
+        setState(() {});
       });
+    Future.delayed(Duration(seconds: 2)).then((_) {
+      controller.forward();
     });
     super.initState();
+  }
+
+  void reset() {
+    controller.reset();
+  }
+
+  void forward() {
+    controller.forward();
+  }
+
+  void reversed() {
+    controller.reverse();
   }
 
   @override
@@ -119,23 +134,45 @@ class _BBState extends State<BB> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: SafeArea(
         child: Container(
+          padding: EdgeInsets.all(12),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.red),
-                ),
-                child: AnimatedSize(
-                  duration: Duration(seconds: 2),
-                  child: Container(
-                    width: w,
-                    height: h,
-                  ),
-                  vsync: this,
+                child: Text(
+                  controller.value.toStringAsFixed(1),
+                  style: TextStyle(fontSize: 20),
                 ),
               ),
+              Container(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  RaisedButton(child: Text('Reset'), onPressed: reset),
+                  RaisedButton(child: Text('Forward'), onPressed: forward),
+                  RaisedButton(child: Text('Reversed'), onPressed: reversed),
+                ],
+              ),
+              Container(height: 12),
+              Stack(
+                children: <Widget>[
+                  Container(
+                    height: 340,
+                    width: 2,
+                    color: Colors.black,
+                  ),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    transform:
+                        Matrix4.translationValues(10, controller.value, 0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blueAccent,
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         ),

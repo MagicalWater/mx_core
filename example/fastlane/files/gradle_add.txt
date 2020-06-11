@@ -1,4 +1,3 @@
-        buildConfigField "String", "PLATFORM_CODE", "\"xiaomi\""
         manifestPlaceholders = [pkgName: applicationId]
     }
 
@@ -42,11 +41,11 @@
 
     buildTypes {
         debug {
-	    shrinkResources false
+	        shrinkResources false
             signingConfig signingConfigs.release
         }
         release {
-	    shrinkResources false
+	        shrinkResources false
             minifyEnabled false
             useProguard true
             signingConfig signingConfigs.release
@@ -58,49 +57,9 @@
 
     productFlavors {
         all { flavor ->
-            def flavorName = flavor.name.toLowerCase()
             applicationId "com.bbsdvsdvsdvb.dvsdvsdv"
             def fullAppId = applicationId
-            if (flavorName != "tonone") {
-                applicationIdSuffix "." + flavorName
-                fullAppId = applicationId + applicationIdSuffix
-            }
             dimension "app"
             manifestPlaceholders = [pkgName: fullAppId]
         }
-
-        //預設無渠道
-        toNone { buildConfigField "String", "PLATFORM_CODE", "\"none\"" }
-        //百度
-        toBaidu { buildConfigField "String", "PLATFORM_CODE", "\"baidu\"" }
-        //華為
-        toHuawei { buildConfigField "String", "PLATFORM_CODE", "\"huawei\"" }
-        //豌豆莢
-        toWangoujia { buildConfigField "String", "PLATFORM_CODE", "\"wang\"" }
-        //小米
-        toXiaomi { buildConfigField "String", "PLATFORM_CODE", "\"xiaomi\"" }
-        //360
-        to360 { buildConfigField "String", "PLATFORM_CODE", "\"360\"" }
-        //魅族
-        toMeizu { buildConfigField "String", "PLATFORM_CODE", "\"meizu\"" }
-        //聯想
-        toLenovo { buildConfigField "String", "PLATFORM_CODE", "\"lenovo\"" }
-        //N多
-        toNduo { buildConfigField "String", "PLATFORM_CODE", "\"nduo\"" }
-        //錘子
-        toSmartisan { buildConfigField "String", "PLATFORM_CODE", "\"smart\"" }
-        //木螞蟻
-        toMumayi { buildConfigField "String", "PLATFORM_CODE", "\"mumayi\"" }
-        //搜狗
-        toSogou { buildConfigField "String", "PLATFORM_CODE", "\"sogou\"" }
-        //金立
-        toGionee { buildConfigField "String", "PLATFORM_CODE", "\"gionee\"" }
-        //應用寶
-        toQQ { buildConfigField "String", "PLATFORM_CODE", "\"qq\"" }
-        //安智
-        toAnzhi { buildConfigField "String", "PLATFORM_CODE", "\"anzhi\"" }
-        //VIVO
-        toVV { buildConfigField "String", "PLATFORM_CODE", "\"vivo\"" }
-        //OPPO
-        toPP { buildConfigField "String", "PLATFORM_CODE", "\"oppo\"" }
     }

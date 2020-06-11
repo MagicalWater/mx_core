@@ -16,12 +16,6 @@ abstract class PageBlocInterface {
 
   /// 當前的子頁面
   RouteData get currentSubPage;
-
-  /// 子頁面需求分發
-  bool dispatchSubPage(RouteData data);
-
-  /// 回退子頁面, 回傳回退後的子頁面路由
-  String popSubPage();
 }
 
 /// 彈出等級
@@ -37,6 +31,11 @@ enum PopLevel {
 class _SubPageHandler {
   PageBlocInterface page;
 
+  bool Function(RouteData data) _isHandleRoute;
+  bool Function(RouteData data, bool Function(String route) popUntil)
+      _dispatchSubPage;
+  String Function() _popSubPage;
+
   List<RouteData> get history => page.subPageHistory;
 
   String get route => page.route;
@@ -46,9 +45,15 @@ class _SubPageHandler {
 
   _SubPageHandler(this.page);
 
-  bool dispatchSubPage(RouteData data) => page.dispatchSubPage(data);
+  bool isHandleRoute(RouteData data) => _isHandleRoute(data);
 
-  String popSubPage() => page.popSubPage();
+  bool dispatchSubPage(
+    RouteData data,
+    bool Function(String route) popUntil,
+  ) =>
+      _dispatchSubPage(data, popUntil);
+
+  String popSubPage() => _popSubPage();
 
   @override
   bool operator ==(other) {
@@ -185,8 +190,18 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   @override
   void registerSubPageListener(
     PageBlocInterface page,
+    bool Function(RouteData data) isHandleRoute,
+    bool Function(
+      RouteData data,
+      bool Function(String route) popUntil,
+    )
+        dispatchSubPage,
+    String Function() popSubPage,
   ) {
     _SubPageHandler subPageHandler = _SubPageHandler(page);
+    subPageHandler._isHandleRoute = isHandleRoute;
+    subPageHandler._dispatchSubPage = dispatchSubPage;
+    subPageHandler._popSubPage = popSubPage;
     _subPageListener.add(subPageHandler);
   }
 
@@ -214,8 +229,8 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     BuildContext context,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
-    bool replaceCurrent = false,
-    bool checkToHistory = true,
+    bool forceNew = false,
+    bool Function(String route) popUntil,
   }) {
     // 先檢查要跳轉的子頁面, 是否於當前的大頁面之下
     if (!RouteCompute.isSubPage(currentPage, route, depth: null)) {
@@ -262,10 +277,16 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
           blocQuery: blocQuery,
         );
 
-        var isHandle = findListener.dispatchSubPage(routeData);
+        routeData.forceNew = forceNew;
+
+        var isHandle = findListener.isHandleRoute(routeData);
         if (!isHandle) {
           print('$findParent 拒絕此次跳轉page請求: $route');
         } else {
+          findListener.dispatchSubPage(
+            routeData,
+            popUntil,
+          );
           var lastShowPage = nextRoute;
 
           var findInnerListener = currentRangeListener.lastWhere(
@@ -299,7 +320,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   }
 
   @override
-  Widget getSubPage(RouteData data) {
+  Widget getSubPage(RouteData data, {Key key}) {
     return getPage(
       data.route,
       subRoute: data.targetSubRoute,
@@ -386,6 +407,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     bool replaceCurrent = false,
     bool Function(String route) removeUntil,
     MixinRouteBuilder<T> builder,
+    Key key,
   }) async {
 //    print("頁面跳轉: $route");
 
@@ -420,6 +442,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         pageQuery: pageQuery,
         blocQuery: blocQuery,
         builder: builder,
+        key: key,
       );
     }
 
@@ -493,6 +516,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
     bool entryPoint = false,
+    Key key,
   }) {
     var data = RouteData(
       route,
@@ -506,7 +530,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       _pageDetailSubject.add(pageHistory.last.route);
       _entryPointRouteAlias = route;
     }
-    return routeWidgetImpl.getPage(data);
+    return routeWidgetImpl.getPage(data, key: key);
   }
 
   PageRoute<T> _getRoute<T>(
@@ -516,6 +540,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
     MixinRouteBuilder<T> builder,
+    Key key,
   }) {
     var page = routeWidgetImpl.getPage(
       RouteData(
@@ -524,6 +549,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         widgetQuery: pageQuery,
         blocQuery: blocQuery,
       ),
+      key: key,
     );
 
     var routeBuilder = builder ?? _defaultRouteBuilder;
