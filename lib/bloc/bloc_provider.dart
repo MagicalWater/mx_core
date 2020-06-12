@@ -31,6 +31,7 @@ class _BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
   @override
   void initState() {
     _currentBloc = widget.bloc;
+    _currentBloc.mounted = true;
     widget.bloc
         .registerSubPageStream(defaultRoute: widget.bloc.defaultSubPage());
     super.initState();
@@ -48,6 +49,7 @@ class _BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
 
   @override
   void dispose() {
+    _currentBloc.mounted = false;
     _currentBloc?.dispose();
     super.dispose();
   }

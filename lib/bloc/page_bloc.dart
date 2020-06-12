@@ -16,6 +16,8 @@ abstract class PageBloc
   /// 快取頁面數量
   int get cachePageCount => subPages().length;
 
+  bool mounted;
+
   /// 由此宣告頁面的 route
   @override
   final String route;
