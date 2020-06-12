@@ -53,23 +53,19 @@ class PageSwitcher extends StatefulWidget {
   PageSwitcher._({
     this.routes,
     this.stream,
-    this.duration = const Duration(milliseconds: 300),
+    this.duration,
     this.emptyWidget,
-    this.scaleIn = 1,
-    this.opacityIn = 0,
-    this.translateIn = Offset.zero,
+    this.scaleIn,
+    this.opacityIn,
+    this.translateIn,
     this.scaleOut,
     this.opacityOut,
     this.translateOut,
-    this.curve = Curves.easeOutSine,
-    this.alignment = Alignment.center,
-    this.stackConfig = const StackConfig(),
-    this.animateEnabled = true,
-    this.animatedShadow = const BoxShadow(
-      color: Colors.black,
-      blurRadius: 1,
-      spreadRadius: 1,
-    ),
+    this.curve,
+    this.alignment,
+    this.stackConfig,
+    this.animateEnabled,
+    this.animatedShadow,
   });
 
   factory PageSwitcher({
@@ -83,12 +79,15 @@ class PageSwitcher extends StatefulWidget {
     double scaleOut,
     double opacityOut,
     Offset translateOut,
-    Curve curve = Curves.easeOutSine,
+    Curve curve = Curves.ease,
     Alignment alignment = Alignment.center,
     StackConfig stackConfig = const StackConfig(),
     bool animateEnabled = true,
-    BoxShadow animatedShadow =
-        const BoxShadow(color: Colors.black, blurRadius: 1, spreadRadius: 1),
+    BoxShadow animatedShadow = const BoxShadow(
+      color: Colors.black,
+      blurRadius: 5,
+      spreadRadius: 0,
+    ),
   }) {
     if (scaleOut == null && scaleIn != null) {
       scaleOut = scaleIn;
@@ -145,6 +144,9 @@ class _PageSwitcherState extends State<PageSwitcher>
 
   StreamSubscription _subscription;
 
+  /// 當前的設定是 push 或者 pop
+  bool isNowSettingPush = true;
+
   /// 是否有縮放
   bool get haveScaleIn => widget.scaleIn != null && widget.scaleIn != 1;
 
@@ -200,32 +202,57 @@ class _PageSwitcherState extends State<PageSwitcher>
     super.initState();
   }
 
-  void _updateSetting() {
+  void _updateSetting({bool push = true}) {
+    isNowSettingPush = push;
+
     var curve = CurvedAnimation(
       parent: _controller,
       curve: widget.curve,
     );
 
-    _fadeIn = haveOpacityIn
-        ? Tween(begin: widget.opacityIn, end: 1.0).animate(curve)
-        : null;
-    _fadeOut = haveOpacityOut
-        ? Tween(begin: 1.0, end: widget.opacityOut).animate(curve)
-        : null;
+    if (isNowSettingPush) {
+      _fadeIn = haveOpacityIn
+          ? Tween(begin: widget.opacityIn, end: 1.0).animate(curve)
+          : null;
+      _fadeOut = haveOpacityOut
+          ? Tween(begin: 1.0, end: widget.opacityOut).animate(curve)
+          : null;
 
-    _scaleIn = haveScaleIn
-        ? Tween(begin: widget.scaleIn, end: 1.0).animate(curve)
-        : null;
-    _scaleOut = haveScaleOut
-        ? Tween(begin: 1.0, end: widget.scaleOut).animate(curve)
-        : null;
+      _scaleIn = haveScaleIn
+          ? Tween(begin: widget.scaleIn, end: 1.0).animate(curve)
+          : null;
+      _scaleOut = haveScaleOut
+          ? Tween(begin: 1.0, end: widget.scaleOut).animate(curve)
+          : null;
 
-    _translateIn = haveTranslateIn
-        ? Tween(begin: widget.translateIn, end: Offset.zero).animate(curve)
-        : null;
-    _translateOut = haveTranslateOut
-        ? Tween(begin: Offset.zero, end: widget.translateOut).animate(curve)
-        : null;
+      _translateIn = haveTranslateIn
+          ? Tween(begin: widget.translateIn, end: Offset.zero).animate(curve)
+          : null;
+      _translateOut = haveTranslateOut
+          ? Tween(begin: Offset.zero, end: widget.translateOut).animate(curve)
+          : null;
+    } else {
+      _fadeIn = haveOpacityOut
+          ? Tween(begin: widget.opacityOut, end: 1.0).animate(curve)
+          : null;
+      _fadeOut = haveOpacityIn
+          ? Tween(begin: 1.0, end: widget.opacityIn).animate(curve)
+          : null;
+
+      _scaleIn = haveScaleOut
+          ? Tween(begin: widget.scaleOut, end: 1.0).animate(curve)
+          : null;
+      _scaleOut = haveScaleOut
+          ? Tween(begin: 1.0, end: widget.scaleIn).animate(curve)
+          : null;
+
+      _translateIn = haveTranslateOut
+          ? Tween(begin: widget.translateOut, end: Offset.zero).animate(curve)
+          : null;
+      _translateOut = haveTranslateIn
+          ? Tween(begin: Offset.zero, end: widget.translateIn).animate(curve)
+          : null;
+    }
   }
 
   @override
@@ -251,6 +278,14 @@ class _PageSwitcherState extends State<PageSwitcher>
 
     RenderRepaintBoundary boundary =
         _boundaryKey.currentContext.findRenderObject();
+
+    if (boundary.debugNeedsPaint) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _cacheCapture(datas);
+      });
+      return;
+    }
+
     _transitionImage = await boundary.toImage(pixelRatio: 1);
 
     _syncData(datas);
@@ -265,6 +300,13 @@ class _PageSwitcherState extends State<PageSwitcher>
     showIndex =
         widget.routes.indexWhere((element) => element == datas.last.route);
     _transitionPush = !datas.last.isPop;
+
+//    print('跳轉類型: push - $_transitionPush');
+
+    if (_transitionPush != isNowSettingPush) {
+      _updateSetting(push: _transitionPush);
+    }
+
     _showChildren = widget.routes.map((e) {
       var finded = datas.firstWhere(
         (element) => element.route == e,
@@ -275,7 +317,7 @@ class _PageSwitcherState extends State<PageSwitcher>
         if (finded.forceNew && finded.route == datas.last.route) {
           var showIndex = cacheKey[finded.route]?.value ?? 0;
           showIndex++;
-          print('加 key: $showIndex');
+//          print('加 key: $showIndex');
           key = ValueKey(showIndex);
           cacheKey[finded.route] = key;
         } else {
@@ -325,11 +367,11 @@ class _PageSwitcherState extends State<PageSwitcher>
 
       var oldMatrix = Matrix4.identity();
 
-      if (haveTranslateOut) {
+      if (_translateOut != null) {
         oldMatrix.translate(_translateOut.value.dx, _translateOut.value.dy);
       }
 
-      if (haveScaleOut) {
+      if (_scaleOut != null) {
         oldMatrix.scale(_scaleOut.value, _scaleOut.value);
       }
 
@@ -339,30 +381,23 @@ class _PageSwitcherState extends State<PageSwitcher>
         child: targetShowOldWidget,
       );
 
-      if (haveOpacityOut) {
+      if (_fadeOut != null) {
         targetShowOldWidget = Opacity(
           opacity: _fadeOut.value,
           child: targetShowOldWidget,
         );
       }
 
-      if (haveTranslateOut) {
-        targetShowOldWidget = Transform.translate(
-          offset: _translateOut.value,
-          child: targetShowOldWidget,
-        );
-      }
-
       var newMatrix = Matrix4.identity();
-      if (haveTranslateIn) {
+      if (_translateIn != null) {
         newMatrix.translate(_translateIn.value.dx, _translateIn.value.dy);
       }
-      if (haveScaleIn) {
+      if (_scaleIn != null) {
         newMatrix.scale(_scaleIn.value, _scaleIn.value);
       }
 
       newWidget = Opacity(
-        opacity: haveOpacityIn ? _fadeIn.value : 1,
+        opacity: _fadeIn != null ? _fadeIn.value : 1,
         child: Container(
           decoration: config == StackSort.oldDown && boxShadow != null
               ? boxShadow

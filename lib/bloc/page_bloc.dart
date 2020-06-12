@@ -210,11 +210,13 @@ abstract class PageBloc
             currentHistory.removeLast();
           }
         }
+        currentHistory.last.isPop = true;
         _historyPageSubject.add(currentHistory);
         return currentHistory.last.route;
       } else {
         _historyPageSubject.value.removeLast();
 //      print('剩餘子頁面: ${_historyPageSubject.value.map((e) => e.route)}');
+        _historyPageSubject.value.last.isPop = true;
         _historyPageSubject.add(_historyPageSubject.value);
         return _historyPageSubject.value.last.route;
       }
