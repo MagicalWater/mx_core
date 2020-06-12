@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mx_core/mx_core.dart';
 
-import 'bloc/application_bloc.dart';
+import 'bloc/app_bloc.dart';
 import 'router/route.dart';
 
 void main() {
@@ -19,7 +19,7 @@ void main() {
 
     // 專案擁有的 route
     routeSetting: RouteSetting(
-      mixinImpl: ApplicationBloc.getInstance(),
+      mixinImpl: AppBloc(),
       widgetImpl: RouteWidget.getInstance(),
     ),
   );
@@ -50,10 +50,10 @@ void main() {
     );
   });
 
-  ApplicationBloc.getInstance().pageStream.listen((e) {
+  AppBloc().pageStream.listen((e) {
     print('''
-歷史 - ${ApplicationBloc.getInstance().pageHistory.map((el) => el.route).toList()}
-當前 - ${ApplicationBloc.getInstance().currentDetailPage}
+歷史 - ${AppBloc().pageHistory.map((el) => el.route).toList()}
+當前 - ${AppBloc().currentDetailPage}
     ''');
   });
 
@@ -83,7 +83,7 @@ class App extends StatelessWidget {
             },
           ),
         ),
-        home: ApplicationBloc.getInstance().getPage(
+        home: AppBloc().getPage(
           Pages.introduction,
           entryPoint: true,
         ),

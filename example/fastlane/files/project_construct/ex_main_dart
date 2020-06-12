@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mx_core/mx_core.dart';
 
-import 'bloc/application_bloc.dart';
+import 'bloc/app_bloc.dart';
 import 'generated/l10n.dart';
 import 'router/route_widget.dart';
 import 'router/routes.dart';
@@ -15,7 +15,7 @@ void main() {
 
     // 專案擁有的 route
     routeSetting: RouteSetting(
-      mixinImpl: ApplicationBloc.getInstance(),
+      mixinImpl: AppBloc.getInstance(),
       widgetImpl: RouteWidget.getInstance(),
     ),
   );
@@ -74,7 +74,7 @@ class App extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: S.delegate.supportedLocales,
-        home: ApplicationBloc.getInstance().getPage(
+        home: AppBloc().getPage(
           Pages.exLaunch,
           entryPoint: true,
         ),

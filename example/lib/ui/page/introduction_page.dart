@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
-import 'package:mx_core_example/bloc/application_bloc.dart';
+import 'package:mx_core_example/bloc/app_bloc.dart';
 import 'package:mx_core_example/bloc/page/introduction_bloc.dart';
 
 import '../../router/route.dart';
@@ -112,7 +112,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
   }
 
   void _handleIntroductionTap(String page) {
-    ApplicationBloc.getInstance().pushPage(page, context);
+    AppBloc().pushPage(page, context);
   }
 
   @override

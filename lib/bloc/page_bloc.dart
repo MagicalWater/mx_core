@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:mx_core/bloc/bloc.dart';
 import 'package:mx_core/bloc/load_mixin.dart';
+import 'package:mx_core/bloc/page_route_mixin.dart';
 import 'package:mx_core/bloc/refresh_mixin.dart';
 import 'package:mx_core/router/router.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,7 +9,7 @@ import 'package:rxdart/rxdart.dart';
 /// 針對一個頁面的 bloc 進行封裝
 /// 可藉由繼承此類 註冊/跳轉 route / 設置 loading 狀態 / 取得子頁面相關功能
 abstract class PageBloc
-    with LoadMixin, RefreshMixin
+    with LoadMixin, RefreshMixin, PageRouteMixin
     implements BlocBase, PageBlocInterface {
   RouteOption option;
 
@@ -123,10 +124,10 @@ abstract class PageBloc
 
       print('註冊頁面: $route, $hashCode');
       routeMixinImpl.registerSubPageListener(
-        this,
-        _isHandleRoute,
-        _dispatchSubPage,
-        _popSubPage,
+        page: this,
+        isHandleRoute: _isHandleRoute,
+        dispatchSubPage: _dispatchSubPage,
+        popSubPage: _popSubPage,
       );
 
 //        print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
@@ -158,10 +159,11 @@ abstract class PageBloc
   }
 
   /// 子頁面跳轉分發
-  bool _dispatchSubPage(RouteData data, bool Function(String route) popUntil) {
+  bool _dispatchSubPage(RouteData data,
+      {bool Function(String route) popUntil}) {
     if (_isHandleRoute(data)) {
       // 在此確認是否處理此子頁面的跳轉
-      print('接收跳轉請求: ${data.route}');
+//      print('接收跳轉請求: ${data.route}');
 
       // 判斷頁面是否已經存在歷史裡面
       var findHistoryIndex =
@@ -178,7 +180,15 @@ abstract class PageBloc
               currentHistory.sublist(currentHistory.length - cachePageCount);
         }
 
-        if (popUntil != null) {}
+        if (popUntil != null) {
+          bool isKeep = false;
+          while (!isKeep && currentHistory.length > 1) {
+            isKeep = popUntil(currentHistory[currentHistory.length - 2].route);
+            if (!isKeep) {
+              currentHistory.removeAt(currentHistory.length - 2);
+            }
+          }
+        }
 
         _historyPageSubject.add(currentHistory);
       } else {
@@ -189,12 +199,25 @@ abstract class PageBloc
     return false;
   }
 
-  String _popSubPage() {
+  String _popSubPage({bool Function(String route) popUntil}) {
     if (subPageHistory.length >= 2) {
-      _historyPageSubject.value.removeLast();
+      if (popUntil != null) {
+        var currentHistory = _historyPageSubject.value;
+        bool isKeep = false;
+        while (!isKeep && currentHistory.length > 1) {
+          isKeep = popUntil(currentHistory.last.route);
+          if (!isKeep) {
+            currentHistory.removeLast();
+          }
+        }
+        _historyPageSubject.add(currentHistory);
+        return currentHistory.last.route;
+      } else {
+        _historyPageSubject.value.removeLast();
 //      print('剩餘子頁面: ${_historyPageSubject.value.map((e) => e.route)}');
-      _historyPageSubject.add(_historyPageSubject.value);
-      return _historyPageSubject.value.last.route;
+        _historyPageSubject.add(_historyPageSubject.value);
+        return _historyPageSubject.value.last.route;
+      }
     }
     return null;
   }

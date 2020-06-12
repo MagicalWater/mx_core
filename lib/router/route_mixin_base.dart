@@ -32,6 +32,7 @@ abstract class RouteMixinBase {
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
     bool forceNew = false,
+    bool Function(String route) popUntil,
   });
 
   /// 發起頁面跳轉
@@ -72,6 +73,20 @@ abstract class RouteMixinBase {
     bool Function(String route) popUntil,
     Object result,
   });
+
+  /// 可以彈出子頁面嗎
+  bool canPopSubPage({
+    String route,
+    PopLevel level = PopLevel.exact,
+  });
+
+  /// 彈出子頁面
+  bool popSubPage({
+    String route,
+    BuildContext context,
+    PopLevel level = PopLevel.exact,
+    bool Function(String route) popUntil,
+  });
 }
 
 abstract class RoutePageBase {
@@ -89,16 +104,16 @@ abstract class RoutePageBase {
 //  Stream<RouteData> getSubPageStream([String page]);
 
   /// 註冊子頁面監聽
-  void registerSubPageListener(
+  void registerSubPageListener({
     PageBlocInterface page,
     bool Function(RouteData data) isHandleRoute,
-    bool Function(
-      RouteData data,
-      bool Function(String route) popUntil,
-    )
+    bool Function(RouteData data, {bool Function(String route) popUntil})
         dispatchSubPage,
-    String Function() popSubPage,
-  );
+    String Function({
+      bool Function(String route) popUntil,
+    })
+        popSubPage,
+  });
 
   /// 取消註冊子頁面監聽
   void unregisterSubPageListener(PageBlocInterface page);

@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:annotation_route/route.dart';
+import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
-import 'package:mx_core_example/router/route.dart';
 import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub1_bloc.dart';
-import 'package:mx_core_example/bloc/application_bloc.dart';
+import 'package:mx_core_example/router/route.dart';
 
 @ARoute(url: Pages.routePushSub1)
 class RoutePushSub1Page extends StatefulWidget {
@@ -17,6 +16,8 @@ class RoutePushSub1Page extends StatefulWidget {
 
 class _RoutePushSub1PageState extends State<RoutePushSub1Page> {
   RoutePushSub1Bloc bloc;
+
+  var index = 0;
 
   @override
   void initState() {
@@ -33,9 +34,15 @@ class _RoutePushSub1PageState extends State<RoutePushSub1Page> {
         height: double.infinity,
         color: Colors.indigoAccent,
         alignment: Alignment.center,
-        child: Text(
-          "子頁面1",
-          style: TextStyle(color: Colors.white, fontSize: 25),
+        child: InkWell(
+          onTap: () {
+            index++;
+            setState(() {});
+          },
+          child: Text(
+            "子頁面1 - $index",
+            style: TextStyle(color: Colors.white, fontSize: 25),
+          ),
         ),
       ),
     );

@@ -32,9 +32,9 @@ class _SubPageHandler {
   PageBlocInterface page;
 
   bool Function(RouteData data) _isHandleRoute;
-  bool Function(RouteData data, bool Function(String route) popUntil)
+  bool Function(RouteData data, {bool Function(String route) popUntil})
       _dispatchSubPage;
-  String Function() _popSubPage;
+  String Function({bool Function(String route) popUntil}) _popSubPage;
 
   List<RouteData> get history => page.subPageHistory;
 
@@ -47,13 +47,12 @@ class _SubPageHandler {
 
   bool isHandleRoute(RouteData data) => _isHandleRoute(data);
 
-  bool dispatchSubPage(
-    RouteData data,
-    bool Function(String route) popUntil,
-  ) =>
-      _dispatchSubPage(data, popUntil);
+  bool dispatchSubPage(RouteData data,
+          {bool Function(String route) popUntil}) =>
+      _dispatchSubPage(data, popUntil: popUntil);
 
-  String popSubPage() => _popSubPage();
+  String popSubPage({bool Function(String route) popUntil}) =>
+      _popSubPage(popUntil: popUntil);
 
   @override
   bool operator ==(other) {
@@ -80,7 +79,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// app 入口頁面的別名
   String _entryPointRouteAlias;
 
-  /// 所有頁面跳轉歷史紀錄
+  /// 大頁面跳轉歷史紀錄
   List<RouteData> get pageHistory => _pageSubject.value ?? [];
 
   /// 大頁面跳轉紀錄串流
@@ -112,6 +111,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   }
 
   /// 是否可以彈出子頁面
+  @override
   bool canPopSubPage({
     String route,
     PopLevel level = PopLevel.exact,
@@ -140,10 +140,12 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// [level] - 彈出等級
   /// 若 [PopLevel.exact] 則只談出鎖定目標下的子頁面
   /// 若 [PopLevel.greaterOrEqual] 則鎖定目標下無子頁面時, 會彈出鎖定目標往上層級尋找
+  @override
   bool popSubPage({
     String route,
     BuildContext context,
     PopLevel level = PopLevel.exact,
+    bool Function(String route) popUntil,
   }) {
     if (!canPopSubPage(route: route, level: level)) {
       return false;
@@ -159,7 +161,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         if (findListener == null) {
           return false;
         }
-        var result = findListener.popSubPage();
+        var result = findListener.popSubPage(popUntil: popUntil);
         if (result != null) {
           var lastShowPage = result;
 
@@ -188,16 +190,13 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 
   /// 註冊子頁面監聽
   @override
-  void registerSubPageListener(
+  void registerSubPageListener({
     PageBlocInterface page,
     bool Function(RouteData data) isHandleRoute,
-    bool Function(
-      RouteData data,
-      bool Function(String route) popUntil,
-    )
+    bool Function(RouteData data, {bool Function(String route) popUntil})
         dispatchSubPage,
-    String Function() popSubPage,
-  ) {
+    String Function({bool Function(String route) popUntil}) popSubPage,
+  }) {
     _SubPageHandler subPageHandler = _SubPageHandler(page);
     subPageHandler._isHandleRoute = isHandleRoute;
     subPageHandler._dispatchSubPage = dispatchSubPage;
@@ -261,8 +260,10 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 
       while (findParent != null && findListener == null) {
         findParent = RouteCompute.getParentRoute(findParent);
-        findListener = currentRangeListener
-            .lastWhere((element) => element.route == findParent, orElse: null);
+        findListener = currentRangeListener.lastWhere(
+          (element) => element.route == findParent,
+          orElse: () => null,
+        );
       }
 
       if (findListener != null) {
@@ -285,7 +286,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         } else {
           findListener.dispatchSubPage(
             routeData,
-            popUntil,
+            popUntil: popUntil,
           );
           var lastShowPage = nextRoute;
 
@@ -326,6 +327,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       subRoute: data.targetSubRoute,
       pageQuery: data.widgetQuery,
       blocQuery: data.blocQuery,
+      key: key,
     );
   }
 

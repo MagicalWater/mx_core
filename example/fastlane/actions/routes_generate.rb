@@ -73,8 +73,8 @@ module Fastlane
 
         FileUtils.mkdir_p('lib/bloc')
 
-        appBlocPath = 'fastlane/files/project_construct/bloc/application_bloc_dart'
-        targetPath = 'lib/bloc/application_bloc.dart'
+        appBlocPath = 'fastlane/files/project_construct/bloc/app_bloc_dart'
+        targetPath = 'lib/bloc/app_bloc.dart'
 
         if !(File.exist?(targetPath))
           hash = FileHandleAction.convert_name(appBlocPath)

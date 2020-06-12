@@ -1,7 +1,7 @@
 import 'package:annotation_route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
-import 'package:mx_core_example/bloc/application_bloc.dart';
+import 'package:mx_core_example/bloc/app_bloc.dart';
 import 'package:mx_core_example/bloc/page/route_push_second_bloc.dart';
 import 'package:mx_core_example/router/route.dart';
 import 'package:mx_core_example/ui/page/introduction_page.dart';
@@ -18,7 +18,7 @@ class RoutePushSecondPage extends StatefulWidget {
 
 class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
   RoutePushSecondBloc bloc;
-  ApplicationBloc appBloc = ApplicationBloc.getInstance();
+  AppBloc appBloc = AppBloc.getInstance();
 
   var title = "頁面跳轉機制第二大頁面";
   var content = """
@@ -50,15 +50,25 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                 buildIntroduction(content),
                 _buildButton("點擊切換子頁面", () {
                   count++;
-                  bloc.setSubPageToNext();
-                  return;
-                  if (count > 5) {
+//                  bloc.setSubPageToNext();
+//                  return;
+                  if (count > 2) {
                     print('回退');
-                    if (!ApplicationBloc.getInstance().canPopSubPage(route: Pages.routePushSecond)) {
-                      print('不可以回退');
-                      return;
-                    }
-                    ApplicationBloc.getInstance().popSubPage(route: Pages.routePushSecond, context: context);
+//                    if (!ApplicationBloc.getInstance().canPopSubPage(route: Pages.routePushSecond)) {
+//                      print('不可以回退');
+//                      return;
+//                    }
+                    appBloc.popSubPage(route: Pages.routePushSecond, popUntil: (route) => false);
+//                    ApplicationBloc.getInstance().setSubPage(
+//                      bloc.subPages()[0],
+//                      popUntil: (route) {
+//                        print('刪除歷史: $route');
+//                        return false;
+//                      },
+//                      forceNew: true,
+//                    );
+                    print(bloc.subPageHistory.map((e) => e.route));
+//                    ApplicationBloc.getInstance().popSubPage(route: Pages.routePushSecond, context: context);
                   } else {
                     bloc.setSubPageToNext();
                   }
@@ -68,7 +78,7 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   color: Colors.transparent,
                 ),
                 Expanded(
-                  child: PageSwitcher2(
+                  child: PageSwitcher(
                     routes: bloc.subPages(),
                     stream: bloc.subPageHistoryStream,
                     emptyWidget: Container(),

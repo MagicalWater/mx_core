@@ -7,7 +7,7 @@ import 'package:mx_core/mx_core.dart';
 
 /// 頁面切換元件
 /// 直接將 PageBloc 的 subPageStream 以及 routes 傳入即可
-class PageSwitcher2 extends StatefulWidget {
+class PageSwitcher extends StatefulWidget {
   final List<String> routes;
   final Stream<List<RouteData>> stream;
 
@@ -50,7 +50,7 @@ class PageSwitcher2 extends StatefulWidget {
   /// 轉場動畫貯列排序
   final StackConfig stackConfig;
 
-  PageSwitcher2._({
+  PageSwitcher._({
     this.routes,
     this.stream,
     this.duration = const Duration(milliseconds: 300),
@@ -72,7 +72,7 @@ class PageSwitcher2 extends StatefulWidget {
     ),
   });
 
-  factory PageSwitcher2({
+  factory PageSwitcher({
     List<String> routes,
     Stream<List<RouteData>> stream,
     Duration duration = const Duration(milliseconds: 300),
@@ -99,7 +99,7 @@ class PageSwitcher2 extends StatefulWidget {
     if (translateOut == null && translateIn != null) {
       translateOut = translateIn;
     }
-    return PageSwitcher2._(
+    return PageSwitcher._(
       routes: routes,
       stream: stream,
       duration: duration,
@@ -119,10 +119,10 @@ class PageSwitcher2 extends StatefulWidget {
   }
 
   @override
-  _PageSwitcher2State createState() => _PageSwitcher2State();
+  _PageSwitcherState createState() => _PageSwitcherState();
 }
 
-class _PageSwitcher2State extends State<PageSwitcher2>
+class _PageSwitcherState extends State<PageSwitcher>
     with TickerProviderStateMixin {
   Map<String, ValueKey<int>> cacheKey = {};
 
@@ -229,7 +229,7 @@ class _PageSwitcher2State extends State<PageSwitcher2>
   }
 
   @override
-  void didUpdateWidget(PageSwitcher2 oldWidget) {
+  void didUpdateWidget(PageSwitcher oldWidget) {
     _controller.duration = widget.duration;
     if (oldWidget.scaleIn != widget.scaleIn ||
         oldWidget.scaleOut != widget.scaleOut ||
@@ -279,7 +279,6 @@ class _PageSwitcher2State extends State<PageSwitcher2>
           key = ValueKey(showIndex);
           cacheKey[finded.route] = key;
         } else {
-          print('不加 key');
           key = cacheKey[finded.route];
         }
         return routeMixinImpl.getSubPage(finded, key: key);
@@ -308,7 +307,8 @@ class _PageSwitcher2State extends State<PageSwitcher2>
           _transitionPush ? widget.stackConfig.push : widget.stackConfig.pop;
 
       BoxDecoration boxShadow;
-      if (widget.animatedShadow != null) {
+      if (widget.animatedShadow != null &&
+          (haveTranslateIn || haveTranslateOut)) {
         boxShadow = BoxDecoration(
           color: Colors.transparent,
           boxShadow: [widget.animatedShadow],
@@ -445,7 +445,7 @@ class StackConfig {
   final StackSort pop;
 
   const StackConfig({
-    this.push = StackSort.oldUp,
+    this.push = StackSort.oldDown,
     this.pop = StackSort.oldUp,
   });
 }

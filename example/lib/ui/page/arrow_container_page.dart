@@ -3,7 +3,7 @@ import 'package:annotation_route/route.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/router/route.dart';
 import 'package:mx_core_example/bloc/page/arrow_container_bloc.dart';
-import 'package:mx_core_example/bloc/application_bloc.dart';
+import 'package:mx_core_example/bloc/app_bloc.dart';
 import 'package:mx_core_example/ui/page/introduction_page.dart';
 
 @ARoute(url: Pages.arrowContainer)

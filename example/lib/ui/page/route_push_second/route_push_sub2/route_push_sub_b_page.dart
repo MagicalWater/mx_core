@@ -3,7 +3,7 @@ import 'package:annotation_route/route.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/router/route.dart';
 import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart';
-import 'package:mx_core_example/bloc/application_bloc.dart';
+import 'package:mx_core_example/bloc/app_bloc.dart';
 
 @ARoute(url: Pages.routePushSubB)
 class RoutePushSubBPage extends StatefulWidget {
@@ -30,9 +30,8 @@ class _RoutePushSubBPageState extends State<RoutePushSubBPage> {
       loadStream: bloc.loadStream,
       child: Align(
         child: Container(
-          width: 200,
-          height: 200,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.teal),
+
+          decoration: BoxDecoration(color: Colors.teal),
           alignment: Alignment.center,
           child: Text(
             "子頁面B",
