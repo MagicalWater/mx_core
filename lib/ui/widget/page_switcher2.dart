@@ -84,7 +84,7 @@ class PageSwitcher extends StatefulWidget {
     StackConfig stackConfig = const StackConfig(),
     bool animateEnabled = true,
     BoxShadow animatedShadow = const BoxShadow(
-      color: Colors.black,
+      color: Colors.black26,
       blurRadius: 5,
       spreadRadius: 0,
     ),
