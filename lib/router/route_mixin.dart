@@ -284,6 +284,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         if (!isHandle) {
           print('$findParent 拒絕此次跳轉page請求: $route');
         } else {
+          _pageDetailSubject.add(nextRoute);
           findListener.dispatchSubPage(
             routeData,
             popUntil: popUntil,
@@ -305,8 +306,6 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
               break;
             }
           }
-
-          _pageDetailSubject.add(lastShowPage);
         }
         return isHandle;
       } else {
