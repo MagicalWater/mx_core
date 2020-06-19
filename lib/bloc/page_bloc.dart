@@ -16,7 +16,9 @@ abstract class PageBloc
   /// 快取頁面數量
   int get cachePageCount => subPages().length;
 
-  bool mounted;
+  BlocProviderState providerState;
+
+  bool get mounted => providerState?.mounted ?? false;
 
   /// 由此宣告頁面的 route
   @override
