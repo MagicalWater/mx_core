@@ -12,8 +12,10 @@
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bloc/bloc_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/bloc_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/popup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/popup.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/arrow_popup_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/arrow_popup_button.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

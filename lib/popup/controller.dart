@@ -1,6 +1,4 @@
-import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mx_core/ui/widget/animated_comb/animated_comb.dart';
+part of 'impl.dart';
 
 /// 彈窗的控制器
 /// 此類無法直接使用, 請使用實作類別
@@ -49,6 +47,7 @@ abstract class PopupController {
 
     await Future.wait(_controllerList.map((e) => e.toggle()));
     _controllerList.clear();
+    _allShowPopup.remove(this);
   }
 }
 

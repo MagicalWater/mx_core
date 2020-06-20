@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/popup/arrow_style.dart';
-import 'package:mx_core/popup/controller.dart';
 import 'package:mx_core/popup/impl.dart';
 import 'package:mx_core/ui/widget/material_layer.dart';
 

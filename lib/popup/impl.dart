@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mx_core/ui/widget/animated_comb/animated_comb.dart';
@@ -8,8 +9,9 @@ import 'package:mx_core/ui/widget/arrow_container.dart';
 import 'package:mx_core/util/screen_util.dart';
 
 import 'arrow_style.dart';
-import 'controller.dart';
 import 'option.dart';
+
+part 'controller.dart';
 
 part 'layout.dart';
 
@@ -21,6 +23,8 @@ typedef Widget PopupWidgetBuilder(
   PopupController controller,
 );
 
+List<PopupController> _allShowPopup = [];
+
 /// 彈跳視窗類
 /// 共有下列幾個靜態方法可使用
 /// [Popup.showRoute] - 以 route 方式顯示彈跳視窗(無法使用穿透點擊, 可以視為一個新的頁面, 只是仍然渲染背景)
@@ -28,6 +32,16 @@ typedef Widget PopupWidgetBuilder(
 /// [Popup.showArrow] - 箭頭彈跳視窗, 核心為 [Popup.showOverlay]
 class Popup {
   Popup._();
+
+  /// 彈出所有彈窗
+  static Future<void> removeAll() async {
+    var allRemove = <Future<void>>[];
+    _allShowPopup.forEach((element) {
+      allRemove.add(element.remove());
+    });
+    _allShowPopup.clear();
+    await Future.wait(allRemove);
+  }
 
   /// [option] - 彈窗屬性
   /// [builder] - 彈窗元件構建
@@ -66,6 +80,7 @@ class Popup {
     );
 
     var controller = RouteController(context);
+    _allShowPopup.add(controller);
 
     var child = builder(controller);
 
@@ -149,6 +164,7 @@ class Popup {
     }
 
     var controller = OverlayController();
+    _allShowPopup.add(controller);
     var backgroundSync = AnimatedSyncTick.identity(
       type: AnimatedType.toggle,
       initToggle: true,
