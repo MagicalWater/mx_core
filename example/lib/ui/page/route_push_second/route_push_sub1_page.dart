@@ -14,7 +14,7 @@ class RoutePushSub1Page extends StatefulWidget {
   _RoutePushSub1PageState createState() => _RoutePushSub1PageState();
 }
 
-class _RoutePushSub1PageState extends State<RoutePushSub1Page> {
+class _RoutePushSub1PageState extends State<RoutePushSub1Page> with AutomaticKeepAliveClientMixin {
   RoutePushSub1Bloc bloc;
 
   var index = 0;
@@ -27,6 +27,7 @@ class _RoutePushSub1PageState extends State<RoutePushSub1Page> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return LoadProvider(
       loadStream: bloc.loadStream,
       child: Container(
@@ -47,4 +48,7 @@ class _RoutePushSub1PageState extends State<RoutePushSub1Page> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

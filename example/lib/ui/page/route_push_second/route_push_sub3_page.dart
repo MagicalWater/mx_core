@@ -15,7 +15,11 @@ class RoutePushSub3Page extends StatefulWidget {
   _RoutePushSub3PageState createState() => _RoutePushSub3PageState();
 }
 
-class _RoutePushSub3PageState extends State<RoutePushSub3Page> {
+class _RoutePushSub3PageState extends State<RoutePushSub3Page> with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   RoutePushSub3Bloc bloc;
 
   @override
@@ -26,6 +30,7 @@ class _RoutePushSub3PageState extends State<RoutePushSub3Page> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return LoadProvider(
       loadStream: bloc.loadStream,
       child: Container(

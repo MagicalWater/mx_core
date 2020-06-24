@@ -50,7 +50,7 @@ void main() {
     );
   });
 
-  AppBloc().pageStream.listen((e) {
+  AppBloc().pageDetailStream.listen((e) {
     print('''
 歷史 - ${AppBloc().pageHistory.map((el) => el.route).toList()}
 當前 - ${AppBloc().currentDetailPage}

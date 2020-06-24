@@ -94,7 +94,7 @@ abstract class PageBloc
   @override
   Future<void> dispose() async {
     // 取消子頁面監聽
-    if (route != null && route.isNotEmpty) {
+    if (route != null) {
       routeMixinImpl?.unregisterSubPageListener(this);
     }
 
@@ -132,6 +132,7 @@ abstract class PageBloc
         isHandleRoute: _isHandleRoute,
         dispatchSubPage: _dispatchSubPage,
         popSubPage: _popSubPage,
+        forceModifyPageDetail: _forceModifyPageDetail,
       );
 
 //        print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
@@ -201,6 +202,31 @@ abstract class PageBloc
       return true;
     }
     return false;
+  }
+
+  /// 強制更改子頁面
+  void _forceModifyPageDetail(String route) {
+    // 判斷頁面是否已經存在歷史裡面
+    var findHistoryIndex =
+        subPageHistory.indexWhere((element) => element.route == route);
+
+    if (findHistoryIndex != -1) {
+      // 曾經在歷史裡面, 調換位置
+      _historyPageSubject.value.removeAt(findHistoryIndex);
+    }
+
+    var routeData = RouteData(route);
+
+    if (_historyPageSubject.hasValue) {
+      var currentHistory = _historyPageSubject.value..add(routeData);
+      if (currentHistory.length > cachePageCount) {
+        currentHistory =
+            currentHistory.sublist(currentHistory.length - cachePageCount);
+      }
+      _historyPageSubject.add(currentHistory);
+    } else {
+      _historyPageSubject.add([routeData]);
+    }
   }
 
   String _popSubPage({bool Function(String route) popUntil}) {

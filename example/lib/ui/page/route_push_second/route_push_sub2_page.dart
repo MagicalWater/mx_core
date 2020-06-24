@@ -14,7 +14,11 @@ class RoutePushSub2Page extends StatefulWidget {
   _RoutePushSub2PageState createState() => _RoutePushSub2PageState();
 }
 
-class _RoutePushSub2PageState extends State<RoutePushSub2Page> {
+class _RoutePushSub2PageState extends State<RoutePushSub2Page> with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   RoutePushSub2Bloc bloc;
   int counter = 0;
 
@@ -26,6 +30,7 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return LoadProvider(
       loadStream: bloc.loadStream,
       child: Container(

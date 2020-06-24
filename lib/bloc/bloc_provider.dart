@@ -51,6 +51,7 @@ class BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
   void dispose() {
     _currentBloc.providerState = null;
     _currentBloc?.dispose();
+    _currentBloc = null;
     super.dispose();
   }
 

@@ -11,14 +11,28 @@
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/popup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/popup.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/arrow_popup_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/arrow_popup_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub1_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub1_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub3_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub3_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/page_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/route_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub1_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub1_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub3_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub3_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_switcher.dart" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +41,6 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_24" />
   <component name="FavoritesManager">
     <favorites_list name="mx_core" />
   </component>
@@ -43,11 +56,15 @@
   </component>
   <component name="ProjectId" id="1ZhbQ4vlOVhznajdYa9J7hWkrvX" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -69,18 +86,6 @@
       <recent name="$PROJECT_DIR$/lib/ui/widget/intrinsic_layout" />
       <recent name="$PROJECT_DIR$/example/fastlane/actions" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Flutter.android_debug">
     <configuration name="main_example.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -155,5 +160,27 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1638" height="209" key="GridCell.Tab.0.bottom" timestamp="1592815090552">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1638" height="209" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090552" />
+    <state width="1638" height="209" key="GridCell.Tab.0.center" timestamp="1592815090551">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1638" height="209" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090551" />
+    <state width="1638" height="209" key="GridCell.Tab.0.left" timestamp="1592815090550">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1638" height="209" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090550" />
+    <state width="1638" height="209" key="GridCell.Tab.0.right" timestamp="1592815090551">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1638" height="209" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090551" />
+    <state width="300" height="95" key="javadoc.popup.new" timestamp="1592814858803">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="300" height="95" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592814858803" />
   </component>
 </project>
