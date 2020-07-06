@@ -45,7 +45,10 @@ abstract class PopupController {
     });
     _removeEventCallbackList.clear();
 
-    await Future.wait(_controllerList.map((e) => e.toggle()));
+    await Future.wait(_controllerList.map((e) {
+      var toggle = e.toggle(false);
+      return toggle;
+    }));
     _controllerList.clear();
     _allShowPopup.remove(this);
   }
@@ -65,8 +68,8 @@ class RouteController extends PopupController {
     await super.remove();
     if (needRemove) {
       Navigator.of(_context).pop();
+      _context = null;
     }
-    _context = null;
   }
 }
 

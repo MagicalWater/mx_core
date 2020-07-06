@@ -42,6 +42,15 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 是否由內部自行註冊 [TickerProvider]
   bool _isNeedRegisterTicker;
 
+  /// 是否動畫中
+  @override
+  bool get isAnimating =>
+      status == AnimationStatus.forward || status == AnimationStatus.dismissed;
+
+  /// 動畫狀態
+  @override
+  AnimationStatus get status => _controller.status;
+
   AnimatedSyncTick._({
     this.initToggle = false,
   })  : this._controller = null,
