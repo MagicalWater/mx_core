@@ -3,7 +3,7 @@ import 'package:annotation_route/route.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:${project}/router/route.dart';
 import 'package:${project}/bloc/page/${path}${lower_line}_bloc.dart';
-import 'package:${project}/bloc/application_bloc.dart';
+import 'package:${project}/bloc/app_bloc.dart';
 
 @ARoute(url: Pages.${ori})
 class ${upper_camel}Page extends StatefulWidget {

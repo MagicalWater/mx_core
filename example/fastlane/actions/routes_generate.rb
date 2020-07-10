@@ -161,7 +161,7 @@ module Fastlane
               addText = addText + %{      case Pages.#{page}:
         return BlocProvider(
           child: child,
-          bloc: #{convertName['upper_camel']}Bloc(blocOption),
+          blocBuilder: () => #{convertName['upper_camel']}Bloc(blocOption),
           key: key,
         );
 }

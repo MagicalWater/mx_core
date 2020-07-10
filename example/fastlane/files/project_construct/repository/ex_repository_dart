@@ -17,7 +17,7 @@ class ExRepository {
 
   /// 透過 _requestService 取得 exApi 的資料
   /// 並且將 資料轉換為 ExApiData
-  Observable<ExApiData> getRequestData() {
+  Stream<ExApiData> getRequestData() {
     return _requestService
         .exApi("titlePath", "aId", "bToken", "cBody", "rawBody",
             FileInfo(filepath: "filepath", filename: "filename"),

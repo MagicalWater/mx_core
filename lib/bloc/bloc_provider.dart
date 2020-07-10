@@ -5,21 +5,22 @@ abstract class BlocBase {
   Future<void> dispose();
 }
 
+typedef T BlocBuilder<T extends PageBloc>();
+
 class BlocProvider<T extends PageBloc> extends StatefulWidget {
   BlocProvider({
     Key key,
     @required this.child,
-    @required this.bloc,
+    @required this.blocBuilder,
   }) : super(key: key);
 
-  final T bloc;
+  final BlocBuilder<T> blocBuilder;
   final Widget child;
 
   @override
   BlocProviderState<T> createState() => BlocProviderState<T>();
 
   static T of<T extends PageBloc>(BuildContext context) {
-//    BlocProvider<T> provider = context.findAncestorWidgetOfExactType();
     BlocProviderState<T> providerState = context.findAncestorStateOfType();
     return providerState?._currentBloc;
   }
@@ -30,10 +31,10 @@ class BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
 
   @override
   void initState() {
-    _currentBloc = widget.bloc;
+    _currentBloc = widget.blocBuilder();
     _currentBloc.providerState = this;
-    widget.bloc
-        .registerSubPageStream(defaultRoute: widget.bloc.defaultSubPage());
+    _currentBloc.registerSubPageStream(
+        defaultRoute: _currentBloc.defaultSubPage());
     super.initState();
   }
 

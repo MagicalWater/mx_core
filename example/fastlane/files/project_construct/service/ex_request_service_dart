@@ -7,7 +7,7 @@ import '../request/ex/ex_request_client.dart';
 class ExRequestService {
   ExRequestClientMixin exRequestClientMixin = ExRequestClient.getInstance();
 
-  Observable<ServerResponse> exApi(String titlePath, String aId, String bToken,
+  Stream<ServerResponse> exApi(String titlePath, String aId, String bToken,
       String cBody, String rawBody, FileInfo dBodyFile,
       {String opId,
       String opToken,

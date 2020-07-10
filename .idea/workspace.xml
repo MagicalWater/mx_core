@@ -12,17 +12,38 @@
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.android.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.ios.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/routes_generate.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/routes_generate.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/repository/ex_repository_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/project_construct/repository/ex_repository_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/service/ex_request_service_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/project_construct/service/ex_request_service_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/template/template_page_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/template/template_page_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/version" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/version" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/popup/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/popup/controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/popup/impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/mx_core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/mx_core.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_comb_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_comb_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mx_core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mx_core.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/routes_generate.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/routes_generate.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/repository/ex_repository_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/repository/ex_repository_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/service/ex_request_service_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/service/ex_request_service_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_page_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_page_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/version" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route.internal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route.internal.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/bloc_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/bloc_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/router/route.internal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route.internal.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bloc/bloc_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/bloc_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -154,30 +175,38 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state width="1638" height="209" key="GridCell.Tab.0.bottom" timestamp="1594014428358">
+    <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1594346077689">
+      <screen x="0" y="23" width="1680" height="952" />
+    </state>
+    <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594346077689" />
+    <state width="1638" height="209" key="GridCell.Tab.0.bottom" timestamp="1594346401355">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state width="1638" height="209" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090552" />
-    <state width="1638" height="209" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594014428358" />
-    <state width="1638" height="209" key="GridCell.Tab.0.center" timestamp="1594014428357">
+    <state width="1638" height="209" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594346401355" />
+    <state width="1638" height="209" key="GridCell.Tab.0.center" timestamp="1594346401354">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state width="1638" height="209" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090551" />
-    <state width="1638" height="209" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594014428357" />
-    <state width="1638" height="209" key="GridCell.Tab.0.left" timestamp="1594014428357">
+    <state width="1638" height="209" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594346401354" />
+    <state width="1638" height="209" key="GridCell.Tab.0.left" timestamp="1594346401354">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state width="1638" height="209" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090550" />
-    <state width="1638" height="209" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594014428357" />
-    <state width="1638" height="209" key="GridCell.Tab.0.right" timestamp="1594014428358">
+    <state width="1638" height="209" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594346401354" />
+    <state width="1638" height="209" key="GridCell.Tab.0.right" timestamp="1594346401354">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state width="1638" height="209" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090551" />
-    <state width="1638" height="209" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594014428358" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1594014295331">
+    <state width="1638" height="209" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594346401354" />
+    <state x="493" y="256" width="694" height="486" key="find.popup" timestamp="1594346278077">
+      <screen x="0" y="23" width="1680" height="952" />
+    </state>
+    <state x="493" y="256" width="694" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594346278077" />
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1594345672685">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state width="300" height="95" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592814858803" />
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594014295331" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594345672685" />
   </component>
 </project>

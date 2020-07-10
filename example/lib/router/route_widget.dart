@@ -79,157 +79,157 @@ class RouteWidget implements RouteWidgetBase {
       case Pages.spanGrid:
         return BlocProvider(
           child: child,
-          bloc: SpanGridBloc(blocOption),
+          blocBuilder: () => SpanGridBloc(blocOption),
           key: key,
         );
       case Pages.assistTouch:
         return BlocProvider(
           child: child,
-          bloc: AssistTouchBloc(blocOption),
+          blocBuilder: () => AssistTouchBloc(blocOption),
           key: key,
         );
       case Pages.coordinateLayout:
         return BlocProvider(
           child: child,
-          bloc: CoordinateLayoutBloc(blocOption),
+          blocBuilder: () => CoordinateLayoutBloc(blocOption),
           key: key,
         );
       case Pages.loading:
         return BlocProvider(
           child: child,
-          bloc: LoadingBloc(blocOption),
+          blocBuilder: () => LoadingBloc(blocOption),
           key: key,
         );
       case Pages.loadProvider:
         return BlocProvider(
           child: child,
-          bloc: LoadProviderBloc(blocOption),
+          blocBuilder: () => LoadProviderBloc(blocOption),
           key: key,
         );
       case Pages.marquee:
         return BlocProvider(
           child: child,
-          bloc: MarqueeBloc(blocOption),
+          blocBuilder: () => MarqueeBloc(blocOption),
           key: key,
         );
       case Pages.particleAnimation:
         return BlocProvider(
           child: child,
-          bloc: ParticleAnimationBloc(blocOption),
+          blocBuilder: () => ParticleAnimationBloc(blocOption),
           key: key,
         );
       case Pages.timer:
         return BlocProvider(
           child: child,
-          bloc: TimerBloc(blocOption),
+          blocBuilder: () => TimerBloc(blocOption),
           key: key,
         );
       case Pages.animatedCore:
         return BlocProvider(
           child: child,
-          bloc: AnimatedCoreBloc(blocOption),
+          blocBuilder: () => AnimatedCoreBloc(blocOption),
           key: key,
         );
       case Pages.arrowContainer:
         return BlocProvider(
           child: child,
-          bloc: ArrowContainerBloc(blocOption),
+          blocBuilder: () => ArrowContainerBloc(blocOption),
           key: key,
         );
       case Pages.normalPopup:
         return BlocProvider(
           child: child,
-          bloc: NormalPopupBloc(blocOption),
+          blocBuilder: () => NormalPopupBloc(blocOption),
           key: key,
         );
       case Pages.arrowPopup:
         return BlocProvider(
           child: child,
-          bloc: ArrowPopupBloc(blocOption),
+          blocBuilder: () => ArrowPopupBloc(blocOption),
           key: key,
         );
       case Pages.routePushEntry:
         return BlocProvider(
           child: child,
-          bloc: RoutePushEntryBloc(blocOption),
+          blocBuilder: () => RoutePushEntryBloc(blocOption),
           key: key,
         );
       case Pages.routePushSecond:
         return BlocProvider(
           child: child,
-          bloc: RoutePushSecondBloc(blocOption),
+          blocBuilder: () => RoutePushSecondBloc(blocOption),
           key: key,
         );
       case Pages.waveProgress:
         return BlocProvider(
           child: child,
-          bloc: WaveProgressBloc(blocOption),
+          blocBuilder: () => WaveProgressBloc(blocOption),
           key: key,
         );
       case Pages.test:
         return BlocProvider(
           child: child,
-          bloc: TestBloc(blocOption),
+          blocBuilder: () => TestBloc(blocOption),
           key: key,
         );
       case Pages.refreshView:
         return BlocProvider(
           child: child,
-          bloc: RefreshViewBloc(blocOption),
+          blocBuilder: () => RefreshViewBloc(blocOption),
           key: key,
         );
       case Pages.libEaseRefresh:
         return BlocProvider(
           child: child,
-          bloc: LibEaseRefreshBloc(blocOption),
+          blocBuilder: () => LibEaseRefreshBloc(blocOption),
           key: key,
         );
       case Pages.introduction:
         return BlocProvider(
           child: child,
-          bloc: IntroductionBloc(blocOption),
+          blocBuilder: () => IntroductionBloc(blocOption),
           key: key,
         );
       case Pages.routePushThird:
         return BlocProvider(
           child: child,
-          bloc: RoutePushThirdBloc(blocOption),
+          blocBuilder: () => RoutePushThirdBloc(blocOption),
           key: key,
         );
       case Pages.statefulButton:
         return BlocProvider(
           child: child,
-          bloc: StatefulButtonBloc(blocOption),
+          blocBuilder: () => StatefulButtonBloc(blocOption),
           key: key,
         );
       case Pages.routePushSub1:
         return BlocProvider(
           child: child,
-          bloc: RoutePushSub1Bloc(blocOption),
+          blocBuilder: () => RoutePushSub1Bloc(blocOption),
           key: key,
         );
       case Pages.routePushSub2:
         return BlocProvider(
           child: child,
-          bloc: RoutePushSub2Bloc(blocOption),
+          blocBuilder: () => RoutePushSub2Bloc(blocOption),
           key: key,
         );
       case Pages.routePushSub3:
         return BlocProvider(
           child: child,
-          bloc: RoutePushSub3Bloc(blocOption),
+          blocBuilder: () => RoutePushSub3Bloc(blocOption),
           key: key,
         );
       case Pages.routePushSubA:
         return BlocProvider(
           child: child,
-          bloc: RoutePushSubABloc(blocOption),
+          blocBuilder: () => RoutePushSubABloc(blocOption),
           key: key,
         );
       case Pages.routePushSubB:
         return BlocProvider(
           child: child,
-          bloc: RoutePushSubBBloc(blocOption),
+          blocBuilder: () => RoutePushSubBBloc(blocOption),
           key: key,
         );
       default:
