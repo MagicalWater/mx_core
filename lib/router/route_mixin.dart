@@ -416,6 +416,11 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     );
   }
 
+  /// 是否可以返回大頁面
+  bool canPopPage(BuildContext context) {
+    return Navigator.of(context).canPop();
+  }
+
   /// 返回大頁面 page
   /// [popUtil] - pop 直到返回true
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
