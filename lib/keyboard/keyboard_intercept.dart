@@ -260,7 +260,7 @@ class KeyboardIntercept {
     // 因為顯示自訂鍵盤, 因此需要處理 android 的返回按鈕事件
     // zIndex 則是消費的先後順序(具體規則看 lib 文件)
     BackButtonInterceptor.add(
-      (_) {
+      (bool stopDefaultButtonEvent, RouteInfo routeInfo) {
         // 監聽到事件時, 呼叫隱藏鍵盤的 action
         // 但這邊不是直接呼叫此處的隱藏鍵盤
         // 而是再以消息機制與本地溝通

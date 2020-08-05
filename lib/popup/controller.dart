@@ -94,7 +94,7 @@ class OverlayController extends PopupController {
     if (_isRegisterBackButtonListener || _isRemoved) return;
     _isRegisterBackButtonListener = true;
     BackButtonInterceptor.add(
-      (_) {
+      (bool stopDefaultButtonEvent, RouteInfo routeInfo) {
         callback();
         return true;
       },
