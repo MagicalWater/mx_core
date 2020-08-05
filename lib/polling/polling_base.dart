@@ -1,15 +1,20 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:rxdart/rxdart.dart';
 
 /// 輪詢基底
 abstract class PollingBase {
   /// 輪詢間隔
   Duration interval;
 
-  /// 輪詢的訂閱
-  StreamSubscription _subscription;
+  /// 當前的 loop
+  _PollLoop _loop;
+
+  /// 現在輪詢是否啟動中
+  bool get isActive => _loop?.isLooping ?? false;
+
+  /// 是否正在輪詢中
+  bool get isPolling => _loop?.isPolling ?? false;
 
   /// 在這邊回傳需要進行輪詢的方法
   @protected
@@ -19,25 +24,63 @@ abstract class PollingBase {
 
   /// 開始輪詢
   /// 開始之前先停止之前的
-  void start() {
-    print("開始倒數");
+  /// [immediately] - 是否立刻執行一次輪詢
+  void start([bool immediately = false]) {
     end();
-    _subscription = TimerStream('', interval).listen((_) async {
-      print("時間到了 給我立刻輪詢");
-      await onPolling();
-      start();
-    });
-    print("逃出 start");
+    _loop = _PollLoop(interval: () => interval, onPoll: onPolling);
+    _loop.start(immediately);
   }
 
   /// 停止輪詢
   void end() {
-    _subscription?.cancel();
-    _subscription = null;
+    _loop?.end();
   }
 
   /// 釋放資源
   void dispose() {
     end();
+  }
+}
+
+class _PollLoop {
+  Duration Function() interval;
+  Future<void> Function() onPoll;
+
+  _PollLoop({this.interval, this.onPoll});
+
+  /// 輪詢是否啟動中
+  bool isLooping = false;
+
+  /// 是否正在輪詢中
+  bool isPolling = false;
+
+  /// 是否要結束輪詢
+  bool _isEnd = false;
+
+  void start([bool immediately = false]) async {
+    if (isLooping) {
+      return;
+    }
+
+    isLooping = true;
+    if (!immediately) {
+      await Future.delayed(interval());
+    }
+    while (!_isEnd) {
+      print("開始輪詢");
+      isPolling = true;
+      await onPoll();
+      isPolling = false;
+      print('輪詢結束 - 等待 $interval');
+      if (!_isEnd) {
+        await Future.delayed(interval());
+      }
+    }
+
+    isLooping = false;
+  }
+
+  void end() {
+    _isEnd = true;
   }
 }
