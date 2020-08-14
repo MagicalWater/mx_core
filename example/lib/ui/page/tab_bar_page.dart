@@ -54,7 +54,7 @@ class _TabBarPageState extends State<TabBarPage> {
 //            },
 //            header: Container(width: 30),
 //            footer: Container(width: 100),
-            height: 100,
+            tabHeight: 100,
             scrollable: true,
             indicator: TabIndicator(
               color: Colors.red,
