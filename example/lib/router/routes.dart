@@ -80,6 +80,12 @@ class Pages {
   /// SpanGrid
   static const spanGrid = "/spanGrid";
 
+  /// tab
+  static const tabBar = "/tabBar";
+
+  /// 線條指示器
+  static const lineIndicator = "/lineIndicator";
+
   Pages._();
 }
 

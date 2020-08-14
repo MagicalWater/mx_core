@@ -26,6 +26,8 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
   List<PageInfo> textMap = [
     PageInfo(Pages.test, "測試頁面"),
+    PageInfo(Pages.lineIndicator, "線條指示器"),
+    PageInfo(Pages.tabBar, "Tab元件"),
     PageInfo(Pages.spanGrid, "空間切割佈局"),
     PageInfo(Pages.coordinateLayout, "座標佈局"),
     PageInfo(Pages.assistTouch, "輔助按鈕"),

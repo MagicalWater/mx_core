@@ -58,8 +58,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   AnimatedSyncTick._({
     this.initToggle = false,
     this.autoStart = true,
-  })
-      : this._controller = null,
+  })  : this._controller = null,
         this._isNeedRegisterTicker = true;
 
   /// [vsync] - 動畫控制器 [TickerProvider]
@@ -70,8 +69,7 @@ class AnimatedSyncTick implements AnimatedCombController {
     @required TickerProvider vsync,
     this.initToggle,
     this.autoStart = true,
-  })
-      : this._isNeedRegisterTicker = false,
+  })  : this._isNeedRegisterTicker = false,
         this._type = type,
         this._controller = AnimationController(
           duration: Duration.zero,
@@ -92,10 +90,10 @@ class AnimatedSyncTick implements AnimatedCombController {
     bool initToggle = false,
     bool autoStart = true,
   }) {
-    final tick = AnimatedSyncTick._(
-        initToggle: initToggle, autoStart: autoStart);
-    tick._type = type;
-    return tick;
+    return AnimatedSyncTick._(
+      initToggle: initToggle,
+      autoStart: autoStart,
+    ).._type = type;
   }
 
   /// 控制器的 ticker 監聽
@@ -127,8 +125,10 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 註冊動畫 Ticker
   /// 只由 [AnimatedComb] 內部檢測到 ticker 狀態參數 [_isNeedRegisterTicker]
   /// 為 true 時才觸發
-  void _registerTicker(AnimatedType type,
-      TickerProvider vsync,) {
+  void _registerTicker(
+    AnimatedType type,
+    TickerProvider vsync,
+  ) {
     if (_isNeedRegisterTicker && this._controller != null) {
       // 代表已經註冊過了, 不可再註冊, 拋出錯誤
       // 同時也代表外部將 AnimatedCombController 丟給多個元件
@@ -150,8 +150,7 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   /// 取得 [AnimationData]
   AnimationData _getAnimationData(int id) {
-    return _animatedParseMap[id]
-      ..current._toggle = _currentToggle;
+    return _animatedParseMap[id]..current._toggle = _currentToggle;
   }
 
   /// 註冊動畫, 回傳一個註冊的 id
@@ -306,9 +305,11 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 將 [List<Comb>] 轉為 [AnimationData]
   /// 首先依照動畫時間分割執行時段
   /// 最後生成對應的 [AnimationData]
-  AnimationData _convertToAnimatedData(int totalDuration,
-      _AnimatedComb animatedComb,
-      int id,) {
+  AnimationData _convertToAnimatedData(
+    int totalDuration,
+    _AnimatedComb animatedComb,
+    int id,
+  ) {
     var animationData = AnimationData();
 
     // 實際開始時間
@@ -444,15 +445,15 @@ class AnimatedSyncTick implements AnimatedCombController {
         );
         switch ((value as CombRotate).type) {
           case RotateType.x:
-          // 垂直翻轉
+            // 垂直翻轉
             animationData._rotateXList.add(binder);
             break;
           case RotateType.y:
-          // 水平翻轉
+            // 水平翻轉
             animationData._rotateYList.add(binder);
             break;
           case RotateType.z:
-          // 旋轉
+            // 旋轉
             animationData._rotateZList.add(binder);
             break;
         }
@@ -570,7 +571,7 @@ class AnimatedSyncTick implements AnimatedCombController {
         await _controller?.forward();
         break;
       case AnimatedType.toggle:
-      // 先儲存當前的 toggle 狀態
+        // 先儲存當前的 toggle 狀態
         var oriToggle = _currentToggle;
         _currentMethod = AnimationMethod.toggle;
         _controller?.reset();
@@ -782,17 +783,17 @@ class AnimationData {
   void syncTickValue(double t) {
     var scaleAnimComb = _scaleList.where((e) => e._isActive(t));
     var rotateXAnim =
-    _rotateXList.firstWhere((e) => e._isActive(t), orElse: () => null);
+        _rotateXList.firstWhere((e) => e._isActive(t), orElse: () => null);
     var rotateYAnim =
-    _rotateYList.firstWhere((e) => e._isActive(t), orElse: () => null);
+        _rotateYList.firstWhere((e) => e._isActive(t), orElse: () => null);
     var rotateZAnim =
-    _rotateZList.firstWhere((e) => e._isActive(t), orElse: () => null);
+        _rotateZList.firstWhere((e) => e._isActive(t), orElse: () => null);
     var offsetAnimComb = _offsetList.where((e) => e._isActive(t));
     var opacityAnim =
-    _opacityList.firstWhere((e) => e._isActive(t), orElse: () => null);
+        _opacityList.firstWhere((e) => e._isActive(t), orElse: () => null);
     var sizeAnimComb = _sizeList.where((e) => e._isActive(t));
     var colorAnim =
-    _colorList.firstWhere((e) => e._isActive(t), orElse: () => null);
+        _colorList.firstWhere((e) => e._isActive(t), orElse: () => null);
 
     if (scaleAnimComb.isNotEmpty) {
       var first = scaleAnimComb.first;
@@ -803,7 +804,7 @@ class AnimationData {
           break;
         case ScaleType.width:
           var second = scaleAnimComb.firstWhere(
-                (e) => e.scaleType == ScaleType.height,
+            (e) => e.scaleType == ScaleType.height,
             orElse: () => null,
           );
           if (second != null) {
@@ -822,7 +823,7 @@ class AnimationData {
           break;
         case ScaleType.height:
           var second = scaleAnimComb.firstWhere(
-                (e) => e.scaleType == ScaleType.width,
+            (e) => e.scaleType == ScaleType.width,
             orElse: () => null,
           );
           if (second != null) {
@@ -853,7 +854,7 @@ class AnimationData {
           break;
         case SizeType.width:
           var second = sizeAnimComb.firstWhere(
-                (e) => e.sizeType == SizeType.height,
+            (e) => e.sizeType == SizeType.height,
             orElse: () => null,
           );
           if (second != null) {
@@ -872,7 +873,7 @@ class AnimationData {
           break;
         case SizeType.height:
           var second = sizeAnimComb.firstWhere(
-                (e) => e.sizeType == SizeType.width,
+            (e) => e.sizeType == SizeType.width,
             orElse: () => null,
           );
           if (second != null) {
@@ -931,7 +932,7 @@ class AnimationData {
           break;
         case TransType.x:
           var second = offsetAnimComb.firstWhere(
-                (e) => e.transType == TransType.y,
+            (e) => e.transType == TransType.y,
             orElse: () => null,
           );
           if (second != null) {
@@ -950,7 +951,7 @@ class AnimationData {
           break;
         case TransType.y:
           var second = offsetAnimComb.firstWhere(
-                (e) => e.transType == TransType.x,
+            (e) => e.transType == TransType.x,
             orElse: () => null,
           );
           if (second != null) {

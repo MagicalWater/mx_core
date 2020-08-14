@@ -10,11 +10,81 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/xing/mx_core_example/TestAA.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/android/app/src/test/java/com/xing/mx_core_example/ExampleUnitTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/android/app/src/main/kotlin/com/xing/mx_core_example/TestAA.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/android/app/src/test/java/com/xing/mx_core_example/ExampleUnitTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/line_indicator_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/tab_bar_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/line_indicator_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/tab_bar_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/extension/list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/line_indicator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/locate_row.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/action_width.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/base_tab_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/bob_tab_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/builder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/indicator_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/swipe_tab_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/tab_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/tab_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/z_index_flex/flex.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/z_index_flex/z_index_flex.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/bloc/page/line_indicator_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/bloc/page/tab_bar_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/line_indicator_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/tab_bar_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/extension/list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/line_indicator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/locate_row.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/action_width.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/base_tab_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/bob_tab_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/builder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/indicator_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/tab_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/tab_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/z_index_flex/flex.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/z_index_flex/z_index_flex.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/xing/mx_core_example/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/src/main/kotlin/com/xing/mx_core_example/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.android.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.ios.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/report.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/mx_core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/mx_core.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/android/app/src/main/kotlin/com/xing/mx_core_example/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/android/app/src/main/kotlin/com/xing/mx_core_example/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route.internal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route.internal.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/polling/polling_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/polling/polling_base.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/animated_comb/animated_sync_tick.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/animated_comb/animated_sync_tick.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/router/route.internal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route.internal.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/polling/polling_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/polling/polling_base.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mx_core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mx_core.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,7 +118,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget/tab" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -57,18 +127,18 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/align_grid/space" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout/space" />
       <recent name="$PROJECT_DIR$/lib/popup" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/intrinsic_layout" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/ui/widget/tab" />
       <recent name="$PROJECT_DIR$/lib/ui/widget" />
       <recent name="$PROJECT_DIR$/example/lib/bloc/page" />
       <recent name="$PROJECT_DIR$/example/lib/ui/page" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/intrinsic_layout" />
-      <recent name="$PROJECT_DIR$/example/fastlane/actions" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.android_debug">
@@ -150,34 +220,49 @@
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1594346077689" />
-    <state width="1638" height="209" key="GridCell.Tab.0.bottom" timestamp="1596595684909">
+    <state width="1638" height="297" key="GridCell.Tab.0.bottom" timestamp="1597368475911">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1638" height="297" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597368475911" />
+    <state width="1638" height="209" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597222232027" />
+    <state width="1638" height="297" key="GridCell.Tab.0.center" timestamp="1597368475910">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1638" height="297" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597368475910" />
+    <state width="1638" height="209" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597222232026" />
+    <state width="1638" height="297" key="GridCell.Tab.0.left" timestamp="1597368475910">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1638" height="297" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597368475910" />
+    <state width="1638" height="209" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597222232026" />
+    <state width="1638" height="297" key="GridCell.Tab.0.right" timestamp="1597368475911">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="1638" height="297" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597368475911" />
+    <state width="1638" height="209" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597222232027" />
+    <state x="341" y="137" key="SettingsEditor" timestamp="1597291421548">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state x="341" y="137" key="SettingsEditor/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597291421548" />
+    <state x="341" y="137" key="SettingsEditor/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597198796421" />
+    <state x="493" y="256" width="803" height="486" key="find.popup" timestamp="1597223005617">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="1638" height="209" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090552" />
-    <state width="1638" height="209" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1596595684909" />
-    <state width="1638" height="209" key="GridCell.Tab.0.center" timestamp="1596595684909">
+    <state x="493" y="256" width="803" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597223005617" />
+    <state width="300" height="95" key="javadoc.popup.new" timestamp="1597385323590">
+      <screen x="0" y="23" width="1680" height="951" />
+    </state>
+    <state width="300" height="95" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597385323590" />
+    <state width="343" height="107" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@-240.-1057.1920.1057" timestamp="1597110922935" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597224908855" />
+    <state x="505" y="229" width="670" height="675" key="run.anything.popup" timestamp="1597126303985">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state width="1638" height="209" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090551" />
-    <state width="1638" height="209" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1596595684909" />
-    <state width="1638" height="209" key="GridCell.Tab.0.left" timestamp="1596595684909">
-      <screen x="0" y="23" width="1680" height="952" />
+    <state x="505" y="229" width="670" height="675" key="run.anything.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597126303985" />
+    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup" timestamp="1597367564214">
+      <screen x="0" y="23" width="1680" height="951" />
     </state>
-    <state width="1638" height="209" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090550" />
-    <state width="1638" height="209" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1596595684909" />
-    <state width="1638" height="209" key="GridCell.Tab.0.right" timestamp="1596595684909">
-      <screen x="0" y="23" width="1680" height="952" />
-    </state>
-    <state width="1638" height="209" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592815090551" />
-    <state width="1638" height="209" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1596595684909" />
-    <state x="493" y="256" width="694" height="486" key="find.popup" timestamp="1596592691726">
-      <screen x="0" y="23" width="1680" height="952" />
-    </state>
-    <state x="493" y="256" width="694" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1596592691726" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1596610963712">
-      <screen x="0" y="23" width="1680" height="952" />
-    </state>
-    <state width="300" height="95" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1592814858803" />
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1596610963712" />
+    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597367564214" />
+    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597223128024" />
   </component>
 </project>

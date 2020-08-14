@@ -21,3 +21,6 @@ export 'wave_progress/wave_progress.dart';
 export 'focus_layout.dart';
 export 'info_popup.dart';
 export 'span_grid/span_grid.dart';
+export 'locate_row.dart';
+export 'tab_bar/tab_bar.dart';
+export 'line_indicator.dart';
