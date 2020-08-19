@@ -156,20 +156,27 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
         ? (tabTextStyle?.select ?? _defaultTextStyle.select)
         : (tabTextStyle?.unSelect ?? _defaultTextStyle.unSelect);
 
-    return MaterialLayer.single(
-      layer: LayerProperties(
-        width: size.width,
-        height: size.height,
-      ),
-      onTap: onTap,
-      child: Container(
-        padding: padding,
-        alignment: Alignment.center,
-        child: AnimatedDefaultTextStyle(
-          child: Text(texts[index]),
-          style: textStyle,
-          duration: duration,
-          curve: curve,
+    var decoration = isSelected
+        ? (tabDecoration?.select ?? _defaultDecoration.select)
+        : (tabDecoration?.unSelect ?? _defaultDecoration.unSelect);
+
+    return Material(
+      type: MaterialType.transparency,
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: getBorderRadius(decoration),
+        onTap: onTap,
+        child: Container(
+          width: size.width,
+          height: size.height,
+          padding: padding,
+          alignment: Alignment.center,
+          child: AnimatedDefaultTextStyle(
+            child: Text(texts[index]),
+            style: textStyle,
+            duration: duration,
+            curve: curve,
+          ),
         ),
       ),
     );
@@ -193,16 +200,21 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
   @override
   Widget buildActionForeground({Size size, int index, VoidCallback onTap}) {
     var textStyle = actionTextStyle ?? _defaultActionTextStyle;
-    return MaterialLayer.single(
-      layer: LayerProperties(
-        width: size.width,
-        height: size.height,
-      ),
-      onTap: onTap,
-      child: Container(
-        padding: padding,
-        alignment: Alignment.center,
-        child: Text(actions[index], style: textStyle),
+    var decoration = actionDecoration ?? _defaultActionDecoration;
+
+    return Material(
+      type: MaterialType.transparency,
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: getBorderRadius(decoration),
+        onTap: onTap,
+        child: Container(
+          width: size.width,
+          height: size.height,
+          padding: padding,
+          alignment: Alignment.center,
+          child: Text(actions[index], style: textStyle),
+        ),
       ),
     );
   }

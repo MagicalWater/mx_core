@@ -4,6 +4,7 @@ import 'router/router.dart';
 import 'util/screen_util.dart';
 
 export 'bloc/bloc.dart';
+export 'extension/extension.dart';
 export 'http/http.dart';
 export 'keyboard/keyboard.dart';
 export 'polling/polling.dart';
