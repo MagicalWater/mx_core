@@ -16,11 +16,11 @@ WidgetBuilder _defaultBackgroundBuilder;
 WidgetBuilder _defaultMenuBuilder;
 
 typedef PreferredSizeWidgetBuilder = PreferredSizeWidget Function(
-  BuildContext context,
-  Widget leading,
-  String title,
-  List<Widget> actions,
-);
+    BuildContext context,
+    Widget leading,
+    String title,
+    List<Widget> actions,
+    );
 
 /// 默認 appBar
 PreferredSizeWidgetBuilder _defaultAppBarBuilder;
@@ -76,6 +76,9 @@ class PageScaffold extends StatelessWidget {
   /// 下方導航欄
   final Widget bottomNavigationBar;
 
+  /// 背景是否蓋住 app bar
+  final bool backgroundCoverAppbar;
+
   PageScaffold._({
     @required this.child,
     this.showMenu = true,
@@ -89,6 +92,7 @@ class PageScaffold extends StatelessWidget {
     this.leading,
     this.title,
     this.background,
+    this.backgroundCoverAppbar,
     this.drawerScrimColor,
     this.resizeToAvoidBottomPadding,
     this.bottomNavigationBar,
@@ -105,6 +109,7 @@ class PageScaffold extends StatelessWidget {
     Widget leading,
     String title,
     Widget background,
+    bool backgroundConverAppbar = false,
     Color drawerScrimColor,
     bool resizeToAvoidBottomPadding = true,
     Widget bottomNavigationBar,
@@ -124,6 +129,7 @@ class PageScaffold extends StatelessWidget {
       leading: leading,
       title: title,
       background: background,
+      backgroundCoverAppbar: backgroundConverAppbar,
       resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
       drawerScrimColor: drawerScrimColor,
       bottomNavigationBar: bottomNavigationBar,
@@ -248,6 +254,12 @@ class PageScaffold extends StatelessWidget {
 
     List<Widget> showWidgets = [];
     if (backgroundWidget != null) {
+      if (!backgroundCoverAppbar && appBar != null) {
+        backgroundWidget = Container(
+          padding: EdgeInsets.only(top: appBar.preferredSize.height),
+          child: backgroundWidget,
+        );
+      }
       showWidgets.add(backgroundWidget);
     }
 

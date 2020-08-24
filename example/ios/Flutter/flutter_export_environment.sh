@@ -10,3 +10,4 @@ export "FLUTTER_FRAMEWORK_DIR=/Users/magicalwater/sdk/flutter/bin/cache/artifact
 export "FLUTTER_BUILD_NAME=1.1.0"
 export "FLUTTER_BUILD_NUMBER=13"
 export "TRACK_WIDGET_CREATION=true"
+export "DART_DEFINES=flutter.inspector.structuredErrors=true"
