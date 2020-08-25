@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mx_core/util/screen_util.dart';
 
 import 'load_provider.dart';
 
@@ -16,11 +17,11 @@ WidgetBuilder _defaultBackgroundBuilder;
 WidgetBuilder _defaultMenuBuilder;
 
 typedef PreferredSizeWidgetBuilder = PreferredSizeWidget Function(
-    BuildContext context,
-    Widget leading,
-    String title,
-    List<Widget> actions,
-    );
+  BuildContext context,
+  Widget leading,
+  String title,
+  List<Widget> actions,
+);
 
 /// 默認 appBar
 PreferredSizeWidgetBuilder _defaultAppBarBuilder;
@@ -109,7 +110,7 @@ class PageScaffold extends StatelessWidget {
     Widget leading,
     String title,
     Widget background,
-    bool backgroundConverAppbar = false,
+    bool backgroundCoverAppbar = false,
     Color drawerScrimColor,
     bool resizeToAvoidBottomPadding = true,
     Widget bottomNavigationBar,
@@ -129,7 +130,7 @@ class PageScaffold extends StatelessWidget {
       leading: leading,
       title: title,
       background: background,
-      backgroundCoverAppbar: backgroundConverAppbar,
+      backgroundCoverAppbar: backgroundCoverAppbar,
       resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
       drawerScrimColor: drawerScrimColor,
       bottomNavigationBar: bottomNavigationBar,
@@ -256,7 +257,10 @@ class PageScaffold extends StatelessWidget {
     if (backgroundWidget != null) {
       if (!backgroundCoverAppbar && appBar != null) {
         backgroundWidget = Container(
-          padding: EdgeInsets.only(top: appBar.preferredSize.height),
+          color: Colors.green.withAlpha(150),
+          padding: EdgeInsets.only(
+            top: appBar.preferredSize.height + Screen.statusBarHeight,
+          ),
           child: backgroundWidget,
         );
       }
