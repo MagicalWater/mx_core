@@ -29,7 +29,7 @@ class HttpContentGenerator with HttpContentMixin {
       host ?? defaultHost,
       path,
       method,
-      port: port,
+      port: port ?? this.port,
       contentType: contentType,
     );
     content.setQueryParams(queryParams);

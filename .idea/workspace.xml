@@ -10,11 +10,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/service/api_service.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/service/api_service.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/ex_main_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/project_construct/ex_main_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/repository/ex_repository_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/project_construct/repository/ex_repository_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/service/ex_db_service_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/project_construct/service/api_service_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/service/ex_request_service_dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/service/ex_sp_service_dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/version" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/version" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_scaffold.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_scaffold.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/repository/ex_repository_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/repository/ex_repository_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/service/ex_db_service_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/service/api_service_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/service/ex_request_service_dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/service/ex_sp_service_dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +65,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget/tab" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/fastlane/files/project_construct/service" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -55,19 +73,19 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example/fastlane/files/project_construct/service" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/tab" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget" />
+      <recent name="$PROJECT_DIR$/example/lib/bloc/page" />
+      <recent name="$PROJECT_DIR$/example/lib/ui/page" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/align_grid/space" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout/space" />
       <recent name="$PROJECT_DIR$/lib/popup" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib/ui/widget/tab" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget" />
-      <recent name="$PROJECT_DIR$/example/lib/bloc/page" />
-      <recent name="$PROJECT_DIR$/example/lib/ui/page" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/intrinsic_layout" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.android_debug">
@@ -145,6 +163,10 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
+    <state x="523" y="309" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1598846419549">
+      <screen x="0" y="23" width="1680" height="952" />
+    </state>
+    <state x="523" y="309" key="#com.intellij.fileTypes.FileTypeChooser/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1598846419549" />
     <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1594346077689">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
@@ -178,16 +200,16 @@
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state x="493" y="256" width="803" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597223005617" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1598326304573">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1598846206456">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state width="300" height="95" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597385323590" />
     <state width="343" height="107" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@-240.-1057.1920.1057" timestamp="1597110922935" />
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1598326304573" />
-    <state x="505" y="229" width="670" height="675" key="run.anything.popup" timestamp="1597126303985">
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1598846206456" />
+    <state x="505" y="229" width="670" height="675" key="run.anything.popup" timestamp="1598846374232">
       <screen x="0" y="23" width="1680" height="952" />
     </state>
-    <state x="505" y="229" width="670" height="675" key="run.anything.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597126303985" />
+    <state x="505" y="229" width="670" height="675" key="run.anything.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1598846374232" />
     <state x="505" y="231" width="670" height="676" key="search.everywhere.popup" timestamp="1597367564214">
       <screen x="0" y="23" width="1680" height="951" />
     </state>

@@ -60,7 +60,7 @@ class App extends StatelessWidget {
     return LoadProvider(
       root: true,
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: !kReleaseMode,
         onGenerateTitle: (context) {
           return 'AppName';
         },
