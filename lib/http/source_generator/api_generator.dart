@@ -71,11 +71,7 @@ class ApiGenerator extends GeneratorForAnnotation<Api> {
 
   String getImportText(String sourceFile) {
     return """
-    import 'dart:io' show ContentType;
-    import 'package:meta/meta.dart';
-    import 'package:mx_core/mx_core.dart';
-    import 'package:rxdart/rxdart.dart';
-    import '$sourceFile';
+    part of '$sourceFile';
     """;
   }
 }

@@ -1,6 +1,10 @@
-import 'package:mx_core/mx_core.dart';
+import 'dart:io' show ContentType;
 
-import 'ex_request_builder.api.dart';
+import 'package:meta/meta.dart';
+import 'package:mx_core/mx_core.dart';
+import 'package:rxdart/rxdart.dart';
+
+part 'ex_request_builder.api.dart';
 
 @Api()
 abstract class ExRequestInterface {
