@@ -159,6 +159,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       end: indicatorEnd ?? 0,
       duration: duration,
       curve: curve,
+      appearAnimation: false,
     );
   }
 

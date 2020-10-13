@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/bloc/page_bloc.dart';
 
 abstract class BlocBase {
+  void initState();
   Future<void> dispose();
 }
 
@@ -34,7 +35,9 @@ class BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
     _currentBloc = widget.blocBuilder();
     _currentBloc.providerState = this;
     _currentBloc.registerSubPageStream(
-        defaultRoute: _currentBloc.defaultSubPage());
+      defaultRoute: _currentBloc.defaultSubPage(),
+    );
+    _currentBloc.initState();
     super.initState();
   }
 

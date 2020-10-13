@@ -356,13 +356,13 @@ class _RefreshViewState extends State<RefreshView> {
     _stateSubject.add(widget.initState);
     _updateEasyRefresh();
 
-    var dataHandleStream = widget.stateStream.doOnData((e) {
+    var dataHandleStream = widget.stateStream?.doOnData((e) {
       _handleRefreshState(e);
     });
 
     if (widget.loadingDebounce != null &&
         widget.loadingDebounce > Duration.zero) {
-      dataHandleStream = dataHandleStream.debounce((e) {
+      dataHandleStream = dataHandleStream?.debounce((e) {
         _activeDebounce();
         if (e.isLoading || !_isDebounceActive) {
           return Stream.value(e);
@@ -372,7 +372,7 @@ class _RefreshViewState extends State<RefreshView> {
       });
     }
 
-    _stateStreamSubscription = dataHandleStream.listen((data) {
+    _stateStreamSubscription = dataHandleStream?.listen((data) {
 //      print("資料傳遞");
       _stateSubject.add(data);
     });

@@ -43,6 +43,9 @@ class LineIndicator extends StatefulWidget {
   /// 動畫時間
   final Duration duration;
 
+  /// 從無至有顯示是否使用動畫
+  final bool appearAnimation;
+
   LineIndicator({
     this.color,
     this.decoration,
@@ -55,6 +58,7 @@ class LineIndicator extends StatefulWidget {
     this.end,
     this.curve = Curves.easeInOutSine,
     this.duration = const Duration(milliseconds: 300),
+    this.appearAnimation = true,
   }) : assert(color != null || decoration != null);
 
   @override
@@ -84,7 +88,7 @@ class _LineIndicatorState extends State<LineIndicator>
       vsync: this,
       duration: widget.duration,
     );
-    syncShow(null, widget);
+    syncShow(widget);
     _controller.addListener(() {
       currentStart = startAnim.value;
       currentEnd = endAnim.value;
@@ -96,11 +100,11 @@ class _LineIndicatorState extends State<LineIndicator>
   @override
   void didUpdateWidget(LineIndicator oldWidget) {
     _controller.duration = widget.duration;
-    syncShow(oldWidget, widget);
+    syncShow(widget);
     super.didUpdateWidget(oldWidget);
   }
 
-  void syncShow(LineIndicator oldWidget, LineIndicator widget) {
+  void syncShow(LineIndicator widget) {
     var newDecoration = widget.decoration ?? BoxDecoration(color: widget.color);
 
     if (currentDecoration != null && currentDecoration != newDecoration) {
@@ -119,6 +123,17 @@ class _LineIndicatorState extends State<LineIndicator>
         currentEnd != null &&
         currentEnd == widget.end) {
       return;
+    }
+
+    if (!widget.appearAnimation) {
+      var isStartAppear = currentStart == null || (currentStart == currentEnd);
+      var isEndAppear = currentEnd == null || (currentStart == currentEnd);
+
+      if (isStartAppear && isEndAppear) {
+        currentStart = widget.start;
+        currentEnd = widget.end;
+        return;
+      }
     }
 
     if (startTween != null) {

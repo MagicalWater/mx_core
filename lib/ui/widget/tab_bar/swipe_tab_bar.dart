@@ -144,6 +144,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
         maxLength: widget.indicator.maxWidth,
         size: widget.indicator.height,
         direction: Axis.horizontal,
+        appearAnimation: false,
       );
 
       switch (widget.indicator.position) {

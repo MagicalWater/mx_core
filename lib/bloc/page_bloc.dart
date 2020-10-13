@@ -92,6 +92,10 @@ abstract class PageBloc
 
   @mustCallSuper
   @override
+  void initState() {}
+
+  @mustCallSuper
+  @override
   Future<void> dispose() async {
     // 取消子頁面監聽
     if (route != null) {
@@ -135,7 +139,7 @@ abstract class PageBloc
         forceModifyPageDetail: _forceModifyPageDetail,
       );
 
-//        print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
+      print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
       if (option.nextRoute != null && option is RouteData) {
         // 需要再往下進行跳轉頁面
         var data = option as RouteData;

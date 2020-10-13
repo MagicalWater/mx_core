@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mx_core/mx_core.dart';
@@ -126,7 +127,8 @@ class _PageSwitcherState extends State<PageSwitcher>
   Map<String, ValueKey<int>> cacheKey = {};
 
   GlobalKey _boundaryKey = GlobalKey();
-  List<Widget> _showChildren;
+
+  List<WidgetBuilder> _showChildren;
   int showIndex;
 
   /// 當前的轉場是 push 或 pop 嗎
@@ -279,7 +281,7 @@ class _PageSwitcherState extends State<PageSwitcher>
     RenderRepaintBoundary boundary =
         _boundaryKey.currentContext.findRenderObject();
 
-    if (boundary.debugNeedsPaint) {
+    if (!kReleaseMode && (boundary.debugNeedsPaint ?? false)) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         _cacheCapture(datas);
       });
@@ -323,9 +325,9 @@ class _PageSwitcherState extends State<PageSwitcher>
         } else {
           key = cacheKey[finded.route];
         }
-        return routeMixinImpl.getSubPage(finded, key: key);
+        return (_) => routeMixinImpl.getSubPage(finded, key: key);
       } else {
-        return Container();
+        return (_) => Container();
       }
     }).toList();
   }
@@ -341,7 +343,7 @@ class _PageSwitcherState extends State<PageSwitcher>
 
     Widget newWidget = IndexedStack(
       index: showIndex,
-      children: _showChildren,
+      children: _showChildren.map((e) => e.call(context)).toList(),
     );
 
     if (_transitionImage != null) {

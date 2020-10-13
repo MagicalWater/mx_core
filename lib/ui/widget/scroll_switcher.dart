@@ -62,7 +62,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
 
   PageController _pageController;
 
-  List<Widget> _showChildren;
+  List<WidgetBuilder> _showChildren;
 
   StreamSubscription _subscription;
 
@@ -106,10 +106,10 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
         } else {
           key = cacheKey[finded.route];
         }
-        return routeMixinImpl.getSubPage(finded, key: key);
+        return (_) => routeMixinImpl.getSubPage(finded, key: key);
       } else {
         var key = cacheKey[e];
-        return routeMixinImpl.getSubPage(RouteData(e), key: key);
+        return (_) => routeMixinImpl.getSubPage(RouteData(e), key: key);
       }
     }).toList();
 
@@ -145,7 +145,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
       return Container();
     }
     return PageView(
-      children: _showChildren,
+      children: _showChildren.map((e) => e.call(context)).toList(),
       controller: _pageController,
       physics: widget.physics,
       onPageChanged: (index) {

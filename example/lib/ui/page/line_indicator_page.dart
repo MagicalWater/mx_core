@@ -47,6 +47,8 @@ class _LineIndicatorPageState extends State<LineIndicatorPage> {
                 size: 10.scaleA,
                 direction: Axis.vertical,
                 alignment: Alignment.topRight,
+                duration: Duration(seconds: 5),
+                appearAnimation: false,
               ),
             ],
           ),

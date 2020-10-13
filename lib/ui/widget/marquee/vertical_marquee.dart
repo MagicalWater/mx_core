@@ -80,6 +80,21 @@ class _VerticalMarqueeState extends State<VerticalMarquee>
   @override
   void didUpdateWidget(VerticalMarquee oldWidget) {
     clearWidgetRect();
+    var currentControllerLen = itemScrollController.length;
+    var needLen = this.widget.children.length;
+    if (currentControllerLen > needLen) {
+      var diff = currentControllerLen - needLen;
+      for (var i = 0; i < diff; i++) {
+        var lastController = itemScrollController.removeLast();
+        lastController.dispose();
+      }
+    } else if (needLen > currentControllerLen) {
+      var diff = needLen - currentControllerLen;
+      for (var i = 0; i < diff; i++) {
+        var newController = ScrollController();
+        itemScrollController.add(newController);
+      }
+    }
     super.didUpdateWidget(oldWidget);
   }
 
@@ -171,7 +186,6 @@ class _VerticalMarqueeState extends State<VerticalMarquee>
     var currentTimes = 0;
 
     while (keepScroll && scrollEnabled) {
-
       // 依序慢慢滾動
       for (int i = 0; i < widget.children.length; i++) {
         await Future.delayed(widget.interval);

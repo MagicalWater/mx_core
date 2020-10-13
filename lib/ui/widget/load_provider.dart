@@ -87,6 +87,8 @@ class _LoadProviderState extends State<LoadProvider>
   Offset _showPos;
   Size _showSize;
 
+  StreamSubscription _listenSubscription;
+
   @override
   void initState() {
     Screen.init();
@@ -110,7 +112,7 @@ class _LoadProviderState extends State<LoadProvider>
       _rootLoadController = this;
     }
 
-    widget.loadStream?.listen((e) {
+    _listenSubscription = widget.loadStream?.listen((e) {
       if (e) {
         show();
       } else {
@@ -207,9 +209,12 @@ class _LoadProviderState extends State<LoadProvider>
 
   @override
   void dispose() {
+    _listenSubscription?.cancel();
     _animatedSync.toggle(false);
     _animatedSync.dispose();
     _loadStreamController.close();
+    _loadStreamController = null;
+    _animatedSync = null;
     super.dispose();
   }
 
@@ -239,16 +244,16 @@ class _LoadProviderState extends State<LoadProvider>
     await Future.delayed(Duration.zero);
     await _attach(attach);
     _currentShow = true;
-    _loadStreamController.add(_currentShow);
-    await _animatedSync.toggle(true);
+    _loadStreamController?.add(_currentShow);
+    await _animatedSync?.toggle(true);
   }
 
   @override
   Future<void> hide() async {
     _currentShow = false;
     await Future.delayed(Duration.zero);
-    await _animatedSync.toggle(false);
-    _loadStreamController.add(_currentShow);
+    await _animatedSync?.toggle(false);
+    _loadStreamController?.add(_currentShow);
   }
 
   FutureOr<void> _attach(BuildContext context) async {
