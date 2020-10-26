@@ -159,3 +159,13 @@ class NumUtil {
     return Decimal.parse(a) >= Decimal.parse(b);
   }
 }
+
+extension DoubleCalculate on double {
+  double add(num other) => NumUtil.add(this, other);
+
+  double subtract(num other) => NumUtil.subtract(this, other);
+
+  double multiply(num other) => NumUtil.multiply(this, other);
+
+  double divide(num other) => NumUtil.divide(this, other);
+}

@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io' show File;
 
 import 'package:dio/dio.dart';
-import 'package:mx_core/util/file_util.dart';
-import 'package:path/path.dart';
 
 class ServerResponse {
   String url;
@@ -40,15 +38,5 @@ class ServerResponse {
 
   int getStatusCode() {
     return response?.statusCode;
-  }
-
-  Future<void> writeToFile() async {
-    var uri = Uri.parse(url);
-    var segments = ["ServerResponse", uri.host] + uri.pathSegments;
-    var name = segments.removeLast();
-    var nameNoExtension = basenameWithoutExtension(name);
-    segments.add("$nameNoExtension.txt");
-    var fullPath = joinAll(segments);
-    return FileUtil.write(name: fullPath, content: getString());
   }
 }

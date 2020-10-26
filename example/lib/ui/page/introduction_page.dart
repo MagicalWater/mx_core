@@ -114,6 +114,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
   }
 
   void _handleIntroductionTap(String page) {
+    print('點跳跳: $page');
     AppBloc().pushPage(page, context);
   }
 

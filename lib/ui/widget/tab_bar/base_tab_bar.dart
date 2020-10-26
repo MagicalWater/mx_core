@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:mx_core/extension/list.dart';
+import 'package:mx_core/mx_core.dart';
 import 'package:mx_core/ui/widget/line_indicator.dart';
 import 'package:mx_core/ui/widget/locate_row.dart';
 
@@ -41,25 +43,35 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
 
   double indicatorStart, indicatorEnd;
 
+  int currentIndex;
+
+  /// 當前 index 的偏移量
+  /// 此為搭配 [TabController] 時使用的偏移變數
+  double indexOffset;
+
   @override
   @mustCallSuper
   void initState() {
-    _settingChildIndexMap();
-    _settingChildKey();
+    settingChildIndexMap();
+    settingChildKey();
     super.initState();
   }
 
   @override
   @mustCallSuper
   void didUpdateWidget(T oldWidget) {
-    _settingChildIndexMap();
-    _settingChildKey();
-    syncIndicator();
+    if (widget.tabCount != oldWidget.tabCount) {
+      tabRectMap.clear();
+      settingChildIndexMap();
+      settingChildKey();
+    } else {
+      syncIndicator();
+    }
     super.didUpdateWidget(oldWidget);
   }
 
-  void _settingChildIndexMap() {
-    // 由於所有的列表之間跟裡外都會插入空格, 因此真正的 index 對應的孩子需要作轉換
+  /// 由於所有的列表之間跟裡外都會插入空格, 因此真正的 index 對應的孩子需要作轉換
+  void settingChildIndexMap() {
     tabIndexMap.clear();
     for (var i = 0; i < widget.tabCount; i++) {
       var splitIndex = i * 2 + 1;
@@ -78,8 +90,9 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
     print('action index = $actionIndexMap');
   }
 
-  void _settingChildKey() {
-    // 由於所有的列表之間跟裡外都會插入空格, 因此真正的 index 對應的孩子需要作轉換
+  /// 給所有的 tab 加入 globalKey
+  /// 方便在 Scrollable.of(context) 的方式將 tab 滑動到置中
+  void settingChildKey() {
     for (var i = childKeyList.length; i < widget.tabCount; i++) {
 //      childKeyList = List.generate(widget.tabCount, (index) => GlobalKey());
       childKeyList.add(GlobalKey());
@@ -99,7 +112,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
   }) {
     var tabList = _buildTabList(
       tab: (context, index) {
-        if (index == widget.currentIndex) {
+        if (index == currentIndex) {
           return selectTab(context, index);
         } else {
           return unSelectTab(context, index);
@@ -127,9 +140,9 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
           actionIndexMap.forEach((key, value) {
             actionRectMap[value] = rects[key];
           });
-//          print('共有: ${rects.asMap()}');
-//          print('打印: $tabRectMap');
-//          print('總共: $totalSize');
+          // print('共有: ${rects.asMap()}');
+          // print('打印: $tabRectMap');
+          // print('總共: $totalSize');
           this.totalSize = totalSize;
           syncIndicator();
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -152,7 +165,9 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
     Decoration decoration,
     Duration duration,
     Curve curve,
+    bool animation,
   }) {
+    // print('刷新指示: $indicatorStart, $indicatorEnd');
     return LineIndicator(
       decoration: decoration,
       start: indicatorStart ?? 0,
@@ -160,14 +175,50 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       duration: duration,
       curve: curve,
       appearAnimation: false,
+      animation: animation,
     );
   }
 
   /// 取得 rect 後, 同步 LineIndicator 顯示
   void syncIndicator() {
-    var showRect = tabRectMap[widget.currentIndex];
-    indicatorStart = showRect.left / totalSize.width;
-    indicatorEnd = showRect.right / totalSize.width;
+    // print('rect = ${tabRectMap}, curr = $currentIndex');
+    var showRect = tabRectMap[currentIndex];
+
+    if (indexOffset != null && indexOffset != currentIndex) {
+      if (indexOffset > currentIndex) {
+        // 往下一個偏移
+        var nextRect = tabRectMap[currentIndex + 1];
+
+        // 計算依照偏移百分比計算
+        var percent = indexOffset - currentIndex;
+
+        var leftOffset =
+            nextRect.left.subtract(showRect.left).multiply(percent);
+        var rightOffset =
+            nextRect.right.subtract(showRect.right).multiply(percent);
+
+        indicatorStart = showRect.left.add(leftOffset).divide(totalSize.width);
+        indicatorEnd = showRect.right.add(rightOffset).divide(totalSize.width);
+
+        // print('百分比: $percent, 偏移: ${showRect.left.add(leftOffset)} ~ ${showRect.right.add(rightOffset)}, 目標: ${nextRect.left} ~ ${nextRect.right}');
+      } else {
+        // 往前一個偏移
+        var preRect = tabRectMap[currentIndex - 1];
+
+        // 計算依照偏移百分比計算
+        var percent = indexOffset - (currentIndex - 1);
+
+        var leftOffset = showRect.left.subtract(preRect.left).multiply(percent);
+        var rightOffset =
+            showRect.right.subtract(preRect.right).multiply(percent);
+
+        indicatorStart = preRect.left.add(leftOffset).divide(totalSize.width);
+        indicatorEnd = preRect.right.add(rightOffset).divide(totalSize.width);
+      }
+    } else {
+      indicatorStart = showRect.left.divide(totalSize.width);
+      indicatorEnd = showRect.right.divide(totalSize.width);
+    }
   }
 
   /// 取得每個孩子的index

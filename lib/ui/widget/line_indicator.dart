@@ -46,6 +46,9 @@ class LineIndicator extends StatefulWidget {
   /// 從無至有顯示是否使用動畫
   final bool appearAnimation;
 
+  /// 是否啟用動畫
+  final bool animation;
+
   LineIndicator({
     this.color,
     this.decoration,
@@ -59,6 +62,7 @@ class LineIndicator extends StatefulWidget {
     this.curve = Curves.easeInOutSine,
     this.duration = const Duration(milliseconds: 300),
     this.appearAnimation = true,
+    this.animation = true,
   }) : assert(color != null || decoration != null);
 
   @override
@@ -89,12 +93,14 @@ class _LineIndicatorState extends State<LineIndicator>
       duration: widget.duration,
     );
     syncShow(widget);
-    _controller.addListener(() {
-      currentStart = startAnim.value;
-      currentEnd = endAnim.value;
-      setState(() {});
-    });
+    _controller.addListener(_handleAnimValueUpdate);
     super.initState();
+  }
+
+  void _handleAnimValueUpdate() {
+    currentStart = startAnim.value;
+    currentEnd = endAnim.value;
+    setState(() {});
   }
 
   @override
@@ -134,6 +140,12 @@ class _LineIndicatorState extends State<LineIndicator>
         currentEnd = widget.end;
         return;
       }
+    }
+
+    if (!widget.animation) {
+      currentStart = widget.start;
+      currentEnd = widget.end;
+      return;
     }
 
     if (startTween != null) {
@@ -181,6 +193,7 @@ class _LineIndicatorState extends State<LineIndicator>
 
   @override
   void dispose() {
+    _controller.removeListener(_handleAnimValueUpdate);
     _controller.dispose();
     super.dispose();
   }

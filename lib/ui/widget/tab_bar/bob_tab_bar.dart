@@ -78,6 +78,9 @@ class _BobTabBarState extends State<BobTabBar> with TabBarMixin {
   var _defaultFooter = Container();
 
   @override
+  int get currentIndex => widget.currentIndex;
+
+  @override
   void initState() {
     syncTickList = List.generate(
       widget.tabBuilder.tabCount,
@@ -92,7 +95,6 @@ class _BobTabBarState extends State<BobTabBar> with TabBarMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('構建開始');
     Widget tabStack = Stack(
       children: <Widget>[
         componentTabRow(

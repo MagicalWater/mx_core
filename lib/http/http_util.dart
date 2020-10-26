@@ -5,6 +5,8 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:meta/meta.dart';
+import 'package:mx_core/util/file_util.dart';
+import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'http_content.dart';
@@ -17,14 +19,14 @@ typedef ProgressCallback = void Function(int count, int total);
 class HttpUtil {
   static final _singleton = HttpUtil._internal();
 
-  static HttpUtil getInstance() => _singleton;
-
   factory HttpUtil() => _singleton;
 
   HttpUtil._internal() {
     setTimeout(1000 * 10);
     //默認返回純文字數據, 否則dio抓到json之後會把雙引號去掉變成假json
     _dio.options.responseType = ResponseType.plain;
+
+    recordResponseCallback = (response) => _writeResponseToFile(response);
 
     CookieJar cookieJar = CookieJar();
     _cookieManager = CookieManager(cookieJar);
@@ -45,8 +47,8 @@ class HttpUtil {
   /// cookie 管理器
   CookieManager _cookieManager;
 
-  /// 取得 response 後, 是否將 response 的 字串寫入檔案
-  bool _recordResponse = true;
+  /// 取得 response 後, 將呼叫此方法將變數存入本地
+  Future<void> Function(ServerResponse response) recordResponseCallback;
 
   /// 連線 timeout 時間
   int get connectTimeout => _dio.options.connectTimeout;
@@ -61,16 +63,22 @@ class HttpUtil {
     _syncHttpClientAdapter();
   }
 
-  /// 設置是否紀錄 response 的字串到本地
-  void setRecordResponse(bool enable) {
-    _recordResponse = enable;
-  }
-
   /// 設置證書無效的處理
   void setBadCertificateCallback(
       bool callback(X509Certificate cert, String host, int port)) {
     _badCertificateCallback = callback;
     _syncHttpClientAdapter();
+  }
+
+  /// 將 response 存入本地
+  Future<void> _writeResponseToFile(ServerResponse response) {
+    var uri = Uri.parse(response.url);
+    var segments = ["ServerResponse", uri.host] + uri.pathSegments;
+    var name = segments.removeLast();
+    var nameNoExtension = basenameWithoutExtension(name);
+    segments.add("$nameNoExtension.txt");
+    var fullPath = joinAll(segments);
+    return FileUtil.write(name: fullPath, content: response.getString());
   }
 
   /// 同步 httpClient 設定(代理/證書信任)
@@ -282,8 +290,9 @@ class HttpUtil {
     });
 
     // 檢查是否需要將 response 紀錄到本地
-    if (_recordResponse) {
-      observable = observable.doOnData((response) => response.writeToFile());
+    if (recordResponseCallback != null) {
+      observable =
+          observable.doOnData((response) => recordResponseCallback(response));
     }
     return observable;
   }

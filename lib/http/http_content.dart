@@ -15,7 +15,12 @@ class HttpContent with HttpContentMixin {
   /// 此參數只在 Method 為 download 時有效, 下載木調
   String saveInPath;
 
-  Uri get uri => Uri(scheme: scheme, host: host, path: path, port: port, queryParameters: queryParams);
+  Uri get uri => Uri(
+      scheme: scheme,
+      host: host,
+      path: path,
+      port: port,
+      queryParameters: queryParams);
 
   String get url => uri.toString();
 
@@ -76,7 +81,7 @@ class HttpContent with HttpContentMixin {
   /// 使用此 http_content 發起 request
   /// [onReceiveProgress] 為下載進度監聽, 只在 [method] 為 [HttpMethod.download] 時有效
   Stream<ServerResponse> connect({ProgressCallback onReceiveProgress}) =>
-      HttpUtil.getInstance().connect(
+      HttpUtil().connect(
         this,
         onReceiveProgress: onReceiveProgress,
       );

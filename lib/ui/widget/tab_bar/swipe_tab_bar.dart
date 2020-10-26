@@ -18,10 +18,15 @@ class SwipeTabBar extends AbstractTabWidget {
   final Widget header;
   final Widget footer;
 
+  /// 控制器, 當有帶入值時, [currentIndex] 失效
+  /// [TabController] 會接手控制 tab 的選擇
+  final TabController controller;
+
   SwipeTabBar._({
     int currentIndex,
     bool scrollable = false,
     ActionWidth actionWidth,
+    this.controller,
     this.tabBuilder,
     this.indicator,
     this.tabHeight,
@@ -40,6 +45,7 @@ class SwipeTabBar extends AbstractTabWidget {
 
   factory SwipeTabBar.text({
     int currentIndex,
+    TabController controller,
     TextTabBuilder builder,
     bool scrollable = false,
     ActionWidth actionWidth,
@@ -53,6 +59,7 @@ class SwipeTabBar extends AbstractTabWidget {
   }) {
     return SwipeTabBar._(
       currentIndex: currentIndex,
+      controller: controller,
       scrollable: scrollable,
       actionWidth: actionWidth,
       tabBuilder: builder,
@@ -75,6 +82,65 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   var _defaultHeader = Container();
   var _defaultFooter = Container();
 
+  TabController _tabController;
+
+  @override
+  void initState() {
+    bindController(widget.controller);
+    currentIndex = _tabController?.index ?? widget.currentIndex;
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant SwipeTabBar oldWidget) {
+    bindController(widget.controller);
+    if (_tabController == null) {
+      currentIndex = widget.currentIndex;
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void bindController(TabController controller) {
+    // 先取消綁定舊有
+    unbindController();
+
+    _tabController = controller;
+    _tabController?.animation?.addListener(_handlePageOffsetCallback);
+    _tabController?.addListener(_handleControllerCallback);
+  }
+
+  void unbindController() {
+    if (_tabController != null) {
+      _tabController.removeListener(_handleControllerCallback);
+      _tabController?.animation?.removeListener(_handlePageOffsetCallback);
+    }
+    _tabController = null;
+  }
+
+  @override
+  void dispose() {
+    unbindController();
+    super.dispose();
+  }
+
+  void _handlePageOffsetCallback() {
+    indexOffset = _tabController.animation.value;
+    syncIndicator();
+    // print('offset = $indexOffset');
+    setState(() {});
+  }
+
+  void _handleControllerCallback() {
+    if (_tabController.index != currentIndex) {
+      // 同步 currentIndex
+      // print('切換 index: ${_tabController.index}, ${_tabController.indexIsChanging}');
+      currentIndex = _tabController.index;
+      centerSelect(currentIndex);
+      syncIndicator();
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget tabStack = Stack(
@@ -83,13 +149,13 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
         componentTabRow(
           selectTab: (context, index) {
             return widget.tabBuilder.buildTabBackground(
-              isSelected: widget.currentIndex == index,
+              isSelected: currentIndex == index,
               index: index,
             );
           },
           unSelectTab: (context, index) {
             return widget.tabBuilder.buildTabBackground(
-              isSelected: widget.currentIndex == index,
+              isSelected: currentIndex == index,
               index: index,
             );
           },
@@ -109,6 +175,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
             decoration: widget.tabBuilder.swipeDecoration,
             duration: Duration(milliseconds: 300),
             curve: Curves.fastOutSlowIn,
+            animation: _tabController == null,
           ),
         ),
 
@@ -145,6 +212,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
         size: widget.indicator.height,
         direction: Axis.horizontal,
         appearAnimation: false,
+        animation: _tabController == null,
       );
 
       switch (widget.indicator.position) {
@@ -184,7 +252,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   }
 
   Widget _buildTab({int index}) {
-    var isSelected = widget.currentIndex == index;
+    var isSelected = currentIndex == index;
     return widget.tabBuilder.buildTabForeground(
       size: tabRectMap[index].size,
       isSelected: isSelected,
@@ -193,18 +261,27 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
         if (isSelected) {
           return;
         }
-        if (widget.scrollable && childKeyList.length > index) {
-          Scrollable.ensureVisible(
-            childKeyList[index].currentContext,
-            alignment: 0.5,
-            duration: Duration(milliseconds: 300),
-          );
+        centerSelect(index);
+
+        if (_tabController != null) {
+          _tabController.animateTo(index);
         }
+
         if (widget.onTabTap != null) {
           widget.onTabTap(index);
         }
       },
     );
+  }
+
+  void centerSelect(int index) {
+    if (widget.scrollable && childKeyList.length > index) {
+      Scrollable.ensureVisible(
+        childKeyList[index].currentContext,
+        alignment: 0.5,
+        duration: Duration(milliseconds: 300),
+      );
+    }
   }
 
   /// 構建 action
