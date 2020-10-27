@@ -141,8 +141,9 @@ class Popup {
   /// [animated] - 顯示動畫, 空陣列將使用預設動畫 [Comb.scale], 若不需要動畫則帶入 null
   /// [onTapSpace] - 點擊空白處回調, 只有在 [hitRule] 等於 [HitRule.intercept] 時有效
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
-  static PopupController showOverlay(
-    BuildContext context, {
+  static PopupController showOverlay({
+    BuildContext context,
+    OverlayState overlay,
     PopupWidgetBuilder builder,
     PopupOption option,
     HitRule hitRule = HitRule.intercept,
@@ -227,7 +228,11 @@ class Popup {
         );
       },
     );
-    Overlay.of(context).insert(entry);
+    if (context != null) {
+      Overlay.of(context).insert(entry);
+    } else if (overlay != null) {
+      overlay.insert(entry);
+    }
     controller
       ..registerController(backgroundSync)
       ..registerController(childSync)
@@ -294,7 +299,7 @@ class Popup {
     var childSizeStreamController = StreamController<Size>();
 
     var popupController = Popup.showOverlay(
-      context,
+      context: context,
       animated: [
         Comb.parallel(
           animatedList: [

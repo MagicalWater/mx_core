@@ -292,7 +292,9 @@ class HttpUtil {
     // 檢查是否需要將 response 紀錄到本地
     if (recordResponseCallback != null) {
       observable =
-          observable.doOnData((response) => recordResponseCallback(response));
+          observable.doOnData((response) {
+            recordResponseCallback(response);
+          });
     }
     return observable;
   }
