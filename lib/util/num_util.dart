@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:decimal/decimal.dart';
 
 /**
@@ -168,4 +170,22 @@ extension DoubleCalculate on double {
   double multiply(num other) => NumUtil.multiply(this, other);
 
   double divide(num other) => NumUtil.divide(this, other);
+
+  /// 四捨五入到固定小數點
+  double roundToFixed(int fractionDigits) {
+    var fac = pow(10, fractionDigits).toInt();
+    return (this * fac).round() / fac;
+  }
+
+  /// 無條件捨去到固定小數點
+  double floorToFixed(int fractionDigits) {
+    var fac = pow(10, fractionDigits).toInt();
+    return (this * fac).floor() / fac;
+  }
+
+  /// 無條件進位到固定小數點
+  double ceilToFixed(int fractionDigits) {
+    var fac = pow(10, fractionDigits).toInt();
+    return (this * fac).ceil() / fac;
+  }
 }

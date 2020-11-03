@@ -182,6 +182,9 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 告知可以開始進行動畫
   void _start() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_controller == null) {
+        return;
+      }
       _controller.reset();
       switch (type) {
         case AnimatedType.repeatReverse:
