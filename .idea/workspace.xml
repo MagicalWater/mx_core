@@ -192,11 +192,11 @@
     </state>
     <state x="341" y="137" key="SettingsEditor/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597291421548" />
     <state x="341" y="137" key="SettingsEditor/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597198796421" />
-    <state x="493" y="256" width="980" height="488" key="find.popup" timestamp="1603783644707">
-      <screen x="0" y="23" width="1680" height="954" />
+    <state x="493" y="256" width="980" height="486" key="find.popup" timestamp="1604549636652">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state x="493" y="256" width="803" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1601969947034" />
-    <state x="493" y="256" width="980" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1602836500111" />
+    <state x="493" y="256" width="980" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1604549636652" />
     <state x="493" y="256" width="980" height="488" key="find.popup/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1603783644707" />
     <state width="300" height="97" key="javadoc.popup.new" timestamp="1603953393833">
       <screen x="0" y="23" width="1680" height="954" />
@@ -210,12 +210,12 @@
       <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state x="505" y="229" width="670" height="675" key="run.anything.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1598846374232" />
-    <state x="337" y="-826" width="766" height="752" key="search.everywhere.popup" timestamp="1600046615857">
-      <screen x="-240" y="-1057" width="1920" height="1057" />
+    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup" timestamp="1604549673609">
+      <screen x="0" y="23" width="1680" height="952" />
     </state>
     <state x="337" y="-826" width="766" height="752" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.951@-240.-1057.1920.1057" timestamp="1599639182852" />
     <state x="505" y="231" width="670" height="676" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1597367564214" />
     <state x="337" y="-826" width="766" height="752" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.952@-240.-1057.1920.1057" timestamp="1600046615857" />
-    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1597223128024" />
+    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1604549673609" />
   </component>
 </project>

@@ -1,6 +1,7 @@
+import 'package:intl/intl.dart';
+
 /// 金錢工具相關
 class MoneyUtil {
-
   MoneyUtil._();
 
   /// 每隔三位數加一個逗點, 保留多少逗點
@@ -50,11 +51,11 @@ class MoneyUtil {
 
   /// 驗證字串 [text] 是否可轉為 num
   static bool verify(String text) {
-
     bool illegal(String message) {
 //      print(message);
       return false;
     }
+
     if (text.isEmpty) {
       // 空字串不得為數字
       return illegal("空字串不得為數字");
@@ -110,5 +111,12 @@ class MoneyUtil {
     }
 
     return true;
+  }
+}
+
+extension MoneyFormat on num {
+  String moneyFormat() {
+    var format = NumberFormat();
+    return format.format(this);
   }
 }
