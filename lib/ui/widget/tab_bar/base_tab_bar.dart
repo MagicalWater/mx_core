@@ -181,6 +181,17 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
 
   /// 取得 rect 後, 同步 LineIndicator 顯示
   void syncIndicator() {
+    if (currentIndex <= -1) {
+      if (indicatorStart != null && indicatorEnd != null) {
+        var center = indicatorStart.add(indicatorEnd).divide(2);
+        indicatorStart = center;
+        indicatorEnd = center;
+      } else {
+        indicatorStart = 0;
+        indicatorEnd = 0;
+      }
+      return;
+    }
     // print('rect = ${tabRectMap}, curr = $currentIndex');
     var showRect = tabRectMap[currentIndex];
 

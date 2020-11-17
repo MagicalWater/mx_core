@@ -188,4 +188,24 @@ extension DoubleCalculate on double {
     var fac = pow(10, fractionDigits).toInt();
     return (this * fac).ceil() / fac;
   }
+
+  /// 取得小數點有幾位
+  /// 小數點尾數為0則會去除
+  /// 例如
+  /// (10.0).decimalLength 會得到 0
+  /// (10.10).decimalLength 會得到 1
+  int get decimalLength {
+    var showString = toString();
+    var pointIndex = showString.indexOf('.');
+    if (pointIndex == -1) {
+      return 0;
+    } else {
+      var decString = showString.substring(pointIndex);
+      var len = decString.length;
+      if (len == 2 && decString[1] == '0') {
+        return 0;
+      }
+      return len - 1;
+    }
+  }
 }
