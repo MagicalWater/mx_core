@@ -115,8 +115,12 @@ class MoneyUtil {
 }
 
 extension MoneyFormat on num {
-  String moneyFormat() {
+  String moneyFormat({int minimumFractionDigits = 0, int maximumFractionDigits = 10}) {
     var format = NumberFormat();
+    if (maximumFractionDigits != null) {
+      format.minimumFractionDigits = minimumFractionDigits;
+      format.maximumFractionDigits = maximumFractionDigits;
+    }
     return format.format(this);
   }
 }

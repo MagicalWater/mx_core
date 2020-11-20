@@ -236,5 +236,7 @@ class _ScreenBinding with WidgetsBindingObserver {
 extension ScreenScale on num {
   double get scaleA => Screen.scaleA(this.toDouble());
 
+  double get scaleW => Screen.scaleW(this.toDouble());
+
   double get scaleSp => Screen.scaleSp(this.toDouble());
 }

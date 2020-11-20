@@ -78,7 +78,7 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   color: Colors.transparent,
                 ),
                 Expanded(
-                  child: ScrollSwitcher(
+                  child: StackSwitcher(
                     routes: bloc.subPages(),
                     stream: bloc.subPageHistoryStream,
                     emptyWidget: Container(),
