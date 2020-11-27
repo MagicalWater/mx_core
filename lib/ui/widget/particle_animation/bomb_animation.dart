@@ -113,7 +113,6 @@ class _BombAnimationState extends State<BombAnimation> {
 
     // 將粒子動畫顯示在 Overlay 上
     Popup.showOverlay(
-      context: context,
       option: PopupOption(
         left: max(offset.dx, 0),
         top: max(offset.dy, 0),

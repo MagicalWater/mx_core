@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core/router/route_compute.dart';
@@ -35,7 +37,7 @@ class _SubPageHandler {
 
   bool Function(RouteData data) _isHandleRoute;
   bool Function(RouteData data, {bool Function(String route) popUntil})
-  _dispatchSubPage;
+      _dispatchSubPage;
   String Function({bool Function(String route) popUntil}) _popSubPage;
 
   List<RouteData> get history => page.subPageHistory;
@@ -50,7 +52,7 @@ class _SubPageHandler {
   bool isHandleRoute(RouteData data) => _isHandleRoute(data);
 
   bool dispatchSubPage(RouteData data,
-      {bool Function(String route) popUntil}) =>
+          {bool Function(String route) popUntil}) =>
       _dispatchSubPage(data, popUntil: popUntil);
 
   String popSubPage({bool Function(String route) popUntil}) =>
@@ -112,7 +114,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 
     do {
       finded = _subPageListener.firstWhere(
-              (element) => element.route == searchPage,
+          (element) => element.route == searchPage,
           orElse: () => null);
 
       if (finded != null) {
@@ -146,7 +148,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     while (findParent != null && findListener == null) {
       findParent = RouteCompute.getParentRoute(findParent);
       findListener = currentRangeListener.lastWhere(
-            (element) => element.route == findParent,
+        (element) => element.route == findParent,
         orElse: () => null,
       );
     }
@@ -172,16 +174,16 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 
   /// 是否可以彈出子頁面
   @override
-  bool canPopSubPage({
-    String route,
+  bool canPopSubPage(
+    String route, {
     PopLevel level = PopLevel.exact,
   }) {
     switch (level) {
       case PopLevel.greaterOrEqual:
-      // TODO: 尚待實現
+        // TODO: 尚待實現
         break;
       case PopLevel.exact:
-      // 先檢查欲回退的目標是否正在顯示中
+        // 先檢查欲回退的目標是否正在顯示中
         if (route.matchAsPrefix(currentDetailPage) != null) {
           var findListener = _subPageListener.reversed
               .firstWhere((element) => element.route == route);
@@ -201,21 +203,20 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// 若 [PopLevel.exact] 則只談出鎖定目標下的子頁面
   /// 若 [PopLevel.greaterOrEqual] 則鎖定目標下無子頁面時, 會彈出鎖定目標往上層級尋找
   @override
-  bool popSubPage({
-    String route,
-    BuildContext context,
+  bool popSubPage(
+    String route, {
     PopLevel level = PopLevel.exact,
     bool Function(String route) popUntil,
   }) {
-    if (!canPopSubPage(route: route, level: level)) {
+    if (!canPopSubPage(route, level: level)) {
       return false;
     }
     switch (level) {
       case PopLevel.greaterOrEqual:
-      // TODO: 尚待實現
+        // TODO: 尚待實現
         break;
       case PopLevel.exact:
-      // 先檢查欲回退的目標是否正在顯示中
+        // 先檢查欲回退的目標是否正在顯示中
         var findListener = _subPageListener.reversed
             .firstWhere((element) => element.route == route);
         if (findListener == null) {
@@ -227,14 +228,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
 
           var currentRangeListener = _getCurrentRangeListener();
           var findInnerListener = currentRangeListener.lastWhere(
-                (element) => element.route == currentDetailPage,
+            (element) => element.route == currentDetailPage,
             orElse: () => null,
           );
           while (findInnerListener != null) {
             if (findInnerListener.history.isNotEmpty) {
               lastShowPage = findInnerListener.history.last.route;
               findInnerListener = currentRangeListener.lastWhere(
-                    (element) => element.route == lastShowPage,
+                (element) => element.route == lastShowPage,
                 orElse: () => null,
               );
             } else {
@@ -254,7 +255,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     PageBlocInterface page,
     bool Function(RouteData data) isHandleRoute,
     bool Function(RouteData data, {bool Function(String route) popUntil})
-    dispatchSubPage,
+        dispatchSubPage,
     void Function(String route) forceModifyPageDetail,
     String Function({bool Function(String route) popUntil}) popSubPage,
   }) {
@@ -284,59 +285,51 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   }
 
   /// 發出顯示子頁面命令
-  @override
-  bool setSubPage(String route, {
-    BuildContext context,
+  bool _setSubPage(
+    String route, {
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
     bool forceNew = false,
     bool Function(String route) popUntil,
   }) {
     print(
-        '跳轉頁面請求 ${route}, 當前大頁面歷史: ${pageHistory.map((e) =>
-        e.route)}, 子頁面詳情: $currentDetailPage');
+        '跳轉頁面請求 $route, 當前大頁面歷史: ${pageHistory.map((e) => e.route)}, 子頁面詳情: $currentDetailPage');
     // 先檢查要跳轉的子頁面, 是否於當前的大頁面之下
     if (!RouteCompute.isSubPage(currentPage, route, depth: null)) {
       // 不在當前大頁面, 因此先呼叫 pushPage, 並且把子頁面請求帶入 RouteOption 放在 bloc 底下
-      if (context == null) {
-        print(
-            "子頁面跳轉失敗, 在不帶入 context 時, 大頁面 route 必須相同, current = $currentPage, sub = $route");
-        return false;
-      }
 
-      // 有 context, 發起跳轉大頁面, 在進行子頁面的跳轉
+      // 發起跳轉大頁面, 在進行子頁面的跳轉
       var ancestorRoute = RouteCompute.getAncestorRoute(route);
 
 //      print("大頁面不同, 先跳轉大頁面: $ancestorRoute");
 
-      pushPage(
+      _pushPage(
         ancestorRoute,
-        context,
         subRoute: route,
         pageQuery: pageQuery,
         blocQuery: blocQuery,
       );
+
       return true;
     } else {
       var findParent = route;
       _SubPageHandler findListener;
       var currentRangeListener = _getCurrentRangeListener();
 
-      print('當前擁有的頁面監聽: ${_subPageListener.map((e) =>
-      e
-          .route)}, 當前大頁面: $currentPage');
+      // print(
+      //     '當前擁有的頁面監聽: ${_subPageListener.map((e) => e.route)}, 當前大頁面: $currentPage');
 
       while (findParent != null && findListener == null) {
         findParent = RouteCompute.getParentRoute(findParent);
         findListener = currentRangeListener.lastWhere(
-              (element) => element.route == findParent,
+          (element) => element.route == findParent,
           orElse: () => null,
         );
       }
 
       if (findListener != null) {
         var nextRoute =
-        RouteCompute.getNextRoute(parent: findParent, sub: route);
+            RouteCompute.getNextRoute(parent: findParent, sub: route);
 
         // 取得 [e.route] 到 route 的下一個 route
         var routeData = RouteData(
@@ -360,14 +353,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
           var lastShowPage = nextRoute;
 
           var findInnerListener = currentRangeListener.lastWhere(
-                (element) => element.route == currentDetailPage,
+            (element) => element.route == currentDetailPage,
             orElse: () => null,
           );
           while (findInnerListener != null) {
             if (findInnerListener.history.isNotEmpty) {
               lastShowPage = findInnerListener.history.last.route;
               findInnerListener = currentRangeListener.lastWhere(
-                    (element) => element.route == lastShowPage,
+                (element) => element.route == lastShowPage,
                 orElse: () => null,
               );
             } else {
@@ -387,57 +380,43 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     _defaultRouteBuilder = builder;
   }
 
-  @override
-  Widget getSubPage(RouteData data, {Key key}) {
-    return getPage(
-      data.route,
-      subRoute: data.targetSubRoute,
-      pageQuery: data.widgetQuery,
-      blocQuery: data.blocQuery,
-      key: key,
-    );
-  }
-
   /// 返回的同時再 push
   /// [route] - 將要 push 的頁面
   /// [subRoute] - 跳轉到此大頁面底下的這個子頁面
   /// [popUtil] - pop 直到返回true
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   @override
-  Future<T> popAndPushPage<T>(String route,
-      BuildContext context, {
-        String subRoute,
-        Map<String, dynamic> pageQuery,
-        Map<String, dynamic> blocQuery,
-        bool Function(String route) popUntil,
-        Object result,
-      }) {
+  Future<dynamic> popAndPushPage<T>(
+    String route, {
+    Map<String, dynamic> pageQuery,
+    Map<String, dynamic> blocQuery,
+    bool Function(String route) popUntil,
+    Object result,
+  }) {
     print("頁面返回並跳頁, 首先頁面返回");
-    popPage(context, popUntil: popUntil, result: result);
+    popPage(popUntil: popUntil, result: result);
     return pushPage(
       route,
-      context,
-      subRoute: subRoute,
       pageQuery: pageQuery,
       blocQuery: blocQuery,
     );
   }
 
   /// 是否可以返回大頁面
-  bool canPopPage(BuildContext context) {
-    return Navigator.of(context).canPop();
+  bool canPopPage() {
+    return navigatorIns.canPop();
   }
 
   /// 返回大頁面 page
   /// [popUtil] - pop 直到返回true
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   @override
-  bool popPage(BuildContext context, {
+  bool popPage({
     bool Function(String route) popUntil,
     Object result,
   }) {
     print("頁面返回");
-    var navigator = Navigator.of(context);
+    var navigator = navigatorIns;
     if (popUntil != null) {
       // 需要返回多個頁面
       navigator.popUntil((rt) {
@@ -464,32 +443,69 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     }
   }
 
+  @override
+  Future<dynamic> pushPage<T>(
+    String route, {
+    Map<String, dynamic> pageQuery,
+    Map<String, dynamic> blocQuery,
+    bool replaceCurrent,
+    bool Function(String route) removeUntil,
+    MixinRouteBuilder<T> builder,
+    Key key,
+  }) async {
+    // 分發決定跳轉大頁面還是子頁面
+    if (RouteCompute.isAncestorRoute(route)) {
+      // 跳轉大頁面默認不替掉當前頁面
+      replaceCurrent ??= false;
+      // 是跳轉大頁面
+      return _pushPage(
+        route,
+        key: key,
+        pageQuery: pageQuery,
+        blocQuery: blocQuery,
+        replaceCurrent: replaceCurrent,
+        removeUntil: removeUntil,
+        builder: builder,
+      );
+    } else {
+      // 跳轉大頁面默認替掉當前頁面
+      var forceNew = !(replaceCurrent ?? true);
+      // 跳轉子頁面
+      _setSubPage(
+        route,
+        pageQuery: pageQuery,
+        blocQuery: blocQuery,
+        forceNew: forceNew,
+        popUntil: removeUntil,
+      );
+    }
+  }
+
   /// 發起頁面跳轉
   /// [subRoute] - 跳轉到此大頁面底下的這個子頁面
   /// [replaceCurrent] - 替換掉當前頁面, 即無法再返回當前頁面
   /// [removeUtil] - 刪除舊頁面直到返回true
   /// [builder] - 自定義構建 PageRoute
-  @override
-  Future<T> pushPage<T>(String route,
-      BuildContext context, {
-        String subRoute,
-        Map<String, dynamic> pageQuery,
-        Map<String, dynamic> blocQuery,
-        bool replaceCurrent = false,
-        bool Function(String route) removeUntil,
-        MixinRouteBuilder<T> builder,
-        Key key,
-      }) async {
+  Future<T> _pushPage<T>(
+    String route, {
+    String subRoute,
+    Map<String, dynamic> pageQuery,
+    Map<String, dynamic> blocQuery,
+    bool replaceCurrent = false,
+    bool Function(String route) removeUntil,
+    MixinRouteBuilder<T> builder,
+    Key key,
+  }) async {
 //    print("頁面跳轉: $route");
 
     if (!RouteCompute.isAncestorRoute(route)) {
       throw '只有根路由才可以進行 pushPage, 若要跳轉子頁面請改用 setSubPage';
     }
 
-    var navigator = Navigator.of(context);
+    var navigatorState = navigatorIns;
 
     // 檢查回退檢測是否已加入
-    var routeNavigatorObservable = navigator.widget.observers
+    var routeNavigatorObservable = navigatorState.widget.observers
         .whereType<MxCoreRouteObservable>()
         .first;
 
@@ -507,7 +523,6 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     PageRoute<T> pageRoute() {
       return _getRoute<T>(
         route,
-        context,
         subRoute: subRoute,
         pageQuery: pageQuery,
         blocQuery: blocQuery,
@@ -527,15 +542,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       _pageSubject.value.add(routeData);
       _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
-      var result = await navigator.pushAndRemoveUntil(pageRoute(), (rt) {
+      var result = await navigatorState.pushAndRemoveUntil(pageRoute(), (rt) {
         var name = rt.settings.name;
         if (name == '/') {
           name = _entryPointRouteAlias;
         }
         var isKeep = removeUntil(name);
         print(
-            '$name 是否保留 - $isKeep, 歷史: $pageHistory, ${pageHistory.map((e) =>
-            e.route)}');
+            '$name 是否保留 - $isKeep, 歷史: $pageHistory, ${pageHistory.map((e) => e.route)}');
 
         // 倒數第二個大頁面routeData
 //        var lastSecondRoute = _pageHistory[_pageHistory.length - 2];
@@ -551,13 +565,13 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       _pageSubject.value.add(routeData);
       _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
-      return await navigator.pushReplacement(pageRoute());
+      return await navigatorState.pushReplacement(pageRoute());
     } else {
 //      print("添加到歷史: ${routeData.route}");
       _pageSubject.value.add(routeData);
       _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
-      return navigator.push(pageRoute());
+      return navigatorState.push(pageRoute());
     }
   }
 
@@ -583,19 +597,23 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// [subRoute] - 取得的頁面會自動加子頁面設為此
   /// [entryPoint] 表示此頁面是否為入口頁, 即是 MaterialApp 的 home
   @override
-  Widget getPage(String route, {
-    String subRoute,
+  Widget getPage(
+    dynamic route, {
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
     bool entryPoint = false,
     Key key,
   }) {
-    var data = RouteData(
-      route,
-      targetSubRoute: subRoute,
-      widgetQuery: pageQuery,
-      blocQuery: blocQuery,
-    );
+    RouteData data;
+    if (route is RouteData) {
+      data = route;
+    } else if (route is String) {
+      data = RouteData(route);
+    } else {
+      print('警告: route 只可帶入 RouteData 或 String');
+      return null;
+    }
+
     if (entryPoint == true && _entryPointRouteAlias == null) {
 //      print("加入點起始點");
       _pageSubject.add([data]);
@@ -605,14 +623,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     return routeWidgetImpl.getPage(data, key: key);
   }
 
-  PageRoute<T> _getRoute<T>(String route,
-      BuildContext context, {
-        String subRoute,
-        Map<String, dynamic> pageQuery,
-        Map<String, dynamic> blocQuery,
-        MixinRouteBuilder<T> builder,
-        Key key,
-      }) {
+  PageRoute<T> _getRoute<T>(
+    String route, {
+    String subRoute,
+    Map<String, dynamic> pageQuery,
+    Map<String, dynamic> blocQuery,
+    MixinRouteBuilder<T> builder,
+    Key key,
+  }) {
     var page = routeWidgetImpl.getPage(
       RouteData(
         route,
@@ -631,7 +649,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         settings: RouteSettings(name: route),
       );
     } else {
-      pageRoute = routeBuilder(context, page, route);
+      pageRoute = routeBuilder(page, route);
       if (pageRoute == null) {
         print("RouteMixin builder 返回為空, 使用默認 MaterialPageRoute");
         pageRoute = MaterialPageRoute(
@@ -671,8 +689,8 @@ class MxCoreRouteObservable extends NavigatorObserver {
 
   @override
   void didStartUserGesture(Route route, Route previousRoute) {
-    print('檢測到使用者控制開始: ${route?.settings?.name}, ${previousRoute?.settings
-        ?.name}');
+    print(
+        '檢測到使用者控制開始: ${route?.settings?.name}, ${previousRoute?.settings?.name}');
     super.didStartUserGesture(route, previousRoute);
   }
 
@@ -686,8 +704,7 @@ class MxCoreRouteObservable extends NavigatorObserver {
   @override
   void didPop(Route route, Route previousRoute) {
     print("檢測到回退: ${route?.settings?.name}, ${previousRoute?.settings?.name}");
-    if (_onDetectPop != null)
-      _onDetectPop(route.settings.name);
+    if (_onDetectPop != null) _onDetectPop(route.settings.name);
     super.didPop(route, previousRoute);
   }
 
@@ -695,8 +712,7 @@ class MxCoreRouteObservable extends NavigatorObserver {
   void didPush(Route route, Route previousRoute) {
     print(
         '檢測到頁面推進: ${route?.settings?.name}, ${previousRoute?.settings?.name}');
-    if (_onDetectPush != null)
-      _onDetectPush(route.settings.name);
+    if (_onDetectPush != null) _onDetectPush(route.settings.name);
     super.didPush(route, previousRoute);
   }
 }

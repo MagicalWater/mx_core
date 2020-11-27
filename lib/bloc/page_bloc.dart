@@ -14,11 +14,16 @@ abstract class PageBloc
   RouteOption option;
 
   /// 快取頁面數量
+  /// 當 [historyShow] 是 [HistoryShow.stack] 時無效
   int get cachePageCount => subPages().length;
 
   BlocProviderState providerState;
 
   bool get mounted => providerState?.mounted ?? false;
+
+  /// 子頁面的加入方式
+  /// 默認使用 [HistoryShow.tab]
+  final HistoryShow historyShow;
 
   /// 由此宣告頁面的 route
   @override
@@ -26,8 +31,9 @@ abstract class PageBloc
 
   PageBloc(
     this.route,
-    this.option,
-  );
+    this.option, {
+    this.historyShow = HistoryShow.tab,
+  });
 
   @override
   List<RouteData> get subPageHistory => _historyPageSubject.value ?? [];
@@ -67,7 +73,12 @@ abstract class PageBloc
   bool isSubPageHandle(RouteData routeData) => true;
 
   /// 切換子頁面到下一個子頁面
-  void setSubPageToNext() {
+  void toNextSubPage() {
+    if (historyShow == HistoryShow.stack) {
+      print('疊層式子頁面不支持 setSubPageToNext 方法');
+      return;
+    }
+
     if (subPages().isNotEmpty) {
       var totalLength = subPages().length;
       int nextIndex;
@@ -76,7 +87,7 @@ abstract class PageBloc
       if (currentSubPageIndex == null) {
         // 當前沒有子頁面, 直接設置為第0個
         nextIndex = 0;
-        routeMixinImpl.setSubPage(subPages()[nextIndex]);
+        routeMixinImpl.pushPage(subPages()[nextIndex]);
       } else {
         nextIndex = currentSubPageIndex + 1 >= totalLength
             ? 0
@@ -84,7 +95,7 @@ abstract class PageBloc
 
         // 檢查下個頁面是否與當前頁面為同一個
         if (nextIndex != currentSubPageIndex) {
-          routeMixinImpl.setSubPage(subPages()[nextIndex]);
+          routeMixinImpl.pushPage(subPages()[nextIndex]);
         }
       }
     }
@@ -144,7 +155,7 @@ abstract class PageBloc
         // 需要再往下進行跳轉頁面
         var data = option as RouteData;
 
-        routeMixinImpl.setSubPage(
+        routeMixinImpl.pushPage(
           data.targetSubRoute,
           pageQuery: data.widgetQuery,
           blocQuery: data.blocQuery,
@@ -152,7 +163,7 @@ abstract class PageBloc
       } else if (defaultRoute != null) {
         print('跳轉預設子頁面: ${defaultRoute.route}');
         // 需要跳轉預設子頁面
-        routeMixinImpl.setSubPage(
+        routeMixinImpl.pushPage(
           defaultRoute.route,
           pageQuery: defaultRoute.widgetQuery,
           blocQuery: defaultRoute.blocQuery,
@@ -168,44 +179,96 @@ abstract class PageBloc
   }
 
   /// 子頁面跳轉分發
-  bool _dispatchSubPage(RouteData data,
-      {bool Function(String route) popUntil}) {
+  bool _dispatchSubPage(
+    RouteData data, {
+    bool Function(String route) popUntil,
+  }) {
     if (_isHandleRoute(data)) {
       // 在此確認是否處理此子頁面的跳轉
 //      print('接收跳轉請求: ${data.route}');
-
-      // 判斷頁面是否已經存在歷史裡面
-      var findHistoryIndex =
-          subPageHistory.indexWhere((element) => element.route == data.route);
-      if (findHistoryIndex != -1) {
-        // 曾經在歷史裡面, 調換位置
-        _historyPageSubject.value.removeAt(findHistoryIndex);
+      switch (historyShow) {
+        case HistoryShow.stack:
+          _stackDispatchPage(data, popUntil: popUntil);
+          break;
+        case HistoryShow.tab:
+          _tabDispatchPage(data, popUntil: popUntil);
+          break;
       }
 
-      if (_historyPageSubject.hasValue) {
-        var currentHistory = _historyPageSubject.value..add(data);
-        if (currentHistory.length > cachePageCount) {
-          currentHistory =
-              currentHistory.sublist(currentHistory.length - cachePageCount);
-        }
-
-        if (popUntil != null) {
-          bool isKeep = false;
-          while (!isKeep && currentHistory.length > 1) {
-            isKeep = popUntil(currentHistory[currentHistory.length - 2].route);
-            if (!isKeep) {
-              currentHistory.removeAt(currentHistory.length - 2);
-            }
-          }
-        }
-
-        _historyPageSubject.add(currentHistory);
-      } else {
-        _historyPageSubject.add([data]);
-      }
       return true;
     }
     return false;
+  }
+
+  /// 貯列式分發頁面
+  /// 若分發了頁面, 但由於
+  void _stackDispatchPage(
+    RouteData data, {
+    bool Function(String route) popUntil,
+  }) {
+    var currentHistory = subPageHistory;
+
+    // 判斷當前頁面是否為同個頁面
+    // 若為同個頁面則不在疊一層
+    // 除非為 forceNew
+    if (currentHistory.isNotEmpty) {
+      var lastPage = currentHistory.last;
+      if (lastPage.route == data.route && !data.forceNew) {
+        currentHistory.removeLast();
+      }
+    }
+
+    currentHistory.add(data);
+
+    if (currentHistory.length > 1 && popUntil != null) {
+      bool isKeep = false;
+      while (!isKeep && currentHistory.length > 1) {
+        isKeep = popUntil(currentHistory[currentHistory.length - 2].route);
+        if (!isKeep) {
+          currentHistory.removeAt(currentHistory.length - 2);
+        }
+      }
+    }
+
+    _historyPageSubject.add(currentHistory);
+  }
+
+  /// tab式分發頁面
+  void _tabDispatchPage(
+    RouteData data, {
+    bool Function(String route) popUntil,
+  }) {
+    var currentHistory = subPageHistory;
+
+    // 判斷頁面是否已經存在歷史裡面
+    var findHistoryIndex =
+        currentHistory.indexWhere((element) => element.route == data.route);
+
+    if (findHistoryIndex != -1) {
+      // 曾經在歷史裡面, 調換位置
+      currentHistory.removeAt(findHistoryIndex);
+    }
+
+    currentHistory.add(data);
+
+    // 檢測歷史長度是否超過快取
+    if (currentHistory.length > cachePageCount) {
+      currentHistory =
+          currentHistory.sublist(currentHistory.length - cachePageCount);
+    }
+
+    // 檢測是否可以刪除以前的頁面
+    if (currentHistory.length > 1 && popUntil != null) {
+      bool isKeep = false;
+      while (!isKeep && currentHistory.length > 1) {
+        isKeep = popUntil(currentHistory[currentHistory.length - 2].route);
+        if (!isKeep) {
+          currentHistory.removeAt(currentHistory.length - 2);
+        }
+      }
+    }
+
+    _historyPageSubject.add(currentHistory);
   }
 
   /// 強制更改子頁面
@@ -269,4 +332,13 @@ abstract class PageBloc
   @mustCallSuper
   @protected
   void didUpdateOption(RouteOption oldOption) {}
+}
+
+/// 此頁面的歷史記錄類型
+enum HistoryShow {
+  /// 與 navigator 相同, 一層疊著一層
+  stack,
+
+  /// 用於 tab 上, 每個子頁面都是唯一的
+  tab,
 }

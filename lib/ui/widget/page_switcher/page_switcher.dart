@@ -325,7 +325,7 @@ class _PageSwitcherState extends State<PageSwitcher>
         } else {
           key = cacheKey[finded.route];
         }
-        return (_) => routeMixinImpl.getSubPage(finded, key: key);
+        return (_) => routeMixinImpl.getPage(finded, key: key);
       } else {
         return (_) => Container();
       }

@@ -49,6 +49,8 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
               children: <Widget>[
                 buildIntroduction(content),
                 _buildButton("點擊切換子頁面", () {
+                  // bloc.setSubPageToNext();
+                  // return;
                   count++;
 //                  bloc.setSubPageToNext();
 //                  return;
@@ -58,7 +60,7 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
 //                      print('不可以回退');
 //                      return;
 //                    }
-                    appBloc.popSubPage(route: Pages.routePushSecond, popUntil: (route) => false);
+                    appBloc.popSubPage(Pages.routePushSecond);
 //                    ApplicationBloc.getInstance().setSubPage(
 //                      bloc.subPages()[0],
 //                      popUntil: (route) {
@@ -70,7 +72,7 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                     print(bloc.subPageHistory.map((e) => e.route));
 //                    ApplicationBloc.getInstance().popSubPage(route: Pages.routePushSecond, context: context);
                   } else {
-                    bloc.setSubPageToNext();
+                    bloc.toNextSubPage();
                   }
                 }),
                 Divider(
@@ -78,10 +80,19 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   color: Colors.transparent,
                 ),
                 Expanded(
-                  child: StackSwitcher(
+                  child: PageSwitcher(
                     routes: bloc.subPages(),
                     stream: bloc.subPageHistoryStream,
                     emptyWidget: Container(),
+                    translateIn: Offset(Screen.width, 0),
+                    translateOut: Offset(-40, 0),
+                    animateEnabled: true,
+                    duration: Duration(milliseconds: 3000),
+                    opacityIn: 1,
+                    opacityOut: 1,
+                    // onBackPage: () {
+                    //   bloc.popSubPage(Pages.routePushSecond);
+                    // },
                   ),
                 ),
               ],

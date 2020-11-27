@@ -56,10 +56,7 @@ abstract class PopupController {
 
 /// 路由彈窗控制器
 class RouteController extends PopupController {
-  /// 彈窗綁定的 context
-  BuildContext _context;
-
-  RouteController(BuildContext context) : this._context = context;
+  RouteController();
 
   /// 移除彈窗
   @override
@@ -67,8 +64,7 @@ class RouteController extends PopupController {
     var needRemove = !_isRemoved;
     await super.remove();
     if (needRemove) {
-      Navigator.of(_context).pop();
-      _context = null;
+      navigatorIns.pop();
     }
   }
 }

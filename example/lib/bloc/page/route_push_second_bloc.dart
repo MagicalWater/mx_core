@@ -3,7 +3,11 @@ import 'package:mx_core_example/router/route.dart';
 
 class RoutePushSecondBloc extends PageBloc {
   RoutePushSecondBloc(RouteOption option)
-      : super(Pages.routePushSecond, option);
+      : super(
+          Pages.routePushSecond,
+          option,
+          historyShow: HistoryShow.tab,
+        );
 
   @override
   RouteData defaultSubPage() => RouteData(subPages()[0]);

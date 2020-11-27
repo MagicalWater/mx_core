@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mx_core/ui/widget/animated_comb/animated_comb.dart';
 import 'package:mx_core/ui/widget/arrow_container.dart';
+import 'package:mx_core/ui/widget/navigator_provider.dart';
 import 'package:mx_core/util/screen_util.dart';
 
 import 'arrow_style.dart';
@@ -48,8 +49,7 @@ class Popup {
   /// [animated] - 顯示動畫, 空陣列將使用預設動畫 [Comb.scale], 若不需要動畫則帶入 null
   /// [onTapSpace] - 點擊空白處
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
-  static PopupController showRoute(
-    BuildContext context, {
+  static PopupController showRoute({
     PopupOption option,
     PopupWidgetBuilder builder,
     List<Comb> animated = const [],
@@ -79,7 +79,7 @@ class Popup {
       initToggle: true,
     );
 
-    var controller = RouteController(context);
+    var controller = RouteController();
     _allShowPopup.add(controller);
 
     var child = builder(controller);
@@ -129,7 +129,7 @@ class Popup {
         ),
       ),
     );
-    Navigator.of(context).push(layout);
+    navigatorIns.push(layout);
     controller
       ..registerController(childSync)
       ..registerController(backgroundSync);
@@ -142,8 +142,6 @@ class Popup {
   /// [onTapSpace] - 點擊空白處回調, 只有在 [hitRule] 等於 [HitRule.intercept] 時有效
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
   static PopupController showOverlay({
-    BuildContext context,
-    OverlayState overlay,
     PopupWidgetBuilder builder,
     PopupOption option,
     HitRule hitRule = HitRule.intercept,
@@ -228,11 +226,7 @@ class Popup {
         );
       },
     );
-    if (context != null) {
-      Overlay.of(context).insert(entry);
-    } else if (overlay != null) {
-      overlay.insert(entry);
-    }
+    navigatorIns.overlay.insert(entry);
     controller
       ..registerController(backgroundSync)
       ..registerController(childSync)
@@ -299,7 +293,6 @@ class Popup {
     var childSizeStreamController = StreamController<Size>();
 
     var popupController = Popup.showOverlay(
-      context: context,
       animated: [
         Comb.parallel(
           animatedList: [

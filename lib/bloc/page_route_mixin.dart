@@ -1,14 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
-mixin PageRouteMixin implements RouteMixinBase {
-  /// 取得子頁面
-//  @override
-//  Widget getSubPage(RouteData data) => routeMixinImpl?.getSubPage(data);
-  @override
-  Widget getSubPage(RouteData data, {Key key}) =>
-      routeMixinImpl?.getSubPage(data, key: key);
+export 'dart:async';
 
+mixin PageRouteMixin implements RouteMixinBase {
   /// 取得路由為 [page] 的頁面是否顯示中
   @override
   bool isPageShowing(String page) => routeMixinImpl?.isPageShowing(page);
@@ -19,22 +16,30 @@ mixin PageRouteMixin implements RouteMixinBase {
   /// [popUtil] - pop 直到返回true
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   @override
-  Future<T> popAndPushPage<T>(String route, BuildContext context,
-          {String subRoute,
-          Map<String, dynamic> pageQuery,
-          Map<String, dynamic> blocQuery,
-          popUntil,
-          Object result}) =>
-      routeMixinImpl?.popAndPushPage(route, context,
-          pageQuery: pageQuery,
-          blocQuery: blocQuery,
-          popUntil: popUntil,
-          result: result);
+  Future<dynamic> popAndPushPage<T>(
+    String route, {
+    Map<String, dynamic> pageQuery,
+    Map<String, dynamic> blocQuery,
+    popUntil,
+    Object result,
+  }) =>
+      routeMixinImpl?.popAndPushPage(
+        route,
+        pageQuery: pageQuery,
+        blocQuery: blocQuery,
+        popUntil: popUntil,
+        result: result,
+      );
 
   @override
-  bool popPage(BuildContext context,
-          {bool Function(String route) popUntil, Object result}) =>
-      routeMixinImpl?.popPage(context, popUntil: popUntil, result: result);
+  bool popPage({
+    bool Function(String route) popUntil,
+    Object result,
+  }) =>
+      routeMixinImpl?.popPage(
+        popUntil: popUntil,
+        result: result,
+      );
 
   /// 發起大頁面跳轉
   /// [subRoute] - 跳轉到此大頁面底下的這個子頁面
@@ -42,54 +47,38 @@ mixin PageRouteMixin implements RouteMixinBase {
   /// [removeUtil] - 刪除舊頁面直到返回true
   /// [builder] - 自定義構建 PageRoute
   @override
-  Future<T> pushPage<T>(String route, BuildContext context,
-          {String subRoute,
-          Map<String, dynamic> pageQuery,
-          Map<String, dynamic> blocQuery,
-          bool replaceCurrent = false,
-          bool Function(String route) removeUntil,
-          MixinRouteBuilder builder}) =>
-      routeMixinImpl?.pushPage(route, context,
-          subRoute: subRoute,
-          pageQuery: pageQuery,
-          blocQuery: blocQuery,
-          replaceCurrent: replaceCurrent,
-          removeUntil: removeUntil,
-          builder: builder);
-
-  /// 跳轉子頁面
-  @override
-  bool setSubPage(
+  Future<dynamic> pushPage<T>(
     String route, {
-    BuildContext context,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
-    bool forceNew = false,
-    bool Function(String route) popUntil,
+    bool replaceCurrent,
+    bool Function(String route) removeUntil,
+    MixinRouteBuilder<T> builder,
+    Key key,
   }) =>
-      routeMixinImpl?.setSubPage(
+      routeMixinImpl?.pushPage(
         route,
-        context: context,
         pageQuery: pageQuery,
         blocQuery: blocQuery,
-        forceNew: forceNew,
-        popUntil: popUntil,
+        replaceCurrent: replaceCurrent,
+        removeUntil: removeUntil,
+        builder: builder,
+        key: key,
       );
 
   /// 可以彈出子頁面嗎
   @override
-  bool canPopSubPage({
-    String route,
+  bool canPopSubPage(
+    String route, {
     PopLevel level = PopLevel.exact,
   }) =>
-      routeMixinImpl?.canPopSubPage(route: route, level: level);
+      routeMixinImpl?.canPopSubPage(route, level: level);
 
   /// 彈出子頁面
-  bool popSubPage({
-    String route,
-    BuildContext context,
+  bool popSubPage(
+    String route, {
     PopLevel level = PopLevel.exact,
     bool Function(String route) popUntil,
   }) =>
-      routeMixinImpl?.popSubPage(route: route, level: level);
+      routeMixinImpl?.popSubPage(route, level: level);
 }

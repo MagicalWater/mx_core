@@ -65,30 +65,32 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoadProvider(
       root: true,
-      child: MaterialApp(
-        builder: BotToastInit(),
-        navigatorObservers: [
-          BotToastNavigatorObserver(),
-          MxCoreRouteObservable(),
-        ],
-        debugShowCheckedModeBanner: false,
-        onGenerateTitle: (context) {
-          return 'MxCore範例';
-        },
-        theme: ThemeData.from(
-          colorScheme: const ColorScheme.light(),
-        ).copyWith(
-          pageTransitionsTheme: const PageTransitionsTheme(
-            builders: <TargetPlatform, PageTransitionsBuilder>{
-              TargetPlatform.android: ZoomPageTransitionsBuilder(),
-            },
+      child: MxCoreInit(
+        child: MaterialApp(
+          builder: BotToastInit(),
+          navigatorObservers: [
+            BotToastNavigatorObserver(),
+            MxCoreRouteObservable(),
+          ],
+          debugShowCheckedModeBanner: false,
+          onGenerateTitle: (context) {
+            return 'MxCore範例';
+          },
+          theme: ThemeData.from(
+            colorScheme: const ColorScheme.light(),
+          ).copyWith(
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: <TargetPlatform, PageTransitionsBuilder>{
+                TargetPlatform.android: ZoomPageTransitionsBuilder(),
+              },
+            ),
           ),
-        ),
-        home: AppBloc().getPage(
-          Pages.introduction,
-          entryPoint: true,
-        ),
+          home: AppBloc().getPage(
+            Pages.introduction,
+            entryPoint: true,
+          ),
 //        home: BB(),
+        ),
       ),
     );
   }

@@ -60,7 +60,6 @@ class _NormalPopupPageState extends State<NormalPopupPage> {
       child: Text('Route彈窗'),
       onPressed: () {
         Popup.showRoute(
-          context,
           builder: (controller) => SafeArea(
             child: Align(
               child: Container(
@@ -100,7 +99,6 @@ class _NormalPopupPageState extends State<NormalPopupPage> {
       child: Text('Overlay Entry彈窗'),
       onPressed: () {
         Popup.showOverlay(
-          context: context,
           builder: (controller) => SafeArea(
             child: Align(
               child: Container(

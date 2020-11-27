@@ -53,13 +53,13 @@ class _RoutePushEntryPageState extends State<RoutePushEntryPage> {
               children: <Widget>[
                 buildIntroduction(content),
                 _buildRouteButton("跳轉大頁面", () {
-                  appBloc.pushPage(Pages.routePushSecond, context);
+                  appBloc.pushPage(Pages.routePushSecond);
                 }),
                 _buildRouteButton("跨頁面跳轉子頁面", () {
-                  appBloc.setSubPage(Pages.routePushSub3, context: context);
+                  appBloc.pushPage(Pages.routePushSub3);
                 }),
                 _buildRouteButton("跨頁跳轉隔代子頁面", () {
-                  appBloc.setSubPage(Pages.routePushSubB, context: context);
+                  appBloc.pushPage(Pages.routePushSubB);
                 }),
               ],
             ),

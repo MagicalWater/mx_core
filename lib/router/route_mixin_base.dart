@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
 typedef MixinRouteBuilder<T> = PageRoute<T> Function(
-  BuildContext context,
   Widget child,
   String name,
 );
@@ -22,33 +23,19 @@ abstract class RouteMixinBase {
   /// 取得路由為 [page] 的頁面是否顯示中
   bool isPageShowing(String page);
 
-  /// 取得子頁面
-  Widget getSubPage(RouteData data, {Key key});
-
-  /// 設定子頁面
-  bool setSubPage(
-    String route, {
-    BuildContext context,
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
-    bool forceNew = false,
-    bool Function(String route) popUntil,
-  });
-
   /// 發起頁面跳轉
   /// [subRoute] - 跳轉到此大頁面底下的這個子頁面
   /// [replaceCurrent] - 替換掉當前頁面, 即無法再返回當前頁面
   /// [removeUtil] - 刪除舊頁面直到返回true
   /// [builder] - 自定義構建 PageRoute
-  Future<T> pushPage<T>(
-    String route,
-    BuildContext context, {
-    String subRoute,
+  Future<dynamic> pushPage<T>(
+    String route, {
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
-    bool replaceCurrent = false,
+    bool replaceCurrent,
     bool Function(String route) removeUntil,
     MixinRouteBuilder<T> builder,
+    Key key,
   });
 
   /// 返回的同時再 push
@@ -56,10 +43,8 @@ abstract class RouteMixinBase {
   /// [subRoute] - 跳轉到此大頁面底下的這個子頁面
   /// [popUtil] - pop 直到返回true
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
-  Future<T> popAndPushPage<T>(
-    String route,
-    BuildContext context, {
-    String subRoute,
+  Future<dynamic> popAndPushPage<T>(
+    String route, {
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
     bool Function(String route) popUntil,
@@ -68,22 +53,20 @@ abstract class RouteMixinBase {
 
   /// 返回 page
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
-  bool popPage(
-    BuildContext context, {
+  bool popPage({
     bool Function(String route) popUntil,
     Object result,
   });
 
   /// 可以彈出子頁面嗎
-  bool canPopSubPage({
-    String route,
+  bool canPopSubPage(
+    String route, {
     PopLevel level = PopLevel.exact,
   });
 
   /// 彈出子頁面
-  bool popSubPage({
-    String route,
-    BuildContext context,
+  bool popSubPage(
+    String route, {
     PopLevel level = PopLevel.exact,
     bool Function(String route) popUntil,
   });
@@ -91,17 +74,15 @@ abstract class RouteMixinBase {
 
 abstract class RoutePageBase {
   /// 直接取得page實體
-  /// [subRoute] - 取得的頁面會自動加子頁面設為此
+  /// [route] - 可帶入 [String] 或 [RouteData]
+  ///   若帶入字串, 將會自動組成 [RouteData]
+  ///   若帶入 [RouteData], 則 [pageQuery] 以及 [blocQuery] 失效
   Widget getPage(
-    String route, {
-    String subRoute,
+    dynamic route, {
+    Key key,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
-    Key key,
   });
-
-  /// 取得子頁面的串流
-//  Stream<RouteData> getSubPageStream([String page]);
 
   /// 註冊子頁面監聽
   void registerSubPageListener({

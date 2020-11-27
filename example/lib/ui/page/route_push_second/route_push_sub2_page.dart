@@ -45,7 +45,7 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page> with AutomaticKee
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             _buildButton("切換子頁面 A/B", () {
-              bloc.setSubPageToNext();
+              bloc.toNextSubPage();
 //              counter++;
 //              setState(() {});
             }),

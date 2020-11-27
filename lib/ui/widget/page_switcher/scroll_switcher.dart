@@ -106,10 +106,10 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
         } else {
           key = cacheKey[finded.route];
         }
-        return (_) => routeMixinImpl.getSubPage(finded, key: key);
+        return (_) => routeMixinImpl.getPage(finded, key: key);
       } else {
         var key = cacheKey[e];
-        return (_) => routeMixinImpl.getSubPage(RouteData(e), key: key);
+        return (_) => routeMixinImpl.getPage(e, key: key);
       }
     }).toList();
 
