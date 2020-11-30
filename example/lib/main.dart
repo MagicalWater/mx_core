@@ -8,6 +8,10 @@ import 'bloc/app_bloc.dart';
 import 'router/route.dart';
 
 void main() {
+  var aa = '/routePushSecond/routePushSub1';
+  var bb = '/routePushSecond/routePushSub1';
+  print('檢測: ${aa.matchAsPrefix(bb)}');
+
 //  print("螢幕高: ${Screen.height}");
 
 //  timeDilation = 25;

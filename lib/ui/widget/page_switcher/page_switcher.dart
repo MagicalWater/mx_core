@@ -421,9 +421,9 @@ class _PageSwitcherState extends State<PageSwitcher>
           break;
       }
 
-      oldDownWidget ??= Container();
+      oldDownWidget ??= Positioned.fill(child: Container());
     } else {
-      oldDownWidget = Container();
+      oldDownWidget = Positioned.fill(child: Container());
 
       newWidget = Opacity(
         opacity: 1,

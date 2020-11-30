@@ -10,55 +10,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/navigator_provider.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/navigator_provider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/switcher.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/page_switcher/switcher.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second_bloc.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/normal_popup_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/normal_popup_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_entry_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_entry_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_a_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_a_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_b_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_b_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/test_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/test_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/page_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/page_route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/bloc/page_route_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/popup/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/popup/controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/popup/impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/route_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/route_mixin_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/route_mixin_base.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/info_popup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/info_popup.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/page_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/page_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/scroll_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/scroll_switcher.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/stack_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/stack_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/particle_animation/bomb_animation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/particle_animation/bomb_animation.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second_bloc.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/normal_popup_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/normal_popup_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_entry_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_entry_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_a_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_a_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_b_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_b_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/test_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/test_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/bloc/page_route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/page_route_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin_base.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/info_popup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/info_popup.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/page_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_switcher/page_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/scroll_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_switcher/scroll_switcher.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/stack_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_switcher/stack_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/particle_animation/bomb_animation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/particle_animation/bomb_animation.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
@@ -207,35 +175,35 @@
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state x="100" y="123" width="1480" height="751" key="DiffContextDialog/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606449819918" />
-    <state width="1638" height="217" key="GridCell.Tab.0.bottom" timestamp="1606458056361">
+    <state width="1638" height="217" key="GridCell.Tab.0.bottom" timestamp="1606725460607">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state width="1878" height="382" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@-240.-1057.1920.1057" timestamp="1599639256386" />
-    <state width="1638" height="217" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606458056361" />
+    <state width="1638" height="217" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606725460607" />
     <state width="1638" height="218" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606287795056" />
     <state width="1638" height="219" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716605" />
     <state width="1638" height="217" key="GridCell.Tab.0.bottom/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471739" />
-    <state width="1638" height="217" key="GridCell.Tab.0.center" timestamp="1606458056360">
+    <state width="1638" height="217" key="GridCell.Tab.0.center" timestamp="1606725460607">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state width="1878" height="382" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@-240.-1057.1920.1057" timestamp="1599639256385" />
-    <state width="1638" height="217" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606458056360" />
+    <state width="1638" height="217" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606725460607" />
     <state width="1638" height="218" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606287795056" />
     <state width="1638" height="219" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716604" />
     <state width="1638" height="217" key="GridCell.Tab.0.center/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471738" />
-    <state width="1638" height="217" key="GridCell.Tab.0.left" timestamp="1606458056360">
+    <state width="1638" height="217" key="GridCell.Tab.0.left" timestamp="1606725460606">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state width="1878" height="382" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@-240.-1057.1920.1057" timestamp="1599639256385" />
-    <state width="1638" height="217" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606458056360" />
+    <state width="1638" height="217" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606725460606" />
     <state width="1638" height="218" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606287795056" />
     <state width="1638" height="219" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716603" />
     <state width="1638" height="217" key="GridCell.Tab.0.left/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471737" />
-    <state width="1638" height="217" key="GridCell.Tab.0.right" timestamp="1606458056360">
+    <state width="1638" height="217" key="GridCell.Tab.0.right" timestamp="1606725460607">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state width="1878" height="382" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@-240.-1057.1920.1057" timestamp="1599639256385" />
-    <state width="1638" height="217" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606458056360" />
+    <state width="1638" height="217" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606725460607" />
     <state width="1638" height="218" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606287795056" />
     <state width="1638" height="219" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716604" />
     <state width="1638" height="217" key="GridCell.Tab.0.right/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471738" />
@@ -253,10 +221,10 @@
     <state x="493" y="256" width="803" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606372351085" />
     <state x="493" y="256" width="980" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606188727215" />
     <state x="493" y="256" width="980" height="488" key="find.popup/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1603783644707" />
-    <state width="300" height="95" key="javadoc.popup.new" timestamp="1606456047978">
+    <state width="300" height="95" key="javadoc.popup.new" timestamp="1606725228851">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
-    <state width="300" height="95" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606456047978" />
+    <state width="300" height="95" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606725228851" />
     <state width="343" height="107" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@-240.-1057.1920.1057" timestamp="1601363260573" />
     <state width="300" height="96" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606287097263" />
     <state width="343" height="106" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.954@-240.-1057.1920.1057" timestamp="1601361829881" />
@@ -266,11 +234,11 @@
     </state>
     <state x="505" y="229" width="670" height="675" key="run.anything.popup/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1605595727362" />
     <state x="505" y="229" width="670" height="675" key="run.anything.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606208270338" />
-    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup" timestamp="1606455985017">
+    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup" timestamp="1606725274181">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state x="337" y="-826" width="766" height="752" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.951@-240.-1057.1920.1057" timestamp="1599639182852" />
-    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606455985017" />
+    <state x="505" y="231" width="670" height="676" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606725274181" />
     <state x="337" y="-826" width="766" height="752" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.952@-240.-1057.1920.1057" timestamp="1600046615857" />
     <state x="505" y="231" width="670" height="676" key="search.everywhere.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606286452586" />
   </component>

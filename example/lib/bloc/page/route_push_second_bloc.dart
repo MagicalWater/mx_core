@@ -6,7 +6,7 @@ class RoutePushSecondBloc extends PageBloc {
       : super(
           Pages.routePushSecond,
           option,
-          historyShow: HistoryShow.tab,
+          historyShow: HistoryShow.stack,
         );
 
   @override

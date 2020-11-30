@@ -54,7 +54,7 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   count++;
 //                  bloc.setSubPageToNext();
 //                  return;
-                  if (count > 2) {
+                  if (count > 200) {
                     print('回退');
 //                    if (!ApplicationBloc.getInstance().canPopSubPage(route: Pages.routePushSecond)) {
 //                      print('不可以回退');
@@ -72,7 +72,19 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                     print(bloc.subPageHistory.map((e) => e.route));
 //                    ApplicationBloc.getInstance().popSubPage(route: Pages.routePushSecond, context: context);
                   } else {
-                    bloc.toNextSubPage();
+                    if (bloc.isPageShowing(Pages.routePushSub1)) {
+                      print('子頁面1顯示中');
+                      bloc.pushPage(Pages.routePushSub2);
+                    } else if (bloc.isPageShowing(Pages.routePushSub2)) {
+                      print('子頁面2顯示中');
+                      bloc.pushPage(Pages.routePushSub3);
+                    } else if (bloc.isPageShowing(Pages.routePushSub3)) {
+                      print('子頁面3顯示中');
+                      bloc.pushPage(Pages.routePushSub1);
+                    } else {
+                      print('沒有任何頁面顯示');
+                    }
+                    // bloc.toNextSubPage();
                   }
                 }),
                 Divider(
@@ -80,19 +92,45 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   color: Colors.transparent,
                 ),
                 Expanded(
-                  child: PageSwitcher(
+                  child: StackSwitcher(
                     routes: bloc.subPages(),
                     stream: bloc.subPageHistoryStream,
                     emptyWidget: Container(),
-                    translateIn: Offset(Screen.width, 0),
-                    translateOut: Offset(-40, 0),
+
+                    // === 右滑回退 ===
+                    // translateIn: Offset(-Screen.width, 0),
+                    // translateOut: Offset(40, 0),
+                    // backDirection: AxisDirection.right,
+                    // ===============
+
+                    // === 左滑回退 ===
+                    // translateIn: Offset(Screen.width, 0),
+                    // translateOut: Offset(-40, 0),
+                    // backDirection: AxisDirection.left,
+                    // ===============
+
+                    // === 下滑回退 ===
+                    // translateIn: Offset(0, Screen.height),
+                    // translateOut: Offset(0, -40),
+                    // backDirection: AxisDirection.down,
+                    // ===============
+
+                    // === 上滑回退 ===
+                    translateIn: Offset(0, -Screen.height),
+                    translateOut: Offset(0, 40),
+                    backDirection: AxisDirection.up,
+                    // ===============
+
+                    scaleIn: 1.5,
+                    scaleOut: 0.5,
+
                     animateEnabled: true,
-                    duration: Duration(milliseconds: 3000),
-                    opacityIn: 1,
-                    opacityOut: 1,
-                    // onBackPage: () {
-                    //   bloc.popSubPage(Pages.routePushSecond);
-                    // },
+                    duration: Duration(milliseconds: 2000),
+                    opacityIn: 0,
+                    opacityOut: 0.5,
+                    onBackPage: () {
+                      bloc.popSubPage(Pages.routePushSecond);
+                    },
                   ),
                 ),
               ],
