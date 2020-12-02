@@ -416,6 +416,7 @@ class _StackSwitcherState extends State<StackSwitcher>
   }
 
   void _onHorizontalDragStart(DragStartDetails details) {
+    _initPageOffset = null;
     final widgetBound = context.findRenderObject()?.paintBounds;
     if (widgetBound != null) {
       double distance;
