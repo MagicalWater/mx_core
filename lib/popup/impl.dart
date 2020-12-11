@@ -151,14 +151,12 @@ class Popup {
   }) {
     if (animated?.isEmpty == true) {
       animated = [
-        Comb.parallel(animatedList: [
-          Comb.scale(
-            begin: Size.square(0),
-            end: Size.square(1),
-            curve: Curves.easeOutSine,
-          ),
-          Comb.opacity(begin: 0, end: 1, duration: 100),
-        ]),
+        Comb.parallel(
+          animatedList: [
+            Comb.scale(begin: Size.square(0.8)),
+            Comb.opacity(begin: 0),
+          ],
+        ),
       ];
     }
 
@@ -393,11 +391,11 @@ class Popup {
     FractionalOffset anchor,
   ) {
     if (popupScale == PopupScale.vertical) {
-      return Comb.scaleY(begin: 0, alignment: anchor, x: 1);
+      return Comb.scaleY(begin: 0.8, alignment: anchor, x: 1);
     } else if (popupScale == PopupScale.horizontal) {
-      return Comb.scaleX(begin: 0, alignment: anchor, y: 1);
+      return Comb.scaleX(begin: 0.8, alignment: anchor, y: 1);
     } else {
-      return Comb.scale(begin: Size.zero, alignment: anchor);
+      return Comb.scale(begin: Size.square(0.8), alignment: anchor);
     }
   }
 

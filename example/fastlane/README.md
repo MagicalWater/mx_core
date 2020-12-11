@@ -54,6 +54,16 @@ fastlane build_runner_clean
 fastlane ios auto_match_cert
 ```
 自動證書管理
+### ios resign_ipa
+```
+fastlane ios resign_ipa
+```
+重新簽名ipa(用於超級簽)
+### ios register_debug_device
+```
+fastlane ios register_debug_device
+```
+註冊測試設備 ipa
 ### ios export_ipa
 ```
 fastlane ios export_ipa

@@ -22,7 +22,7 @@ class RouteWidget implements RouteWidgetBase {
   Widget getPage(RouteData data, {Key key}) {
     final widgetOption = data.copyWith(RouteDataType.widget);
     final blocOption = data.copyWith(RouteDataType.bloc);
-    final child = AppRoute.getPage(widgetOption);
+    Widget getChild(BuildContext context) => AppRoute.getPage(widgetOption);
     switch (data.route) {
       default:
         print("找無對應的 page, ${data.route}");

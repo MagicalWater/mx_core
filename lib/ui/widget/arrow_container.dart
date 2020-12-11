@@ -145,6 +145,9 @@ class _ArrowShiftBox extends RenderShiftedBox {
   /// 已經繪製好的 strokePath
   Path strokePath;
 
+  /// 當前繪製的 Rect
+  Rect currentRect;
+
   _ArrowShiftBox({
     this.shiftLeafPercent = 0,
     this.shiftRootPercent = 0,
@@ -243,6 +246,12 @@ class _ArrowShiftBox extends RenderShiftedBox {
       child.size.width + diffStrokeWidth * 2,
       child.size.height + diffStrokeWidth * 2,
     );
+
+    if (rect != currentRect) {
+      fillPath = null;
+      strokePath = null;
+      currentRect = rect;
+    }
 
     if (fillPath == null) {
       if (gradient != null) {

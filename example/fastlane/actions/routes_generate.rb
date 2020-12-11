@@ -160,7 +160,7 @@ module Fastlane
               convertName = FileHandleAction.convert_name(page)
               addText = addText + %{      case Pages.#{page}:
         return BlocProvider(
-          child: child,
+          childBuilder: getChild,
           blocBuilder: () => #{convertName['upper_camel']}Bloc(blocOption),
           key: key,
         );

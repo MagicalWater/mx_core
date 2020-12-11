@@ -45,8 +45,12 @@ class _MxCoreInitState extends _NavigatorProviderState {
 
   NavigatorState _getNavigator() {
     if (_needSearchNavigator) {
+      try {
+        _searchNavigatorState(context);
+      } catch (ex, stack) {
+        print('無法更新nav, 沿用舊的, 保留至下次更新: $ex');
+      }
       _needSearchNavigator = false;
-      _searchNavigatorState(context);
     }
     return _navigatorState;
   }

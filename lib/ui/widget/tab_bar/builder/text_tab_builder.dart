@@ -166,16 +166,20 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
       child: InkWell(
         borderRadius: getBorderRadius(decoration),
         onTap: onTap,
-        child: Container(
-          width: size.width,
-          height: size.height,
-          padding: padding,
+        child: SizedOverflowBox(
           alignment: Alignment.center,
-          child: AnimatedDefaultTextStyle(
-            child: Text(texts[index]),
-            style: textStyle,
-            duration: duration,
-            curve: curve,
+          size: Size(size.width, size.height),
+          child: Container(
+            width: size.width + 0.5,
+            height: size.height,
+            padding: padding,
+            alignment: Alignment.center,
+            child: AnimatedDefaultTextStyle(
+              child: Text(texts[index]),
+              style: textStyle,
+              duration: duration,
+              curve: curve,
+            ),
           ),
         ),
       ),
@@ -190,6 +194,7 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
       height: double.infinity,
       padding: padding,
       decoration: decoration,
+      alignment: Alignment.center,
       child: Text(
         actions[index],
         style: textStyle.copyWith(color: Colors.transparent),
@@ -208,12 +213,21 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
       child: InkWell(
         borderRadius: getBorderRadius(decoration),
         onTap: onTap,
-        child: Container(
-          width: size.width,
-          height: size.height,
-          padding: padding,
+        child: SizedOverflowBox(
           alignment: Alignment.center,
-          child: Text(actions[index], style: textStyle),
+          size: Size(size.width, size.height),
+          child: Container(
+            width: size.width + 0.5,
+            height: size.height,
+            padding: padding,
+            alignment: Alignment.center,
+            child: Text(
+              actions[index],
+              style: textStyle,
+              maxLines: 1,
+              overflow: TextOverflow.clip,
+            ),
+          ),
         ),
       ),
     );

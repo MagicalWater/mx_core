@@ -29,14 +29,11 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
     bloc = BlocProvider.of<TabBarBloc>(context);
     tabController = TabController(
       initialIndex: currentIndex,
-      length: 2,
+      length: 3,
       vsync: this,
     );
 
-    tabs = [
-      '1',
-      '2',
-    ];
+    tabs = List.generate(tabController.length, (index) => '${index + 1}');
 
     pages = List.generate(
         tabs.length,
@@ -51,28 +48,28 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
               ),
             ));
 
-    Future.delayed(Duration(seconds: 2)).then((value) {
-      var startIndex = tabs.length + 1;
-      tabs += ['$startIndex', '${startIndex + 1}'];
-      pages = List.generate(
-          tabs.length,
-          (index) => Container(
-                alignment: Alignment.center,
-                child: Text(
-                  '頁面 $index',
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: 30.scaleA,
-                  ),
-                ),
-              ));
-      tabController = TabController(
-        initialIndex: currentIndex,
-        length: 4,
-        vsync: this,
-      );
-      setState(() {});
-    });
+    // Future.delayed(Duration(seconds: 2)).then((value) {
+    //   var startIndex = tabs.length + 1;
+    //   tabs += ['$startIndex', '${startIndex + 1}'];
+    //   pages = List.generate(
+    //       tabs.length,
+    //       (index) => Container(
+    //             alignment: Alignment.center,
+    //             child: Text(
+    //               '頁面 $index',
+    //               style: TextStyle(
+    //                 color: Colors.black45,
+    //                 fontSize: 30.scaleA,
+    //               ),
+    //             ),
+    //           ));
+    //   tabController = TabController(
+    //     initialIndex: currentIndex,
+    //     length: 4,
+    //     vsync: this,
+    //   );
+    //   setState(() {});
+    // });
     // TabBar();
     super.initState();
   }
@@ -85,46 +82,55 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         haveAppBar: true,
         title: "TabBar",
         child: Container(
-          alignment: Alignment.center,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SwipeTabBar.text(
-                currentIndex: currentIndex,
-                // controller: tabController,
-                builder: TextTabBuilder(
-                  texts: tabs,
-                  // actions: [
-                  //   '第一名',
-                  //   '第二名',
-                  // ],
-                  tabDecoration: TabStyle<BoxDecoration>(
-                    select: BoxDecoration(color: Colors.transparent),
-                    unSelect: BoxDecoration(color: Colors.transparent),
+              Container(
+                width: double.infinity,
+                child: SwipeTabBar.text(
+                  currentIndex: currentIndex,
+                  // controller: tabController,
+                  builder: TextTabBuilder(
+                    texts: tabs,
+                    // actions: [
+                    //   '第一名',
+                    //   '第二名',
+                    // ],
+                    tabDecoration: TabStyle<BoxDecoration>(
+                      select: BoxDecoration(color: Colors.transparent),
+                      unSelect: BoxDecoration(color: Colors.transparent),
+                    ),
+                    tabTextStyle: TabStyle<TextStyle>(
+                      select: TextStyle(color: Colors.black, fontSize: 12),
+                      unSelect: TextStyle(color: Colors.grey, fontSize: 12),
+                    ),
+                    actions: ['1'],
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                   ),
-                  tabTextStyle: TabStyle<TextStyle>(
-                    select: TextStyle(color: Colors.black, fontSize: 12),
-                    unSelect: TextStyle(color: Colors.grey, fontSize: 12),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                ),
-                gapBuilder: (context, index) {
-                  return Container(width: 10);
-                },
+                  gapBuilder: (context, index) {
+                    if (index == tabs.length - 1) {
+                      return Expanded(child: Container());
+                    }
+                    return Container(width: 10);
+                  },
 //            header: Container(width: 30),
 //            footer: Container(width: 100),
-                tabHeight: 40,
-                scrollable: true,
-                indicator: TabIndicator(
-                  color: Colors.red,
-                  height: 2,
+                  tabWidth: TabWidth.shrinkWrap(),
+                  tabHeight: 40,
+                  scrollable: false,
+                  indicator: TabIndicator(
+                    color: Colors.red,
+                    height: 2,
+                  ),
+                  onTabTap: (index) {
+                    currentIndex = index;
+
+                    setState(() {});
+                  },
+                  onActionTap: (index) {
+                    BotToast.showText(text: '$index');
+                  },
                 ),
-                onTabTap: (index) {
-                  currentIndex = index;
-                  setState(() {});
-                },
-                onActionTap: (index) {
-                  BotToast.showText(text: '$index');
-                },
               ),
               Expanded(
                 child: TabBarView(

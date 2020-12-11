@@ -40,6 +40,8 @@ class _SubPageHandler {
       _dispatchSubPage;
   String Function({bool Function(String route) popUntil}) _popSubPage;
 
+  void Function() _notifyUpdate;
+
   List<RouteData> get history => page.subPageHistory;
 
   String get route => page.route;
@@ -57,6 +59,8 @@ class _SubPageHandler {
 
   String popSubPage({bool Function(String route) popUntil}) =>
       _popSubPage(popUntil: popUntil);
+
+  void notifyUpdate() => _notifyUpdate();
 
   void forceModifyPageDetail(String route) => _forceModifyPageDetail(route);
 
@@ -107,31 +111,37 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   String get currentDetailPage => _pageDetailSubject.value;
 
   /// 從當前大頁面重新尋找最終子頁面
+  /// 並且讓其頁面進行刷新
   String _researchCurrentDetailPage() {
     String searchPage = currentPage;
 //    print('搜索: $searchPage');
-    _SubPageHandler finded;
+    _SubPageHandler findStep, searchListener;
 
     do {
-      finded = _subPageListener.firstWhere(
+      findStep = _subPageListener.firstWhere(
           (element) => element.route == searchPage,
           orElse: () => null);
 
-      if (finded != null) {
-        if (finded.history.isNotEmpty) {
-          searchPage = finded.history.last.route;
+      if (findStep != null) {
+        if (findStep.history.isNotEmpty) {
+          searchPage = findStep.history.last.route;
+          searchListener = findStep;
 //          print('往下搜索: $searchPage');
         } else {
 //          print('沒有子頁面歷史, 停止搜索: $searchPage');
-          finded = null;
+          findStep = null;
         }
       } else {
 //        print('找不到子頁面監聽, 停止搜索: $searchPage');
-        finded = null;
+        findStep = null;
       }
-    } while (finded != null);
+    } while (findStep != null);
 
+    print('找到應該顯示的頁面: $searchPage');
     _pageDetailSubject.add(searchPage);
+
+    // 通知子頁面進行刷新
+    searchListener?.notifyUpdate();
 
     return searchPage;
   }
@@ -258,12 +268,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         dispatchSubPage,
     void Function(String route) forceModifyPageDetail,
     String Function({bool Function(String route) popUntil}) popSubPage,
+    void Function() notifyUpdate,
   }) {
     _SubPageHandler subPageHandler = _SubPageHandler(page);
     subPageHandler._isHandleRoute = isHandleRoute;
     subPageHandler._dispatchSubPage = dispatchSubPage;
     subPageHandler._popSubPage = popSubPage;
     subPageHandler._forceModifyPageDetail = forceModifyPageDetail;
+    subPageHandler._notifyUpdate = notifyUpdate;
     _subPageListener.add(subPageHandler);
   }
 
@@ -308,6 +320,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         subRoute: route,
         pageQuery: pageQuery,
         blocQuery: blocQuery,
+        removeUntil: popUntil,
       );
 
       return true;

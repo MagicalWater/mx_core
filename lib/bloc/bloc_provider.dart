@@ -3,6 +3,7 @@ import 'package:mx_core/bloc/page_bloc.dart';
 
 abstract class BlocBase {
   void initState();
+
   Future<void> dispose();
 }
 
@@ -11,12 +12,12 @@ typedef T BlocBuilder<T extends PageBloc>();
 class BlocProvider<T extends PageBloc> extends StatefulWidget {
   BlocProvider({
     Key key,
-    @required this.child,
+    @required this.childBuilder,
     @required this.blocBuilder,
   }) : super(key: key);
 
   final BlocBuilder<T> blocBuilder;
-  final Widget child;
+  final WidgetBuilder childBuilder;
 
   @override
   BlocProviderState<T> createState() => BlocProviderState<T>();
@@ -51,6 +52,11 @@ class BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
     super.didChangeDependencies();
   }
 
+  void notifyUpdate() {
+    print('頁面通知刷新');
+    setState(() {});
+  }
+
   @override
   void dispose() {
     _currentBloc.providerState = null;
@@ -61,6 +67,6 @@ class BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return widget.childBuilder(context);
   }
 }

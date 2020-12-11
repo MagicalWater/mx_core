@@ -94,9 +94,7 @@ class _LocateRowState extends RenderFlex {
 
     if (_checkIsLocateChanged(childRect)) {
       tempLocate = childRect;
-      if (_onLocateChanged != null) {
-        _onLocateChanged(childRect, size);
-      }
+      _onLocateChanged?.call(childRect, size);
     }
   }
 

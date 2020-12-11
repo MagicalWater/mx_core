@@ -7,6 +7,7 @@ export 'coordinate_layout/layout.dart';
 export 'load_provider.dart';
 export 'loading/loading.dart';
 export 'marquee/marquee.dart';
+export 'marquee/vertical_marquee.dart';
 export 'material_layer.dart';
 export 'page_scaffold.dart';
 export 'particle_animation/particle.dart';

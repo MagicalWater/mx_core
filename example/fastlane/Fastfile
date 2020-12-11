@@ -149,7 +149,8 @@ platform :ios do
       app_identifier: bundleId,
       readonly: false,
       generate_apple_certs: true,
-      output_path: "./export/ios/development"
+      output_path: "./export/ios/development",
+      force_for_new_devices: true
     )
 
     match(
@@ -170,7 +171,7 @@ platform :ios do
 
     # 自動同步bundle 以及 開發帳號
     # 關閉自動簽名
-    automatic_code_signing(
+    update_code_signing_settings(
       path: "ios/Runner.xcodeproj",
       use_automatic_signing: false,
       team_id: teamId,
@@ -196,6 +197,124 @@ platform :ios do
       sign_manually(mode: "Release|Profile", path: appstoreProfile, development: false)
     end
 
+  end
+
+  desc '重新簽名ipa(用於超級簽)'
+  lane :resign_ipa do |params|
+    # 裝置列表由字串組成
+    # 裝置之間以逗號隔開
+    # 名稱與uuid以:隔開
+    # 例子
+    # DeviceName:abcdefghijklmnopqrstvuwxyzabcdefghijklmn
+    newDeviceString = params[:devices].to_s
+
+    # ipa路徑
+    ipaPath = params[:ipa].to_s
+
+    if ipaPath.empty?
+        UI.user_error!("ipa路徑沒填寫")
+    end
+
+    if !newDeviceString.empty?
+      # 代表需要註冊新裝置
+      deviceArray = newDeviceString.split(',').map{ |e| e.strip }.map{ |e|
+        name = ""
+        id = ""
+        e.gsub(/.+(?=:)/) { |f|
+            name = f.strip
+        }
+        e.gsub(/(?<=:).+/) { |f|
+            id = f.strip
+        }
+        {
+            "name" => name,
+            "id" => id
+        }
+      }.select{ |e|
+        nameOk = !e["name"].to_s.empty?
+        idOk = !e["id"].to_s.empty?
+        puts "name: #{nameOk}, id: #{idOk}"
+        nameOk && idOk
+      }
+
+      devicesHash = {}
+      deviceArray.each { |e|
+           devicesHash[e["name"]] = e["id"]
+      }
+
+      puts "註冊裝置: #{devicesHash}"
+
+      register_devices(
+        devices: devicesHash,
+        username: userName
+      )
+    end
+
+    # 註冊測試裝置
+    register_devices(
+      devices_file: "./fastlane/files/devices_ios.txt",
+      username: userName
+    )
+
+    # 刪除資料夾 ./export/ios/development
+    # 刪除資料夾 ./export/ios/appstore
+
+    devCerPath = File.expand_path("../export/ios/development", Dir.pwd)
+    appstoreCerPath = File.expand_path("../export/ios/appstore", Dir.pwd)
+
+    FileUtils.rm_rf(devCerPath)
+    FileUtils.rm_rf(appstoreCerPath)
+
+    # 進行證書匹配
+    match(
+      storage_mode: "git",
+      git_url: "https://github.com/8ucx/Base-APP-Certificate.git",
+      git_branch: userName,
+      username: userName,
+      type: "development",
+      app_identifier: bundleId,
+      readonly: false,
+      generate_apple_certs: true,
+      output_path: "./export/ios/development",
+      force_for_new_devices: true
+    )
+
+    # 取得 dev 的 profile path
+    devProfileList = Dir.glob("#{devCerPath}/*.mobileprovision")
+    devProfile = devProfileList.select{ |i| i[/_#{bundleId}\.mobileprovision$/] }.first
+
+    # 取得 dev 的 cert path
+    devCerList = Dir.glob("#{devCerPath}/*.cer")
+    devCer = devCerList.first
+
+    # 取得證書的名稱
+    certInfo = ""
+    Open3.popen3("openssl x509 -inform der -in #{devCer} -noout -text") do |stdin, stdout, stderr, thread|
+       certInfo = stdout.read.to_s
+    end
+
+    infoArray = certInfo.split(/\n/).map{ |e| e.strip }.select { |e| e.start_with?("Subject:") }
+
+    findSubject = ""
+    infoArray[0].gsub(/(?<=CN=).+?(?=,)/) { |f|
+        findSubject = f.strip
+    }
+    puts "證書路徑 #{findSubject}"
+    puts "Profile路徑 #{devProfile}"
+
+    resign(
+      ipa: ipaPath,
+      signing_identity: findSubject,
+      provisioning_profile: devProfile,
+    )
+  end
+
+  desc '註冊測試設備 ipa'
+  lane :register_debug_device do |params|
+    register_devices(
+      devices_file: "./fastlane/files/devices_ios.txt",
+      username: userName
+    )
   end
 
   # 接受三個參數
@@ -251,7 +370,7 @@ platform :ios do
       app_identifier: bundleId,
       sku: bundleId,
       app_name: appName,
-      language: 'Simplified Chinese',
+      language: 'zh-Hans',
       app_version: '1.0',
       enable_services: {
         push_notification: "on",
@@ -309,7 +428,7 @@ platform :ios do
     teamId = info[1]
 
     # 自動同步bundle 以及 帳號
-    automatic_code_signing(
+    update_code_signing_settings(
       path: "ios/Runner.xcodeproj",
       use_automatic_signing: true,
       team_id: teamId,

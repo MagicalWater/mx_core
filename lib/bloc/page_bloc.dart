@@ -148,6 +148,7 @@ abstract class PageBloc
         dispatchSubPage: _dispatchSubPage,
         popSubPage: _popSubPage,
         forceModifyPageDetail: _forceModifyPageDetail,
+        notifyUpdate: _notifyUpdate,
       );
 
       print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
@@ -269,6 +270,11 @@ abstract class PageBloc
     }
 
     _historyPageSubject.add(currentHistory);
+  }
+
+  /// 通知頁面刷新
+  void _notifyUpdate() {
+    providerState?.notifyUpdate();
   }
 
   /// 強制更改子頁面

@@ -7,6 +7,7 @@ import 'action_width.dart';
 import 'base_tab_bar.dart';
 import 'builder/builder.dart';
 import 'indicator_style.dart';
+import 'tab_width.dart';
 
 class SwipeTabBar extends AbstractTabWidget {
   final SwipeTabBuilder tabBuilder;
@@ -26,6 +27,7 @@ class SwipeTabBar extends AbstractTabWidget {
     int currentIndex,
     bool scrollable = false,
     ActionWidth actionWidth,
+    TabWidth tabWidth,
     this.controller,
     this.tabBuilder,
     this.indicator,
@@ -39,6 +41,7 @@ class SwipeTabBar extends AbstractTabWidget {
           currentIndex: currentIndex,
           scrollable: scrollable,
           actionWidth: actionWidth,
+          tabWidth: tabWidth,
           tabCount: tabBuilder.tabCount,
           actionCount: tabBuilder.actionCount,
         );
@@ -49,6 +52,7 @@ class SwipeTabBar extends AbstractTabWidget {
     TextTabBuilder builder,
     bool scrollable = false,
     ActionWidth actionWidth,
+    TabWidth tabWidth,
     double tabHeight,
     TabIndicator indicator,
     IndexedWidgetBuilder gapBuilder,
@@ -62,6 +66,7 @@ class SwipeTabBar extends AbstractTabWidget {
       controller: controller,
       scrollable: scrollable,
       actionWidth: actionWidth,
+      tabWidth: tabWidth,
       tabBuilder: builder,
       tabHeight: tabHeight,
       gapBuilder: gapBuilder,
@@ -286,6 +291,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
   /// 構建 action
   Widget _buildAction({int index}) {
+    print('構建: action = ${actionRectMap[index].size}');
     return widget.tabBuilder.buildActionForeground(
       size: actionRectMap[index].size,
       index: index,

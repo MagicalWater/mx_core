@@ -6,11 +6,13 @@ import 'package:mx_core/ui/widget/line_indicator.dart';
 import 'package:mx_core/ui/widget/locate_row.dart';
 
 import 'action_width.dart';
+import 'tab_width.dart';
 
 abstract class AbstractTabWidget extends StatefulWidget {
   final int currentIndex;
   final bool scrollable;
   final ActionWidth actionWidth;
+  final TabWidth tabWidth;
   final int tabCount;
   final int actionCount;
 
@@ -18,6 +20,7 @@ abstract class AbstractTabWidget extends StatefulWidget {
     this.currentIndex,
     this.scrollable,
     this.actionWidth,
+    this.tabWidth,
     this.tabCount,
     this.actionCount,
   });
@@ -245,31 +248,48 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       var actionWidth = widget.actionWidth;
       if (actionWidth?.fixed != null) {
 //        print('固定寬度');
-        return Container(
-          width: actionWidth.fixed,
-          child: actionWidget,
-        );
+        return Container(width: actionWidth.fixed, child: actionWidget);
       } else if (!widget.scrollable && actionWidth?.flex != null) {
-        return Expanded(
-          flex: actionWidth.flex,
-          child: actionWidget,
-        );
+        return Expanded(flex: actionWidth.flex, child: actionWidget);
       } else {
         return actionWidget;
       }
     }
 
+    Widget packageTab(Widget tabWidget, int index) {
+      var tabWidth = widget.tabWidth;
+      if (tabWidth?.fixed != null) {
+//        print('固定寬度');
+        return Container(
+            key: location ? childKeyList[index] : null,
+            width: tabWidth.fixed,
+            child: tabWidget,
+        );
+      } else if (!widget.scrollable && tabWidth?.flex != null) {
+        return Expanded(flex: tabWidth.flex, child: tabWidget);
+      } else {
+        return Container(
+          key: location ? childKeyList[index] : null,
+          child: tabWidget,
+        );
+      }
+
+      // widget.scrollable
+      //     ? Container(
+      //         key: location ? childKeyList[i] : null,
+      //         child: tabWidget,
+      //       )
+      //     : Expanded(
+      //         flex: 2,
+      //         child: tabWidget,
+      //       );
+    }
+
     var children = <Widget>[
       for (var i = 0; i < widget.tabCount; i++)
-        widget.scrollable
-            ? Container(
-                key: location ? childKeyList[i] : null,
-                child: tab(context, i),
-              )
-            : Expanded(
-                flex: 2,
-                child: tab(context, i),
-              ),
+        packageTab(
+          tab(context, i), i
+        ),
       for (var i = 0; i < widget.actionCount; i++)
         packageAction(
           action(context, i),
