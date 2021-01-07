@@ -86,6 +86,9 @@ class Pages {
   /// 線條指示器
   static const lineIndicator = "/lineIndicator";
 
+  /// 子彈頭渲染
+  static const bulletShape = "/bulletShape";
+
   Pages._();
 }
 

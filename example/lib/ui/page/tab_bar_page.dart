@@ -87,50 +87,8 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
             children: [
               Container(
                 width: double.infinity,
-                child: SwipeTabBar.text(
-                  currentIndex: currentIndex,
-                  // controller: tabController,
-                  builder: TextTabBuilder(
-                    texts: tabs,
-                    // actions: [
-                    //   '第一名',
-                    //   '第二名',
-                    // ],
-                    tabDecoration: TabStyle<BoxDecoration>(
-                      select: BoxDecoration(color: Colors.transparent),
-                      unSelect: BoxDecoration(color: Colors.transparent),
-                    ),
-                    tabTextStyle: TabStyle<TextStyle>(
-                      select: TextStyle(color: Colors.black, fontSize: 12),
-                      unSelect: TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                    actions: ['1'],
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                  ),
-                  gapBuilder: (context, index) {
-                    if (index == tabs.length - 1) {
-                      return Expanded(child: Container());
-                    }
-                    return Container(width: 10);
-                  },
-//            header: Container(width: 30),
-//            footer: Container(width: 100),
-                  tabWidth: TabWidth.shrinkWrap(),
-                  tabHeight: 40,
-                  scrollable: false,
-                  indicator: TabIndicator(
-                    color: Colors.red,
-                    height: 2,
-                  ),
-                  onTabTap: (index) {
-                    currentIndex = index;
-
-                    setState(() {});
-                  },
-                  onActionTap: (index) {
-                    BotToast.showText(text: '$index');
-                  },
-                ),
+                // child: textTab(),
+                child: widgetTab(),
               ),
               Expanded(
                 child: TabBarView(
@@ -142,6 +100,132 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
           ),
         ),
       ),
+    );
+  }
+
+  Widget textTab() {
+    return SwipeTabBar.text(
+      currentIndex: currentIndex,
+      // controller: tabController,
+      builder: TextTabBuilder(
+        texts: tabs,
+        // actions: [
+        //   '第一名',
+        //   '第二名',
+        // ],
+        tabDecoration: TabStyle<BoxDecoration>(
+          select: BoxDecoration(color: Colors.transparent),
+          unSelect: BoxDecoration(color: Colors.transparent),
+        ),
+        tabTextStyle: TabStyle<TextStyle>(
+          select: TextStyle(color: Colors.black, fontSize: 12),
+          unSelect: TextStyle(color: Colors.grey, fontSize: 12),
+        ),
+        actions: ['1'],
+        padding: EdgeInsets.symmetric(horizontal: 20),
+      ),
+      gapBuilder: (context, index) {
+        if (index == tabs.length - 1) {
+          return Expanded(child: Container());
+        }
+        return Container(width: 10);
+      },
+//            header: Container(width: 30),
+//            footer: Container(width: 100),
+      tabWidth: TabWidth.shrinkWrap(),
+      tabHeight: 40,
+      scrollable: false,
+      indicator: TabIndicator(
+        color: Colors.red,
+        height: 2,
+      ),
+      onTabTap: (index) {
+        currentIndex = index;
+
+        setState(() {});
+      },
+      onActionTap: (index) {
+        BotToast.showText(text: '$index');
+      },
+    );
+  }
+
+  Widget widgetTab() {
+    return SwipeTabBar(
+      currentIndex: currentIndex,
+      // controller: tabController,
+      tabBuilder: WidgetTabBuilder(
+        tabBuilder: (context, index, isSelect, foreground) {
+          Widget cc;
+          if (index == 2) {
+            cc = Row(
+              children: [
+                Text(
+                  tabs[index],
+                  style: TextStyle(
+                    color: isSelect ? Colors.black : Colors.grey,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_back,
+                  size: 20,
+                ),
+              ],
+            );
+          } else {
+            cc = Text(
+              tabs[index],
+              style: TextStyle(
+                color: isSelect ? Colors.black : Colors.grey,
+              ),
+            );
+          }
+          return AnimatedSwitcher(
+            duration: Duration(milliseconds: 300),
+            child: Container(
+              key: ValueKey('$index$isSelect'),
+              child: cc,
+            ),
+          );
+        },
+        actionBuilder: (context, index) {
+          return Text(
+            '1',
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          );
+        },
+        tabCount: tabs.length,
+        // actionCount: 1,
+        tabDecoration: TabStyle<BoxDecoration>(
+          select: BoxDecoration(color: Colors.black.withAlpha(100)),
+          unSelect: BoxDecoration(color: Colors.green.withAlpha(100)),
+        ),
+        margin: EdgeInsets.symmetric(vertical: 10.scaleA, horizontal: 5.scaleA),
+        padding: EdgeInsets.symmetric(horizontal: 20),
+      ),
+      gapBuilder: (context, index) {
+        if (index == tabs.length - 1) {
+          return Expanded(child: Container());
+        }
+        return Container(width: 10);
+      },
+      tabWidth: TabWidth.shrinkWrap(),
+      tabHeight: 40,
+      scrollable: false,
+      indicator: TabIndicator(
+        color: Colors.red,
+        height: 2,
+      ),
+      onTabTap: (index) {
+        currentIndex = index;
+
+        setState(() {});
+      },
+      onActionTap: (index) {
+        BotToast.showText(text: '$index');
+      },
     );
   }
 }

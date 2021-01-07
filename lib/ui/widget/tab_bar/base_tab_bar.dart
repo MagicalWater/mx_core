@@ -167,6 +167,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
   Widget componentIndicator({
     Decoration decoration,
     Duration duration,
+    EdgeInsetsGeometry padding,
     Curve curve,
     bool animation,
   }) {
@@ -175,6 +176,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       decoration: decoration,
       start: indicatorStart ?? 0,
       end: indicatorEnd ?? 0,
+      padding: padding,
       duration: duration,
       curve: curve,
       appearAnimation: false,

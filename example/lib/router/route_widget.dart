@@ -31,6 +31,7 @@ import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub2_bloc
 import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub3_bloc.dart';
 import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub2/route_push_sub_a_bloc.dart';
 import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart';
+import 'package:mx_core_example/bloc/page/bullet_shape_bloc.dart';
 /// 儲存所有 route 對應的 page widget
 class RouteWidget implements RouteWidgetBase {
 
@@ -72,6 +73,7 @@ class RouteWidget implements RouteWidgetBase {
     Pages.routePushSub3,
     Pages.routePushSubA,
     Pages.routePushSubB,
+    Pages.bulletShape,
   ];
 
   @override
@@ -246,6 +248,12 @@ class RouteWidget implements RouteWidgetBase {
         return BlocProvider(
           childBuilder: getChild,
           blocBuilder: () => RoutePushSubBBloc(blocOption),
+          key: key,
+        );
+      case Pages.bulletShape:
+        return BlocProvider(
+          childBuilder: getChild,
+          blocBuilder: () => BulletShapeBloc(blocOption),
           key: key,
         );
       default:

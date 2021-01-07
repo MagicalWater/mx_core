@@ -23,7 +23,7 @@ class SwipeTabBar extends AbstractTabWidget {
   /// [TabController] 會接手控制 tab 的選擇
   final TabController controller;
 
-  SwipeTabBar._({
+  SwipeTabBar({
     int currentIndex,
     bool scrollable = false,
     ActionWidth actionWidth,
@@ -61,7 +61,7 @@ class SwipeTabBar extends AbstractTabWidget {
     ValueChanged<int> onTabTap,
     ValueChanged<int> onActionTap,
   }) {
-    return SwipeTabBar._(
+    return SwipeTabBar(
       currentIndex: currentIndex,
       controller: controller,
       scrollable: scrollable,
@@ -148,61 +148,9 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
   @override
   Widget build(BuildContext context) {
-    Widget tabStack = Stack(
-      children: <Widget>[
-        // 構建背景顯示
-        componentTabRow(
-          selectTab: (context, index) {
-            return widget.tabBuilder.buildTabBackground(
-              isSelected: currentIndex == index,
-              index: index,
-            );
-          },
-          unSelectTab: (context, index) {
-            return widget.tabBuilder.buildTabBackground(
-              isSelected: currentIndex == index,
-              index: index,
-            );
-          },
-          action: (context, index) {
-            return widget.tabBuilder.buildActionBackground(
-              index: index,
-            );
-          },
-          gap: widget.gapBuilder ?? _defaultGap,
-          header: widget.header ?? _defaultHeader,
-          footer: widget.footer ?? _defaultFooter,
-          location: true,
-        ),
-
-        Positioned.fill(
-          child: componentIndicator(
-            decoration: widget.tabBuilder.swipeDecoration,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.fastOutSlowIn,
-            animation: _tabController == null,
-          ),
-        ),
-
-        if (tabRectMap.isNotEmpty)
-          componentTabRow(
-            selectTab: (context, index) {
-              return _buildTab(index: index);
-            },
-            unSelectTab: (context, index) {
-              return _buildTab(index: index);
-            },
-            action: (context, index) {
-              return _buildAction(index: index);
-            },
-            gap: widget.gapBuilder ?? _defaultGap,
-            header: widget.header ?? _defaultHeader,
-            footer: widget.footer ?? _defaultFooter,
-            location: false,
-          ),
-      ],
-    );
-
+    var tabHeight = widget.tabHeight ?? 40.scaleA;
+    double topHeight = 0, bottomHeight = 0;
+    double topPadding = 0, bottomPadding = 0;
     Widget upContainer, downContainer;
 
     if (widget.indicator != null && widget.indicator.height > 0) {
@@ -222,26 +170,107 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
       switch (widget.indicator.position) {
         case VerticalDirection.up:
-          upContainer = Container(child: lineIndicator);
+          topHeight = widget.indicator.height;
+          bottomPadding = tabHeight;
+          upContainer = lineIndicator;
           break;
         case VerticalDirection.down:
-          downContainer = Container(child: lineIndicator);
+          bottomHeight = widget.indicator.height;
+          topPadding = tabHeight;
+          downContainer = lineIndicator;
           break;
       }
     }
     upContainer ??= Container();
     downContainer ??= Container();
 
-    tabStack = IntrinsicWidth(
+    Widget tabStack = IntrinsicWidth(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          upContainer,
-          Container(
-            height: widget.tabHeight ?? 40.scaleA,
-            child: tabStack,
+        children: [
+          Stack(
+            children: <Widget>[
+              // 構建背景顯示
+              Container(
+                height: tabHeight + topHeight + bottomHeight,
+                child: Container(
+                  height: tabHeight,
+                  padding:
+                      EdgeInsets.only(top: topHeight, bottom: bottomHeight),
+                  child: componentTabRow(
+                    selectTab: (context, index) {
+                      return widget.tabBuilder.buildTabBackground(
+                        isSelected: currentIndex == index,
+                        index: index,
+                      );
+                    },
+                    unSelectTab: (context, index) {
+                      return widget.tabBuilder.buildTabBackground(
+                        isSelected: currentIndex == index,
+                        index: index,
+                      );
+                    },
+                    action: (context, index) {
+                      return widget.tabBuilder.buildActionBackground(
+                        index: index,
+                      );
+                    },
+                    gap: widget.gapBuilder ?? _defaultGap,
+                    header: widget.header ?? _defaultHeader,
+                    footer: widget.footer ?? _defaultFooter,
+                    location: true,
+                  ),
+                ),
+              ),
+
+              Positioned.fill(
+                top: topHeight,
+                bottom: bottomHeight,
+                child: componentIndicator(
+                  decoration: widget.tabBuilder.swipeDecoration,
+                  duration: Duration(milliseconds: 300),
+                  padding: widget.tabBuilder.margin,
+                  curve: Curves.fastOutSlowIn,
+                  animation: _tabController == null,
+                ),
+              ),
+
+              Positioned.fill(
+                top: 0,
+                bottom: bottomPadding,
+                child: upContainer,
+              ),
+              Positioned.fill(
+                top: topPadding,
+                bottom: 0,
+                child: downContainer,
+              ),
+
+              if (tabRectMap.isNotEmpty)
+                Container(
+                  height: tabHeight + topHeight + bottomHeight,
+                  child: Container(
+                    height: tabHeight,
+                    padding:
+                        EdgeInsets.only(top: topHeight, bottom: bottomHeight),
+                    child: componentTabRow(
+                      selectTab: (context, index) {
+                        return _buildTab(index: index);
+                      },
+                      unSelectTab: (context, index) {
+                        return _buildTab(index: index);
+                      },
+                      action: (context, index) {
+                        return _buildAction(index: index);
+                      },
+                      gap: widget.gapBuilder ?? _defaultGap,
+                      header: widget.header ?? _defaultHeader,
+                      footer: widget.footer ?? _defaultFooter,
+                      location: false,
+                    ),
+                  ),
+                ),
+            ],
           ),
-          downContainer,
         ],
       ),
     );

@@ -100,7 +100,12 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       _pageSubject.stream.map((event) => event.last);
 
   /// 當前顯示的頁面
-  String get currentPage => pageHistory.last.route;
+  String get currentPage {
+    if (pageHistory.isEmpty) {
+      return null;
+    }
+    return pageHistory.last.route;
+  }
 
   /// 頁面詳細跳轉
   BehaviorSubject<String> _pageDetailSubject = BehaviorSubject();
@@ -113,7 +118,12 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   /// 從當前大頁面重新尋找最終子頁面
   /// 並且讓其頁面進行刷新
   String _researchCurrentDetailPage() {
-    String searchPage = currentPage;
+    var searchPage = currentPage;
+
+    if (searchPage == null) {
+      return null;
+    }
+
 //    print('搜索: $searchPage');
     _SubPageHandler findStep, searchListener;
 

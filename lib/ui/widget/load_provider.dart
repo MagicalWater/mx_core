@@ -136,7 +136,7 @@ class _LoadProviderState extends State<LoadProvider>
             alignment: Alignment.center,
             child: Loading.circle(
               color: _currentStyle.color ?? Colors.blueAccent,
-              size: _currentStyle.size ?? 50,
+              size: _currentStyle.size ?? 50.scaleA,
             ),
           );
         } else {

@@ -34,6 +34,7 @@ abstract class PollingBase {
   /// 停止輪詢
   void end() {
     _loop?.end();
+    _loop = null;
   }
 
   /// 釋放資源
@@ -66,6 +67,7 @@ class _PollLoop {
     if (!immediately) {
       await Future.delayed(interval());
     }
+
     while (!_isEnd) {
       print("開始輪詢");
       isPolling = true;

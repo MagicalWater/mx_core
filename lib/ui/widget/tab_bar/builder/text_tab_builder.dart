@@ -29,11 +29,17 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
   final List<String> actions;
   final Duration duration;
   final Curve curve;
+
+  @override
   final EdgeInsetsGeometry padding;
+
+  @override
+  final EdgeInsetsGeometry margin;
 
   TextTabBuilder({
     this.texts,
     this.padding,
+    this.margin,
     this.actions,
     this.tabDecoration,
     this.tabTextStyle,
@@ -78,7 +84,8 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
   }
 
   @override
-  Widget buildTab({bool isSelected, int index, VoidCallback onTap}) {
+  Widget buildTab(
+      {BuildContext context, bool isSelected, int index, VoidCallback onTap}) {
     var textStyle = isSelected
         ? (tabTextStyle?.select ?? _defaultTextStyle.select)
         : (tabTextStyle?.unSelect ?? _defaultTextStyle.unSelect);
@@ -98,6 +105,7 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
           child: Container(
             height: double.infinity,
             padding: padding,
+            margin: margin,
             alignment: Alignment.center,
             child: AnimatedDefaultTextStyle(
               child: Text(texts[index]),
@@ -112,7 +120,7 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
   }
 
   @override
-  Widget buildAction({int index, VoidCallback onTap}) {
+  Widget buildAction({BuildContext context, int index, VoidCallback onTap}) {
     var decoration = actionDecoration ?? _defaultActionDecoration;
     var textStyle = actionTextStyle ?? _defaultActionTextStyle;
     return MaterialLayer.single(
@@ -123,6 +131,7 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
       child: Container(
         height: double.infinity,
         padding: padding,
+        margin: margin,
         alignment: Alignment.center,
         child: Text(actions[index], style: textStyle),
       ),
@@ -130,7 +139,8 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
   }
 
   @override
-  Widget buildTabBackground({bool isSelected, int index}) {
+  Widget buildTabBackground(
+      {BuildContext context, bool isSelected, int index}) {
     var textStyle = isSelected
         ? (tabTextStyle?.select ?? _defaultTextStyle.select)
         : (tabTextStyle?.unSelect ?? _defaultTextStyle.unSelect);
@@ -140,6 +150,7 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
       decoration: decoration,
       height: double.infinity,
       padding: padding,
+      margin: margin,
       child: AnimatedDefaultTextStyle(
         child: Text(texts[index]),
         style: textStyle.copyWith(color: Colors.transparent),
@@ -151,7 +162,11 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
 
   @override
   Widget buildTabForeground(
-      {Size size, bool isSelected, int index, VoidCallback onTap}) {
+      {BuildContext context,
+      Size size,
+      bool isSelected,
+      int index,
+      VoidCallback onTap}) {
     var textStyle = isSelected
         ? (tabTextStyle?.select ?? _defaultTextStyle.select)
         : (tabTextStyle?.unSelect ?? _defaultTextStyle.unSelect);
@@ -173,6 +188,7 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
             width: size.width + 0.5,
             height: size.height,
             padding: padding,
+            margin: margin,
             alignment: Alignment.center,
             child: AnimatedDefaultTextStyle(
               child: Text(texts[index]),
@@ -187,12 +203,13 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
   }
 
   @override
-  Widget buildActionBackground({int index}) {
+  Widget buildActionBackground({BuildContext context, int index}) {
     var textStyle = actionTextStyle ?? _defaultActionTextStyle;
     var decoration = actionDecoration ?? _defaultActionDecoration;
     return Container(
       height: double.infinity,
       padding: padding,
+      margin: margin,
       decoration: decoration,
       alignment: Alignment.center,
       child: Text(
@@ -203,7 +220,8 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
   }
 
   @override
-  Widget buildActionForeground({Size size, int index, VoidCallback onTap}) {
+  Widget buildActionForeground(
+      {BuildContext context, Size size, int index, VoidCallback onTap}) {
     var textStyle = actionTextStyle ?? _defaultActionTextStyle;
     var decoration = actionDecoration ?? _defaultActionDecoration;
 
@@ -220,6 +238,7 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
             width: size.width + 0.5,
             height: size.height,
             padding: padding,
+            margin: margin,
             alignment: Alignment.center,
             child: Text(
               actions[index],

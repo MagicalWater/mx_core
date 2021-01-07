@@ -10,20 +10,48 @@ abstract class _BaseBuilder {
 }
 
 abstract class TabBuilder implements _BaseBuilder {
-  Widget buildTab({bool isSelected, int index, VoidCallback onTap});
+  Widget buildTab({
+    BuildContext context,
+    bool isSelected,
+    int index,
+    VoidCallback onTap,
+  });
 
-  Widget buildAction({int index, VoidCallback onTap});
+  Widget buildAction({
+    BuildContext context,
+    int index,
+    VoidCallback onTap,
+  });
 }
 
 abstract class SwipeTabBuilder implements _BaseBuilder {
   Decoration get swipeDecoration;
+  EdgeInsetsGeometry get padding;
+  EdgeInsetsGeometry get margin;
 
-  Widget buildTabBackground({bool isSelected, int index});
+  Widget buildTabBackground({
+    BuildContext context,
+    bool isSelected,
+    int index,
+  });
 
-  Widget buildTabForeground(
-      {Size size, bool isSelected, int index, VoidCallback onTap});
+  Widget buildTabForeground({
+    BuildContext context,
+    Size size,
+    bool isSelected,
+    int index,
+    VoidCallback onTap,
+  });
 
-  Widget buildActionBackground({int index});
+  Widget buildActionBackground({
+    BuildContext context,
+    int index,
+  });
 
-  Widget buildActionForeground({Size size, int index, VoidCallback onTap});
+  Widget buildActionForeground({
+    BuildContext context,
+    Size size,
+    int index,
+    VoidCallback onTap,
+  });
 }

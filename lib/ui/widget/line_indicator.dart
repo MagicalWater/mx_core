@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mx_core/util/num_util.dart';
 
@@ -20,7 +22,7 @@ class LineIndicator extends StatefulWidget {
   /// 依照 [direction] 不同所指不同
   /// [Axis.horizontal] => 線條橫向邊距
   /// [Axis.vertical] => 線條最大高度
-  final double padding;
+  final EdgeInsetsGeometry padding;
 
   /// 此參數優先於 color
   final Decoration decoration;
@@ -181,7 +183,7 @@ class _LineIndicatorState extends State<LineIndicator>
           end: currentEnd ?? 0,
           lineSize: widget.size,
           maxLength: widget.maxLength,
-          padding: widget.padding ?? 0,
+          padding: widget.padding ?? EdgeInsets.zero,
           direction: widget.direction,
           alignment: widget.alignment,
           painter: painter,
@@ -203,10 +205,10 @@ class _LinePainter extends CustomPainter {
   /// 元件大小, 整個粒子運動空間
   final double start, end;
 
-  final double lineSize;
+  double lineSize;
   final Axis direction;
   final double maxLength;
-  final double padding;
+  final EdgeInsetsGeometry padding;
   final Alignment alignment;
 
   BoxPainter painter;
@@ -226,9 +228,11 @@ class _LinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     switch (direction) {
       case Axis.horizontal:
+        lineSize ??= size.height;
         _paintHorizontal(canvas, size);
         break;
       case Axis.vertical:
+        lineSize ??= size.width;
         _paintVertical(canvas, size);
         break;
     }
@@ -238,8 +242,22 @@ class _LinePainter extends CustomPainter {
     var startPos = size.height * start;
     var endPos = size.height * end;
 
-    startPos += padding;
-    endPos -= padding;
+    double startX = 0;
+    var lineWidth = min(lineSize, size.width);
+
+    if (padding is EdgeInsets) {
+      startPos += (padding as EdgeInsets).top;
+      endPos -= (padding as EdgeInsets).bottom;
+
+      startX = (padding as EdgeInsets).left;
+      lineWidth = lineWidth -
+          ((padding as EdgeInsets).left + (padding as EdgeInsets).right);
+    } else {
+      startPos += padding.vertical / 2;
+      endPos -= padding.vertical / 2;
+      startX = padding.horizontal / 2;
+      lineWidth = lineWidth - padding.horizontal;
+    }
 
     if (startPos >= endPos) {
       return;
@@ -261,9 +279,9 @@ class _LinePainter extends CustomPainter {
 
     painter.paint(
       canvas,
-      Offset(0, startPos),
+      Offset(startX, startPos),
       ImageConfiguration(
-        size: Size(size.width, endPos - startPos),
+        size: Size(lineWidth, endPos - startPos),
       ),
     );
   }
@@ -272,8 +290,21 @@ class _LinePainter extends CustomPainter {
     var startPos = size.width * start;
     var endPos = size.width * end;
 
-    startPos += padding;
-    endPos -= padding;
+    double startY = 0;
+    var lineWidth = min(lineSize, size.height);
+
+    if (padding is EdgeInsets) {
+      startPos += (padding as EdgeInsets).left;
+      endPos -= (padding as EdgeInsets).right;
+      startY = (padding as EdgeInsets).top;
+      lineWidth = lineWidth -
+          ((padding as EdgeInsets).top + (padding as EdgeInsets).bottom);
+    } else {
+      startPos += padding.horizontal / 2;
+      endPos -= padding.horizontal / 2;
+      startY = padding.vertical / 2;
+      lineWidth = lineWidth - padding.vertical;
+    }
 
     if (startPos >= endPos) {
       return;
@@ -295,9 +326,9 @@ class _LinePainter extends CustomPainter {
 
     painter.paint(
       canvas,
-      Offset(startPos, 0),
+      Offset(startPos, startY),
       ImageConfiguration(
-        size: Size(endPos - startPos, size.height),
+        size: Size(endPos - startPos, lineWidth),
       ),
     );
   }
