@@ -30,6 +30,9 @@ class StatefulButton extends StatefulWidget {
   /// 初始化的 load 狀態
   final bool initLoad;
 
+  /// 初始化的動畫狀態
+  final bool initAnimated;
+
   /// loading 狀態時的 size
   final StateStyle loadStyle;
 
@@ -39,16 +42,20 @@ class StatefulButton extends StatefulWidget {
   /// 按鈕點擊時觸發
   final StatefulButtonTapCallback onTap;
 
+  final Duration changeInterval;
+
   StatefulButton({
     @required this.width,
     @required this.height,
     this.child,
     this.decoration,
     this.initLoad = false,
+    this.initAnimated = false,
     this.duration,
     this.tapStyle,
     this.loadStyle,
     this.loadStream,
+    this.changeInterval = const Duration(seconds: 1),
     this.onCreated,
     this.onTap,
   });
@@ -87,31 +94,80 @@ class _StatefulButtonState extends State<StatefulButton>
   /// 動畫時間
   Duration get _animDuration {
     if (widget.duration == null) {
-      return Duration(milliseconds: 1000);
+      return Duration(milliseconds: 100);
     }
     return widget.duration;
   }
 
+  /// 動畫時間
+  Duration get _sizeDuration {
+    if (widget.duration == null) {
+      return Duration(milliseconds: 300);
+    }
+    return widget.duration;
+  }
+
+  bool willEnable;
+
   @override
   void initState() {
     _isStandby = !widget.initLoad;
-    _controller = AnimatedSyncTick.identity(initToggle: _isStandby);
+    _controller = AnimatedSyncTick.identity(
+      initToggle: _isStandby,
+      initAnimated: widget.initAnimated,
+    )..addStatusListener((status) {
+        print('狀態變更: $status');
+
+        if (status == AnimationStatus.dismissed ||
+            status == AnimationStatus.completed) {
+          // 當動畫結束時, 發現開關不同時需要進行同步
+
+          if (willEnable != null) {
+            print('動畫結束, 檢測到有需要執行的開關, 倒數計時開始');
+            _startSyncTimer();
+          }
+        }
+      });
     // 如果有 load 狀態 stream, 進行監聽
     if (widget.loadStream != null) {
       _loadSubscription = widget.loadStream.listen((enable) {
-        _isStandby = !enable;
-        _syncLoadState();
+        setLoad(enable);
       });
     }
     super.initState();
   }
 
+  Timer _syncTimer;
+
+  void _startSyncTimer() {
+    _endSyncTimer();
+    _syncTimer = Timer(
+      widget.changeInterval,
+      () {
+        _syncTimer = null;
+        if (!_controller.isAnimating && willEnable != null) {
+          _isStandby = !willEnable;
+          willEnable = null;
+          _syncLoadState();
+        }
+      },
+    );
+  }
+
+  void _endSyncTimer() {
+    if (_syncTimer != null && _syncTimer.isActive) {
+      _syncTimer.cancel();
+    }
+    _syncTimer = null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('動畫時間: $_animDuration');
     return Center(
       child: AnimatedComb(
         sync: _controller,
-        curve: Curves.elasticOut,
+        curve: Curves.fastOutSlowIn,
         type: AnimatedType.toggle,
         builder: (context, anim) {
           var child = MaterialLayer.single(
@@ -146,14 +202,15 @@ class _StatefulButtonState extends State<StatefulButton>
             begin: _loadStyle.size,
             end: widget.width,
             height: _loadStyle.size,
-            duration: _animDuration.inMilliseconds ~/ 2,
+            duration: _sizeDuration.inMilliseconds ~/ 2,
           ),
-          Comb.height(
-            begin: _loadStyle.size,
-            end: widget.height,
-            width: widget.width,
-            duration: _animDuration.inMilliseconds ~/ 2,
-          ),
+          if (_loadStyle.size != widget.height)
+            Comb.height(
+              begin: _loadStyle.size,
+              end: widget.height,
+              width: widget.width,
+              duration: _sizeDuration.inMilliseconds ~/ 2,
+            ),
         ],
       ),
     );
@@ -167,12 +224,26 @@ class _StatefulButtonState extends State<StatefulButton>
   /// 設置按鈕讀取狀態
   @override
   void setLoad(bool load) {
-    _isStandby = !load;
-    _syncLoadState();
+    var isWaitForTimer = _syncTimer?.isActive ?? false;
+    if (isWaitForTimer) {
+      print('動畫等待調用中, 不動作進入等待區');
+      willEnable = load;
+    } else if (_controller.isAnimating) {
+      _endSyncTimer();
+      print('動畫中, 不動作進入等待區');
+      willEnable = load;
+    } else {
+      _endSyncTimer();
+      print('執行動畫變更');
+      willEnable = null;
+      _isStandby = !load;
+      _syncLoadState();
+    }
   }
 
   @override
   void dispose() {
+    _endSyncTimer();
     _loadSubscription?.cancel();
     _loadSubscription = null;
     super.dispose();

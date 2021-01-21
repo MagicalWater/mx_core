@@ -257,7 +257,6 @@ class PageScaffold extends StatelessWidget {
     if (backgroundWidget != null) {
       if (!backgroundCoverAppbar && appBar != null) {
         backgroundWidget = Container(
-          color: Colors.green.withAlpha(150),
           padding: EdgeInsets.only(
             top: appBar.preferredSize.height + Screen.statusBarHeight,
           ),

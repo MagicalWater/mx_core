@@ -20,9 +20,14 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 儲存動畫群組列表解析後的 data
   Map<int, AnimationData> _animatedParseMap = {};
 
+  List<AnimationStatusListener> _outsideStatusListener = [];
+
   /// 動畫開關初始值
   /// 當 [type] 為 [AnimatedBehavior.toggle] 時有效
   final bool initToggle;
+
+  /// 初始動畫開關是否使用動畫過度
+  final bool initAnimated;
 
   /// 是否自動開始動畫
   /// 當動畫類行為 [AnimatedType.once] 以及 [AnimatedType.repeat] 時有效
@@ -57,6 +62,7 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   AnimatedSyncTick._({
     this.initToggle = false,
+    this.initAnimated = true,
     this.autoStart = true,
   })  : this._controller = null,
         this._isNeedRegisterTicker = true;
@@ -68,6 +74,7 @@ class AnimatedSyncTick implements AnimatedCombController {
     @required AnimatedType type,
     @required TickerProvider vsync,
     this.initToggle,
+    this.initAnimated = true,
     this.autoStart = true,
   })  : this._isNeedRegisterTicker = false,
         this._type = type,
@@ -88,10 +95,12 @@ class AnimatedSyncTick implements AnimatedCombController {
   factory AnimatedSyncTick.identity({
     AnimatedType type,
     bool initToggle = false,
+    bool initAnimated = true,
     bool autoStart = true,
   }) {
     return AnimatedSyncTick._(
       initToggle: initToggle,
+      initAnimated: initAnimated,
       autoStart: autoStart,
     ).._type = type;
   }
@@ -109,6 +118,11 @@ class AnimatedSyncTick implements AnimatedCombController {
   void _statusListener(AnimationStatus status) {
     //        print("動畫狀態變更");
     _handleAnimatedStatusChanged(status);
+  }
+
+  void addStatusListener(AnimationStatusListener listener) {
+    _outsideStatusListener.add(listener);
+    _controller?.addStatusListener(listener);
   }
 
   /// 重設所有資料
@@ -143,9 +157,14 @@ class AnimatedSyncTick implements AnimatedCombController {
       duration: Duration.zero,
       vsync: vsync,
     );
+
     this._controller
       ..addListener(_controllerListener)
       ..addStatusListener(_statusListener);
+
+    _outsideStatusListener?.forEach((element) {
+      this._controller.addStatusListener(element);
+    });
   }
 
   /// 取得 [AnimationData]
@@ -202,19 +221,31 @@ class AnimatedSyncTick implements AnimatedCombController {
         case AnimatedType.onceReverse:
           _currentMethod = AnimationMethod.onceReverse;
           if (autoStart) {
-            _controller.forward();
+            if (initAnimated ?? true) {
+              _controller.forward();
+            } else {
+              _controller.value = 1;
+            }
           }
           break;
         case AnimatedType.once:
           _currentMethod = AnimationMethod.once;
           if (autoStart) {
-            _controller.forward();
+            if (initAnimated ?? true) {
+              _controller.forward();
+            } else {
+              _controller.value = 1;
+            }
           }
           break;
         case AnimatedType.toggle:
           if (initToggle ?? false) {
             _currentMethod = AnimationMethod.once;
-            _controller.forward();
+            if (initAnimated ?? true) {
+              _controller.forward();
+            } else {
+              _controller.value = 1;
+            }
           }
           break;
         case AnimatedType.tap:
@@ -622,6 +653,10 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   /// 釋放動畫串流
   void dispose() {
+    _outsideStatusListener?.forEach((element) {
+      _controller?.removeStatusListener(element);
+    });
+    _outsideStatusListener?.clear();
     _controller?.removeListener(_controllerListener);
     _controller?.removeStatusListener(_statusListener);
     _controller?.dispose();

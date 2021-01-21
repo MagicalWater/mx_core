@@ -175,26 +175,28 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
         ? (tabDecoration?.select ?? _defaultDecoration.select)
         : (tabDecoration?.unSelect ?? _defaultDecoration.unSelect);
 
-    return Material(
-      type: MaterialType.transparency,
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: getBorderRadius(decoration),
-        onTap: onTap,
-        child: SizedOverflowBox(
-          alignment: Alignment.center,
-          size: Size(size.width, size.height),
-          child: Container(
-            width: size.width + 0.5,
-            height: size.height,
-            padding: padding,
-            margin: margin,
+    return Container(
+      padding: margin,
+      child: Material(
+        type: MaterialType.transparency,
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: getBorderRadius(decoration),
+          onTap: onTap,
+          child: SizedOverflowBox(
             alignment: Alignment.center,
-            child: AnimatedDefaultTextStyle(
-              child: Text(texts[index]),
-              style: textStyle,
-              duration: duration,
-              curve: curve,
+            size: Size(size.width, size.height),
+            child: Container(
+              width: size.width + 0.5,
+              height: size.height,
+              padding: padding,
+              alignment: Alignment.center,
+              child: AnimatedDefaultTextStyle(
+                child: Text(texts[index]),
+                style: textStyle,
+                duration: duration,
+                curve: curve,
+              ),
             ),
           ),
         ),
@@ -225,26 +227,28 @@ class TextTabBuilder implements TabBuilder, SwipeTabBuilder {
     var textStyle = actionTextStyle ?? _defaultActionTextStyle;
     var decoration = actionDecoration ?? _defaultActionDecoration;
 
-    return Material(
-      type: MaterialType.transparency,
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: getBorderRadius(decoration),
-        onTap: onTap,
-        child: SizedOverflowBox(
-          alignment: Alignment.center,
-          size: Size(size.width, size.height),
-          child: Container(
-            width: size.width + 0.5,
-            height: size.height,
-            padding: padding,
-            margin: margin,
+    return Container(
+      padding: margin,
+      child: Material(
+        type: MaterialType.transparency,
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: getBorderRadius(decoration),
+          onTap: onTap,
+          child: SizedOverflowBox(
             alignment: Alignment.center,
-            child: Text(
-              actions[index],
-              style: textStyle,
-              maxLines: 1,
-              overflow: TextOverflow.clip,
+            size: Size(size.width, size.height),
+            child: Container(
+              width: size.width + 0.5,
+              height: size.height,
+              padding: padding,
+              alignment: Alignment.center,
+              child: Text(
+                actions[index],
+                style: textStyle,
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+              ),
             ),
           ),
         ),

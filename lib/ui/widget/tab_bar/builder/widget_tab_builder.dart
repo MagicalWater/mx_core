@@ -98,7 +98,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
       {BuildContext context, Size size, int index, onTap}) {
     var decoration = actionDecoration ?? _defaultActionDecoration;
 
-    return Padding(
+    return Container(
       padding: margin,
       child: Material(
         type: MaterialType.transparency,
@@ -113,7 +113,6 @@ class WidgetTabBuilder implements SwipeTabBuilder {
               width: size.width + 0.5,
               height: size.height,
               padding: padding,
-              margin: margin,
               alignment: Alignment.center,
               child: actionBuilder(context, index),
             ),
@@ -149,7 +148,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
         ? (tabDecoration?.select ?? _defaultDecoration.select)
         : (tabDecoration?.unSelect ?? _defaultDecoration.unSelect);
 
-    return Padding(
+    return Container(
       padding: margin,
       child: Material(
         type: MaterialType.transparency,

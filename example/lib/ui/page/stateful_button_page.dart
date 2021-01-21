@@ -70,6 +70,7 @@ class _StatefulButtonPageState extends State<StatefulButtonPage> {
           ),
         ),
         loadStyle: StateStyle(color: Colors.white, size: 60),
+        initAnimated: false,
         onTap: (controller) {
           print('當前狀態: ${controller.isLoading}');
           if (controller.isLoading) {
@@ -78,7 +79,7 @@ class _StatefulButtonPageState extends State<StatefulButtonPage> {
           }
           print('點點中');
           controller.setLoad(true);
-          Future.delayed(Duration(seconds: 3)).then((_) {
+          Future.delayed(Duration(milliseconds: 500)).then((_) {
             controller.setLoad(false);
           });
         },
