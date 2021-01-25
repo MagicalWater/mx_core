@@ -49,7 +49,7 @@ class SwipeTabBar extends AbstractTabWidget {
   factory SwipeTabBar.text({
     int currentIndex,
     TabController controller,
-    TextTabBuilder builder,
+    TextTabBuilder tabBuilder,
     bool scrollable = false,
     ActionWidth actionWidth,
     TabWidth tabWidth,
@@ -67,7 +67,7 @@ class SwipeTabBar extends AbstractTabWidget {
       scrollable: scrollable,
       actionWidth: actionWidth,
       tabWidth: tabWidth,
-      tabBuilder: builder,
+      tabBuilder: tabBuilder,
       tabHeight: tabHeight,
       gapBuilder: gapBuilder,
       indicator: indicator,

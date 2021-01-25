@@ -198,15 +198,24 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       return;
     }
     // print('rect = ${tabRectMap}, curr = $currentIndex');
-    var showRect = tabRectMap[currentIndex];
 
     if (indexOffset != null && indexOffset != currentIndex) {
-      if (indexOffset > currentIndex) {
+      var indexShow = indexOffset.floor();
+      if (indexShow == indexOffset) {
+        // 滑動中, 但位於第 indexShow 個tab正中間, 不需要計算偏移
+        var showRect = tabRectMap[indexShow];
+        indicatorStart = showRect.left.divide(totalSize.width);
+        indicatorEnd = showRect.right.divide(totalSize.width);
+      } else if (indexOffset > currentIndex) {
+        // 往前滑動, 需要計算偏移
+
+        var showRect = tabRectMap[indexShow];
+        // print('往後偏移');
         // 往下一個偏移
-        var nextRect = tabRectMap[currentIndex + 1];
+        var nextRect = tabRectMap[indexShow + 1];
 
         // 計算依照偏移百分比計算
-        var percent = indexOffset - currentIndex;
+        var percent = indexOffset - indexShow;
 
         var leftOffset =
             nextRect.left.subtract(showRect.left).multiply(percent);
@@ -215,14 +224,13 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
 
         indicatorStart = showRect.left.add(leftOffset).divide(totalSize.width);
         indicatorEnd = showRect.right.add(rightOffset).divide(totalSize.width);
-
-        // print('百分比: $percent, 偏移: ${showRect.left.add(leftOffset)} ~ ${showRect.right.add(rightOffset)}, 目標: ${nextRect.left} ~ ${nextRect.right}');
-      } else {
-        // 往前一個偏移
-        var preRect = tabRectMap[currentIndex - 1];
+      } else if (indexOffset < currentIndex) {
+        // 往後滑動, 需要計算偏移
+        var showRect = tabRectMap[indexShow + 1];
+        var preRect = tabRectMap[indexShow];
 
         // 計算依照偏移百分比計算
-        var percent = indexOffset - (currentIndex - 1);
+        var percent = indexOffset - indexShow;
 
         var leftOffset = showRect.left.subtract(preRect.left).multiply(percent);
         var rightOffset =
@@ -232,6 +240,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
         indicatorEnd = preRect.right.add(rightOffset).divide(totalSize.width);
       }
     } else {
+      var showRect = tabRectMap[currentIndex];
       indicatorStart = showRect.left.divide(totalSize.width);
       indicatorEnd = showRect.right.divide(totalSize.width);
     }
@@ -263,9 +272,9 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       if (tabWidth?.fixed != null) {
 //        print('固定寬度');
         return Container(
-            key: location ? childKeyList[index] : null,
-            width: tabWidth.fixed,
-            child: tabWidget,
+          key: location ? childKeyList[index] : null,
+          width: tabWidth.fixed,
+          child: tabWidget,
         );
       } else if (!widget.scrollable && tabWidth?.flex != null) {
         return Expanded(flex: tabWidth.flex, child: tabWidget);
@@ -288,10 +297,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
     }
 
     var children = <Widget>[
-      for (var i = 0; i < widget.tabCount; i++)
-        packageTab(
-          tab(context, i), i
-        ),
+      for (var i = 0; i < widget.tabCount; i++) packageTab(tab(context, i), i),
       for (var i = 0; i < widget.actionCount; i++)
         packageAction(
           action(context, i),

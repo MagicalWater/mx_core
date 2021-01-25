@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:annotation_route/route.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +31,19 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
     bloc = BlocProvider.of<TabBarBloc>(context);
     tabController = TabController(
       initialIndex: currentIndex,
-      length: 3,
+      length: 8,
       vsync: this,
     );
 
-    tabs = List.generate(tabController.length, (index) => '${index + 1}');
+    tabs = List.generate(tabController.length, (index) {
+      var showIndex = index + 1;
+      var text = '$showIndex';
+      var randomIndex = Random().nextInt(9) + 1;
+      for (var i = 0; i < randomIndex; i++) {
+        text += '$showIndex';
+      }
+      return text;
+    });
 
     pages = List.generate(
         tabs.length,
@@ -86,9 +96,10 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                color: Colors.black,
                 width: double.infinity,
                 // child: textTab(),
-                child: widgetTab(),
+                child: test(),
               ),
               Expanded(
                 child: TabBarView(
@@ -103,26 +114,64 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
     );
   }
 
+  Widget test() {
+    return SwipeTabBar.text(
+      controller: tabController,
+      tabBuilder: TextTabBuilder(
+        texts: tabs,
+        tabDecoration: TabStyle<Decoration>(
+          select: BoxDecoration(
+            color: Colors.yellow,
+            border: Border.all(color: Colors.yellow),
+            borderRadius: BorderRadius.circular(6.scaleA),
+          ),
+          unSelect: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.white),
+            borderRadius: BorderRadius.circular(6.scaleA),
+          ),
+        ),
+        tabTextStyle: TabStyle<TextStyle>(
+          select: TextStyle(
+            color: Colors.black,
+            fontSize: 14.scaleA,
+          ),
+          unSelect: TextStyle(
+            color: Colors.black,
+            fontSize: 14.scaleA,
+          ),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10.scaleA),
+      ),
+      scrollable: true,
+      tabHeight: 40.scaleA,
+      gapBuilder: (context, index) => Container(width: 10.scaleW),
+      header: Container(
+        width: 20.scaleW,
+      ),
+      footer: Container(
+        width: 20.scaleW,
+      ),
+    );
+  }
+
   Widget textTab() {
     return SwipeTabBar.text(
       currentIndex: currentIndex,
-      // controller: tabController,
-      builder: TextTabBuilder(
+      controller: tabController,
+      tabBuilder: TextTabBuilder(
         texts: tabs,
-        // actions: [
-        //   '第一名',
-        //   '第二名',
-        // ],
         tabDecoration: TabStyle<BoxDecoration>(
-          select: BoxDecoration(color: Colors.transparent),
-          unSelect: BoxDecoration(color: Colors.transparent),
+          select: BoxDecoration(color: Colors.black.withAlpha(100)),
+          unSelect: BoxDecoration(color: Colors.green.withAlpha(100)),
         ),
         tabTextStyle: TabStyle<TextStyle>(
           select: TextStyle(color: Colors.black, fontSize: 12),
           unSelect: TextStyle(color: Colors.grey, fontSize: 12),
         ),
-        actions: ['1'],
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        // actions: ['1'],
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        margin: EdgeInsets.only(left: 10, right: 10),
       ),
       gapBuilder: (context, index) {
         if (index == tabs.length - 1) {
@@ -130,11 +179,11 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         }
         return Container(width: 10);
       },
-//            header: Container(width: 30),
-//            footer: Container(width: 100),
       tabWidth: TabWidth.shrinkWrap(),
       tabHeight: 40,
       scrollable: false,
+      header: Container(width: 50,),
+      footer: Container(width: 50,),
       indicator: TabIndicator(
         color: Colors.red,
         height: 2,
@@ -159,6 +208,8 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
           Widget cc;
           if (index == 2) {
             cc = Row(
+              // mainAxisSize: MainAxisSize.min,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   tabs[index],
@@ -184,6 +235,8 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
             duration: Duration(milliseconds: 300),
             child: Container(
               key: ValueKey('$index$isSelect'),
+              // padding: EdgeInsets.symmetric(horizontal: 20),
+              alignment: Alignment.center,
               child: cc,
             ),
           );
@@ -202,8 +255,8 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
           select: BoxDecoration(color: Colors.black.withAlpha(100)),
           unSelect: BoxDecoration(color: Colors.green.withAlpha(100)),
         ),
-        margin: EdgeInsets.symmetric(vertical: 10.scaleA, horizontal: 5.scaleA),
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        margin: EdgeInsets.only(left: 10, right: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10),
       ),
       gapBuilder: (context, index) {
         if (index == tabs.length - 1) {

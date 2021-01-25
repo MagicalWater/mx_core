@@ -22,8 +22,6 @@ class WidgetTabBuilder implements SwipeTabBuilder {
 
   final TabWidgetBuilder tabBuilder;
   final IndexedWidgetBuilder actionBuilder;
-  final Duration duration;
-  final Curve curve;
 
   final TabStyle<Decoration> tabDecoration;
   final Decoration actionDecoration;
@@ -43,8 +41,6 @@ class WidgetTabBuilder implements SwipeTabBuilder {
     this.margin,
     @required int tabCount,
     int actionCount = 0,
-    this.duration = const Duration(milliseconds: 300),
-    this.curve = Curves.fastOutSlowIn,
   })  : this._tabCount = tabCount,
         this._actionCount = actionCount;
 
@@ -77,17 +73,17 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   @override
   Widget buildActionBackground({BuildContext context, int index}) {
     var decoration = actionDecoration ?? _defaultActionDecoration;
-    return Container(
-      height: double.infinity,
-      padding: padding,
-      margin: margin,
-      decoration: decoration,
-      alignment: Alignment.center,
-      child: IgnorePointer(
-        ignoring: true,
-        child: Opacity(
-          opacity: 0,
-          child: actionBuilder(context, index),
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: Container(
+        decoration: decoration,
+        padding: padding,
+        child: IgnorePointer(
+          ignoring: true,
+          child: Opacity(
+            opacity: 0,
+            child: actionBuilder(context, index),
+          ),
         ),
       ),
     );
@@ -98,22 +94,21 @@ class WidgetTabBuilder implements SwipeTabBuilder {
       {BuildContext context, Size size, int index, onTap}) {
     var decoration = actionDecoration ?? _defaultActionDecoration;
 
-    return Container(
-      padding: margin,
-      child: Material(
-        type: MaterialType.transparency,
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: getBorderRadius(decoration),
-          onTap: onTap,
-          child: SizedOverflowBox(
-            alignment: Alignment.center,
-            size: Size(size.width, size.height),
-            child: Container(
-              width: size.width + 0.5,
-              height: size.height,
-              padding: padding,
-              alignment: Alignment.center,
+    return SizedOverflowBox(
+      alignment: Alignment.center,
+      size: Size(size.width, size.height),
+      child: Container(
+        width: size.width + 0.5,
+        height: size.height,
+        padding: margin,
+        child: Material(
+          type: MaterialType.transparency,
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: getBorderRadius(decoration),
+            onTap: onTap,
+            child: Padding(
+              padding: padding ?? EdgeInsets.zero,
               child: actionBuilder(context, index),
             ),
           ),
@@ -126,16 +121,17 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   Widget buildTabBackground(
       {BuildContext context, bool isSelected, int index}) {
     var decoration = tabDecoration?.unSelect ?? _defaultDecoration.unSelect;
-    return Container(
-      decoration: decoration,
-      height: double.infinity,
-      padding: padding,
-      margin: margin,
-      child: IgnorePointer(
-        ignoring: true,
-        child: Opacity(
-          opacity: 0,
-          child: tabBuilder(context, index, isSelected, false),
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: Container(
+        decoration: decoration,
+        padding: padding,
+        child: IgnorePointer(
+          ignoring: true,
+          child: Opacity(
+            opacity: 0,
+            child: tabBuilder(context, index, isSelected, false),
+          ),
         ),
       ),
     );
@@ -148,21 +144,21 @@ class WidgetTabBuilder implements SwipeTabBuilder {
         ? (tabDecoration?.select ?? _defaultDecoration.select)
         : (tabDecoration?.unSelect ?? _defaultDecoration.unSelect);
 
-    return Container(
-      padding: margin,
-      child: Material(
-        type: MaterialType.transparency,
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: getBorderRadius(decoration),
-          onTap: onTap,
-          child: SizedOverflowBox(
-            alignment: Alignment.center,
-            size: Size(size.width, size.height),
-            child: Container(
-              width: size.width + 0.5,
-              height: size.height,
-              padding: padding,
+    return SizedOverflowBox(
+      alignment: Alignment.center,
+      size: Size(size.width, size.height),
+      child: Container(
+        width: size.width + 0.5,
+        height: size.height,
+        padding: margin,
+        child: Material(
+          type: MaterialType.transparency,
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: getBorderRadius(decoration),
+            onTap: onTap,
+            child: Padding(
+              padding: padding ?? EdgeInsets.zero,
               child: tabBuilder(context, index, isSelected, true),
             ),
           ),
