@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/app_bloc.dart';
@@ -9,6 +8,12 @@ import '../../router/route.dart';
 List<String> autoPushPage = [
 //  Pages.test,
 ];
+
+class YY {
+  String aa;
+
+  YY({this.aa});
+}
 
 /// 功能介紹頁面
 @ARoute(url: Pages.introduction)
@@ -50,6 +55,34 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
   @override
   void initState() {
+    // SpUtil.setStringList(key: 'bb', value: ['aa', 'bb']);
+    // // SpUtil.remove(key: 'aa');
+    // SpUtil.getStringList(key: 'bb').then((value) {
+    //   print('非加 => key = bb, value = $value');
+    // });
+
+    // var kk = StorageKey<Map<int, int>>('ee');
+    // kk.write({10: 109});
+
+    // kk.read().then((value) {
+    //   print('取得: $value');
+    // });
+
+    // SecureStorage.delete(key: 'bb');
+    // SecureStorage.readObject(key: 'cc').then((value) {
+    //   print('加密 => key = aa, value = ${value[1]}');
+    // });
+
+    // SecureStorage.readList(key: 'cc').then((value) {
+    //   print('加密列表 => key = aa, value = ${value[1].runtimeType}');
+    // });
+
+    SecureStorage.writeObject(key: 'cc', value: ['aa', 000]);
+
+    // SpUtil.migrateToSecureStorage();
+
+    // SecureStorage.writeInt(key: 'aa', value: 20);
+
     bloc = BlocProvider.of<IntroductionBloc>(context);
     if (autoPushPage.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {

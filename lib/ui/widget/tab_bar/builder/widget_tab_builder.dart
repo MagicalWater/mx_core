@@ -77,6 +77,8 @@ class WidgetTabBuilder implements SwipeTabBuilder {
       padding: margin ?? EdgeInsets.zero,
       child: Container(
         decoration: decoration,
+        height: double.infinity,
+        alignment: Alignment.center,
         padding: padding,
         child: IgnorePointer(
           ignoring: true,
@@ -97,18 +99,19 @@ class WidgetTabBuilder implements SwipeTabBuilder {
     return SizedOverflowBox(
       alignment: Alignment.center,
       size: Size(size.width, size.height),
-      child: Container(
-        width: size.width + 0.5,
-        height: size.height,
-        padding: margin,
+      child: Padding(
+        padding: margin ?? EdgeInsets.zero,
         child: Material(
           type: MaterialType.transparency,
           color: Colors.transparent,
           child: InkWell(
             borderRadius: getBorderRadius(decoration),
             onTap: onTap,
-            child: Padding(
-              padding: padding ?? EdgeInsets.zero,
+            child: Container(
+              width: size.width + 0.5,
+              height: size.height,
+              alignment: Alignment.center,
+              padding: padding,
               child: actionBuilder(context, index),
             ),
           ),
@@ -121,11 +124,14 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   Widget buildTabBackground(
       {BuildContext context, bool isSelected, int index}) {
     var decoration = tabDecoration?.unSelect ?? _defaultDecoration.unSelect;
+
     return Padding(
       padding: margin ?? EdgeInsets.zero,
       child: Container(
         decoration: decoration,
         padding: padding,
+        height: double.infinity,
+        alignment: Alignment.center,
         child: IgnorePointer(
           ignoring: true,
           child: Opacity(
@@ -147,18 +153,19 @@ class WidgetTabBuilder implements SwipeTabBuilder {
     return SizedOverflowBox(
       alignment: Alignment.center,
       size: Size(size.width, size.height),
-      child: Container(
-        width: size.width + 0.5,
-        height: size.height,
-        padding: margin,
+      child: Padding(
+        padding: margin ?? EdgeInsets.zero,
         child: Material(
           type: MaterialType.transparency,
           color: Colors.transparent,
           child: InkWell(
             borderRadius: getBorderRadius(decoration),
             onTap: onTap,
-            child: Padding(
-              padding: padding ?? EdgeInsets.zero,
+            child: Container(
+              padding: padding,
+              width: size.width + 0.5,
+              height: size.height,
+              alignment: Alignment.center,
               child: tabBuilder(context, index, isSelected, true),
             ),
           ),

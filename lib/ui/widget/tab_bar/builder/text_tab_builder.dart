@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mx_core/mx_core.dart';
 
 import '../tab_style.dart';
 import 'builder.dart';
@@ -19,6 +20,7 @@ class TextTabBuilder extends WidgetTabBuilder {
   final TextStyle actionTextStyle;
   final Duration animationDuration = const Duration(milliseconds: 300);
   final Curve animationCurve = Curves.fastOutSlowIn;
+  final TextAlign textAlign;
 
   TextTabBuilder({
     List<String> texts,
@@ -26,6 +28,7 @@ class TextTabBuilder extends WidgetTabBuilder {
     EdgeInsetsGeometry margin,
     List<String> actions,
     TabStyle<Decoration> tabDecoration,
+    this.textAlign,
     this.tabTextStyle,
     Decoration actionDecoration,
     Duration textAnimationDuration = const Duration(milliseconds: 300),
@@ -43,6 +46,7 @@ class TextTabBuilder extends WidgetTabBuilder {
                 : (tabTextStyle?.unSelect ?? _defaultTextStyle.unSelect);
             return AnimatedDefaultTextStyle(
               child: Text(texts[index]),
+              textAlign: textAlign ?? TextAlign.center,
               style: textStyle,
               duration: textAnimationDuration,
               curve: textAnimationCurve,
@@ -52,6 +56,7 @@ class TextTabBuilder extends WidgetTabBuilder {
             var textStyle = actionTextStyle ?? _defaultActionTextStyle;
             return Text(
               actions[index],
+              textAlign: textAlign ?? TextAlign.center,
               style: textStyle,
               maxLines: 1,
               overflow: TextOverflow.clip,
@@ -138,7 +143,7 @@ class TextTabBuilder extends WidgetTabBuilder {
 //     );
 //   }
 //
-
+//
 //
 //   @override
 //   Widget buildTab(
@@ -204,7 +209,7 @@ class TextTabBuilder extends WidgetTabBuilder {
 //     var decoration = tabDecoration?.unSelect ?? _defaultDecoration.unSelect;
 //
 //     return Padding(
-//       padding: margin,
+//       padding: margin ?? EdgeInsets.zero,
 //       child: Container(
 //         decoration: decoration,
 //         padding: padding,
@@ -273,7 +278,7 @@ class TextTabBuilder extends WidgetTabBuilder {
 //     var decoration = actionDecoration ?? _defaultActionDecoration;
 //
 //     return Padding(
-//       padding: margin,
+//       padding: margin ?? EdgeInsets.zero,
 //       child: Container(
 //         decoration: decoration,
 //         padding: padding,

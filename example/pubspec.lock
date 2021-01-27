@@ -298,6 +298,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_secure_storage:
+    dependency: transitive
+    description:
+      name: flutter_secure_storage
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.3.5"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -419,7 +426,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "4.2.2+1"
+    version: "4.2.4+1"
   node_interop:
     dependency: transitive
     description:
@@ -798,4 +805,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.10.0-110 <2.11.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  flutter: ">=1.20.0 <2.0.0"
