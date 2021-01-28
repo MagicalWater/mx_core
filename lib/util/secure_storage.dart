@@ -1,21 +1,20 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-typedef T LocalObjectTransformer<T>(dynamic jsonObject);
 
 /// 永久化儲存本地設定
 /// 對於 List 以及 Map, 暫時只支持 List<基本類型>, Map<String, 基本類型>
 /// 基本類型 => int, double, String, bool
-class StorageKey<T> {
+class KeyDataBinder<T> {
   final String key;
   T _value;
 
   T get value => _value ?? _defaultValue;
   final T _defaultValue;
 
-  StorageKey(
-    this.key, {
+  KeyDataBinder({
+    @required this.key,
     T defaultValue,
   })  : assert(T == int ||
             T == double ||

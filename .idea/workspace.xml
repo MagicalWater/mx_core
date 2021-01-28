@@ -10,38 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/secure_storage.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/util/secure_storage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/shared_preferences_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/shared_preferences_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/shared_preferences_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/shared_preferences_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/secure_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/secure_storage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/secure_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/secure_storage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,34 +149,34 @@
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state x="100" y="123" width="1480" height="751" key="DiffContextDialog/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606449819918" />
-    <state width="1638" height="238" key="GridCell.Tab.0.bottom" timestamp="1611739447698">
+    <state width="1638" height="238" key="GridCell.Tab.0.bottom" timestamp="1611818055353">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="238" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611739447698" />
+    <state width="1638" height="238" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611818055353" />
     <state width="1638" height="262" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607671347265" />
     <state width="1638" height="262" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665826920" />
     <state width="1638" height="219" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716605" />
     <state width="1638" height="217" key="GridCell.Tab.0.bottom/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471739" />
-    <state width="1638" height="238" key="GridCell.Tab.0.center" timestamp="1611739447697">
+    <state width="1638" height="238" key="GridCell.Tab.0.center" timestamp="1611818055352">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="238" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611739447697" />
+    <state width="1638" height="238" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611818055352" />
     <state width="1638" height="262" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607671347265" />
     <state width="1638" height="262" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665826919" />
     <state width="1638" height="219" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716604" />
     <state width="1638" height="217" key="GridCell.Tab.0.center/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471738" />
-    <state width="1638" height="238" key="GridCell.Tab.0.left" timestamp="1611739447697">
+    <state width="1638" height="238" key="GridCell.Tab.0.left" timestamp="1611818055352">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="238" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611739447697" />
+    <state width="1638" height="238" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611818055352" />
     <state width="1638" height="262" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607671347265" />
     <state width="1638" height="262" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665826919" />
     <state width="1638" height="219" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716603" />
     <state width="1638" height="217" key="GridCell.Tab.0.left/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471737" />
-    <state width="1638" height="238" key="GridCell.Tab.0.right" timestamp="1611739447697">
+    <state width="1638" height="238" key="GridCell.Tab.0.right" timestamp="1611818055353">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="238" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611739447697" />
+    <state width="1638" height="238" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611818055353" />
     <state width="1638" height="262" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607671347265" />
     <state width="1638" height="262" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665826920" />
     <state width="1638" height="219" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716604" />
