@@ -18,6 +18,7 @@ class KeyDataBinder<T> {
     T defaultValue,
   })  : assert(T == int ||
             T == double ||
+            T == bool ||
             T == String ||
             List<int>() is T ||
             List<double>() is T ||
