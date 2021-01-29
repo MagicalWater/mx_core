@@ -11,6 +11,7 @@ export 'polling/polling.dart';
 export 'popup/popup.dart';
 export 'request/request.dart';
 export 'router/router.dart';
+export 'storage/storage.dart';
 export 'ui/widget/widget.dart';
 export 'util/util.dart';
 

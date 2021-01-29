@@ -14,10 +14,10 @@ class ExSpStorage {
   final String exDataKey = "exDataKey";
 
   Future<String> getExData() {
-    return SpUtil.getString(key: exDataKey);
+    return PlainStorage.readString(key: exDataKey);
   }
 
   Future<void> setExData(String exValue) {
-    return SpUtil.setString(key: exDataKey, value: exValue);
+    return PlainStorage.writeString(key: exDataKey, value: exValue);
   }
 }

@@ -10,10 +10,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/storage/plain_storage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/storage/secure_storage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/storage/storage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/storage/store/plain_data_store.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/storage/store/secure_data_store.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/storage/store/store.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/storage/plain_storage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/storage/secure_storage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/storage/storage.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/storage/store/plain_data_store.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/storage/store/secure_data_store.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/storage/store/store.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.android.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.android.env_new" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.ios.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.ios.env_new" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/project_construct/storage/ex_sp_storage_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/project_construct/storage/ex_sp_storage_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/version" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/secure_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/secure_storage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/secure_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/secure_storage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env_new" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env_new" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/storage/ex_sp_storage_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/project_construct/storage/ex_sp_storage_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/version" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/.last_build_id" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/.last_build_id" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/storage/ex_sp_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/storage/ex_sp_storage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/mx_core.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/mx_core.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/secure_storage.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/shared_preferences_util.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/.last_build_id" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/.last_build_id" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/storage/ex_sp_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/storage/ex_sp_storage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/mx_core.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mx_core.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/secure_storage.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/shared_preferences_util.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,19 +105,19 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib/ui/widget/page_switcher" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/align_grid/space" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout/space" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/ui/widget/tab_bar" />
       <recent name="$PROJECT_DIR$/lib/ui/widget" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/page_switcher" />
       <recent name="$PROJECT_DIR$/example/android/app/src/main/res/drawable" />
       <recent name="$PROJECT_DIR$/example/fastlane/files/project_construct/service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/storage/store" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/page_switcher" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/align_grid/space" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.ios_debug">
@@ -141,42 +194,47 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607665700597">
-      <screen x="0" y="23" width="1680" height="952" />
+    <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1611889161653">
+      <screen x="0" y="25" width="1680" height="944" />
     </state>
+    <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611889161653" />
     <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665700597" />
     <state x="100" y="123" width="1480" height="751" key="DiffContextDialog" timestamp="1606449819918">
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state x="100" y="123" width="1480" height="751" key="DiffContextDialog/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606449819918" />
-    <state width="1638" height="238" key="GridCell.Tab.0.bottom" timestamp="1611818055353">
+    <state x="683" y="260" key="FileChooserDialogImpl" timestamp="1611903372542">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="238" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611818055353" />
+    <state x="683" y="260" key="FileChooserDialogImpl/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611903372542" />
+    <state width="1638" height="401" key="GridCell.Tab.0.bottom" timestamp="1611887901407">
+      <screen x="0" y="25" width="1680" height="944" />
+    </state>
+    <state width="1638" height="401" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611887901407" />
     <state width="1638" height="262" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607671347265" />
     <state width="1638" height="262" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665826920" />
     <state width="1638" height="219" key="GridCell.Tab.0.bottom/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716605" />
     <state width="1638" height="217" key="GridCell.Tab.0.bottom/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471739" />
-    <state width="1638" height="238" key="GridCell.Tab.0.center" timestamp="1611818055352">
+    <state width="1638" height="401" key="GridCell.Tab.0.center" timestamp="1611887901407">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="238" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611818055352" />
+    <state width="1638" height="401" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611887901407" />
     <state width="1638" height="262" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607671347265" />
     <state width="1638" height="262" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665826919" />
     <state width="1638" height="219" key="GridCell.Tab.0.center/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716604" />
     <state width="1638" height="217" key="GridCell.Tab.0.center/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471738" />
-    <state width="1638" height="238" key="GridCell.Tab.0.left" timestamp="1611818055352">
+    <state width="1638" height="401" key="GridCell.Tab.0.left" timestamp="1611887901407">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="238" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611818055352" />
+    <state width="1638" height="401" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611887901407" />
     <state width="1638" height="262" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607671347265" />
     <state width="1638" height="262" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665826919" />
     <state width="1638" height="219" key="GridCell.Tab.0.left/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716603" />
     <state width="1638" height="217" key="GridCell.Tab.0.left/-240.-1057.1920.981/0.23.1680.1027@0.23.1680.1027" timestamp="1606371471737" />
-    <state width="1638" height="238" key="GridCell.Tab.0.right" timestamp="1611818055353">
+    <state width="1638" height="401" key="GridCell.Tab.0.right" timestamp="1611887901407">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="238" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611818055353" />
+    <state width="1638" height="401" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611887901407" />
     <state width="1638" height="262" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607671347265" />
     <state width="1638" height="262" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607665826920" />
     <state width="1638" height="219" key="GridCell.Tab.0.right/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1606120716604" />
@@ -198,19 +256,19 @@
       <screen x="0" y="23" width="1680" height="951" />
     </state>
     <state x="419" y="116" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606448985625" />
-    <state x="493" y="256" width="804" height="490" key="find.popup" timestamp="1611645522199">
+    <state x="493" y="256" width="804" height="490" key="find.popup" timestamp="1611903374605">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state x="493" y="256" width="804" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611645522199" />
+    <state x="493" y="256" width="804" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611903374605" />
     <state x="323" y="-798" width="918" height="541" key="find.popup/-240.-1057.1920.1057/0.23.1680.951@-240.-1057.1920.1057" timestamp="1607067353061" />
     <state x="493" y="256" width="803" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1606372351085" />
     <state x="493" y="256" width="980" height="486" key="find.popup/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1606188727215" />
     <state x="493" y="256" width="980" height="488" key="find.popup/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1603783644707" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1611739338401">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1611903680015">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="343" height="108" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1611109554960" />
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611739338401" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611903680015" />
     <state width="300" height="95" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.951@0.23.1680.951" timestamp="1607494193030" />
     <state width="300" height="96" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.952@0.23.1680.952" timestamp="1607655773419" />
     <state width="300" height="97" key="javadoc.popup.new/-240.-1057.1920.1057/0.23.1680.954@0.23.1680.954" timestamp="1603953393833" />

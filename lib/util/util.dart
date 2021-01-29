@@ -7,7 +7,5 @@ export 'money_util.dart';
 export 'network_util.dart';
 export 'num_util.dart';
 export 'screen_util.dart';
-export 'secure_storage.dart';
-export 'shared_preferences_util.dart';
 export 'uri_util.dart';
 export 'web_socket_util.dart';
