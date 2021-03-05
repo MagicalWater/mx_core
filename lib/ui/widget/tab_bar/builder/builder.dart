@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mx_core/mx_core.dart';
 
 export 'text_tab_builder.dart';
 export 'widget_tab_builder.dart';
@@ -25,20 +26,20 @@ abstract class TabBuilder implements _BaseBuilder {
 }
 
 abstract class SwipeTabBuilder implements _BaseBuilder {
-  Decoration get swipeDecoration;
+  TabStyleBuilder<Decoration> get swipeDecoration;
   EdgeInsetsGeometry get padding;
   EdgeInsetsGeometry get margin;
 
   Widget buildTabBackground({
     BuildContext context,
-    bool isSelected,
+    bool selected,
     int index,
   });
 
   Widget buildTabForeground({
     BuildContext context,
     Size size,
-    bool isSelected,
+    bool selected,
     int index,
     VoidCallback onTap,
   });

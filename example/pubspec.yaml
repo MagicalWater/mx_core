@@ -29,4 +29,5 @@ flutter:
   assets:
   - assets/images/
   - assets/jsons/
+  - assets/jsons/chart_example/
 version: 1.1.0+13

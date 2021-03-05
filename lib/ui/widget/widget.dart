@@ -26,3 +26,4 @@ export 'line_indicator.dart';
 export 'page_switcher/switcher.dart';
 export 'navigator_provider.dart';
 export 'bullet_paint.dart';
+export 'chart/chart.dart';

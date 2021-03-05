@@ -31,6 +31,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
   List<PageInfo> textMap = [
     PageInfo(Pages.test, "測試頁面"),
+    PageInfo(Pages.kChart, "行情圖表"),
     PageInfo(Pages.bulletShape, "彈頭渲染"),
     PageInfo(Pages.lineIndicator, "線條指示器"),
     PageInfo(Pages.tabBar, "Tab元件"),

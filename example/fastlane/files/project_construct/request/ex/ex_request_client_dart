@@ -1,7 +1,8 @@
 import 'package:mx_core/mx_core.dart';
 
-import 'ex_request_builder.api.dart';
 import 'ex_request_builder.dart';
+
+export 'ex_request_builder.dart';
 
 class ExRequestClient extends RequestClientBase with ExRequestClientMixin {
   static final _singleton = ExRequestClient._internal();

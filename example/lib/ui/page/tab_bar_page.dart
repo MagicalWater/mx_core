@@ -119,28 +119,34 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       controller: tabController,
       tabBuilder: TextTabBuilder(
         texts: tabs,
-        tabDecoration: TabStyle<Decoration>(
-          select: BoxDecoration(
-            color: Colors.yellow,
-            border: Border.all(color: Colors.yellow),
-            borderRadius: BorderRadius.circular(6.scaleA),
-          ),
-          unSelect: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.white),
-            borderRadius: BorderRadius.circular(6.scaleA),
-          ),
-        ),
-        tabTextStyle: TabStyle<TextStyle>(
-          select: TextStyle(
-            color: Colors.black,
-            fontSize: 14.scaleA,
-          ),
-          unSelect: TextStyle(
-            color: Colors.black,
-            fontSize: 14.scaleA,
-          ),
-        ),
+        tabDecoration: (index, selected) {
+          if (selected) {
+            return BoxDecoration(
+              color: Colors.yellow,
+              border: Border.all(color: Colors.yellow),
+              borderRadius: BorderRadius.circular(6.scaleA),
+            );
+          } else {
+            return BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(6.scaleA),
+            );
+          }
+        },
+        tabTextStyle: (index, selected) {
+          if (selected) {
+            return TextStyle(
+              color: Colors.black,
+              fontSize: 14.scaleA,
+            );
+          } else {
+            return TextStyle(
+              color: Colors.black,
+              fontSize: 14.scaleA,
+            );
+          }
+        },
         padding: EdgeInsets.symmetric(horizontal: 10.scaleA),
       ),
       scrollable: true,
@@ -161,14 +167,20 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       controller: tabController,
       tabBuilder: TextTabBuilder(
         texts: tabs,
-        tabDecoration: TabStyle<BoxDecoration>(
-          select: BoxDecoration(color: Colors.black.withAlpha(100)),
-          unSelect: BoxDecoration(color: Colors.green.withAlpha(100)),
-        ),
-        tabTextStyle: TabStyle<TextStyle>(
-          select: TextStyle(color: Colors.black, fontSize: 12),
-          unSelect: TextStyle(color: Colors.grey, fontSize: 12),
-        ),
+        tabDecoration: (index, selected) {
+          if (selected) {
+            return BoxDecoration(color: Colors.black.withAlpha(100));
+          } else {
+            return BoxDecoration(color: Colors.green.withAlpha(100));
+          }
+        },
+        tabTextStyle: (index, selected) {
+          if (selected) {
+            return TextStyle(color: Colors.black, fontSize: 12);
+          } else {
+            return TextStyle(color: Colors.grey, fontSize: 12);
+          }
+        },
         // actions: ['1'],
         padding: EdgeInsets.symmetric(horizontal: 10),
         margin: EdgeInsets.only(left: 10, right: 10),
@@ -182,8 +194,12 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       tabWidth: TabWidth.shrinkWrap(),
       tabHeight: 40,
       scrollable: false,
-      header: Container(width: 50,),
-      footer: Container(width: 50,),
+      header: Container(
+        width: 50,
+      ),
+      footer: Container(
+        width: 50,
+      ),
       indicator: TabIndicator(
         color: Colors.red,
         height: 2,
@@ -251,10 +267,13 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         },
         tabCount: tabs.length,
         // actionCount: 1,
-        tabDecoration: TabStyle<BoxDecoration>(
-          select: BoxDecoration(color: Colors.black.withAlpha(100)),
-          unSelect: BoxDecoration(color: Colors.green.withAlpha(100)),
-        ),
+        tabDecoration: (index, selected) {
+          if (selected) {
+            return BoxDecoration(color: Colors.black.withAlpha(100));
+          } else {
+            return BoxDecoration(color: Colors.green.withAlpha(100));
+          }
+        },
         margin: EdgeInsets.only(left: 10, right: 10),
         padding: EdgeInsets.symmetric(horizontal: 10),
       ),

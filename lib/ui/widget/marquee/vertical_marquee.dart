@@ -40,6 +40,8 @@ class Marquee extends StatefulWidget {
   /// 邊緣透明
   final bool fadeSide;
 
+  final Function(int index) onTap;
+
   Marquee({
     @required this.children,
     Key key,
@@ -51,6 +53,7 @@ class Marquee extends StatefulWidget {
     this.onCreated,
     this.onStart,
     this.onEnd,
+    this.onTap,
     this.velocity = 100,
     this.interval = const Duration(milliseconds: 1000),
     this.nextDuration = const Duration(milliseconds: 500),
@@ -67,6 +70,7 @@ class Marquee extends StatefulWidget {
     final Function(MarqueeController controller) onCreated,
     VoidCallback onStart,
     Function(int times) onEnd,
+    Function(int index) onTap,
     int velocity = 100,
     Duration interval = const Duration(milliseconds: 1000),
     Duration nextDuration = const Duration(milliseconds: 500),
@@ -95,6 +99,7 @@ class Marquee extends StatefulWidget {
       onCreated: onCreated,
       onStart: onStart,
       onEnd: onEnd,
+      onTap: onTap,
       velocity: velocity,
       interval: interval,
       nextDuration: nextDuration,
@@ -138,8 +143,9 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
     mainScrollController = ScrollController(initialScrollOffset: widget.height);
     scrollStartIndex = 1;
 
-    showWidget =
-        List.from(widget.children).map((e) => _coverWidget(e)).toList();
+    showWidget = List.from(widget.children)
+        .indexMap((e, i) => _coverWidget(e, index: i))
+        .toList();
 
     showWidget
       ..insert(0, sideWidget)
@@ -156,12 +162,23 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
     super.initState();
   }
 
-  Widget _coverWidget(Widget child) {
-    return Container(
+  Widget _coverWidget(Widget child, {int index}) {
+    var conver = Container(
+      color: Colors.transparent,
       height: widget.height,
       alignment: Alignment.centerLeft,
       child: child,
     );
+    if (index != null) {
+      return GestureDetector(
+        onTap: () {
+          widget.onTap?.call(index);
+        },
+        child: conver,
+      );
+    } else {
+      return conver;
+    }
   }
 
   @override
@@ -181,8 +198,9 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
     var oldSide1 = showWidget.removeAt(0);
     var oldSide2 = showWidget.removeLast();
 
-    showWidget =
-        List.from(widget.children).map((e) => _coverWidget(e)).toList();
+    showWidget = List.from(widget.children)
+        .indexMap((e, i) => _coverWidget(e, index: i))
+        .toList();
 
     // if (showWidget.length> replacement.length) {
     //   showWidget = showWidget.sublist(0, replacement.length);

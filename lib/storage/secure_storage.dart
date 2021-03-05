@@ -18,8 +18,10 @@ class SecureStorage {
     var isFirstActive = await PlainStorage.readBool(key: _firstInstallKey);
     if (isFirstActive != null) {
       // 並非第一次運行, 因此相關鍵值保留
+      print('並非第一次運行app, 保留相關鑰匙圈鍵值');
     } else {
       // 第一次運行app
+      print('第一次運行app, 刪除鑰匙圈鍵值');
       await PlainStorage.writeBool(key: _firstInstallKey, value: true);
       return deleteAll();
     }

@@ -404,7 +404,12 @@ class HttpUtil {
     Map<String, dynamic> headers,
     dynamic body,
   ) {
-    print("${error.toString()} - $url");
+    print('====== 請求錯誤 ======');
+    print('url: $url');
+    print('標頭: $headers');
+    print('參數: $queryParams');
+    print('錯誤: $error');
+    print('=====================');
     return HttpError(
       request: error.request,
       error: error.error,
@@ -465,7 +470,7 @@ class HttpError extends Error implements Exception {
 
   @override
   String toString() =>
-      "錯誤: 請求異常 [${response.response?.statusCode ?? type.toString()}]";
+      "錯誤: 請求異常 [${response?.response?.statusCode ?? type.toString()}]: ${request.queryParameters}";
 
   /// 將錯誤類型轉換為真正顯示的字串
 

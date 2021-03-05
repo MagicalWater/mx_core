@@ -199,13 +199,13 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
                   child: componentTabRow(
                     selectTab: (context, index) {
                       return widget.tabBuilder.buildTabBackground(
-                        isSelected: currentIndex == index,
+                        selected: currentIndex == index,
                         index: index,
                       );
                     },
                     unSelectTab: (context, index) {
                       return widget.tabBuilder.buildTabBackground(
-                        isSelected: currentIndex == index,
+                        selected: currentIndex == index,
                         index: index,
                       );
                     },
@@ -226,7 +226,10 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
                 top: topHeight,
                 bottom: bottomHeight,
                 child: componentIndicator(
-                  decoration: widget.tabBuilder.swipeDecoration,
+                  decoration: widget.tabBuilder.swipeDecoration(
+                    currentIndex,
+                    true,
+                  ),
                   duration: Duration(milliseconds: 300),
                   padding: widget.tabBuilder.margin,
                   curve: Curves.fastOutSlowIn,
@@ -250,8 +253,10 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
                   height: tabHeight + topHeight + bottomHeight,
                   child: Container(
                     height: tabHeight,
-                    padding:
-                        EdgeInsets.only(top: topHeight, bottom: bottomHeight),
+                    padding: EdgeInsets.only(
+                      top: topHeight,
+                      bottom: bottomHeight,
+                    ),
                     child: componentTabRow(
                       selectTab: (context, index) {
                         return _buildTab(index: index);
@@ -289,7 +294,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
     var isSelected = currentIndex == index;
     return widget.tabBuilder.buildTabForeground(
       size: tabRectMap[index].size,
-      isSelected: isSelected,
+      selected: isSelected,
       index: index,
       onTap: () {
         if (isSelected) {

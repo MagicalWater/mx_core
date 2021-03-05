@@ -6,22 +6,24 @@
 
 import 'dart:convert';
 import 'package:annotation_route/route.dart';
-import 'package:mx_core_example/ui/page/load_provider_page.dart';
-import 'package:mx_core_example/ui/page/arrow_container_page.dart';
-import 'package:mx_core_example/ui/page/loading_page.dart';
-import 'package:mx_core_example/ui/page/lib_ease_refresh_page.dart';
-import 'package:mx_core_example/ui/page/tab_bar_page.dart';
-import 'package:mx_core_example/ui/page/animated_core_page.dart';
 import 'package:mx_core_example/ui/page/stateful_button_page.dart';
 import 'package:mx_core_example/ui/page/route_push_second_page.dart';
+import 'package:mx_core_example/ui/page/tab_bar_page.dart';
+import 'package:mx_core_example/ui/page/arrow_container_page.dart';
+import 'package:mx_core_example/ui/page/load_provider_page.dart';
+import 'package:mx_core_example/ui/page/lib_ease_refresh_page.dart';
+import 'package:mx_core_example/ui/page/span_grid_page.dart';
 import 'package:mx_core_example/ui/page/line_indicator_page.dart';
+import 'package:mx_core_example/ui/page/animated_core_page.dart';
 import 'package:mx_core_example/ui/page/assist_touch_page.dart';
+import 'package:mx_core_example/ui/page/bullet_shape_page.dart';
+import 'package:mx_core_example/ui/page/loading_page.dart';
 import 'package:mx_core_example/ui/page/wave_progress_page.dart';
 import 'package:mx_core_example/ui/page/timer_page.dart';
+import 'package:mx_core_example/ui/page/k_chart_page.dart';
 import 'package:mx_core_example/ui/page/normal_popup_page.dart';
-import 'package:mx_core_example/ui/page/route_push_entry_page.dart';
-import 'package:mx_core_example/ui/page/span_grid_page.dart';
 import 'package:mx_core_example/ui/page/particle_animation_page.dart';
+import 'package:mx_core_example/ui/page/route_push_entry_page.dart';
 import 'package:mx_core_example/ui/page/test_page.dart';
 import 'package:mx_core_example/ui/page/route_push_third_page.dart';
 import 'package:mx_core_example/ui/page/refresh_view_page.dart';
@@ -34,41 +36,46 @@ import 'package:mx_core_example/ui/page/route_push_second/route_push_sub1_page.d
 import 'package:mx_core_example/ui/page/coordinate_layout_page.dart';
 import 'package:mx_core_example/ui/page/introduction_page.dart';
 import 'package:mx_core_example/ui/page/marquee_page.dart';
-import 'package:mx_core_example/ui/page/bullet_shape_page.dart';
 
 class ARouterInternalImpl extends ARouterInternal {
   ARouterInternalImpl();
   final Map<String, List<Map<String, dynamic>>> innerRouterMap =
       <String, List<Map<String, dynamic>>>{
-    '/loadProvider': [
-      {'clazz': LoadProviderPage}
-    ],
-    '/arrowContainer': [
-      {'clazz': ArrowContainerPage}
-    ],
-    '/loading': [
-      {'clazz': LoadingPage}
-    ],
-    '/libEaseRefresh': [
-      {'clazz': LibEaseRefreshPage}
-    ],
-    '/tabBar': [
-      {'clazz': TabBarPage}
-    ],
-    '/animatedCore': [
-      {'clazz': AnimatedCorePage}
-    ],
     '/statefulButton': [
       {'clazz': StatefulButtonPage}
     ],
     '/routePushSecond': [
       {'clazz': RoutePushSecondPage}
     ],
+    '/tabBar': [
+      {'clazz': TabBarPage}
+    ],
+    '/arrowContainer': [
+      {'clazz': ArrowContainerPage}
+    ],
+    '/loadProvider': [
+      {'clazz': LoadProviderPage}
+    ],
+    '/libEaseRefresh': [
+      {'clazz': LibEaseRefreshPage}
+    ],
+    '/spanGrid': [
+      {'clazz': SpanGridPage}
+    ],
     '/lineIndicator': [
       {'clazz': LineIndicatorPage}
     ],
+    '/animatedCore': [
+      {'clazz': AnimatedCorePage}
+    ],
     '/assistTouch': [
       {'clazz': AssistTouchPage}
+    ],
+    '/bulletShape': [
+      {'clazz': BulletShapePage}
+    ],
+    '/loading': [
+      {'clazz': LoadingPage}
     ],
     '/waveProgress': [
       {'clazz': WaveProgressPage}
@@ -76,17 +83,17 @@ class ARouterInternalImpl extends ARouterInternal {
     '/timer': [
       {'clazz': TimerPage}
     ],
+    '/kChart': [
+      {'clazz': KChartPage}
+    ],
     '/normalPopup': [
       {'clazz': NormalPopupPage}
     ],
-    '/routePushEntry': [
-      {'clazz': RoutePushEntryPage}
-    ],
-    '/spanGrid': [
-      {'clazz': SpanGridPage}
-    ],
     '/particleAnimation': [
       {'clazz': ParticleAnimationPage}
+    ],
+    '/routePushEntry': [
+      {'clazz': RoutePushEntryPage}
     ],
     '/test': [
       {'clazz': TestPage}
@@ -123,9 +130,6 @@ class ARouterInternalImpl extends ARouterInternal {
     ],
     '/marquee': [
       {'clazz': MarqueePage}
-    ],
-    '/bulletShape': [
-      {'clazz': BulletShapePage}
     ]
   };
 
@@ -150,38 +154,42 @@ class ARouterInternalImpl extends ARouterInternal {
 
   dynamic instanceFromClazz(Type clazz, dynamic option) {
     switch (clazz) {
-      case LoadProviderPage:
-        return new LoadProviderPage(option);
-      case ArrowContainerPage:
-        return new ArrowContainerPage(option);
-      case LoadingPage:
-        return new LoadingPage(option);
-      case LibEaseRefreshPage:
-        return new LibEaseRefreshPage(option);
-      case TabBarPage:
-        return new TabBarPage(option);
-      case AnimatedCorePage:
-        return new AnimatedCorePage(option);
       case StatefulButtonPage:
         return new StatefulButtonPage(option);
       case RoutePushSecondPage:
         return new RoutePushSecondPage(option);
+      case TabBarPage:
+        return new TabBarPage(option);
+      case ArrowContainerPage:
+        return new ArrowContainerPage(option);
+      case LoadProviderPage:
+        return new LoadProviderPage(option);
+      case LibEaseRefreshPage:
+        return new LibEaseRefreshPage(option);
+      case SpanGridPage:
+        return new SpanGridPage(option);
       case LineIndicatorPage:
         return new LineIndicatorPage(option);
+      case AnimatedCorePage:
+        return new AnimatedCorePage(option);
       case AssistTouchPage:
         return new AssistTouchPage(option);
+      case BulletShapePage:
+        return new BulletShapePage(option);
+      case LoadingPage:
+        return new LoadingPage(option);
       case WaveProgressPage:
         return new WaveProgressPage(option);
       case TimerPage:
         return new TimerPage(option);
+      case KChartPage:
+        return new KChartPage(option);
       case NormalPopupPage:
         return new NormalPopupPage(option);
-      case RoutePushEntryPage:
-        return new RoutePushEntryPage(option);
-      case SpanGridPage:
-        return new SpanGridPage(option);
       case ParticleAnimationPage:
         return new ParticleAnimationPage(option);
+      case RoutePushEntryPage:
+        return new RoutePushEntryPage(option);
       case TestPage:
         return new TestPage(option);
       case RoutePushThirdPage:
@@ -206,8 +214,6 @@ class ARouterInternalImpl extends ARouterInternal {
         return new IntroductionPage(option);
       case MarqueePage:
         return new MarqueePage(option);
-      case BulletShapePage:
-        return new BulletShapePage(option);
       default:
         return null;
     }

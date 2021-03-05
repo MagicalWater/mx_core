@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../tab_style.dart';
 import 'builder.dart';
 
 typedef Widget TabWidgetBuilder(
   BuildContext context,
   int index,
-  bool isSelected,
+  bool selected,
   bool foreground,
+);
+
+typedef T TabStyleBuilder<T>(
+  int index,
+  bool selected,
 );
 
 class WidgetTabBuilder implements SwipeTabBuilder {
@@ -23,7 +27,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   final TabWidgetBuilder tabBuilder;
   final IndexedWidgetBuilder actionBuilder;
 
-  final TabStyle<Decoration> tabDecoration;
+  final TabStyleBuilder<Decoration> tabDecoration;
   final Decoration actionDecoration;
 
   @override
@@ -44,8 +48,8 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   })  : this._tabCount = tabCount,
         this._actionCount = actionCount;
 
-  Decoration get swipeDecoration =>
-      tabDecoration?.select ?? _defaultDecoration.select;
+  TabStyleBuilder<Decoration> get swipeDecoration =>
+      tabDecoration ?? _defaultDecoration;
 
   Decoration get _defaultActionDecoration {
     return BoxDecoration(
@@ -55,20 +59,21 @@ class WidgetTabBuilder implements SwipeTabBuilder {
     );
   }
 
-  TabStyle<Decoration> get _defaultDecoration {
-    return TabStyle<Decoration>(
-      select: BoxDecoration(
+  TabStyleBuilder<Decoration> _defaultDecoration = (index, selected) {
+    if (selected) {
+      return BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Colors.blueAccent,
         border: Border.all(color: Colors.blueAccent),
-      ),
-      unSelect: BoxDecoration(
+      );
+    } else {
+      return BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Colors.transparent,
         border: Border.all(color: Colors.blueAccent),
-      ),
-    );
-  }
+      );
+    }
+  };
 
   @override
   Widget buildActionBackground({BuildContext context, int index}) {
@@ -121,9 +126,9 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   }
 
   @override
-  Widget buildTabBackground(
-      {BuildContext context, bool isSelected, int index}) {
-    var decoration = tabDecoration?.unSelect ?? _defaultDecoration.unSelect;
+  Widget buildTabBackground({BuildContext context, bool selected, int index}) {
+    var decoration = tabDecoration?.call(index, false) ??
+        _defaultDecoration(index, selected);
 
     return Padding(
       padding: margin ?? EdgeInsets.zero,
@@ -136,7 +141,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
           ignoring: true,
           child: Opacity(
             opacity: 0,
-            child: tabBuilder(context, index, isSelected, false),
+            child: tabBuilder(context, index, selected, false),
           ),
         ),
       ),
@@ -145,10 +150,9 @@ class WidgetTabBuilder implements SwipeTabBuilder {
 
   @override
   Widget buildTabForeground(
-      {BuildContext context, Size size, bool isSelected, int index, onTap}) {
-    var decoration = isSelected
-        ? (tabDecoration?.select ?? _defaultDecoration.select)
-        : (tabDecoration?.unSelect ?? _defaultDecoration.unSelect);
+      {BuildContext context, Size size, bool selected, int index, onTap}) {
+    var decoration =
+        tabDecoration?.call(index, false) ?? _defaultDecoration(index, false);
 
     return SizedOverflowBox(
       alignment: Alignment.center,
@@ -166,7 +170,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
               width: size.width + 0.5,
               height: size.height,
               alignment: Alignment.center,
-              child: tabBuilder(context, index, isSelected, true),
+              child: tabBuilder(context, index, selected, true),
             ),
           ),
         ),

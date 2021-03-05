@@ -370,7 +370,7 @@ platform :ios do
       app_identifier: bundleId,
       sku: bundleId,
       app_name: appName,
-      language: 'zh-Hans',
+      language: 'en-US',
       app_version: '1.0',
       enable_services: {
         push_notification: "on",
