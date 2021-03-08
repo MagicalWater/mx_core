@@ -408,6 +408,7 @@ class HttpUtil {
     print('url: $url');
     print('標頭: $headers');
     print('參數: $queryParams');
+    print('Body: $body');
     print('錯誤: $error');
     print('=====================');
     return HttpError(

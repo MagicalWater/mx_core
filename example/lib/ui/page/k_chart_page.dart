@@ -144,7 +144,7 @@ class _KChartPageState extends State<KChartPage> {
         button("addData", onPressed: () {
           //拷貝一個對象，修改數據
           var kLineEntity = KLineEntity.fromJson(datas.last.toJson());
-          kLineEntity.id += 60 * 60 * 24;
+          kLineEntity.dateTime = kLineEntity.dateTime.add(Duration(days: 1));
           kLineEntity.open = kLineEntity.close;
           kLineEntity.close += (Random().nextInt(100) - 50).toDouble();
           datas.last.high = max(datas.last.high, datas.last.close);

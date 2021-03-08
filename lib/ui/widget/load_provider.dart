@@ -47,6 +47,7 @@ class LoadProvider extends StatefulWidget {
   final Widget child;
   final void Function(LoadController controller) onCreated;
   final Stream<bool> loadStream;
+  final WidgetBuilder builder;
 
   /// 點擊穿透, 默認 false
   final bool tapThrough;
@@ -65,6 +66,7 @@ class LoadProvider extends StatefulWidget {
     this.onCreated,
     this.tapThrough = false,
     this.loadStream,
+    this.builder,
     this.root = false,
   });
 
@@ -134,7 +136,7 @@ class _LoadProviderState extends State<LoadProvider>
           loadAttach = Container(
             color: Colors.transparent,
             alignment: Alignment.center,
-            child: Loading.circle(
+            child: widget.builder?.call(context) ?? Loading.circle(
               color: _currentStyle.color ?? Colors.blueAccent,
               size: _currentStyle.size ?? 50.scaleA,
             ),

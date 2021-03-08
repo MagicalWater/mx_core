@@ -1,11 +1,16 @@
 import 'dart:math';
-export 'package:flutter/material.dart' show Color, required, TextStyle, Rect, Canvas, Size, CustomPainter;
-import 'package:flutter/material.dart' show Color, required, TextStyle, Rect, Canvas, Size, CustomPainter;
+
+import 'package:flutter/material.dart'
+    show Color, required, TextStyle, Rect, Canvas, Size, CustomPainter;
 import 'package:mx_core/ui/widget/chart/utils/date_format_util.dart';
 import 'package:mx_core/ui/widget/chart/utils/number_util.dart';
+
+import '../chart_style.dart' show ChartStyle;
 import '../entity/k_line_entity.dart';
 import '../k_chart.dart';
-import '../chart_style.dart' show ChartStyle;
+
+export 'package:flutter/material.dart'
+    show Color, required, TextStyle, Rect, Canvas, Size, CustomPainter;
 
 abstract class BaseChartPainter extends CustomPainter {
   static double maxScrollX = 0.0;
@@ -25,10 +30,12 @@ abstract class BaseChartPainter extends CustomPainter {
   int mStartIndex = 0, mStopIndex = 0;
   double mMainMaxValue = -double.maxFinite, mMainMinValue = double.maxFinite;
   double mVolMaxValue = -double.maxFinite, mVolMinValue = double.maxFinite;
-  double mSecondaryMaxValue = -double.maxFinite, mSecondaryMinValue = double.maxFinite;
+  double mSecondaryMaxValue = -double.maxFinite,
+      mSecondaryMinValue = double.maxFinite;
   double mTranslateX = -double.maxFinite;
   int mMainMaxIndex = 0, mMainMinIndex = 0;
-  double mMainHighMaxValue = -double.maxFinite, mMainLowMinValue = double.maxFinite;
+  double mMainHighMaxValue = -double.maxFinite,
+      mMainLowMinValue = double.maxFinite;
   int mItemCount = 0;
   double mDataLen = 0.0; //数据占屏幕总长度
   double mPointWidth = ChartStyle.pointWidth;
@@ -53,8 +60,8 @@ abstract class BaseChartPainter extends CustomPainter {
   void initFormats() {
 //    [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn]
     if (mItemCount < 2) return;
-    int firstTime = datas.first?.id ?? 0;
-    int secondTime = datas[1]?.id ?? 0;
+    int firstTime = datas.first?.dateTime?.second ?? 0;
+    int secondTime = datas[1]?.dateTime?.second ?? 0;
     int time = secondTime - firstTime;
     //月线
     if (time >= 24 * 60 * 60 * 28)
@@ -70,7 +77,8 @@ abstract class BaseChartPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.clipRect(Rect.fromLTRB(0, 0, size.width, size.height));
-    mDisplayHeight = size.height - ChartStyle.topPadding - ChartStyle.bottomDateHigh;
+    mDisplayHeight =
+        size.height - ChartStyle.topPadding - ChartStyle.bottomDateHigh;
     mWidth = size.width;
     mMarginRight = (mWidth / ChartStyle.gridColumns - mPointWidth) / scaleX;
     initRect(size);
@@ -125,18 +133,23 @@ abstract class BaseChartPainter extends CustomPainter {
     double secondaryHeight = mDisplayHeight * 0.2;
     if (volState == VolState.NONE && secondaryState == SecondaryState.NONE) {
       mainHeight = mDisplayHeight;
-    } else if (volState == VolState.NONE || secondaryState == SecondaryState.NONE) {
+    } else if (volState == VolState.NONE ||
+        secondaryState == SecondaryState.NONE) {
       mainHeight = mDisplayHeight * 0.8;
     }
-    mMainRect = Rect.fromLTRB(0, ChartStyle.topPadding, mWidth, ChartStyle.topPadding + mainHeight);
-    if(volState != VolState.NONE){
-      mVolRect = Rect.fromLTRB(0, mMainRect.bottom + ChartStyle.childPadding, mWidth, mMainRect.bottom + volHeight);
+    mMainRect = Rect.fromLTRB(
+        0, ChartStyle.topPadding, mWidth, ChartStyle.topPadding + mainHeight);
+    if (volState != VolState.NONE) {
+      mVolRect = Rect.fromLTRB(0, mMainRect.bottom + ChartStyle.childPadding,
+          mWidth, mMainRect.bottom + volHeight);
     }
-    if (secondaryState != SecondaryState.NONE){
-      mSecondaryRect = Rect.fromLTRB(0, (mVolRect?.bottom??mMainRect.bottom )+ ChartStyle.childPadding, mWidth, (mVolRect?.bottom??mMainRect.bottom)  + secondaryHeight);
+    if (secondaryState != SecondaryState.NONE) {
+      mSecondaryRect = Rect.fromLTRB(
+          0,
+          (mVolRect?.bottom ?? mMainRect.bottom) + ChartStyle.childPadding,
+          mWidth,
+          (mVolRect?.bottom ?? mMainRect.bottom) + secondaryHeight);
     }
-
-
   }
 
   calculateValue() {
@@ -160,27 +173,27 @@ abstract class BaseChartPainter extends CustomPainter {
     } else {
       double maxPrice = item.high, minPrice = item.low;
       if (mainState == MainState.MA) {
-        if(item.MA5Price != 0){
+        if (item.MA5Price != 0) {
           maxPrice = max(maxPrice, item.MA5Price);
           minPrice = min(minPrice, item.MA5Price);
         }
-        if(item.MA10Price != 0){
+        if (item.MA10Price != 0) {
           maxPrice = max(maxPrice, item.MA10Price);
           minPrice = min(minPrice, item.MA10Price);
         }
-        if(item.MA20Price != 0){
+        if (item.MA20Price != 0) {
           maxPrice = max(maxPrice, item.MA20Price);
           minPrice = min(minPrice, item.MA20Price);
         }
-        if(item.MA30Price != 0){
+        if (item.MA30Price != 0) {
           maxPrice = max(maxPrice, item.MA30Price);
           minPrice = min(minPrice, item.MA30Price);
         }
       } else if (mainState == MainState.BOLL) {
-        if(item.up!=0){
+        if (item.up != 0) {
           maxPrice = max(item.up, item.high);
         }
-        if(item.dn!=0){
+        if (item.dn != 0) {
           minPrice = min(item.dn, item.low);
         }
       }
@@ -199,17 +212,23 @@ abstract class BaseChartPainter extends CustomPainter {
   }
 
   void getVolMaxMinValue(KLineEntity item) {
-    mVolMaxValue = max(mVolMaxValue, max(item.vol, max(item.MA5Volume, item.MA10Volume)));
-    mVolMinValue = min(mVolMinValue, min(item.vol, min(item.MA5Volume, item.MA10Volume)));
+    mVolMaxValue =
+        max(mVolMaxValue, max(item.vol, max(item.MA5Volume, item.MA10Volume)));
+    mVolMinValue =
+        min(mVolMinValue, min(item.vol, min(item.MA5Volume, item.MA10Volume)));
   }
 
   void getSecondaryMaxMinValue(KLineEntity item) {
     if (secondaryState == SecondaryState.MACD) {
-      mSecondaryMaxValue = max(mSecondaryMaxValue, max(item.macd, max(item.dif, item.dea)));
-      mSecondaryMinValue = min(mSecondaryMinValue, min(item.macd, min(item.dif, item.dea)));
+      mSecondaryMaxValue =
+          max(mSecondaryMaxValue, max(item.macd, max(item.dif, item.dea)));
+      mSecondaryMinValue =
+          min(mSecondaryMinValue, min(item.macd, min(item.dif, item.dea)));
     } else if (secondaryState == SecondaryState.KDJ) {
-      mSecondaryMaxValue = max(mSecondaryMaxValue, max(item.k, max(item.d, item.j)));
-      mSecondaryMinValue = min(mSecondaryMinValue, min(item.k, min(item.d, item.j)));
+      mSecondaryMaxValue =
+          max(mSecondaryMaxValue, max(item.k, max(item.d, item.j)));
+      mSecondaryMinValue =
+          min(mSecondaryMinValue, min(item.k, min(item.d, item.j)));
     } else if (secondaryState == SecondaryState.RSI) {
       mSecondaryMaxValue = max(mSecondaryMaxValue, item.rsi);
       mSecondaryMinValue = min(mSecondaryMinValue, item.rsi);
@@ -221,7 +240,8 @@ abstract class BaseChartPainter extends CustomPainter {
 
   double xToTranslateX(double x) => -mTranslateX + x / scaleX;
 
-  int indexOfTranslateX(double translateX) => _indexOfTranslateX(translateX, 0, mItemCount - 1);
+  int indexOfTranslateX(double translateX) =>
+      _indexOfTranslateX(translateX, 0, mItemCount - 1);
 
   ///二分查找当前值的index
   int _indexOfTranslateX(double translateX, int start, int end) {
@@ -231,7 +251,9 @@ abstract class BaseChartPainter extends CustomPainter {
     if (end - start == 1) {
       double startValue = getX(start);
       double endValue = getX(end);
-      return (translateX - startValue).abs() < (translateX - endValue).abs() ? start : end;
+      return (translateX - startValue).abs() < (translateX - endValue).abs()
+          ? start
+          : end;
     }
     int mid = start + (end - start) ~/ 2;
     double midValue = getX(mid);
@@ -258,7 +280,8 @@ abstract class BaseChartPainter extends CustomPainter {
   }
 
   ///scrollX 转换为 TranslateX
-  void setTranslateXFromScrollX(double scrollX) => mTranslateX = scrollX + getMinTranslateX();
+  void setTranslateXFromScrollX(double scrollX) =>
+      mTranslateX = scrollX + getMinTranslateX();
 
   ///获取平移的最小值
   double getMinTranslateX() {
@@ -267,12 +290,12 @@ abstract class BaseChartPainter extends CustomPainter {
     x = x >= 0 ? 0.0 : x;
     //数据不足一屏
     if (x >= 0) {
-      if (mWidth/scaleX - getX(datas.length) < mMarginRight) {
+      if (mWidth / scaleX - getX(datas.length) < mMarginRight) {
         //数据填充后剩余空间比mMarginRight小，求出差。x-=差
-        x -= mMarginRight - mWidth/scaleX + getX(datas.length);
+        x -= mMarginRight - mWidth / scaleX + getX(datas.length);
       } else {
         //数据填充后剩余空间比Right大
-        mMarginRight = mWidth/scaleX - getX(datas.length);
+        mMarginRight = mWidth / scaleX - getX(datas.length);
       }
     } else if (x < 0) {
       //数据超过一屏
@@ -294,7 +317,8 @@ abstract class BaseChartPainter extends CustomPainter {
   }
 
   ///translateX转化为view中的x
-  double translateXtoX(double translateX) => (translateX + mTranslateX) * scaleX;
+  double translateXtoX(double translateX) =>
+      (translateX + mTranslateX) * scaleX;
 
   TextStyle getTextStyle(Color color) {
     return TextStyle(fontSize: ChartStyle.defaultTextSize, color: color);

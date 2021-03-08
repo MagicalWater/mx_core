@@ -22,10 +22,14 @@ class SwipeTabBar extends AbstractTabWidget {
   /// 控制器, 當有帶入值時, [currentIndex] 失效
   /// [TabController] 會接手控制 tab 的選擇
   final TabController controller;
+  
+  /// 點選tab後自動置中, 當[scrollable]為true時有效
+  final bool autoScrollCenter;
 
   SwipeTabBar({
     int currentIndex,
     bool scrollable = false,
+    this.autoScrollCenter = true,
     ActionWidth actionWidth,
     TabWidth tabWidth,
     this.controller,
@@ -51,6 +55,7 @@ class SwipeTabBar extends AbstractTabWidget {
     TabController controller,
     TextTabBuilder tabBuilder,
     bool scrollable = false,
+    bool autoScrollCenter = true,
     ActionWidth actionWidth,
     TabWidth tabWidth,
     double tabHeight,
@@ -65,6 +70,7 @@ class SwipeTabBar extends AbstractTabWidget {
       currentIndex: currentIndex,
       controller: controller,
       scrollable: scrollable,
+      autoScrollCenter: autoScrollCenter,
       actionWidth: actionWidth,
       tabWidth: tabWidth,
       tabBuilder: tabBuilder,
@@ -314,7 +320,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   }
 
   void centerSelect(int index) {
-    if (widget.scrollable && childKeyList.length > index) {
+    if (widget.autoScrollCenter && widget.scrollable && childKeyList.length > index) {
       Scrollable.ensureVisible(
         childKeyList[index].currentContext,
         alignment: 0.5,

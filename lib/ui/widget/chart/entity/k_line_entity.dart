@@ -8,7 +8,7 @@ class KLineEntity extends KEntity {
   double vol;
   double amount;
   int count;
-  int id;
+  DateTime dateTime;
 
   KLineEntity({
     this.open,
@@ -18,7 +18,7 @@ class KLineEntity extends KEntity {
     this.vol,
     this.amount,
     this.count,
-    this.id,
+    this.dateTime,
   });
 
   KLineEntity.fromJson(Map<String, dynamic> json) {
@@ -29,12 +29,17 @@ class KLineEntity extends KEntity {
     vol = (json['vol'] as num)?.toDouble();
     amount = (json['amount'] as num)?.toDouble();
     count = (json['count'] as num)?.toInt();
-    id = (json['id'] as num)?.toInt();
+    var second = (json['id'] as num)?.toInt();
+    if (second != null) {
+      dateTime = DateTime.fromMillisecondsSinceEpoch(second * 1000);
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    if (dateTime != null) {
+      data['id'] = dateTime.millisecondsSinceEpoch ~/ 1000;
+    }
     data['open'] = this.open;
     data['close'] = this.close;
     data['high'] = this.high;
@@ -47,6 +52,10 @@ class KLineEntity extends KEntity {
 
   @override
   String toString() {
+    int id;
+    if (dateTime != null) {
+      id = dateTime.millisecondsSinceEpoch ~/ 1000;
+    }
     return 'MarketModel{open: $open, high: $high, low: $low, close: $close, vol: $vol, id: $id}';
   }
 }

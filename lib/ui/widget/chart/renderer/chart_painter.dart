@@ -164,7 +164,7 @@ class ChartPainter extends BaseChartPainter {
         int index = indexOfTranslateX(translateX);
         if (datas[index] == null) continue;
         TextPainter tp = getTextPainter(
-          getDate(datas[index].id),
+          getDate(datas[index].dateTime),
           color: mainChartStyle.xAxisTextColor,
         );
         y = size.height -
@@ -231,7 +231,7 @@ class ChartPainter extends BaseChartPainter {
     }
 
     TextPainter dateTp = getTextPainter(
-      getDate(point.id),
+      getDate(point.dateTime),
       color: mainChartStyle.markerVerticalTextColor,
     );
     textWidth = dateTp.width;
@@ -464,8 +464,7 @@ class ChartPainter extends BaseChartPainter {
     return tp;
   }
 
-  String getDate(int date) =>
-      dateFormat(DateTime.fromMillisecondsSinceEpoch(date * 1000), mFormats);
+  String getDate(DateTime date) => dateFormat(date, mFormats);
 
   double getMainY(double y) => mMainRenderer?.getY(y) ?? 0.0;
 

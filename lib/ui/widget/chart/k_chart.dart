@@ -282,7 +282,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
           double upDown = entity.close - entity.open;
           double upDownPercent = upDown / entity.open * 100;
           infos = [
-            getDate(entity.id),
+            getDate(entity.dateTime),
             NumberUtil.format(entity.open),
             NumberUtil.format(entity.high),
             NumberUtil.format(entity.low),
@@ -354,8 +354,10 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
     );
   }
 
-  String getDate(int date) {
-    return dateFormat(DateTime.fromMillisecondsSinceEpoch(date * 1000),
-        [yy, '-', mm, '-', dd, ' ', HH, ':', nn]);
+  String getDate(DateTime date) {
+    return dateFormat(
+      date,
+      [yy, '-', mm, '-', dd, ' ', HH, ':', nn],
+    );
   }
 }
