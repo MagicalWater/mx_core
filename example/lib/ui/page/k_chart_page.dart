@@ -180,15 +180,18 @@ class _KChartPageState extends State<KChartPage> {
   }
 
   Widget button(String text, {VoidCallback onPressed}) {
-    return FlatButton(
-        onPressed: () {
-          if (onPressed != null) {
-            onPressed();
-            setState(() {});
-          }
-        },
-        child: Text("$text"),
-        color: Colors.blue);
+    return TextButton(
+      onPressed: () {
+        if (onPressed != null) {
+          onPressed();
+          setState(() {});
+        }
+      },
+      child: Text("$text"),
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+      ),
+    );
   }
 
   void getData(String period) async {

@@ -72,7 +72,7 @@ class PageScaffold extends StatelessWidget {
 
   /// 是否會因為鍵盤的盤出影響到布局
   /// 默認為 true
-  final bool resizeToAvoidBottomPadding;
+  final bool resizeToAvoidBottomInset;
 
   /// 下方導航欄
   final Widget bottomNavigationBar;
@@ -95,7 +95,7 @@ class PageScaffold extends StatelessWidget {
     this.background,
     this.backgroundCoverAppbar,
     this.drawerScrimColor,
-    this.resizeToAvoidBottomPadding,
+    this.resizeToAvoidBottomInset,
     this.bottomNavigationBar,
     this.actions,
   });
@@ -131,7 +131,7 @@ class PageScaffold extends StatelessWidget {
       title: title,
       background: background,
       backgroundCoverAppbar: backgroundCoverAppbar,
-      resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
+      resizeToAvoidBottomInset: resizeToAvoidBottomPadding,
       drawerScrimColor: drawerScrimColor,
       bottomNavigationBar: bottomNavigationBar,
       actions: actions,
@@ -237,7 +237,7 @@ class PageScaffold extends StatelessWidget {
       backgroundColor: Colors.transparent,
       drawer: lastShowMenu,
       appBar: lastShowAppBar,
-      resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       body: child,
       bottomNavigationBar: bottomNavigationBar,
     );

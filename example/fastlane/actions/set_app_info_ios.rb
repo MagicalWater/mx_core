@@ -26,20 +26,8 @@ module Fastlane
 
         SetInfoPlistValueAction.run(
           path: "ios/Runner/Info.plist",
-          key: "UIRequiresFullScreen",
-          value: true,
-        )
-
-        SetInfoPlistValueAction.run(
-          path: "ios/Runner/Info.plist",
-          key: "UISupportedInterfaceOrientations",
-          value: ["UIInterfaceOrientationPortrait"],
-        )
-
-        SetInfoPlistValueAction.run(
-          path: "ios/Runner/Info.plist",
-          key: "UISupportedInterfaceOrientations~ipad",
-          value: ["UIInterfaceOrientationPortrait"],
+          key: "CFBundleName",
+          value: iosName,
         )
 
         project = Xcodeproj::Project.open("./ios/Runner.xcodeproj")
