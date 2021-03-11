@@ -75,6 +75,10 @@ class _KChartPageState extends State<KChartPage> {
 
   @override
   Widget build(BuildContext context) {
+    // var maxLen = 30;
+    // if (datas != null && datas.length > maxLen) {
+    //   datas = datas.sublist(0, maxLen);
+    // }
     return PageScaffold(
       color: Colors.white,
       haveAppBar: true,
@@ -94,6 +98,12 @@ class _KChartPageState extends State<KChartPage> {
                 secondaryState: _secondaryState,
                 volState: VolState.VOL,
                 fractionDigits: 4,
+                maLine: [
+                  MALine.ma5,
+                  MALine.ma10,
+                  MALine.ma20,
+                  MALine.ma30,
+                ],
                 onLoadMore: (isLeft) {
                   print('加載更多: $isLeft');
                 },

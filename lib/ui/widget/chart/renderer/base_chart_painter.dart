@@ -80,7 +80,10 @@ abstract class BaseChartPainter extends CustomPainter {
     mDisplayHeight =
         size.height - ChartStyle.topPadding - ChartStyle.bottomDateHigh;
     mWidth = size.width;
-    mMarginRight = (mWidth / ChartStyle.gridColumns - mPointWidth) / scaleX;
+    // mMarginRight = (mWidth / ChartStyle.gridColumns - mPointWidth) / scaleX;
+    mMarginRight = 70 / scaleX;
+    // print('右邊空距離: $mMarginRight, $scaleX');
+
     initRect(size);
     calculateValue();
     initChartRenderer();
@@ -154,7 +157,14 @@ abstract class BaseChartPainter extends CustomPainter {
 
   calculateValue() {
     if (datas == null || datas.isEmpty) return;
-    maxScrollX = getMinTranslateX().abs();
+    var minTransX = getMinTranslateX();
+    if (minTransX > 0) {
+      maxScrollX = 0;
+    } else {
+      maxScrollX = minTransX.abs();
+    }
+    // scrollX = 100;
+    // print('scrollX = $scrollX');
     setTranslateXFromScrollX(scrollX);
     mStartIndex = indexOfTranslateX(xToTranslateX(0));
     mStopIndex = indexOfTranslateX(xToTranslateX(mWidth));
@@ -287,21 +297,25 @@ abstract class BaseChartPainter extends CustomPainter {
   double getMinTranslateX() {
 //    var x = -mDataLen + mWidth / scaleX - mPointWidth / 2;
     var x = -mDataLen + mWidth / scaleX - mPointWidth / 2;
-    x = x >= 0 ? 0.0 : x;
-    //数据不足一屏
     if (x >= 0) {
+      //数据不足一屏
+      x = 0;
       if (mWidth / scaleX - getX(datas.length) < mMarginRight) {
         //数据填充后剩余空间比mMarginRight小，求出差。x-=差
         x -= mMarginRight - mWidth / scaleX + getX(datas.length);
       } else {
         //数据填充后剩余空间比Right大
-        mMarginRight = mWidth / scaleX - getX(datas.length);
+        // 此時最小偏移x為正
+        // mMarginRight = mWidth / scaleX - getX(datas.length);
+        x = (mWidth / scaleX) - mMarginRight - getX(datas.length);
+        return x;
       }
-    } else if (x < 0) {
+    } else {
       //数据超过一屏
       x -= mMarginRight;
+      return x;
     }
-    return x >= 0 ? 0.0 : x;
+    return x >= 0 ? 0 : x;
   }
 
   ///计算长按后x的值，转换为index

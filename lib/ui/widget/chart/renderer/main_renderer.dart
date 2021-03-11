@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../entity/candle_entity.dart';
 import '../k_chart.dart' show MainState;
+import '../k_chart.dart';
 import 'base_chart_renderer.dart';
 
 class MainRenderer extends BaseChartRenderer<CandleEntity> {
@@ -16,6 +17,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   BOLLStyle get bollStyle => style.bollStyle;
 
+  List<MALine> maLine;
+
   MainRenderer(
     Rect mainRect,
     double maxValue,
@@ -25,6 +28,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     this.isLine,
     double scaleX,
     MainChartStyle style,
+    this.maLine,
   ) : super(
           chartRect: mainRect,
           maxValue: maxValue,
@@ -51,15 +55,19 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     if (state == MainState.MA) {
       span = TextSpan(
         children: [
-          if (data.MA5Price != 0)
+          if (maLine.contains(MALine.ma5) && data.MA5Price != 0)
             TextSpan(
                 text: "MA5:${format(data.MA5Price)}    ",
                 style: getTextStyle(maStyle.ma5Color)),
-          if (data.MA10Price != 0)
+          if (maLine.contains(MALine.ma10) && data.MA10Price != 0)
             TextSpan(
                 text: "MA10:${format(data.MA10Price)}    ",
                 style: getTextStyle(maStyle.ma10Color)),
-          if (data.MA30Price != 0)
+          if (maLine.contains(MALine.ma20) && data.MA20Price != 0)
+            TextSpan(
+                text: "MA20:${format(data.MA20Price)}    ",
+                style: getTextStyle(maStyle.ma20Color)),
+          if (maLine.contains(MALine.ma30) && data.MA30Price != 0)
             TextSpan(
                 text: "MA30:${format(data.MA30Price)}    ",
                 style: getTextStyle(maStyle.ma30Color)),
@@ -154,15 +162,19 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   void drawMaLine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
       double lastX, double curX) {
-    if (lastPoint.MA5Price != 0) {
+    if (maLine.contains(MALine.ma5) && lastPoint.MA5Price != 0) {
       drawLine(lastPoint.MA5Price, curPoint.MA5Price, canvas, lastX, curX,
           maStyle.ma5Color);
     }
-    if (lastPoint.MA10Price != 0) {
+    if (maLine.contains(MALine.ma10) && lastPoint.MA10Price != 0) {
       drawLine(lastPoint.MA10Price, curPoint.MA10Price, canvas, lastX, curX,
           maStyle.ma10Color);
     }
-    if (lastPoint.MA30Price != 0) {
+    if (maLine.contains(MALine.ma20) && lastPoint.MA20Price != 0) {
+      drawLine(lastPoint.MA20Price, curPoint.MA20Price, canvas, lastX, curX,
+          maStyle.ma20Color);
+    }
+    if (maLine.contains(MALine.ma30) && lastPoint.MA30Price != 0) {
       drawLine(lastPoint.MA30Price, curPoint.MA30Price, canvas, lastX, curX,
           maStyle.ma30Color);
     }
@@ -203,17 +215,23 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       }
     }
     if (open > close) {
-      chartPaint.color = style.upColor;
       canvas.drawRect(
-          Rect.fromLTRB(curX - r, close, curX + r, open), chartPaint);
+        Rect.fromLTRB(curX - lineR, high, curX + lineR, low),
+        chartPaint..color = style.candleStrokeColor,
+      );
       canvas.drawRect(
-          Rect.fromLTRB(curX - lineR, high, curX + lineR, low), chartPaint);
+        Rect.fromLTRB(curX - r, close, curX + r, open),
+        chartPaint..color = style.upColor,
+      );
     } else {
-      chartPaint.color = style.downColor;
       canvas.drawRect(
-          Rect.fromLTRB(curX - r, open, curX + r, close), chartPaint);
+        Rect.fromLTRB(curX - lineR / 2, high, curX + lineR, low),
+        chartPaint..color = style.candleStrokeColor,
+      );
       canvas.drawRect(
-          Rect.fromLTRB(curX - lineR, high, curX + lineR, low), chartPaint);
+        Rect.fromLTRB(curX - r, open, curX + r, close),
+        chartPaint..color = style.downColor,
+      );
     }
   }
 

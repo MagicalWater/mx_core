@@ -14,6 +14,13 @@ enum MainState { MA, BOLL, NONE }
 enum VolState { VOL, NONE }
 enum SecondaryState { MACD, KDJ, RSI, WR, NONE }
 
+enum MALine {
+  ma5,
+  ma10,
+  ma20,
+  ma30,
+}
+
 class TooltipPrefix {
   final String time;
   final String open;
@@ -52,6 +59,9 @@ class KChart extends StatefulWidget {
   final SubChartStyle subStyle;
   final TooltipPrefix tooltipPrefix;
 
+  /// 顯示的ma線, 不得為空
+  final List<MALine> maLine;
+
   // 滑動邊緣調用, false代表滑動到最左邊, true則為最右邊
   final Function(bool isRight) onLoadMore;
 
@@ -64,6 +74,11 @@ class KChart extends StatefulWidget {
     int fractionDigits = 2,
     this.mainStyle = const MainChartStyle.light(),
     this.subStyle = const SubChartStyle.light(),
+    this.maLine = const [
+      MALine.ma5,
+      MALine.ma10,
+      MALine.ma30,
+    ],
     this.tooltipPrefix = const TooltipPrefix(),
     this.onLoadMore,
   }) {
@@ -178,8 +193,10 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
       },
       onHorizontalDragUpdate: (details) {
         if (isScale || isLongPress) return;
-        mScrollX = (details.primaryDelta / mScaleX + mScrollX)
-            .clamp(0.0, ChartPainter.maxScrollX);
+        mScrollX = (details.primaryDelta / mScaleX + mScrollX).clamp(
+          0.0,
+          ChartPainter.maxScrollX,
+        );
         notifyChanged();
       },
       onHorizontalDragEnd: (DragEndDetails details) {
@@ -249,6 +266,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
               controller: _controller,
               mainStyle: widget.mainStyle,
               subStyle: widget.subStyle,
+              maLine: widget.maLine,
             ),
           ),
           _buildInfoDialog(),

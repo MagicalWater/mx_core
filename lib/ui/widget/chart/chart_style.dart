@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart' show Color, Colors;
 
+enum ChartUpDown {
+  /// 綠漲(賣)紅跌(買)
+  greenUpRedDown,
+
+  /// 紅漲(賣)綠跌(買)
+  redUpGreenDown,
+}
+
 class KDJStyle {
   /// 副圖表的kdj線圖三種顏色
   final Color kColor;
@@ -24,7 +32,7 @@ class KDJStyle {
 
 class RSIStyle {
   final Color color;
-  
+
   const RSIStyle.dark({
     this.color = _ChartColors.rsiColor,
   });
@@ -50,6 +58,12 @@ class MACDStyle {
   final Color difColor;
   final Color deaColor;
 
+  final Color sellUpColor;
+  final Color sellDownColor;
+
+  final Color buyUpColor;
+  final Color buyDownColor;
+
   final Color textColor1;
   final Color textColor2;
 
@@ -58,6 +72,10 @@ class MACDStyle {
     this.deaColor = _ChartColors.deaColor,
     this.textColor1 = _ChartColors.yAxisTextColor,
     this.textColor2 = _ChartColors.macdColor,
+    this.sellUpColor = _ChartReverseColors.macdSellUpColor,
+    this.sellDownColor = _ChartReverseColors.macdSellDnColor,
+    this.buyUpColor = _ChartReverseColors.macdBuyUpColor,
+    this.buyDownColor = _ChartReverseColors.macdBuyDnColor,
   });
 
   const MACDStyle.light({
@@ -65,7 +83,30 @@ class MACDStyle {
     this.deaColor = _ChartReverseColors.deaColor,
     this.textColor1 = _ChartReverseColors.yAxisTextColor,
     this.textColor2 = _ChartReverseColors.macdColor,
+    this.sellUpColor = _ChartReverseColors.macdSellUpColor,
+    this.sellDownColor = _ChartReverseColors.macdSellDnColor,
+    this.buyUpColor = _ChartReverseColors.macdBuyUpColor,
+    this.buyDownColor = _ChartReverseColors.macdBuyDnColor,
   });
+
+  MACDStyle setUpDown(ChartUpDown chartUpDown) {
+    return MACDStyle.light(
+      difColor: difColor,
+      deaColor: deaColor,
+      textColor1: textColor1,
+      textColor2: textColor2,
+      sellUpColor: chartUpDown == ChartUpDown.greenUpRedDown
+          ? sellUpColor
+          : sellDownColor,
+      sellDownColor: chartUpDown == ChartUpDown.greenUpRedDown
+          ? sellDownColor
+          : sellUpColor,
+      buyUpColor:
+          chartUpDown == ChartUpDown.greenUpRedDown ? buyUpColor : buyDownColor,
+      buyDownColor:
+          chartUpDown == ChartUpDown.greenUpRedDown ? buyDownColor : buyUpColor,
+    );
+  }
 }
 
 /// 買賣量圖表
@@ -119,6 +160,16 @@ class SubChartStyle {
     this.wr = const WRStyle.light(),
     this.kdj = const KDJStyle.light(),
   });
+
+  /// 設置轉換漲跌/買賣顏色
+  SubChartStyle setUpDown(ChartUpDown chartUpDown) {
+    return SubChartStyle.light(
+      macd: macd.setUpDown(chartUpDown),
+      rsi: rsi,
+      wr: wr,
+      kdj: kdj,
+    );
+  }
 }
 
 class BOLLStyle {
@@ -142,17 +193,20 @@ class BOLLStyle {
 class MAStyle {
   final Color ma5Color;
   final Color ma10Color;
+  final Color ma20Color;
   final Color ma30Color;
 
   const MAStyle.dark({
     this.ma5Color = _ChartColors.ma5Color,
     this.ma10Color = _ChartColors.ma10Color,
+    this.ma20Color = _ChartColors.ma20Color,
     this.ma30Color = _ChartColors.ma30Color,
   });
 
   const MAStyle.light({
     this.ma5Color = _ChartReverseColors.ma5Color,
     this.ma10Color = _ChartReverseColors.ma10Color,
+    this.ma20Color = _ChartReverseColors.ma20Color,
     this.ma30Color = _ChartReverseColors.ma30Color,
   });
 }
@@ -244,6 +298,9 @@ class MainChartStyle {
   /// tooltip 無漲跌時的文字顏色
   final Color tooltipNoUpDownTextColor;
 
+  /// k線區塊的外框顏色
+  final Color candleStrokeColor;
+
   const MainChartStyle.dark({
     this.bgColor = _ChartColors.bgColor,
     this.yAxisTextColor = _ChartColors.yAxisTextColor,
@@ -280,6 +337,7 @@ class MainChartStyle {
       Colors.transparent
     ],
     this.tooltipNoUpDownTextColor = Colors.white,
+    this.candleStrokeColor = _ChartReverseColors.candleBorderColor,
   });
 
   const MainChartStyle.light({
@@ -301,8 +359,8 @@ class MainChartStyle {
     this.gridColor = _ChartReverseColors.gridColor,
     this.maStyle = const MAStyle.light(),
     this.bollStyle = const BOLLStyle.light(),
-    this.upColor = _ChartColors.upColor,
-    this.downColor = _ChartColors.dnColor,
+    this.upColor = _ChartReverseColors.upColor,
+    this.downColor = _ChartReverseColors.dnColor,
     this.timelineColor = _ChartReverseColors.kLineColor,
     this.timelineShadowColor = _ChartReverseColors.kLineShadowColor,
     this.volTextColor = _ChartReverseColors.volColor,
@@ -318,7 +376,48 @@ class MainChartStyle {
       Color(0x00ffffff),
     ],
     this.tooltipNoUpDownTextColor = Colors.black,
+    this.candleStrokeColor = _ChartReverseColors.candleBorderColor,
   });
+
+  /// 設置轉換漲跌/買賣顏色
+  MainChartStyle setUpDown(ChartUpDown chartUpDown) {
+    return MainChartStyle.light(
+      bgColor: bgColor,
+      yAxisTextColor: yAxisTextColor,
+      xAxisTextColor: xAxisTextColor,
+      markerBgColor: markerBgColor,
+      markerBorderColor: markerBorderColor,
+      minTextColor: minTextColor,
+      maxTextColor: maxTextColor,
+      rightRealTimeTextColor: rightRealTimeTextColor,
+      rightRealTimeLineColor: rightRealTimeLineColor,
+      rightRealTimeBgColor: rightRealTimeBgColor,
+      realTimeLineColor: realTimeLineColor,
+      realTimeTextBorderColor: realTimeTextBorderColor,
+      realTimeBgColor: realTimeBgColor,
+      realTimeTextColor: realTimeTextColor,
+      realTimeTriangleColor: realTimeTriangleColor,
+      gridColor: gridColor,
+      maStyle: maStyle,
+      bollStyle: bollStyle,
+      upColor: chartUpDown == ChartUpDown.greenUpRedDown ? upColor : downColor,
+      downColor:
+          chartUpDown == ChartUpDown.greenUpRedDown ? downColor : upColor,
+      timelineColor: timelineColor,
+      timelineShadowColor: timelineShadowColor,
+      volTextColor: volTextColor,
+      tooltipBgColor: tooltipBgColor,
+      tooltipBorderColor: tooltipBorderColor,
+      tooltipPrefixTextColor: tooltipPrefixTextColor,
+      markerVerticalLineColor: markerVerticalLineColor,
+      markerHorizontalLineColor: markerHorizontalLineColor,
+      markerVerticalTextColor: markerVerticalTextColor,
+      markerHorizontalTextColor: markerHorizontalTextColor,
+      rightRealTimeFlashPointColor: rightRealTimeFlashPointColor,
+      tooltipNoUpDownTextColor: tooltipNoUpDownTextColor,
+      candleStrokeColor: candleStrokeColor,
+    );
+  }
 }
 
 class _ChartColors {
@@ -334,12 +433,17 @@ class _ChartColors {
   ]; //k线阴影渐变
   static const Color ma5Color = Color(0xffC9B885);
   static const Color ma10Color = Color(0xff6CB0A6);
+  static const Color ma20Color = Color(0xff1b94ff);
   static const Color ma30Color = Color(0xff9979C6);
   static const Color upColor = Color(0xff4DAA90);
   static const Color dnColor = Color(0xffC15466);
+  static const Color candleBorderColor = Color(0xff656565);
+
   static const Color volColor = Color(0xff4729AE);
 
   static const Color macdColor = Color(0xff4729AE);
+  static const Color macdUpColor = Color(0xff26a69a);
+  static const Color macdDnColor = Color(0xffef5350);
   static const Color difColor = Color(0xffC9B885);
   static const Color deaColor = Color(0xff6CB0A6);
 
@@ -383,26 +487,32 @@ class _ChartReverseColors {
   //背景颜色
   static const Color bgColor = Color(0xfff2ebe1);
   static const Color kLineColor = Color(0xff4C86CD);
-  static const Color gridColor = Color(0xffcccccc);
+  static const Color gridColor = Color(0xffe1ecf2);
   static const List<Color> kLineShadowColor = [
     Color(0x554C86CD),
     Color(0x00ffffff)
   ]; //k线阴影渐变
-  static const Color ma5Color = Color(0xff36477a);
-  static const Color ma10Color = Color(0xff934f59);
-  static const Color ma30Color = Color(0xff668639);
-  static const Color upColor = Color(0xffb2556f);
-  static const Color dnColor = Color(0xff3eab99);
+  static const Color ma5Color = Color(0xff7e7e7e);
+  static const Color ma10Color = Color(0xfffa8f40);
+  static const Color ma20Color = Color(0xff1b94ff);
+  static const Color ma30Color = Color(0xffb061b0);
+  static const Color upColor = Color(0xff37ec3c);
+  static const Color dnColor = Color(0xfff60600);
+  static const Color candleBorderColor = Color(0xff656565);
   static const Color volColor = Color(0xffb8d651);
 
   static const Color macdColor = Color(0xffb8d651);
-  static const Color difColor = Color(0xff36477a);
-  static const Color deaColor = Color(0xff934f59);
+  static const Color macdSellUpColor = Color(0xff26a69a);
+  static const Color macdSellDnColor = Color(0xffb2dfdb);
+  static const Color macdBuyUpColor = Color(0xffef5350);
+  static const Color macdBuyDnColor = Color(0xfffccdd2);
+  static const Color difColor = Color(0xff1b94ff);
+  static const Color deaColor = Color(0xfffa8f40);
 
-  static const Color kColor = Color(0xff36477a);
-  static const Color dColor = Color(0xff934f59);
-  static const Color jColor = Color(0xff668639);
-  static const Color rsiColor = Color(0xff36477a);
+  static const Color kColor = Color(0xfffa8f40);
+  static const Color dColor = Color(0xff1b94ff);
+  static const Color jColor = Color(0xffb061b0);
+  static const Color rsiColor = Color(0xfffa8f40);
 
   static const Color yAxisTextColor = Color(0xff9f8c71); //右边y轴刻度
   static const Color xAxisTextColor = Color(0xff9f8c71); //下方时间刻度
@@ -437,22 +547,22 @@ class ChartStyle {
   ChartStyle._();
 
   //点与点的距离
-  static const double pointWidth = 11.0;
+  static const double pointWidth = 6.0;
 
   //蜡烛宽度
-  static const double candleWidth = 8.5;
+  static const double candleWidth = 3;
 
   //蜡烛中间线的宽度
-  static const double candleLineWidth = 1.5;
+  static const double candleLineWidth = 0.5;
 
   //vol柱子宽度
-  static const double volWidth = 8.5;
+  static const double volWidth = 4.5;
 
   //macd柱子宽度
-  static const double macdWidth = 3.0;
+  static const double macdWidth = 5;
 
   //垂直交叉线宽度
-  static const double vCrossWidth = 8.5;
+  static const double vCrossWidth = 4.5;
 
   //水平交叉线宽度
   static const double hCrossWidth = 0.5;

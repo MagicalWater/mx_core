@@ -38,8 +38,14 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
         );
 
   @override
-  void drawChart(MACDEntity lastPoint, MACDEntity curPoint, double lastX,
-      double curX, Size size, Canvas canvas) {
+  void drawChart(
+    MACDEntity lastPoint,
+    MACDEntity curPoint,
+    double lastX,
+    double curX,
+    Size size,
+    Canvas canvas,
+  ) {
     switch (state) {
       case SecondaryState.MACD:
         drawMACD(curPoint, canvas, curX, lastPoint, lastX);
@@ -69,17 +75,38 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
     }
   }
 
-  void drawMACD(MACDEntity curPoint, Canvas canvas, double curX,
-      MACDEntity lastPoint, double lastX) {
+  void drawMACD(
+    MACDEntity curPoint,
+    Canvas canvas,
+    double curX,
+    MACDEntity lastPoint,
+    double lastX,
+  ) {
     double macdY = getY(curPoint.macd);
     double r = mMACDWidth / 2;
     double zeroy = getY(0);
     if (curPoint.macd > 0) {
-      canvas.drawRect(Rect.fromLTRB(curX - r, macdY, curX + r, zeroy),
-          chartPaint..color = style.upColor);
+      if (curPoint.macd >= lastPoint.macd) {
+        chartPaint.color = macdStyle.sellUpColor;
+      } else {
+        chartPaint.color = macdStyle.sellDownColor;
+      }
+
+      canvas.drawRect(
+        Rect.fromLTRB(curX - r, macdY, curX + r, zeroy),
+        chartPaint,
+      );
     } else {
-      canvas.drawRect(Rect.fromLTRB(curX - r, zeroy, curX + r, macdY),
-          chartPaint..color = style.downColor);
+      if (curPoint.macd < lastPoint.macd) {
+        chartPaint.color = macdStyle.buyUpColor;
+      } else {
+        chartPaint.color = macdStyle.buyDownColor;
+      }
+
+      canvas.drawRect(
+        Rect.fromLTRB(curX - r, zeroy, curX + r, macdY),
+        chartPaint,
+      );
     }
     if (lastPoint.dif != 0) {
       drawLine(

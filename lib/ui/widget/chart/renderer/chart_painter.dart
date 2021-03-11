@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../entity/info_window_entity.dart';
 import '../entity/k_line_entity.dart';
+import '../k_chart.dart';
 import '../utils/date_format_util.dart';
 import 'base_chart_painter.dart';
 import 'base_chart_renderer.dart';
@@ -19,6 +20,7 @@ class ChartPainter extends BaseChartPainter {
   double opacity;
   MainChartStyle mainChartStyle;
   SubChartStyle subChartStyle;
+  List<MALine> maLine;
 
   ChartPainter({
     @required datas,
@@ -35,6 +37,7 @@ class ChartPainter extends BaseChartPainter {
     this.opacity = 0.0,
     MainChartStyle mainStyle,
     SubChartStyle subStyle,
+    this.maLine,
   })  : this.mainChartStyle = mainStyle ?? MainChartStyle.light(),
         this.subChartStyle = subStyle ?? SubChartStyle.light(),
         super(
@@ -50,8 +53,17 @@ class ChartPainter extends BaseChartPainter {
 
   @override
   void initChartRenderer() {
-    mMainRenderer ??= MainRenderer(mMainRect, mMainMaxValue, mMainMinValue,
-        ChartStyle.topPadding, mainState, isLine, scaleX, mainChartStyle);
+    mMainRenderer ??= MainRenderer(
+      mMainRect,
+      mMainMaxValue,
+      mMainMinValue,
+      ChartStyle.topPadding,
+      mainState,
+      isLine,
+      scaleX,
+      mainChartStyle,
+      maLine,
+    );
     if (mVolRect != null) {
       mVolRenderer ??= VolRenderer(
         mVolRect,
@@ -125,6 +137,7 @@ class ChartPainter extends BaseChartPainter {
   @override
   void drawChart(Canvas canvas, Size size) {
     canvas.save();
+    // print('位移: $mTranslateX');
     canvas.translate(mTranslateX * scaleX, 0.0);
     canvas.scale(scaleX, 1.0);
     for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
