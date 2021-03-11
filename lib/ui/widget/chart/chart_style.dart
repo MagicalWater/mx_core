@@ -97,14 +97,14 @@ class MACDStyle {
       textColor2: textColor2,
       sellUpColor: chartUpDown == ChartUpDown.greenUpRedDown
           ? sellUpColor
-          : sellDownColor,
+          : buyUpColor,
       sellDownColor: chartUpDown == ChartUpDown.greenUpRedDown
           ? sellDownColor
-          : sellUpColor,
+          : buyDownColor,
       buyUpColor:
-          chartUpDown == ChartUpDown.greenUpRedDown ? buyUpColor : buyDownColor,
+          chartUpDown == ChartUpDown.greenUpRedDown ? buyUpColor : sellUpColor,
       buyDownColor:
-          chartUpDown == ChartUpDown.greenUpRedDown ? buyDownColor : buyUpColor,
+          chartUpDown == ChartUpDown.greenUpRedDown ? buyDownColor : sellDownColor,
     );
   }
 }
