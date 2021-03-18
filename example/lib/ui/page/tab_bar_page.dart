@@ -204,7 +204,10 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         color: Colors.red,
         height: 2,
       ),
-      onTabTap: (index) {
+      onTabTap: (preIndex, index) {
+        if (preIndex == index) {
+          return;
+        }
         currentIndex = index;
 
         setState(() {});
@@ -290,7 +293,10 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         color: Colors.red,
         height: 2,
       ),
-      onTabTap: (index) {
+      onTabTap: (preIndex, index) {
+        if (preIndex == index) {
+          return;
+        }
         currentIndex = index;
 
         setState(() {});

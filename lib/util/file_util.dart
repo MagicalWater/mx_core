@@ -21,7 +21,11 @@ class FileUtil {
     return File(dir);
   }
 
-  ///
+  static Future<String> getAppDir() async {
+    var dir = (await getApplicationDocumentsDirectory()).path;
+    return dir;
+  }
+
   static Future<File> _getFile(String name) async {
     var dir = (await getApplicationDocumentsDirectory()).path;
     return File("$dir/$name");
@@ -37,6 +41,39 @@ class FileUtil {
     return await (file).writeAsString(content);
   }
 
+  /// 刪除本地文件
+  static Future<File> delete({
+    @required String name,
+  }) async {
+    var file = await _getFile(name);
+    var isFileExist = await file.exists();
+    if (isFileExist) {
+      print("刪除檔案: ${file.path}");
+      await (file).delete(recursive: true);
+    }
+  }
+
+  /// 檢查文件是否存在
+  static Future<bool> exists({
+    @required String name,
+  }) async {
+    var file = await _getFile(name);
+    return await file.exists();
+  }
+
+  /// 取得文件
+  static Future<String> readAsString({
+    @required String name,
+  }) async {
+    var file = await _getFile(name);
+    var isFileExist = await exists(name: name);
+    if (isFileExist) {
+      return file.readAsString();
+    } else {
+      return null;
+    }
+  }
+
   /// 從網路下載文件
   static Future<File> writeFromNetwork({
     @required String name,
@@ -50,10 +87,12 @@ class FileUtil {
       file = File(httpContent.saveInPath);
     }
     print("FileUtil - 準備連接取得資料 ${httpContent.url}");
-    final _ = await HttpUtil().connect(httpContent,
+    final _ = await HttpUtil()
+        .connect(httpContent,
         onReceiveProgress: (count, total) {
 //      print("下載進度: $count / $total");
-    }).single;
+        })
+        .single;
     print("FileUtil - 下載完畢, 存入 $file");
     return file;
   }
@@ -71,7 +110,7 @@ class FileUtil {
           .where((f) => f is File)
           .map((f) => (f as File).length());
     } catch (e) {
-      print("取得快取size出錯: $e");
+      // print("取得快取size出錯: $e");
       fileLenList = [Future.value(0)];
     }
     var size = (await Future.wait(fileLenList));

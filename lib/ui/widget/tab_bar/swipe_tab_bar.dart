@@ -11,7 +11,7 @@ import 'tab_width.dart';
 
 class SwipeTabBar extends AbstractTabWidget {
   final SwipeTabBuilder tabBuilder;
-  final ValueChanged<int> onTabTap;
+  final void Function(int preIndex, int index) onTabTap;
   final ValueChanged<int> onActionTap;
   final double tabHeight;
   final TabIndicator indicator;
@@ -63,7 +63,7 @@ class SwipeTabBar extends AbstractTabWidget {
     IndexedWidgetBuilder gapBuilder,
     Widget header,
     Widget footer,
-    ValueChanged<int> onTabTap,
+    void Function(int preIndex, int index) onTabTap,
     ValueChanged<int> onActionTap,
   }) {
     return SwipeTabBar(
@@ -297,24 +297,25 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   }
 
   Widget _buildTab({int index}) {
-    var isSelected = currentIndex == index;
+    var currentSelectedIndex = currentIndex;
+    var isSelected = currentSelectedIndex == index;
     return widget.tabBuilder.buildTabForeground(
       size: tabRectMap[index].size,
       selected: isSelected,
       index: index,
       onTap: () {
         if (isSelected) {
+          widget.onTabTap?.call(currentSelectedIndex, index);
           return;
         }
+
         centerSelect(index);
 
         if (_tabController != null) {
           _tabController.animateTo(index);
         }
 
-        if (widget.onTabTap != null) {
-          widget.onTabTap(index);
-        }
+        widget.onTabTap?.call(currentSelectedIndex, index);
       },
     );
   }
