@@ -1,7 +1,16 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart'
-    show Color, required, TextStyle, Rect, Canvas, Size, CustomPainter;
+    show
+        Canvas,
+        Color,
+        CustomPainter,
+        Rect,
+        Size,
+        TextStyle,
+        ValueChanged,
+        VoidCallback,
+        required;
 import 'package:mx_core/ui/widget/chart/utils/date_format_util.dart';
 import 'package:mx_core/ui/widget/chart/utils/number_util.dart';
 
@@ -13,7 +22,12 @@ export 'package:flutter/material.dart'
     show Color, required, TextStyle, Rect, Canvas, Size, CustomPainter;
 
 abstract class BaseChartPainter extends CustomPainter {
-  static double maxScrollX = 0.0;
+  // static double get maxScrollX => _maxScrollX;
+  // double _maxScrollX = 0.0;
+
+  /// 繪製後的滾動最大距離回調
+  ValueChanged<double> onCalculateMaxScrolled;
+
   List<KLineEntity> datas;
   MainState mainState = MainState.MA;
   VolState volState = VolState.VOL;
@@ -42,16 +56,18 @@ abstract class BaseChartPainter extends CustomPainter {
   List<String> mFormats = [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn]; //格式化时间
   double mMarginRight = 0.0; //k线右边空出来的距离
 
-  BaseChartPainter(
-      {@required this.datas,
-      @required this.scaleX,
-      @required this.scrollX,
-      @required this.isLongPress,
-      @required this.selectX,
-      this.mainState,
-      this.volState,
-      this.secondaryState,
-      this.isLine}) {
+  BaseChartPainter({
+    @required this.datas,
+    @required this.scaleX,
+    @required this.scrollX,
+    @required this.isLongPress,
+    @required this.selectX,
+    this.mainState,
+    this.volState,
+    this.secondaryState,
+    this.isLine,
+    this.onCalculateMaxScrolled,
+  }) {
     mItemCount = datas?.length ?? 0;
     mDataLen = mItemCount * mPointWidth;
     initFormats();
@@ -141,10 +157,18 @@ abstract class BaseChartPainter extends CustomPainter {
       mainHeight = mDisplayHeight * 0.8;
     }
     mMainRect = Rect.fromLTRB(
-        0, ChartStyle.topPadding, mWidth, ChartStyle.topPadding + mainHeight);
+      0,
+      ChartStyle.topPadding,
+      mWidth,
+      ChartStyle.topPadding + mainHeight,
+    );
     if (volState != VolState.NONE) {
-      mVolRect = Rect.fromLTRB(0, mMainRect.bottom + ChartStyle.childPadding,
-          mWidth, mMainRect.bottom + volHeight);
+      mVolRect = Rect.fromLTRB(
+        0,
+        mMainRect.bottom + ChartStyle.childPadding,
+        mWidth,
+        mMainRect.bottom + volHeight,
+      );
     }
     if (secondaryState != SecondaryState.NONE) {
       mSecondaryRect = Rect.fromLTRB(
@@ -159,21 +183,28 @@ abstract class BaseChartPainter extends CustomPainter {
     if (datas == null || datas.isEmpty) return;
     var minTransX = getMinTranslateX();
     if (minTransX > 0) {
-      maxScrollX = 0;
+      onCalculateMaxScrolled?.call(0);
     } else {
-      maxScrollX = minTransX.abs();
+      onCalculateMaxScrolled?.call(minTransX.abs());
     }
     // scrollX = 100;
     // print('scrollX = $scrollX');
     setTranslateXFromScrollX(scrollX);
     mStartIndex = indexOfTranslateX(xToTranslateX(0));
     mStopIndex = indexOfTranslateX(xToTranslateX(mWidth));
+
+    // 先重置整個表的最大最小
+    mMainHighMaxValue = -double.maxFinite;
+    mMainLowMinValue = double.maxFinite;
+
     for (int i = mStartIndex; i <= mStopIndex; i++) {
       var item = datas[i];
       getMainMaxMinValue(item, i);
       getVolMaxMinValue(item);
       getSecondaryMaxMinValue(item);
     }
+
+    // print('重置結果: $mMainMinValue, => $mMainLowMinValue');
   }
 
   void getMainMaxMinValue(KLineEntity item, int i) {
@@ -207,14 +238,16 @@ abstract class BaseChartPainter extends CustomPainter {
           minPrice = min(item.dn, item.low);
         }
       }
-      mMainMaxValue = max(mMainMaxValue, maxPrice);
-      mMainMinValue = min(mMainMinValue, minPrice);
+      // mMainMaxValue = max(mMainMaxValue, maxPrice);
+      // mMainMinValue = min(mMainMinValue, minPrice);
 
       if (mMainHighMaxValue < item.high) {
+        mMainMaxValue = item.high;
         mMainHighMaxValue = item.high;
         mMainMaxIndex = i;
       }
       if (mMainLowMinValue > item.low) {
+        mMainMinValue = item.low;
         mMainLowMinValue = item.low;
         mMainMinIndex = i;
       }

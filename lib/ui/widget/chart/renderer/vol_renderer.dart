@@ -8,6 +8,7 @@ import '../utils/number_util.dart';
 
 class VolRenderer extends BaseChartRenderer<VolumeEntity> {
   double mVolWidth = ChartStyle.volWidth;
+  double mTextTopPadding = 5;
 
   MAStyle get maStyle => style.maStyle;
 
@@ -72,9 +73,15 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
             style: getTextStyle(maStyle.ma10Color)),
       ],
     );
-    TextPainter tp = TextPainter(text: span, textDirection: TextDirection.ltr);
+    TextPainter tp = TextPainter(
+      text: span,
+      textDirection: TextDirection.ltr,
+    );
     tp.layout();
-    tp.paint(canvas, Offset(x, chartRect.top - topPadding));
+    tp.paint(
+      canvas,
+      Offset(x, chartRect.top - topPadding + mTextTopPadding),
+    );
   }
 
   @override
@@ -84,7 +91,12 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     TextPainter tp = TextPainter(text: span, textDirection: TextDirection.ltr);
     tp.layout();
     tp.paint(
-        canvas, Offset(chartRect.width - tp.width, chartRect.top - topPadding));
+      canvas,
+      Offset(
+        chartRect.width - tp.width,
+        chartRect.top - topPadding + mTextTopPadding,
+      ),
+    );
   }
 
   @override
@@ -94,8 +106,11 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     double columnSpace = chartRect.width / gridColumns;
     for (int i = 0; i <= columnSpace; i++) {
       //vol垂直线
-      canvas.drawLine(Offset(columnSpace * i, chartRect.top - topPadding),
-          Offset(columnSpace * i, chartRect.bottom), gridPaint);
+      canvas.drawLine(
+        Offset(columnSpace * i, chartRect.top - topPadding),
+        Offset(columnSpace * i, chartRect.bottom),
+        gridPaint,
+      );
     }
   }
 }

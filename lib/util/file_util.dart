@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 
 /// 文件操作
 class FileUtil {
-
   FileUtil._();
 
   /// 取得外部儲存資料夾路徑
@@ -16,9 +15,8 @@ class FileUtil {
     return File(dir);
   }
 
-  static Future<File> get cacheDirectory async {
-    var dir = (await getTemporaryDirectory()).path;
-    return File(dir);
+  static Future<Directory> get cacheDirectory async {
+    return getTemporaryDirectory();
   }
 
   static Future<String> getAppDir() async {
@@ -87,12 +85,10 @@ class FileUtil {
       file = File(httpContent.saveInPath);
     }
     print("FileUtil - 準備連接取得資料 ${httpContent.url}");
-    final _ = await HttpUtil()
-        .connect(httpContent,
+    final _ = await HttpUtil().connect(httpContent,
         onReceiveProgress: (count, total) {
 //      print("下載進度: $count / $total");
-        })
-        .single;
+    }).single;
     print("FileUtil - 下載完畢, 存入 $file");
     return file;
   }
@@ -103,10 +99,17 @@ class FileUtil {
   /// 這邊回傳 mb
   static Future<double> get cacheFileSize async {
     var tempDir = await getTemporaryDirectory();
+    return directorySize(tempDir);
+  }
 
+  /// 取得某個資料夾的總大小
+  static Future<double> directorySize(Directory directory) async {
     Iterable<Future<int>> fileLenList;
+    if (!(await directory.exists())) {
+      return 0;
+    }
     try {
-      fileLenList = (await tempDir.list(recursive: true).toList())
+      fileLenList = (await directory.list(recursive: true).toList())
           .where((f) => f is File)
           .map((f) => (f as File).length());
     } catch (e) {
@@ -127,13 +130,22 @@ class FileUtil {
   }
 
   /// 清理緩存
-  static Future<double> clearCacheFile() async {
-    var file = await cacheDirectory;
+  static Future<double> clearDirectory(Directory directory) async {
+    if (!(await directory.exists())) {
+      return 0;
+    }
+
     try {
-      await file.delete(recursive: true);
+      await directory.delete(recursive: true);
     } catch (e) {
       print("刪除快取失敗: $e");
     }
     return Future.value(0);
+  }
+
+  /// 清理緩存
+  static Future<double> clearCacheDirectory() async {
+    var directory = await cacheDirectory;
+    return clearDirectory(directory);
   }
 }

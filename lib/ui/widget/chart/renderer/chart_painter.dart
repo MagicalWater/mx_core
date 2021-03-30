@@ -13,7 +13,6 @@ import 'secondary_renderer.dart';
 import 'vol_renderer.dart';
 
 class ChartPainter extends BaseChartPainter {
-  static get maxScrollX => BaseChartPainter.maxScrollX;
   BaseChartRenderer mMainRenderer, mVolRenderer, mSecondaryRenderer;
   StreamSink<InfoWindowEntity> sink;
   AnimationController controller;
@@ -37,22 +36,26 @@ class ChartPainter extends BaseChartPainter {
     this.opacity = 0.0,
     MainChartStyle mainStyle,
     SubChartStyle subStyle,
+    ValueChanged<double> onCalculateMaxScrolled,
     this.maLine,
   })  : this.mainChartStyle = mainStyle ?? MainChartStyle.light(),
         this.subChartStyle = subStyle ?? SubChartStyle.light(),
         super(
-            datas: datas,
-            scaleX: scaleX,
-            scrollX: scrollX,
-            isLongPress: isLongPass,
-            selectX: selectX,
-            mainState: mainState,
-            volState: volState,
-            secondaryState: secondaryState,
-            isLine: isLine);
+          datas: datas,
+          scaleX: scaleX,
+          scrollX: scrollX,
+          isLongPress: isLongPass,
+          selectX: selectX,
+          mainState: mainState,
+          volState: volState,
+          secondaryState: secondaryState,
+          isLine: isLine,
+          onCalculateMaxScrolled: onCalculateMaxScrolled,
+        );
 
   @override
   void initChartRenderer() {
+    // print('初始化: $mMainMinValue');
     mMainRenderer ??= MainRenderer(
       mMainRect,
       mMainMaxValue,
@@ -107,8 +110,12 @@ class ChartPainter extends BaseChartPainter {
     }
 
     if (mVolRect != null) {
-      Rect volRect = Rect.fromLTRB(0, mVolRect.top - ChartStyle.childPadding,
-          mVolRect.width, mVolRect.bottom);
+      Rect volRect = Rect.fromLTRB(
+        0,
+        mVolRect.top - ChartStyle.childPadding,
+        mVolRect.width,
+        mVolRect.bottom,
+      );
       canvas.drawRect(volRect, mBgPaint);
     }
 
@@ -128,10 +135,20 @@ class ChartPainter extends BaseChartPainter {
   @override
   void drawGrid(canvas) {
     mMainRenderer?.drawGrid(
-        canvas, ChartStyle.gridRows, ChartStyle.gridColumns);
-    mVolRenderer?.drawGrid(canvas, ChartStyle.gridRows, ChartStyle.gridColumns);
+      canvas,
+      ChartStyle.gridRows,
+      ChartStyle.gridColumns,
+    );
+    mVolRenderer?.drawGrid(
+      canvas,
+      ChartStyle.gridRows,
+      ChartStyle.gridColumns,
+    );
     mSecondaryRenderer?.drawGrid(
-        canvas, ChartStyle.gridRows, ChartStyle.gridColumns);
+      canvas,
+      ChartStyle.gridRows,
+      ChartStyle.gridColumns,
+    );
   }
 
   @override
@@ -319,6 +336,7 @@ class ChartPainter extends BaseChartPainter {
         "${format(mMainHighMaxValue)} ──",
         color: mainChartStyle.maxTextColor,
       );
+      // print('繪製最高價格 = $y');
       tp.paint(canvas, Offset(x - tp.width, y - tp.height / 2));
     }
   }

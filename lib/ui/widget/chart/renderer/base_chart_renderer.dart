@@ -6,7 +6,10 @@ import '../chart_style.dart';
 export '../chart_style.dart';
 
 abstract class BaseChartRenderer<T> {
-  double maxValue, minValue;
+  double maxValue;
+
+  // double get maxValue => _maxValue;
+  double minValue;
   double scaleY, scaleX;
   double topPadding;
   Rect chartRect;

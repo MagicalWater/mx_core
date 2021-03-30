@@ -18,13 +18,13 @@ class KChartPage extends StatefulWidget {
   _KChartPageState createState() => _KChartPageState();
 }
 
-class _KChartPageState extends State<KChartPage> {
+class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
   KChartBloc bloc;
   List<KLineEntity> datas;
   bool showLoading = true;
   MainState _mainState = MainState.MA;
   SecondaryState _secondaryState = SecondaryState.MACD;
-  bool isLine = true;
+  bool isLine = false;
   List<DepthEntity> _bids, _asks;
 
   @override
@@ -32,21 +32,21 @@ class _KChartPageState extends State<KChartPage> {
     super.initState();
     bloc = BlocProvider.of<KChartBloc>(context);
     getData('1day');
-    rootBundle
-        .loadString('assets/jsons/chart_example/depth.json')
-        .then((result) {
-      final parseJson = json.decode(result);
-      Map tick = parseJson['tick'];
-      var bids = tick['bids']
-          .map((item) => DepthEntity(item[0], item[1]))
-          .toList()
-          .cast<DepthEntity>();
-      var asks = tick['asks']
-          .map((item) => DepthEntity(item[0], item[1]))
-          .toList()
-          .cast<DepthEntity>();
-      initDepth(bids, asks);
-    });
+    // rootBundle
+    //     .loadString('assets/jsons/chart_example/depth.json')
+    //     .then((result) {
+    //   final parseJson = json.decode(result);
+    //   Map tick = parseJson['tick'];
+    //   var bids = tick['bids']
+    //       .map((item) => DepthEntity(item[0], item[1]))
+    //       .toList()
+    //       .cast<DepthEntity>();
+    //   var asks = tick['asks']
+    //       .map((item) => DepthEntity(item[0], item[1]))
+    //       .toList()
+    //       .cast<DepthEntity>();
+    //   initDepth(bids, asks);
+    // });
   }
 
   void initDepth(List<DepthEntity> bids, List<DepthEntity> asks) {
@@ -75,10 +75,39 @@ class _KChartPageState extends State<KChartPage> {
 
   @override
   Widget build(BuildContext context) {
-    // var maxLen = 30;
-    // if (datas != null && datas.length > maxLen) {
-    //   datas = datas.sublist(0, maxLen);
-    // }
+    Widget content;
+    if (showLoading) {
+      content = Container(
+        height: 200.scaleA,
+        alignment: Alignment.center,
+      );
+    } else {
+      // inChartWidgetInit = true;
+      content = Container(
+        height: Screen.height * 2 / 3,
+        child: KChart(
+          datas ?? [],
+          isLine: isLine,
+          mainState: _mainState,
+          secondaryState: _secondaryState,
+          volState: VolState.VOL,
+          fractionDigits: 4,
+          maLine: [
+            MALine.ma5,
+            // MALine.ma10,
+            // MALine.ma20,
+            // MALine.ma30,
+          ],
+          onLoadMore: (isRight) {
+            print('加載更多: $isRight');
+          },
+          onDataLessOnePage: () {
+            print('資料未滿一頁');
+          },
+        ),
+      );
+    }
+
     return PageScaffold(
       color: Colors.white,
       haveAppBar: true,
@@ -87,26 +116,13 @@ class _KChartPageState extends State<KChartPage> {
         children: <Widget>[
           Stack(children: <Widget>[
             Container(
-              height: 450,
-              color: Colors.red,
               margin: EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
-              child: KChart(
-                datas,
-                isLine: isLine,
-                mainState: _mainState,
-                secondaryState: _secondaryState,
-                volState: VolState.VOL,
-                fractionDigits: 4,
-                maLine: [
-                  MALine.ma5,
-                  MALine.ma10,
-                  MALine.ma20,
-                  MALine.ma30,
-                ],
-                onLoadMore: (isLeft) {
-                  print('加載更多: $isLeft');
-                },
+              child: AnimatedSize(
+                vsync: this,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.fastOutSlowIn,
+                child: content,
               ),
             ),
             if (showLoading)
@@ -203,6 +219,20 @@ class _KChartPageState extends State<KChartPage> {
 
   void getData(String period) async {
     String result;
+    result =
+        await rootBundle.loadString('assets/jsons/chart_example/kline.json');
+    Map parseJson = json.decode(result);
+    List list = parseJson['data'];
+    datas = list
+        .map((item) => KLineEntity.fromJson(item))
+        .toList()
+        .reversed
+        .toList()
+        .cast<KLineEntity>();
+    ChartDataCalculator.calculate(datas);
+    showLoading = false;
+    setState(() {});
+    return;
     try {
       result = await getIPAddress('$period');
     } catch (e) {

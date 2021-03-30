@@ -435,7 +435,7 @@ class _ChartColors {
   static const Color ma10Color = Color(0xff6CB0A6);
   static const Color ma20Color = Color(0xff1b94ff);
   static const Color ma30Color = Color(0xff9979C6);
-  static const Color upColor = Color(0xff4DAA90);
+  static const Color upColor = Color(0xff19aa1e);
   static const Color dnColor = Color(0xffC15466);
   static const Color candleBorderColor = Color(0xff656565);
 
@@ -496,7 +496,7 @@ class _ChartReverseColors {
   static const Color ma10Color = Color(0xfffa8f40);
   static const Color ma20Color = Color(0xff1b94ff);
   static const Color ma30Color = Color(0xffb061b0);
-  static const Color upColor = Color(0xff37ec3c);
+  static const Color upColor = Color(0xff19aa1e);
   static const Color dnColor = Color(0xfff60600);
   static const Color candleBorderColor = Color(0xff656565);
   static const Color volColor = Color(0xffb8d651);

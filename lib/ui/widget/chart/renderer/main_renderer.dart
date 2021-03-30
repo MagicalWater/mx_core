@@ -11,7 +11,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   MainState state;
   bool isLine;
 
-  double _contentPadding = 12.0;
+  /// 繪製圖形的內容邊距
+  double _contentPadding = 0;
 
   MAStyle get maStyle => style.maStyle;
 
@@ -46,6 +47,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       this.maxValue += value;
       this.minValue -= value;
     }
+    // print('初始化最高: ${this.maxValue}');
   }
 
   @override
@@ -204,6 +206,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     double r = mCandleWidth / 2;
     double lineR = mCandleLineWidth / 2;
 
+    // print('最高y = $high');
+
     //防止线太细，强制最细1px
     if ((open - close).abs() < 1) {
       if (open > close) {
@@ -253,11 +257,11 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
           TextPainter(text: span, textDirection: TextDirection.ltr);
       tp.layout();
       double y;
-      if (i == 0 || i == gridRows) {
-        y = getY(value) - tp.height / 2;
-      } else {
+      // if (i == 0 || i == gridRows) {
+      //   y = getY(value) - tp.height / 2;
+      // } else {
         y = getY(value) - tp.height;
-      }
+      // }
       tp.paint(canvas, Offset(chartRect.width - tp.width, y));
     }
   }
@@ -266,14 +270,21 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   void drawGrid(Canvas canvas, int gridRows, int gridColumns) {
 //    final int gridRows = 4, gridColumns = 4;
     double rowSpace = chartRect.height / gridRows;
+    // print('繪製隔線最高: $topPadding, max: $maxValue');
     for (int i = 0; i <= gridRows; i++) {
-      canvas.drawLine(Offset(0, rowSpace * i + topPadding),
-          Offset(chartRect.width, rowSpace * i + topPadding), gridPaint);
+      canvas.drawLine(
+        Offset(0, rowSpace * i + topPadding),
+        Offset(chartRect.width, rowSpace * i + topPadding),
+        gridPaint,
+      );
     }
     double columnSpace = chartRect.width / gridColumns;
     for (int i = 0; i <= columnSpace; i++) {
-      canvas.drawLine(Offset(columnSpace * i, topPadding / 3),
-          Offset(columnSpace * i, chartRect.bottom), gridPaint);
+      canvas.drawLine(
+        Offset(columnSpace * i, topPadding / 3),
+        Offset(columnSpace * i, chartRect.bottom),
+        gridPaint,
+      );
     }
   }
 }

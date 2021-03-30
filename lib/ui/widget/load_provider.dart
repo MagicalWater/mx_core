@@ -7,8 +7,12 @@ import 'package:mx_core/mx_core.dart';
 /// 根節點的 loadController
 LoadController _rootLoadController;
 
+/// 預設的loading元件
+Widget Function(BuildContext context, LoadStyle style) _defaultLoadingBuilder;
+
 /// 設置根節點的 load 顯示與否
-Future<void> setRootLoad(bool show, {
+Future<void> setRootLoad(
+  bool show, {
   LoadStyle style,
 }) async {
   if (_rootLoadController == null) {
@@ -47,7 +51,11 @@ class LoadProvider extends StatefulWidget {
   final Widget child;
   final void Function(LoadController controller) onCreated;
   final Stream<bool> loadStream;
-  final WidgetBuilder builder;
+  final Widget Function(BuildContext context, LoadStyle style) builder;
+
+  static void setDefaultLoading(Widget Function(BuildContext context, LoadStyle style) builder) {
+    _defaultLoadingBuilder = builder;
+  }
 
   /// 點擊穿透, 默認 false
   final bool tapThrough;
@@ -136,10 +144,12 @@ class _LoadProviderState extends State<LoadProvider>
           loadAttach = Container(
             color: Colors.transparent,
             alignment: Alignment.center,
-            child: widget.builder?.call(context) ?? Loading.circle(
-              color: _currentStyle.color ?? Colors.blueAccent,
-              size: _currentStyle.size ?? 50.scaleA,
-            ),
+            child: _defaultLoadingBuilder?.call(context, _currentStyle) ??
+                widget.builder?.call(context, _currentStyle) ??
+                Loading.circle(
+                  color: _currentStyle.color ?? Colors.blueAccent,
+                  size: _currentStyle.size ?? 50.scaleA,
+                ),
           );
         } else {
           loadAttach = Container();
@@ -176,7 +186,7 @@ class _LoadProviderState extends State<LoadProvider>
           left: _showPos?.dx,
           top: _showPos?.dy,
           right:
-          hasPos ? (Screen.width - (_showPos.dx + _showSize.width)) : null,
+              hasPos ? (Screen.width - (_showPos.dx + _showSize.width)) : null,
           bottom: hasPos
               ? (Screen.height - (_showPos.dy + _showSize.height))
               : null,

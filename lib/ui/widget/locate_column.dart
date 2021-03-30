@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class LocateRow extends Flex {
+class LocateColumn extends Flex {
   /// 孩子的位置有所變更時呼叫
   final void Function(List<Rect> locates, Size total) onLocateChanged;
 
-  LocateRow({
+  LocateColumn({
     Key key,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     MainAxisSize mainAxisSize = MainAxisSize.max,
@@ -18,7 +18,7 @@ class LocateRow extends Flex {
   }) : super(
           children: children,
           key: key,
-          direction: Axis.horizontal,
+          direction: Axis.vertical,
           mainAxisAlignment: mainAxisAlignment,
           mainAxisSize: mainAxisSize,
           crossAxisAlignment: crossAxisAlignment,
@@ -27,9 +27,10 @@ class LocateRow extends Flex {
           textBaseline: textBaseline,
         );
 
+
   @override
   RenderFlex createRenderObject(BuildContext context) {
-    return _LocateRowState(
+    return _LocateColumnState(
       direction: direction,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
@@ -41,19 +42,19 @@ class LocateRow extends Flex {
   }
 
   @override
-  void updateRenderObject(BuildContext context, _LocateRowState renderObject) {
+  void updateRenderObject(BuildContext context, _LocateColumnState renderObject) {
     renderObject._onLocateChanged = onLocateChanged;
     super.updateRenderObject(context, renderObject);
   }
 }
 
-class _LocateRowState extends RenderFlex {
+class _LocateColumnState extends RenderFlex {
   /// 孩子的位置有所變更時呼叫
   void Function(List<Rect> locates, Size total) _onLocateChanged;
 
   List<Rect> tempLocate = [];
 
-  _LocateRowState({
+  _LocateColumnState({
     List<RenderBox> children,
     Axis direction = Axis.horizontal,
     MainAxisSize mainAxisSize = MainAxisSize.max,
