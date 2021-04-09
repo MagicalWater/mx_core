@@ -1,7 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:mx_core/ui/widget/chart/utils/number_util.dart';
 
 import '../chart_style.dart';
+import '../utils/number_util.dart';
 
 export '../chart_style.dart';
 
@@ -27,6 +29,8 @@ abstract class BaseChartRenderer<T> {
     ..filterQuality = FilterQuality.high
     ..strokeWidth = 0.5;
 
+  final bool showLog;
+
   BaseChartRenderer({
     @required this.chartRect,
     @required this.maxValue,
@@ -34,13 +38,23 @@ abstract class BaseChartRenderer<T> {
     @required this.topPadding,
     @required this.scaleX,
     @required this.style,
+    this.showLog = false,
+    double preValue,
+    double nextValue,
   }) {
     gridPaint.color = style.gridColor;
+    translateMinMax();
+    scaleY = chartRect.height / (maxValue - minValue);
+  }
+
+  /// 計算最大最小值是否需要調整偏移
+  void translateMinMax() {
     if (maxValue == minValue) {
+      // 當最大最小相同時, 代表為唯一價
+      // 但圖表為一整面, 需要給予上下界
       maxValue += 0.5;
       minValue -= 0.5;
     }
-    scaleY = chartRect.height / (maxValue - minValue);
   }
 
   double getY(double y) => (maxValue - y) * scaleY + chartRect.top;

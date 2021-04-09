@@ -1,9 +1,23 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:mx_core/mx_core.dart' show NumUtil;
+import 'package:mx_core/ui/widget/chart/entity/k_line_entity.dart';
 
 import '../entity/candle_entity.dart';
 import '../k_chart.dart' show MainState;
 import '../k_chart.dart';
 import 'base_chart_renderer.dart';
+
+class _MinMax {
+  double min;
+  double max;
+
+  bool isMinDefault;
+  bool isMaxDefault;
+
+  _MinMax({this.min, this.max, this.isMinDefault, this.isMaxDefault});
+}
 
 class MainRenderer extends BaseChartRenderer<CandleEntity> {
   double mCandleWidth = ChartStyle.candleWidth;
@@ -20,6 +34,9 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   List<MALine> maLine;
 
+  KLineEntity preEntity;
+  KLineEntity nextEntity;
+
   MainRenderer(
     Rect mainRect,
     double maxValue,
@@ -30,6 +47,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     double scaleX,
     MainChartStyle style,
     this.maLine,
+    this.preEntity,
+    this.nextEntity,
   ) : super(
           chartRect: mainRect,
           maxValue: maxValue,
@@ -37,7 +56,121 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
           topPadding: topPadding,
           scaleX: scaleX,
           style: style,
-        ) {
+        );
+
+  @override
+  void translateMinMax() {
+    _MinMax _minMax(double minDefault, double maxDefault,
+        [double v1,
+        double v2,
+        double v3,
+        double v4,
+        double v5,
+        double v6,
+        double v7,
+        double v8,
+        double v9,
+        double v10]) {
+      var values = <double>[];
+      values
+        ..add(v1)
+        ..add(v2)
+        ..add(v3)
+        ..add(v4)
+        ..add(v5)
+        ..add(v6)
+        ..add(v7)
+        ..add(v8)
+        ..add(v9)
+        ..add(v10);
+      values.removeWhere((element) => element == null);
+      if (values.isEmpty) {
+        return _MinMax(
+          min: minDefault,
+          max: maxDefault,
+          isMinDefault: true,
+          isMaxDefault: true,
+        );
+      } else {
+        var maxV = max(minDefault, values.reduce(max));
+        var minV = min(minDefault, values.reduce(min));
+        return _MinMax(
+          min: minV,
+          max: maxV,
+          isMinDefault: minV == minDefault,
+          isMaxDefault: maxV == maxDefault,
+        );
+      }
+    }
+
+    if (maxValue == minValue) {
+      _MinMax minMax;
+
+      // 當最大最小同一時需要預先調整
+      switch (state) {
+        case MainState.MA:
+          minMax = _minMax(
+            minValue,
+            maxValue,
+            preEntity?.MA5Price,
+            preEntity?.MA10Price,
+            preEntity?.MA20Price,
+            preEntity?.MA30Price,
+            nextEntity?.MA5Price,
+            nextEntity?.MA10Price,
+            nextEntity?.MA20Price,
+            nextEntity?.MA30Price,
+          );
+          break;
+        case MainState.BOLL:
+          minMax = _minMax(
+            minValue,
+            maxValue,
+            preEntity?.mb,
+            preEntity?.dn,
+            preEntity?.up,
+            nextEntity?.mb,
+            nextEntity?.dn,
+            nextEntity?.up,
+          );
+          break;
+        case MainState.NONE:
+          minMax = _minMax(
+            minValue,
+            maxValue,
+          );
+          break;
+      }
+
+      if (!minMax.isMinDefault && !minMax.isMaxDefault) {
+        // 都非預設
+        var minDiff = NumUtil.subtract(maxValue, minMax.min);
+        var maxDiff = NumUtil.subtract(minMax.max, maxValue);
+
+        if (minDiff > maxDiff) {
+          // 採用最小
+          minValue = minMax.min;
+          maxValue = NumUtil.add(maxValue, minDiff);
+        } else {
+          maxValue = minMax.max;
+          minValue = NumUtil.subtract(minValue, maxDiff);
+        }
+      } else if (!minMax.isMinDefault) {
+        // 最大值為預設
+        var minDiff = NumUtil.subtract(maxValue, minMax.min);
+        minValue = minMax.min;
+        maxValue = NumUtil.add(maxValue, minDiff);
+      } else if (!minMax.isMaxDefault) {
+        // 最小值為預設
+        var maxDiff = NumUtil.subtract(minMax.max, maxValue);
+        maxValue = minMax.max;
+        minValue = NumUtil.subtract(minValue, maxDiff);
+      } else {
+        minValue -= 0.5;
+        maxValue += 0.5;
+      }
+    }
+
     var diff = maxValue - minValue; //计算差
     var newScaleY = (chartRect.height - _contentPadding) / diff; //内容区域高度/差=新的比例
     var newDiff = chartRect.height / newScaleY; //高/新比例=新的差
@@ -47,7 +180,6 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       this.maxValue += value;
       this.minValue -= value;
     }
-    // print('初始化最高: ${this.maxValue}');
   }
 
   @override
@@ -260,7 +392,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       // if (i == 0 || i == gridRows) {
       //   y = getY(value) - tp.height / 2;
       // } else {
-        y = getY(value) - tp.height;
+      y = getY(value) - tp.height;
       // }
       tp.paint(canvas, Offset(chartRect.width - tp.width, y));
     }

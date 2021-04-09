@@ -7,8 +7,12 @@ import 'chart_style.dart';
 import 'entity/info_window_entity.dart';
 import 'entity/k_line_entity.dart';
 import 'renderer/chart_painter.dart';
+import 'setting/setting.dart';
 import 'utils/date_format_util.dart';
 import 'utils/number_util.dart';
+
+export 'chart_style.dart';
+export 'setting/setting.dart';
 
 enum MainState { MA, BOLL, NONE }
 enum VolState { VOL, NONE }
@@ -65,6 +69,10 @@ class KChart extends StatefulWidget {
   // 滑動邊緣調用, false代表滑動到最左邊, true則為最右邊
   final Function(bool isRight) onLoadMore;
 
+  // final MainChartSetting mainSetting;
+  // final VolChartSetting volSetting;
+  // final SecondaryChartSetting secondarySetting;
+
   // 當數據未滿一頁時觸發
   final Function() onDataLessOnePage;
 
@@ -82,6 +90,9 @@ class KChart extends StatefulWidget {
       MALine.ma10,
       MALine.ma30,
     ],
+    // this.mainSetting,
+    // this.volSetting,
+    // this.secondarySetting,
     this.tooltipPrefix = const TooltipPrefix(),
     this.onLoadMore,
     this.onDataLessOnePage,
@@ -276,32 +287,33 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
           CustomPaint(
             size: Size(double.infinity, double.infinity),
             painter: ChartPainter(
-                datas: widget.datas,
-                scaleX: mScaleX,
-                scrollX: mScrollX,
-                selectX: mSelectX,
-                isLongPass: isLongPress,
-                mainState: widget.mainState,
-                volState: widget.volState,
-                secondaryState: widget.secondaryState,
-                isLine: widget.isLine,
-                sink: mInfoWindowStream?.sink,
-                opacity: _animation.value,
-                controller: _controller,
-                mainStyle: widget.mainStyle,
-                subStyle: widget.subStyle,
-                maLine: widget.maLine,
-                onCalculateMaxScrolled: (maxScroll) {
-                  this.maxScrollX = maxScroll;
+              datas: widget.datas,
+              scaleX: mScaleX,
+              scrollX: mScrollX,
+              selectX: mSelectX,
+              isLongPass: isLongPress,
+              mainState: widget.mainState,
+              volState: widget.volState,
+              secondaryState: widget.secondaryState,
+              isLine: widget.isLine,
+              sink: mInfoWindowStream?.sink,
+              opacity: _animation.value,
+              controller: _controller,
+              mainStyle: widget.mainStyle,
+              subStyle: widget.subStyle,
+              maLine: widget.maLine,
+              onCalculateMaxScrolled: (maxScroll) {
+                this.maxScrollX = maxScroll;
 
-                  // 假設 maxScrollX 為 0, 且資料量或者scale與舊有不同時觸發加載更多
-                  if (widget.onDataLessOnePage != null &&
-                      maxScrollX == 0 &&
-                      isDataLenChanged) {
-                    isDataLenChanged = false;
-                    widget.onDataLessOnePage?.call();
-                  }
-                }),
+                // 假設 maxScrollX 為 0, 且資料量或者scale與舊有不同時觸發加載更多
+                if (widget.onDataLessOnePage != null &&
+                    maxScrollX == 0 &&
+                    isDataLenChanged) {
+                  isDataLenChanged = false;
+                  widget.onDataLessOnePage?.call();
+                }
+              },
+            ),
           ),
           _buildInfoDialog(),
         ],

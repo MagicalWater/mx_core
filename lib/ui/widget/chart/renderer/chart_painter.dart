@@ -20,6 +20,9 @@ class ChartPainter extends BaseChartPainter {
   MainChartStyle mainChartStyle;
   SubChartStyle subChartStyle;
   List<MALine> maLine;
+  // MainChartSetting mainSetting;
+  // VolChartSetting volSetting;
+  // SecondaryChartSetting secondarySetting;
 
   ChartPainter({
     @required datas,
@@ -38,8 +41,14 @@ class ChartPainter extends BaseChartPainter {
     SubChartStyle subStyle,
     ValueChanged<double> onCalculateMaxScrolled,
     this.maLine,
+    // MainChartSetting mainSetting,
+    // VolChartSetting volSetting,
+    // SecondaryChartSetting secondarySetting,
   })  : this.mainChartStyle = mainStyle ?? MainChartStyle.light(),
         this.subChartStyle = subStyle ?? SubChartStyle.light(),
+        // this.mainSetting = mainSetting ?? MainChartSetting(),
+        // this.volSetting = volSetting ?? VolChartSetting(),
+        // this.secondarySetting = secondarySetting ?? SecondaryChartSetting(),
         super(
           datas: datas,
           scaleX: scaleX,
@@ -56,6 +65,16 @@ class ChartPainter extends BaseChartPainter {
   @override
   void initChartRenderer() {
     // print('初始化: $mMainMinValue');
+    KLineEntity preEntity, nextEntity;
+    var preIndex = mStartIndex - 1;
+    var nextIndex = mStopIndex + 1;
+    if (preIndex >= 0 && preIndex < datas.length) {
+      preEntity = datas[preIndex];
+    }
+    if (nextIndex >= 0 && nextIndex < datas.length) {
+      nextEntity = datas[nextIndex];
+    }
+
     mMainRenderer ??= MainRenderer(
       mMainRect,
       mMainMaxValue,
@@ -66,6 +85,8 @@ class ChartPainter extends BaseChartPainter {
       scaleX,
       mainChartStyle,
       maLine,
+      preEntity,
+      nextEntity,
     );
     if (mVolRect != null) {
       mVolRenderer ??= VolRenderer(
@@ -155,20 +176,62 @@ class ChartPainter extends BaseChartPainter {
   void drawChart(Canvas canvas, Size size) {
     canvas.save();
     // print('位移: $mTranslateX');
+    var mainTransRect = mMainRect.translate((mTranslateX * scaleX).abs(), 0.0);
+    var volTransRect = mVolRect.translate((mTranslateX * scaleX).abs(), 0.0);
+    var secondaryTransRect =
+        mSecondaryRect.translate((mTranslateX * scaleX).abs(), 0.0);
+    // print('切割: $mMainRect, 偏移: ${mTranslateX * scaleX}, 偏移後: $mainTransRect');
     canvas.translate(mTranslateX * scaleX, 0.0);
     canvas.scale(scaleX, 1.0);
-    for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
-      KLineEntity curPoint = datas[i];
-      if (curPoint == null) continue;
-      KLineEntity lastPoint = i == 0 ? curPoint : datas[i - 1];
-      double curX = getX(i);
-      double lastX = i == 0 ? curX : getX(i - 1);
+    // print('縮放 = $scaleX');
 
-      mMainRenderer?.drawChart(lastPoint, curPoint, lastX, curX, size, canvas);
-      mVolRenderer?.drawChart(lastPoint, curPoint, lastX, curX, size, canvas);
-      mSecondaryRenderer?.drawChart(
-          lastPoint, curPoint, lastX, curX, size, canvas);
+    void drawMain() {
+      canvas.save();
+      canvas.clipRect(mainTransRect);
+      for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
+        KLineEntity curPoint = datas[i];
+        if (curPoint == null) continue;
+        KLineEntity lastPoint = i == 0 ? curPoint : datas[i - 1];
+        double curX = getX(i);
+        double lastX = i == 0 ? curX : getX(i - 1);
+        mMainRenderer?.drawChart(
+            lastPoint, curPoint, lastX, curX, size, canvas);
+      }
+      canvas.restore();
     }
+
+    void drawVol() {
+      canvas.save();
+      canvas.clipRect(volTransRect);
+      for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
+        KLineEntity curPoint = datas[i];
+        if (curPoint == null) continue;
+        KLineEntity lastPoint = i == 0 ? curPoint : datas[i - 1];
+        double curX = getX(i);
+        double lastX = i == 0 ? curX : getX(i - 1);
+        mVolRenderer?.drawChart(lastPoint, curPoint, lastX, curX, size, canvas);
+      }
+      canvas.restore();
+    }
+
+    void drawSecondary() {
+      canvas.save();
+      canvas.clipRect(secondaryTransRect);
+      for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
+        KLineEntity curPoint = datas[i];
+        if (curPoint == null) continue;
+        KLineEntity lastPoint = i == 0 ? curPoint : datas[i - 1];
+        double curX = getX(i);
+        double lastX = i == 0 ? curX : getX(i - 1);
+        mSecondaryRenderer?.drawChart(
+            lastPoint, curPoint, lastX, curX, size, canvas);
+      }
+      canvas.restore();
+    }
+
+    drawMain();
+    drawVol();
+    drawSecondary();
 
     if (isLongPress == true) drawCrossLine(canvas, size);
     canvas.restore();

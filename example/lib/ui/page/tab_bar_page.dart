@@ -31,7 +31,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
     bloc = BlocProvider.of<TabBarBloc>(context);
     tabController = TabController(
       initialIndex: currentIndex,
-      length: 8,
+      length: 3,
       vsync: this,
     );
 
@@ -41,6 +41,9 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       var randomIndex = Random().nextInt(9) + 1;
       for (var i = 0; i < randomIndex; i++) {
         text += '$showIndex';
+      }
+      if (index == 1) {
+        return '更多';
       }
       return text;
     });
@@ -119,6 +122,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       controller: tabController,
       tabBuilder: TextTabBuilder(
         texts: tabs,
+        textAnimationDuration: Duration(milliseconds: 700),
         tabDecoration: (index, selected) {
           if (selected) {
             return BoxDecoration(
@@ -143,13 +147,14 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
           } else {
             return TextStyle(
               color: Colors.black,
-              fontSize: 14.scaleA,
+              fontSize: selected ? 30.scaleA : 10.scaleA,
             );
           }
         },
-        padding: EdgeInsets.symmetric(horizontal: 10.scaleA),
+        padding: EdgeInsets.symmetric(horizontal: 20.scaleA),
       ),
-      scrollable: true,
+      tabWidth: TabWidth.shrinkWrap(),
+      scrollable: false,
       tabHeight: 40.scaleA,
       gapBuilder: (context, index) => Container(width: 10.scaleW),
       header: Container(
@@ -182,7 +187,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
           }
         },
         // actions: ['1'],
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         margin: EdgeInsets.only(left: 10, right: 10),
       ),
       gapBuilder: (context, index) {
@@ -278,7 +283,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
           }
         },
         margin: EdgeInsets.only(left: 10, right: 10),
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20),
       ),
       gapBuilder: (context, index) {
         if (index == tabs.length - 1) {

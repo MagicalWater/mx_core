@@ -10,39 +10,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/locate_column.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/locate_column.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/setting/main_chart_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/setting/secondary_chart_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/setting/setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/setting/vol_chart_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/chart/setting/main_chart_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/chart/setting/secondary_chart_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/chart/setting/setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/chart/setting/vol_chart_setting.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/jsons/chart_example/kline.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/jsons/chart_example/kline.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/assets/jsons/chart_example/kline.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/assets/jsons/chart_example/kline.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/tab_bar_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/tab_bar_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/entity/k_line_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/entity/k_line_entity.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/k_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/k_chart.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_painter.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_renderer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/chart_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/main_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/main_renderer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/vol_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/vol_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/load_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/load_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/locate_row.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/locate_row.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/file_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/file_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/chart_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/chart_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/tab_bar_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/tab_bar_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/k_line_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/k_line_entity.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/k_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/k_chart.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_painter.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_renderer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/chart_painter.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/main_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/main_renderer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/vol_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/vol_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/load_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/load_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/locate_row.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/locate_row.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/file_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/file_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +71,7 @@
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget/chart/setting" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -81,19 +79,19 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/ui/widget/chart/setting" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget" />
+      <recent name="$PROJECT_DIR$/example/assets/jsons" />
+      <recent name="$PROJECT_DIR$/assets/jsons/chart_example" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/chart" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/storage/store" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/page_switcher" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/align_grid/space" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib/ui/widget" />
-      <recent name="$PROJECT_DIR$/example/assets/jsons" />
-      <recent name="$PROJECT_DIR$/assets/jsons/chart_example" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/chart" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/tab_bar" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.ios_debug">
@@ -178,55 +176,55 @@
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="683" y="260" key="FileChooserDialogImpl/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611903372542" />
-    <state width="1638" height="253" key="GridCell.Tab.0.bottom" timestamp="1616654445229">
+    <state width="1638" height="128" key="GridCell.Tab.0.bottom" timestamp="1617699732433">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="1878" height="457" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1612842737434" />
-    <state width="1638" height="253" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1616654445229" />
-    <state width="1638" height="253" key="GridCell.Tab.0.center" timestamp="1616654445229">
+    <state width="1638" height="128" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617699732433" />
+    <state width="1638" height="128" key="GridCell.Tab.0.center" timestamp="1617699732431">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="1878" height="457" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1612842737433" />
-    <state width="1638" height="253" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1616654445229" />
-    <state width="1638" height="253" key="GridCell.Tab.0.left" timestamp="1616654445228">
+    <state width="1638" height="128" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617699732431" />
+    <state width="1638" height="128" key="GridCell.Tab.0.left" timestamp="1617699732431">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="1878" height="457" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1612842737433" />
-    <state width="1638" height="253" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1616654445228" />
-    <state width="1638" height="253" key="GridCell.Tab.0.right" timestamp="1616654445229">
+    <state width="1638" height="128" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617699732431" />
+    <state width="1638" height="128" key="GridCell.Tab.0.right" timestamp="1617699732432">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="1878" height="457" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1612842737434" />
-    <state width="1638" height="253" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1616654445229" />
+    <state width="1638" height="128" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617699732432" />
     <state x="595" y="212" key="RollbackChangesDialog" timestamp="1616640364991">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="595" y="212" key="RollbackChangesDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1616640364991" />
-    <state x="341" y="126" key="SettingsEditor" timestamp="1611556183859">
+    <state x="341" y="126" key="SettingsEditor" timestamp="1617675076257">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state x="341" y="126" key="SettingsEditor/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611556183859" />
+    <state x="341" y="126" key="SettingsEditor/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617675076257" />
     <state x="100" y="125" width="1480" height="744" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1609120108765">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="100" y="125" width="1480" height="744" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1609120108765" />
-    <state x="493" y="256" width="984" height="490" key="find.popup" timestamp="1616650881429">
+    <state x="493" y="256" width="984" height="490" key="find.popup" timestamp="1617676183778">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1616650881429" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1616650937132">
+    <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617676183778" />
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1617699366513">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="343" height="108" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1616119092573" />
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1616650937132" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617699366513" />
     <state x="337" y="-827" width="766" height="750" key="run.anything.popup" timestamp="1616119120343">
       <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>
     <state x="337" y="-827" width="766" height="750" key="run.anything.popup/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1616119120343" />
     <state x="505" y="229" width="670" height="671" key="run.anything.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1614821459174" />
-    <state x="505" y="231" width="670" height="671" key="search.everywhere.popup" timestamp="1615429452298">
+    <state x="505" y="231" width="670" height="671" key="search.everywhere.popup" timestamp="1617697252856">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state x="505" y="231" width="670" height="671" key="search.everywhere.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1615429452298" />
+    <state x="505" y="231" width="670" height="671" key="search.everywhere.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617697252856" />
   </component>
 </project>

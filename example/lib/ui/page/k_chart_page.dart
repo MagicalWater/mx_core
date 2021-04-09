@@ -116,7 +116,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
         children: <Widget>[
           Stack(children: <Widget>[
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              margin: EdgeInsets.symmetric(horizontal: 50),
               width: double.infinity,
               child: AnimatedSize(
                 vsync: this,
@@ -225,47 +225,10 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
     List list = parseJson['data'];
     datas = list
         .map((item) => KLineEntity.fromJson(item))
-        .toList()
-        .reversed
-        .toList()
-        .cast<KLineEntity>();
+        .toList();
     ChartDataCalculator.calculate(datas);
     showLoading = false;
     setState(() {});
     return;
-    try {
-      result = await getIPAddress('$period');
-    } catch (e) {
-      print('獲取數據失敗,獲取本地數據');
-      result =
-          await rootBundle.loadString('assets/jsons/chart_example/kline.json');
-    } finally {
-      Map parseJson = json.decode(result);
-      List list = parseJson['data'];
-      datas = list
-          .map((item) => KLineEntity.fromJson(item))
-          .toList()
-          .reversed
-          .toList()
-          .cast<KLineEntity>();
-      ChartDataCalculator.calculate(datas);
-      showLoading = false;
-      setState(() {});
-    }
-  }
-
-  Future<String> getIPAddress(String period) async {
-    //火幣api，需要翻牆
-    var url =
-        'https://api.huobi.br.com/market/history/kline?period=${period ?? '1day'}&size=300&symbol=btcusdt';
-    String result;
-    var response =
-        await HttpUtil().get(url).timeout(Duration(seconds: 7)).single;
-    if (response.response.statusCode == 200) {
-      result = response.body;
-    } else {
-      return Future.error("獲取失敗");
-    }
-    return result;
   }
 }

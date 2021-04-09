@@ -50,6 +50,7 @@ abstract class BaseChartPainter extends CustomPainter {
   int mMainMaxIndex = 0, mMainMinIndex = 0;
   double mMainHighMaxValue = -double.maxFinite,
       mMainLowMinValue = double.maxFinite;
+
   int mItemCount = 0;
   double mDataLen = 0.0; //数据占屏幕总长度
   double mPointWidth = ChartStyle.pointWidth;
