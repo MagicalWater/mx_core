@@ -11,6 +11,7 @@ import 'base_chart_renderer.dart';
 import 'main_renderer.dart';
 import 'secondary_renderer.dart';
 import 'vol_renderer.dart';
+import 'package:mx_core/util/num_util.dart';
 
 class ChartPainter extends BaseChartPainter {
   BaseChartRenderer mMainRenderer, mVolRenderer, mSecondaryRenderer;
@@ -20,6 +21,7 @@ class ChartPainter extends BaseChartPainter {
   MainChartStyle mainChartStyle;
   SubChartStyle subChartStyle;
   List<MALine> maLine;
+
   // MainChartSetting mainSetting;
   // VolChartSetting volSetting;
   // SecondaryChartSetting secondarySetting;
@@ -174,20 +176,30 @@ class ChartPainter extends BaseChartPainter {
 
   @override
   void drawChart(Canvas canvas, Size size) {
-    canvas.save();
+    // canvas.save();
     // print('位移: $mTranslateX');
-    var mainTransRect = mMainRect.translate((mTranslateX * scaleX).abs(), 0.0);
-    var volTransRect = mVolRect.translate((mTranslateX * scaleX).abs(), 0.0);
-    var secondaryTransRect =
-        mSecondaryRect.translate((mTranslateX * scaleX).abs(), 0.0);
-    // print('切割: $mMainRect, 偏移: ${mTranslateX * scaleX}, 偏移後: $mainTransRect');
-    canvas.translate(mTranslateX * scaleX, 0.0);
-    canvas.scale(scaleX, 1.0);
+    // var mainTransRect = mMainRect
+    //     .translate((mTranslateX * scaleX).abs(), 0.0)
+    //     .scale(scaleX, 1.0);
+    // var volTransRect = mVolRect
+    //     .translate((mTranslateX * scaleX).abs(), 0.0)
+    //     .scale(scaleX, 1.0);
+    // var secondaryTransRect = mSecondaryRect
+    //     .translate((mTranslateX * scaleX).abs(), 0.0)
+    //     .scale(scaleX, 1.0);
+    // // print('切割: $mMainRect, 偏移: ${mTranslateX * scaleX}, 偏移後: $mainTransRect');
+    // canvas.translate(mTranslateX * scaleX, 0.0);
+    //
+    // // canvas的縮放錨點默認為左上角
+    // canvas.scale(scaleX, 1.0);
     // print('縮放 = $scaleX');
 
     void drawMain() {
       canvas.save();
-      canvas.clipRect(mainTransRect);
+      // canvas.clipRect(mainTransRect);
+      canvas.clipRect(mMainRect);
+      canvas.translate(mTranslateX * scaleX, 0.0);
+      canvas.scale(scaleX, 1.0);
       for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
         KLineEntity curPoint = datas[i];
         if (curPoint == null) continue;
@@ -202,7 +214,9 @@ class ChartPainter extends BaseChartPainter {
 
     void drawVol() {
       canvas.save();
-      canvas.clipRect(volTransRect);
+      canvas.clipRect(mVolRect);
+      canvas.translate(mTranslateX * scaleX, 0.0);
+      canvas.scale(scaleX, 1.0);
       for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
         KLineEntity curPoint = datas[i];
         if (curPoint == null) continue;
@@ -216,7 +230,9 @@ class ChartPainter extends BaseChartPainter {
 
     void drawSecondary() {
       canvas.save();
-      canvas.clipRect(secondaryTransRect);
+      canvas.clipRect(mSecondaryRect);
+      canvas.translate(mTranslateX * scaleX, 0.0);
+      canvas.scale(scaleX, 1.0);
       for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
         KLineEntity curPoint = datas[i];
         if (curPoint == null) continue;
@@ -234,7 +250,7 @@ class ChartPainter extends BaseChartPainter {
     drawSecondary();
 
     if (isLongPress == true) drawCrossLine(canvas, size);
-    canvas.restore();
+    // canvas.restore();
   }
 
   @override
@@ -568,5 +584,16 @@ class ChartPainter extends BaseChartPainter {
 
   stopAnimation() {
     if (controller?.isAnimating == true) controller?.stop();
+  }
+}
+
+extension _ScaleRect on Rect {
+  Rect scale(double sx, [double sy = 1]) {
+    return Rect.fromLTWH(
+      this.left,
+      this.top,
+      this.width.multiply(sx),
+      this.height.multiply(sy),
+    );
   }
 }
