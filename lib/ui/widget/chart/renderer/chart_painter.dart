@@ -1,6 +1,7 @@
 import 'dart:async' show StreamSink;
 
 import 'package:flutter/material.dart';
+import 'package:mx_core/util/num_util.dart';
 
 import '../entity/info_window_entity.dart';
 import '../entity/k_line_entity.dart';
@@ -11,7 +12,6 @@ import 'base_chart_renderer.dart';
 import 'main_renderer.dart';
 import 'secondary_renderer.dart';
 import 'vol_renderer.dart';
-import 'package:mx_core/util/num_util.dart';
 
 class ChartPainter extends BaseChartPainter {
   BaseChartRenderer mMainRenderer, mVolRenderer, mSecondaryRenderer;
@@ -245,11 +245,45 @@ class ChartPainter extends BaseChartPainter {
       canvas.restore();
     }
 
+    void drawCrossLine() {
+      canvas.save();
+      canvas.translate(mTranslateX * scaleX, 0.0);
+      canvas.scale(scaleX, 1.0);
+      var index = calculateSelectedX(selectX);
+      KLineEntity point = getItem(index);
+      Paint paintY = Paint()
+        ..color = mainChartStyle.markerVerticalLineColor
+        ..strokeWidth = ChartStyle.vCrossWidth
+        ..isAntiAlias = true;
+      double x = getX(index);
+      double y = getMainY(point.close);
+      // k线图竖线
+      canvas.drawLine(
+        Offset(x, ChartStyle.topPadding),
+        Offset(x, size.height - ChartStyle.bottomDateHigh),
+        paintY,
+      );
+
+      Paint paintX = Paint()
+        ..color = mainChartStyle.markerHorizontalLineColor
+        ..strokeWidth = ChartStyle.hCrossWidth
+        ..isAntiAlias = true;
+      // k线图横线
+      canvas.drawLine(Offset(-mTranslateX, y),
+          Offset(-mTranslateX + mWidth / scaleX, y), paintX);
+//    canvas.drawCircle(Offset(x, y), 2.0, paintX);
+      canvas.drawOval(
+          Rect.fromCenter(
+              center: Offset(x, y), height: 2.0 * scaleX, width: 2.0),
+          paintX);
+      canvas.restore();
+    }
+
     drawMain();
     drawVol();
     drawSecondary();
 
-    if (isLongPress == true) drawCrossLine(canvas, size);
+    if (isLongPress == true) drawCrossLine();
     // canvas.restore();
   }
 
@@ -418,33 +452,6 @@ class ChartPainter extends BaseChartPainter {
       // print('繪製最高價格 = $y');
       tp.paint(canvas, Offset(x - tp.width, y - tp.height / 2));
     }
-  }
-
-  ///画交叉线
-  void drawCrossLine(Canvas canvas, Size size) {
-    var index = calculateSelectedX(selectX);
-    KLineEntity point = getItem(index);
-    Paint paintY = Paint()
-      ..color = mainChartStyle.markerVerticalLineColor
-      ..strokeWidth = ChartStyle.vCrossWidth
-      ..isAntiAlias = true;
-    double x = getX(index);
-    double y = getMainY(point.close);
-    // k线图竖线
-    canvas.drawLine(Offset(x, ChartStyle.topPadding),
-        Offset(x, size.height - ChartStyle.bottomDateHigh), paintY);
-
-    Paint paintX = Paint()
-      ..color = mainChartStyle.markerHorizontalLineColor
-      ..strokeWidth = ChartStyle.hCrossWidth
-      ..isAntiAlias = true;
-    // k线图横线
-    canvas.drawLine(Offset(-mTranslateX, y),
-        Offset(-mTranslateX + mWidth / scaleX, y), paintX);
-//    canvas.drawCircle(Offset(x, y), 2.0, paintX);
-    canvas.drawOval(
-        Rect.fromCenter(center: Offset(x, y), height: 2.0 * scaleX, width: 2.0),
-        paintX);
   }
 
   final Paint realTimePaint = Paint()

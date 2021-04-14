@@ -266,14 +266,14 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
       },
       onLongPressStart: (details) {
         isLongPress = true;
-        if (mSelectX != details.globalPosition.dx) {
-          mSelectX = details.globalPosition.dx;
+        if (mSelectX != details.localPosition.dx) {
+          mSelectX = details.localPosition.dx;
           notifyChanged();
         }
       },
       onLongPressMoveUpdate: (details) {
-        if (mSelectX != details.globalPosition.dx) {
-          mSelectX = details.globalPosition.dx;
+        if (mSelectX != details.localPosition.dx) {
+          mSelectX = details.localPosition.dx;
           notifyChanged();
         }
       },
