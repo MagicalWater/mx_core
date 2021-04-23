@@ -33,7 +33,8 @@ abstract class BaseChartPainter extends CustomPainter {
   VolState volState = VolState.VOL;
   SecondaryState secondaryState = SecondaryState.MACD;
 
-  double scaleX = 1.0, scrollX = 0.0, selectX;
+  double scaleX = 1.0, scrollX = 0.0, selectX, selectY;
+  ChartLongPressY longPressY;
   bool isLongPress = false;
   bool isLine = false;
 
@@ -63,6 +64,8 @@ abstract class BaseChartPainter extends CustomPainter {
     @required this.scrollX,
     @required this.isLongPress,
     @required this.selectX,
+    @required this.selectY,
+    this.longPressY,
     this.mainState,
     this.volState,
     this.secondaryState,

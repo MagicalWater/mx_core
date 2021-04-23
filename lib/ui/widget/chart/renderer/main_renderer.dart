@@ -37,6 +37,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   KLineEntity preEntity;
   KLineEntity nextEntity;
 
+  List<double> gridPosition = [];
+
   MainRenderer(
     Rect mainRect,
     double maxValue,
@@ -377,8 +379,10 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     for (var i = 0; i <= gridRows; ++i) {
       double position = 0;
       if (i == 0) {
+        // 最高
         position = (gridRows - i) * rowSpace - _contentPadding / 2;
       } else if (i == gridRows) {
+        // 最低
         position = (gridRows - i) * rowSpace + _contentPadding / 2;
       } else {
         position = (gridRows - i) * rowSpace;
@@ -403,12 +407,15 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 //    final int gridRows = 4, gridColumns = 4;
     double rowSpace = chartRect.height / gridRows;
     // print('繪製隔線最高: $topPadding, max: $maxValue');
+    gridPosition.clear();
     for (int i = 0; i <= gridRows; i++) {
+      var pos = rowSpace * i + topPadding;
       canvas.drawLine(
-        Offset(0, rowSpace * i + topPadding),
+        Offset(0, pos),
         Offset(chartRect.width, rowSpace * i + topPadding),
         gridPaint,
       );
+      gridPosition.add(pos);
     }
     double columnSpace = chartRect.width / gridColumns;
     for (int i = 0; i <= columnSpace; i++) {
@@ -418,5 +425,15 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         gridPaint,
       );
     }
+  }
+
+  /// 針對grid圖表切割線的吸附
+  double getGridAdsorption(double y) {
+    var absorptionPoint = gridPosition.firstWhere(
+      (element) => (y - element).abs() < 4,
+      orElse: () => null,
+    );
+
+    return absorptionPoint ?? y;
   }
 }

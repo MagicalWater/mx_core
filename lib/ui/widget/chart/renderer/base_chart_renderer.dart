@@ -57,7 +57,14 @@ abstract class BaseChartRenderer<T> {
     }
   }
 
+  /// 帶入數值, 取得對應的y軸
   double getY(double y) => (maxValue - y) * scaleY + chartRect.top;
+
+  /// 帶入y軸, 取得對應的數值
+  double getValue(double y) {
+    // return y / scaleY + minValue;
+    return maxValue - ((y - chartRect.top) / scaleY);
+  }
 
   String format(double n) {
     return NumberUtil.format(n);

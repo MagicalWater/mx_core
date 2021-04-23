@@ -7,7 +7,6 @@ import 'chart_style.dart';
 import 'entity/info_window_entity.dart';
 import 'entity/k_line_entity.dart';
 import 'renderer/chart_painter.dart';
-import 'setting/setting.dart';
 import 'utils/date_format_util.dart';
 import 'utils/number_util.dart';
 
@@ -62,16 +61,13 @@ class KChart extends StatefulWidget {
   final MainChartStyle mainStyle;
   final SubChartStyle subStyle;
   final TooltipPrefix tooltipPrefix;
+  final ChartLongPressY longPressY;
 
   /// 顯示的ma線, 不得為空
   final List<MALine> maLine;
 
   // 滑動邊緣調用, false代表滑動到最左邊, true則為最右邊
   final Function(bool isRight) onLoadMore;
-
-  // final MainChartSetting mainSetting;
-  // final VolChartSetting volSetting;
-  // final SecondaryChartSetting secondarySetting;
 
   // 當數據未滿一頁時觸發
   final Function() onDataLessOnePage;
@@ -82,6 +78,7 @@ class KChart extends StatefulWidget {
     this.volState = VolState.VOL,
     this.secondaryState = SecondaryState.MACD,
     this.isLine,
+    this.longPressY = ChartLongPressY.closePrice,
     int fractionDigits = 2,
     this.mainStyle = const MainChartStyle.light(),
     this.subStyle = const SubChartStyle.light(),
@@ -107,7 +104,7 @@ class KChart extends StatefulWidget {
 class _KChartState extends State<KChart> with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
-  double mScaleX = 1.0, mScrollX = 0.0, mSelectX = 0.0;
+  double mScaleX = 1.0, mScrollX = 0.0, mSelectX = 0.0, mSelectY = 0.0;
   StreamController<InfoWindowEntity> mInfoWindowStream;
   double mWidth = 0;
   AnimationController _scrollXController;
@@ -191,7 +188,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
     super.didUpdateWidget(oldWidget);
     resetWhenEmptyData(oldWidget);
     _syncTooltipShow();
-    if (oldWidget.datas != widget.datas) mScrollX = mSelectX = 0.0;
+    if (oldWidget.datas != widget.datas) mScrollX = mSelectX = mSelectY = 0.0;
   }
 
   @override
@@ -214,7 +211,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
     }
 
     if (widget.datas == null || widget.datas.isEmpty) {
-      mScrollX = mSelectX = 0.0;
+      mScrollX = mSelectX = mSelectY = 0.0;
       mScaleX = 1.0;
     }
   }
@@ -266,14 +263,18 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
       },
       onLongPressStart: (details) {
         isLongPress = true;
-        if (mSelectX != details.localPosition.dx) {
+        if (mSelectX != details.localPosition.dx ||
+            mSelectY != details.localPosition.dy) {
           mSelectX = details.localPosition.dx;
+          mSelectY = details.localPosition.dy;
           notifyChanged();
         }
       },
       onLongPressMoveUpdate: (details) {
-        if (mSelectX != details.localPosition.dx) {
+        if (mSelectX != details.localPosition.dx ||
+            mSelectY != details.localPosition.dy) {
           mSelectX = details.localPosition.dx;
+          mSelectY = details.localPosition.dy;
           notifyChanged();
         }
       },
@@ -291,7 +292,9 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
               scaleX: mScaleX,
               scrollX: mScrollX,
               selectX: mSelectX,
+              selectY: mSelectY,
               isLongPass: isLongPress,
+              longPressY: widget.longPressY,
               mainState: widget.mainState,
               volState: widget.volState,
               secondaryState: widget.secondaryState,
@@ -424,4 +427,16 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
       [yy, '-', mm, '-', dd, ' ', HH, ':', nn],
     );
   }
+}
+
+/// 圖表長按時y橫線的顯示
+enum ChartLongPressY {
+  /// 根據長按位置顯示資訊
+  absolute,
+
+  /// 自動吸附至隔線
+  gridAdsorption,
+
+  /// 收盤價
+  closePrice,
 }

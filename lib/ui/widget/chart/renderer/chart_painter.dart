@@ -32,6 +32,8 @@ class ChartPainter extends BaseChartPainter {
     @required scrollX,
     @required isLongPass,
     @required selectX,
+    @required selectY,
+    ChartLongPressY longPressY,
     mainState,
     volState,
     secondaryState,
@@ -56,7 +58,9 @@ class ChartPainter extends BaseChartPainter {
           scaleX: scaleX,
           scrollX: scrollX,
           isLongPress: isLongPass,
+          longPressY: longPressY,
           selectX: selectX,
+          selectY: selectY,
           mainState: mainState,
           volState: volState,
           secondaryState: secondaryState,
@@ -250,13 +254,29 @@ class ChartPainter extends BaseChartPainter {
       canvas.translate(mTranslateX * scaleX, 0.0);
       canvas.scale(scaleX, 1.0);
       var index = calculateSelectedX(selectX);
-      KLineEntity point = getItem(index);
       Paint paintY = Paint()
         ..color = mainChartStyle.markerVerticalLineColor
         ..strokeWidth = ChartStyle.vCrossWidth
         ..isAntiAlias = true;
       double x = getX(index);
-      double y = getMainY(point.close);
+      double y;
+
+      switch (longPressY) {
+        case ChartLongPressY.absolute:
+          y = clampY(selectY);
+          break;
+        case ChartLongPressY.gridAdsorption:
+          y = getGridAdsorption(selectY);
+          y = clampY(y);
+          break;
+        case ChartLongPressY.closePrice:
+          KLineEntity point = getItem(index);
+          y = getMainY(point.close);
+          break;
+      }
+
+      // print('y軸位置: $selectY, 繪製y: $y');
+
       // k线图竖线
       canvas.drawLine(
         Offset(x, ChartStyle.topPadding),
@@ -269,8 +289,11 @@ class ChartPainter extends BaseChartPainter {
         ..strokeWidth = ChartStyle.hCrossWidth
         ..isAntiAlias = true;
       // k线图横线
-      canvas.drawLine(Offset(-mTranslateX, y),
-          Offset(-mTranslateX + mWidth / scaleX, y), paintX);
+      canvas.drawLine(
+        Offset(-mTranslateX, y),
+        Offset(-mTranslateX + mWidth / scaleX, y),
+        paintX,
+      );
 //    canvas.drawCircle(Offset(x, y), 2.0, paintX);
       canvas.drawOval(
           Rect.fromCenter(
@@ -332,8 +355,22 @@ class ChartPainter extends BaseChartPainter {
     var index = calculateSelectedX(selectX);
     KLineEntity point = getItem(index);
 
+    double y;
+    switch (longPressY) {
+      case ChartLongPressY.absolute:
+        y = clampY(selectY);
+        break;
+      case ChartLongPressY.gridAdsorption:
+        y = getGridAdsorption(selectY);
+        y = clampY(y);
+        break;
+      case ChartLongPressY.closePrice:
+        y = getMainY(point.close);
+        break;
+    }
+
     TextPainter tp = getTextPainter(
-      format(point.close),
+      format(getMainValue(y)),
       color: mainChartStyle.markerHorizontalTextColor,
     );
     double textHeight = tp.height;
@@ -342,7 +379,8 @@ class ChartPainter extends BaseChartPainter {
     double w1 = 5;
     double w2 = 3;
     double r = textHeight / 2 + w2;
-    double y = getMainY(point.close);
+    // double y = getMainY(point.close);
+    // double y = selectY;
     double x;
     bool isLeft = false;
     if (translateXtoX(getX(index)) < mWidth / 2) {
@@ -389,12 +427,20 @@ class ChartPainter extends BaseChartPainter {
     }
     double baseLine = textHeight / 2;
     canvas.drawRect(
-        Rect.fromLTRB(x - textWidth / 2 - w1, y, x + textWidth / 2 + w1,
-            y + baseLine + r),
+        Rect.fromLTRB(
+          x - textWidth / 2 - w1,
+          y,
+          x + textWidth / 2 + w1,
+          y + baseLine + r,
+        ),
         selectPointPaint);
     canvas.drawRect(
-        Rect.fromLTRB(x - textWidth / 2 - w1, y, x + textWidth / 2 + w1,
-            y + baseLine + r),
+        Rect.fromLTRB(
+          x - textWidth / 2 - w1,
+          y,
+          x + textWidth / 2 + w1,
+          y + baseLine + r,
+        ),
         selectorBorderPaint);
 
     dateTp.paint(canvas, Offset(x - textWidth / 2, y));
@@ -584,6 +630,34 @@ class ChartPainter extends BaseChartPainter {
   String getDate(DateTime date) => dateFormat(date, mFormats);
 
   double getMainY(double y) => mMainRenderer?.getY(y) ?? 0.0;
+
+  double getMainValue(double y) {
+    return mMainRenderer?.getValue(y) ?? 0.0;
+  }
+
+  double getGridAdsorption(double y) {
+    if (mMainRenderer != null && mMainRenderer is MainRenderer) {
+      return (mMainRenderer as MainRenderer).getGridAdsorption(y);
+    } else {
+      return y;
+    }
+  }
+
+  /// 限制y軸範圍
+  double clampY(double y) {
+    if (mMainRenderer != null && mMainRenderer is MainRenderer) {
+      var gridPos = (mMainRenderer as MainRenderer).gridPosition;
+      if (gridPos.length >= 2) {
+        var minY = gridPos.first;
+        var maxY = gridPos.last;
+        return y.clamp(minY, maxY);
+      } else {
+        return y;
+      }
+    } else {
+      return y;
+    }
+  }
 
   startAnimation() {
     if (controller?.isAnimating != true) controller?.repeat(reverse: true);

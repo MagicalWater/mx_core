@@ -92,6 +92,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
           secondaryState: _secondaryState,
           volState: VolState.VOL,
           fractionDigits: 4,
+          longPressY: ChartLongPressY.absolute,
           maLine: [
             MALine.ma5,
             // MALine.ma10,
