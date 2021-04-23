@@ -412,7 +412,7 @@ class HttpUtil {
     print('錯誤: $error');
     print('=====================');
     return HttpError(
-      request: error.request,
+      request: error.requestOptions,
       error: error.error,
       type: _convertToHttpErrorType(error.type),
       response: ServerResponse(
@@ -428,15 +428,15 @@ class HttpUtil {
   /// 將 Dio 的 Error 轉換為自訂的 Error
   HttpErrorType _convertToHttpErrorType(DioErrorType type) {
     switch (type) {
-      case DioErrorType.CONNECT_TIMEOUT:
+      case DioErrorType.connectTimeout:
         return HttpErrorType.connectTimeout;
-      case DioErrorType.SEND_TIMEOUT:
+      case DioErrorType.sendTimeout:
         return HttpErrorType.sendTimeout;
-      case DioErrorType.RECEIVE_TIMEOUT:
+      case DioErrorType.receiveTimeout:
         return HttpErrorType.receiveTimeout;
-      case DioErrorType.RESPONSE:
+      case DioErrorType.response:
         return HttpErrorType.response;
-      case DioErrorType.CANCEL:
+      case DioErrorType.cancel:
         return HttpErrorType.cancel;
       default:
         return HttpErrorType.other;

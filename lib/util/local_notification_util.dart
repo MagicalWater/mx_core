@@ -12,7 +12,10 @@ class LocalNotificationUtil {
     var settingsIOS = IOSInitializationSettings(
       onDidReceiveLocalNotification: onReceiveIOS,
     );
-    var settings = InitializationSettings(settingsAndroid, settingsIOS);
+    var settings = InitializationSettings(
+      android: settingsAndroid,
+      iOS: settingsIOS,
+    );
     plugin.initialize(settings, onSelectNotification: onSelectNotification);
   }
 
@@ -38,11 +41,17 @@ class LocalNotificationUtil {
     FlutterLocalNotificationsPlugin notificationsPlugin =
         FlutterLocalNotificationsPlugin();
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        '12345', '這是通道名稱', '這是通道說明',
-        importance: Importance.Max, priority: Priority.High);
+      '12345',
+      '這是通道名稱',
+      '這是通道說明',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var channelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
 //    print("觸發通知開始");
     await notificationsPlugin.show(id, title, content, channelSpecifics,
         payload: payload);

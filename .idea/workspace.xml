@@ -10,21 +10,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/k_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/k_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/chart_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/main_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/main_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/k_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/k_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/chart_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/main_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/main_renderer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/Flutter.podspec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bean/bean_converter.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bean/ex_api/ex_api.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bean/ex_api/ex_api.g.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/service/api_service.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/animated_core_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/animated_core_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_scaffold.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/local_notification_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/local_notification_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/Flutter.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/Flutter.podspec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bean/bean_converter.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bean/ex_api/ex_api.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bean/ex_api/ex_api.g.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/service/api_service.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/animated_core_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/animated_core_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_scaffold.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/local_notification_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/local_notification_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,26 +189,26 @@
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="683" y="260" key="FileChooserDialogImpl/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611903372542" />
-    <state width="1638" height="284" key="GridCell.Tab.0.bottom" timestamp="1618451994381">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state width="1878" height="284" key="GridCell.Tab.0.bottom" timestamp="1619164387809">
+      <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>
-    <state width="1878" height="457" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1612842737434" />
-    <state width="1638" height="284" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618451994381" />
-    <state width="1638" height="284" key="GridCell.Tab.0.center" timestamp="1618451994380">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state width="1878" height="284" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619164387809" />
+    <state width="1638" height="284" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619150456125" />
+    <state width="1878" height="284" key="GridCell.Tab.0.center" timestamp="1619164387808">
+      <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>
-    <state width="1878" height="457" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1612842737433" />
-    <state width="1638" height="284" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618451994380" />
-    <state width="1638" height="284" key="GridCell.Tab.0.left" timestamp="1618451994380">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state width="1878" height="284" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619164387808" />
+    <state width="1638" height="284" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619150456125" />
+    <state width="1878" height="284" key="GridCell.Tab.0.left" timestamp="1619164387807">
+      <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>
-    <state width="1878" height="457" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1612842737433" />
-    <state width="1638" height="284" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618451994380" />
-    <state width="1638" height="284" key="GridCell.Tab.0.right" timestamp="1618451994381">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state width="1878" height="284" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619164387807" />
+    <state width="1638" height="284" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619150456125" />
+    <state width="1878" height="284" key="GridCell.Tab.0.right" timestamp="1619164387808">
+      <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>
-    <state width="1878" height="457" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1612842737434" />
-    <state width="1638" height="284" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618451994381" />
+    <state width="1878" height="284" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619164387808" />
+    <state width="1638" height="284" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619150456125" />
     <state x="595" y="212" key="RollbackChangesDialog" timestamp="1616640364991">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
@@ -200,11 +225,11 @@
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618389880369" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1618451183278">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1619159033936">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="343" height="108" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1616119092573" />
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618451183278" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619159033936" />
     <state x="337" y="-827" width="766" height="750" key="run.anything.popup" timestamp="1616119120343">
       <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>

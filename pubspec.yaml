@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 4.4.0+1
+version: 5.0.0+1
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -10,57 +10,48 @@ dependencies:
   flutter:
     sdk: flutter
 
-  rxdart: ^0.24.0
+  rxdart: ^0.26.0
 
   # 網路請求庫
-  dio: 3.0.0
+  dio: 4.0.0
 
   # 解析圖片
-  image: ^2.1.7
+  image: ^3.0.2
 
   # dio 的 cookie 管理
-  dio_cookie_manager: 1.0.0
+  dio_cookie_manager: 2.0.0
 
   # 搭配 dio, 讓 dio 會自動帶入 cookie
-  cookie_jar: 1.0.1
+  cookie_jar: 3.0.1
 
   # 本地文件
-  path_provider: ^1.6.7
+  path_provider: ^2.0.1
 
   # 輕量級資料儲存
-  shared_preferences: '>=0.5.6+1 <2.0.0'
+  shared_preferences: ^2.0.5
 
   # 本地通知
-  flutter_local_notifications: ^1.1.3
+  flutter_local_notifications: ^5.0.0+1
 
   # 時間/數字格式化
-  intl: ^0.16.0
+  intl: ^0.17.0
 
   # SQLite 數據庫
-  sqflite: ^1.1.5
+  sqflite: ^2.0.0+3
 
   # android 的返回按鈕攔截
-  back_button_interceptor: ^4.0.6
+  back_button_interceptor: ^5.0.0
 
   # 列表組件
-  flutter_easyrefresh: ^2.0.5
+  flutter_easyrefresh: ^2.2.1
 
-#  animations: ^1.0.0+5
+  device_info: ^2.0.0
 
-#  flutter_spinkit: "^4.1.2"
+  package_info: ^2.0.0
 
-#  webview_flutter: ^0.3.19+9
+  decimal: ^1.0.0+1
 
-  device_info: ^0.4.2+1
-
-  package_info: ^0.4.0+16
-
-  decimal: ^0.3.5
-
-  flutter_secure_storage: ^3.3.5
-
-dependency_overrides:
-  image: 2.1.7
+  flutter_secure_storage: ^4.1.0
 
 dev_dependencies:
   flutter_test:

@@ -60,7 +60,7 @@ class _AnimatedCorePageState extends State<AnimatedCorePage>
       child: PageScaffold(
         color: Colors.black,
         haveAppBar: true,
-        resizeToAvoidBottomPadding: true,
+        resizeToAvoidBottomInset: true,
         title: title,
         child: GestureDetector(
           behavior: HitTestBehavior.translucent,
