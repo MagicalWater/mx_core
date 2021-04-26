@@ -471,7 +471,7 @@ class HttpError extends Error implements Exception {
 
   @override
   String toString() =>
-      "錯誤: 請求異常 [${response?.response?.statusCode ?? type.toString()}]: ${request.queryParameters}";
+      "錯誤: 請求異常 [${response?.response?.statusCode ?? type.toString()}]: ${request?.queryParameters}";
 
   /// 將錯誤類型轉換為真正顯示的字串
 
