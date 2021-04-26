@@ -10,18 +10,18 @@ import '../load_provider.dart';
 part 'easy_refresh_style.dart';
 
 typedef RefreshBuilder = Widget Function(
-    BuildContext context,
-    RefreshState state,
-    PlaceStyle place,
-    );
+  BuildContext context,
+  RefreshState state,
+  PlaceStyle place,
+);
 
 typedef RefreshHeaderBuilder = Header Function(
-    BuildContext context,
-    );
+  BuildContext context,
+);
 
 typedef RefreshFooterBuilder = Footer Function(
-    BuildContext context,
-    );
+  BuildContext context,
+);
 
 /// 預設 header
 RefreshHeaderBuilder _defaultHeaderBuilder;
@@ -93,7 +93,7 @@ class RefreshView extends StatefulWidget {
     Header header,
     Footer footer,
     Widget emptyWidget,
-    bool firstRefresh,
+    bool firstRefresh = false,
     Widget firstRefreshWidget,
     int headerIndex = 0,
     bool topBouncing = true,
@@ -142,6 +142,8 @@ class RefreshView extends StatefulWidget {
     Widget emptyWidget,
     bool taskIndependence = false,
     Header header,
+    bool firstRefresh = false,
+    Widget firstRefreshWidget,
     int headerIndex = 0,
     Footer footer,
     Axis scrollDirection = Axis.vertical,
@@ -164,6 +166,8 @@ class RefreshView extends StatefulWidget {
       taskIndependence: taskIndependence,
       header: header,
       headerIndex: headerIndex,
+      firstRefresh: firstRefresh,
+      firstRefreshWidget: firstRefreshWidget,
       footer: footer,
       scrollDirection: scrollDirection,
       reverse: reverse,
@@ -202,6 +206,9 @@ class RefreshView extends StatefulWidget {
     RefreshState initState = const RefreshState._init(),
     Stream<RefreshState> stateStream,
     PlaceStyle placeStyle,
+    bool firstRefresh = false,
+    Widget firstRefreshWidget,
+    int headerIndex = 0,
     RefreshBuilder placeBuilder,
     VoidCallback onRefresh,
     VoidCallback onLoadMore,
@@ -219,6 +226,7 @@ class RefreshView extends StatefulWidget {
       taskIndependence: taskIndependence,
       scrollController: scrollController,
       header: header,
+      firstRefresh: firstRefresh,
       footer: footer,
       topBouncing: topBouncing,
       bottomBouncing: bottomBouncing,
@@ -380,7 +388,6 @@ class _RefreshViewState extends State<RefreshView> {
     super.initState();
   }
 
-  
   /// 處理刷新/加載狀態
   void _handleRefreshState(RefreshState state) {
 //    print("準備處理狀態: ${state.isLoading}");
@@ -502,21 +509,21 @@ class _RefreshViewState extends State<RefreshView> {
           ? null
           : () async {
 //              print("發出刷新");
-        if (_cancelOutRefreshCount == 0) {
-          _isRefreshing = true;
-          widget.onRefresh();
-        }
-        _cancelOutRefreshCount = 0;
-      },
+              if (_cancelOutRefreshCount == 0) {
+                _isRefreshing = true;
+                widget.onRefresh();
+              }
+              _cancelOutRefreshCount = 0;
+            },
       onLoad: widget.onLoad == null
           ? null
           : () async {
-        if (_cancelOutLoadMoreCount == 0) {
-          _isLoadingMore = true;
-          widget.onLoad();
-        }
-        _cancelOutLoadMoreCount = 0;
-      },
+              if (_cancelOutLoadMoreCount == 0) {
+                _isLoadingMore = true;
+                widget.onLoad();
+              }
+              _cancelOutLoadMoreCount = 0;
+            },
     );
 
     // 當滿足以下條件, 則需要加入滑動監聽
@@ -717,8 +724,7 @@ class RefreshState {
     this.type = RefreshType.refresh,
     this.bounce = true,
     this.centerLoad = false,
-  })
-      : this.empty = false,
+  })  : this.empty = false,
         this.success = true,
         this.noMore = false,
         this.isLoading = true,
@@ -733,8 +739,7 @@ class RefreshState {
     this.noMore = false,
     this.resetLoadMore = true,
     this.noLoadMore,
-  })
-      : this.isLoading = false,
+  })  : this.isLoading = false,
         this.bounce = true,
         this.type = RefreshType.refresh,
         this.resetRefresh = false,
@@ -746,8 +751,7 @@ class RefreshState {
     this.empty = false,
     this.noMore = false,
     this.resetRefresh = false,
-  })
-      : this.isLoading = false,
+  })  : this.isLoading = false,
         this.bounce = true,
         this.type = RefreshType.loadMore,
         this.resetLoadMore = false,
