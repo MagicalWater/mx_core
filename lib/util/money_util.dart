@@ -112,11 +112,28 @@ class MoneyUtil {
 
     return true;
   }
+
+  static void setDefaultMoneyFormat([String pattern, String locale]) {
+    _defaultMoneyFormatPattern = pattern;
+    _defaultMoneyFormatLocale = locale;
+  }
 }
 
+String _defaultMoneyFormatPattern;
+String _defaultMoneyFormatLocale;
+
 extension MoneyFormat on num {
-  String moneyFormat({int minimumFractionDigits = 0, int maximumFractionDigits = 10}) {
-    var format = NumberFormat();
+
+  String moneyFormat({
+    int minimumFractionDigits = 0,
+    int maximumFractionDigits = 10,
+    String newPattern,
+    String locale,
+  }) {
+    var format = NumberFormat(
+      newPattern ?? _defaultMoneyFormatPattern,
+      locale ?? _defaultMoneyFormatLocale,
+    );
     if (maximumFractionDigits != null) {
       format.minimumFractionDigits = minimumFractionDigits;
       format.maximumFractionDigits = maximumFractionDigits;

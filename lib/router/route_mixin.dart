@@ -303,6 +303,9 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       }
       return false;
     });
+    if (index == -1) {
+      return _subPageListener;
+    }
     return _subPageListener.sublist(index);
   }
 
