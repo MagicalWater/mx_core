@@ -31,6 +31,7 @@ class LineIndicator extends StatefulWidget {
   /// 則需要設置對齊位置
   final Alignment alignment;
 
+  /// 線條顏色
   final Color color;
 
   /// 線條開始百分比位置, 0 < value < 1

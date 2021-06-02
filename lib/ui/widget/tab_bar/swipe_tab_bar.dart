@@ -22,7 +22,7 @@ class SwipeTabBar extends AbstractTabWidget {
   /// 控制器, 當有帶入值時, [currentIndex] 失效
   /// [TabController] 會接手控制 tab 的選擇
   final TabController controller;
-  
+
   /// 點選tab後自動置中, 當[scrollable]為true時有效
   final bool autoScrollCenter;
 
@@ -160,18 +160,25 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
     Widget upContainer, downContainer;
 
     if (widget.indicator != null && widget.indicator.height > 0) {
-      var lineIndicator = LineIndicator(
-        decoration: widget.indicator.decoration,
-        color: widget.indicator.color,
-        start: indicatorStart ?? 0,
-        end: indicatorEnd ?? 0,
-        duration: widget.indicator.duration,
-        curve: widget.indicator.curve,
-        maxLength: widget.indicator.maxWidth,
-        size: widget.indicator.height,
-        direction: Axis.horizontal,
-        appearAnimation: false,
-        animation: _tabController == null,
+      var indicatorBg = widget.indicator.bgDecoration;
+      if (indicatorBg == null && widget.indicator.bgColor != null) {
+        indicatorBg = BoxDecoration(color: widget.indicator.bgColor);
+      }
+      var lineIndicator = Container(
+        decoration: indicatorBg,
+        child: LineIndicator(
+          decoration: widget.indicator.decoration,
+          color: widget.indicator.color,
+          start: indicatorStart ?? 0,
+          end: indicatorEnd ?? 0,
+          duration: widget.indicator.duration,
+          curve: widget.indicator.curve,
+          maxLength: widget.indicator.maxWidth,
+          size: widget.indicator.height,
+          direction: Axis.horizontal,
+          appearAnimation: false,
+          animation: _tabController == null,
+        ),
       );
 
       switch (widget.indicator.position) {
@@ -321,7 +328,9 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   }
 
   void centerSelect(int index) {
-    if (widget.autoScrollCenter && widget.scrollable && childKeyList.length > index) {
+    if (widget.autoScrollCenter &&
+        widget.scrollable &&
+        childKeyList.length > index) {
       Scrollable.ensureVisible(
         childKeyList[index].currentContext,
         alignment: 0.5,

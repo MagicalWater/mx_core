@@ -10,11 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/normal_popup_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/normal_popup_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/line_indicator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/line_indicator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/indicator_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/indicator_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,38 +150,38 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
-    <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1611889161653">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state x="768" y="265" key="AndroidProcessChooserDialog" timestamp="1622450726088">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="578" y="253" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611889161653" />
+    <state x="768" y="265" key="AndroidProcessChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622450726088" />
     <state x="-240" y="-1042" width="1891" height="1042" maximized="true" key="DiffContextDialog" timestamp="1618451229746">
       <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>
     <state x="-240" y="-1042" width="1891" height="1042" maximized="true" key="DiffContextDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618451229746" />
-    <state x="683" y="260" key="FileChooserDialogImpl" timestamp="1611903372542">
-      <screen x="0" y="25" width="1680" height="944" />
-    </state>
-    <state x="683" y="260" key="FileChooserDialogImpl/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1611903372542" />
-    <state width="1638" height="215" key="GridCell.Tab.0.bottom" timestamp="1619408811986">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state width="1860" height="278" key="GridCell.Tab.0.bottom" timestamp="1622622832126">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1878" height="247" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619408036398" />
     <state width="1638" height="215" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619408811986" />
-    <state width="1638" height="215" key="GridCell.Tab.0.center" timestamp="1619408811985">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state width="1860" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622622832126" />
+    <state width="1860" height="278" key="GridCell.Tab.0.center" timestamp="1622622832125">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1878" height="247" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619408036398" />
     <state width="1638" height="215" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619408811985" />
-    <state width="1638" height="215" key="GridCell.Tab.0.left" timestamp="1619408811985">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state width="1860" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622622832125" />
+    <state width="1860" height="278" key="GridCell.Tab.0.left" timestamp="1622622832125">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1878" height="247" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619408036398" />
     <state width="1638" height="215" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619408811985" />
-    <state width="1638" height="215" key="GridCell.Tab.0.right" timestamp="1619408811986">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state width="1860" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622622832125" />
+    <state width="1860" height="278" key="GridCell.Tab.0.right" timestamp="1622622832126">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1878" height="247" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619408036398" />
     <state width="1638" height="215" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619408811986" />
+    <state width="1860" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622622832126" />
     <state x="595" y="212" key="RollbackChangesDialog" timestamp="1616640364991">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
@@ -186,10 +194,11 @@
       <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>
     <state x="-231" y="-1041" width="1887" height="1033" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618370759591" />
-    <state x="493" y="256" width="984" height="490" key="find.popup" timestamp="1619425038958">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state x="563" y="254" width="1125" height="540" key="find.popup" timestamp="1622618997268">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619425038957" />
+    <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622618997268" />
     <state width="300" height="96" key="javadoc.popup.new" timestamp="1619425596822">
       <screen x="0" y="25" width="1680" height="944" />
     </state>

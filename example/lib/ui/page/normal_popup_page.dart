@@ -43,12 +43,17 @@ class _NormalPopupPageState extends State<NormalPopupPage> {
       child: PageScaffold(
         haveAppBar: true,
         title: "NormalPopup",
-        child: Column(
-          children: <Widget>[
-            buildIntroduction(content),
-            buildRouteButton(),
-            buildOverlayButton(),
-          ],
+        child: InkWell(
+          onTap: () {
+            print('背景');
+          },
+          child: Column(
+            children: <Widget>[
+              buildIntroduction(content),
+              buildRouteButton(),
+              buildOverlayButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -56,7 +61,7 @@ class _NormalPopupPageState extends State<NormalPopupPage> {
 
   /// 構建 route 彈窗按鈕
   Widget buildRouteButton() {
-    return RaisedButton(
+    return ElevatedButton(
       child: Text('Route彈窗'),
       onPressed: () {
         Popup.showRoute(
@@ -95,27 +100,32 @@ class _NormalPopupPageState extends State<NormalPopupPage> {
 
   /// 構建 overlay entry 彈窗按鈕
   Widget buildOverlayButton() {
-    return RaisedButton(
+    return ElevatedButton(
       child: Text('Overlay Entry彈窗'),
       onPressed: () {
         Popup.showOverlay(
-          builder: (controller) => SafeArea(
-            child: Align(
-              child: Container(
-                width: 200,
-                height: 200,
-                child: Center(child: Text('Overlay Entry彈窗')),
-                decoration: BoxDecoration(
-                  color: Colors.redAccent,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(),
-                  ],
+          builder: (controller) => GestureDetector(
+            onTap: () {
+              print('嗨嗨');
+            },
+            child: SafeArea(
+              child: Align(
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  child: Center(child: Text('Overlay Entry彈窗')),
+                  decoration: BoxDecoration(
+                    color: Colors.redAccent,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          hitRule: HitRule.intercept,
+          hitRule: HitRule.childIntercept,
           option: PopupOption(
             maskColor: Colors.blueAccent.withAlpha(100),
             alignment: Alignment.center,

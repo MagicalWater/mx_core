@@ -188,10 +188,10 @@ class Popup {
 
     var entry = OverlayEntry(
       builder: (context) {
-        return Material(
-          color: Colors.transparent,
-          child: _TapWidget(
-            hitRule: hitRule,
+        return _TapWidget(
+          hitRule: hitRule,
+          child: Material(
+            color: Colors.transparent,
             child: GestureDetector(
               onTap: () {
                 if (hitRule == HitRule.intercept && onTapSpace != null) {
