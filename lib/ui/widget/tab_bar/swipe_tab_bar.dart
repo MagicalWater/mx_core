@@ -98,6 +98,14 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   @override
   void initState() {
     bindController(widget.controller);
+    if (widget.scrollable) {
+      tabScrollController = ScrollController();
+    }
+    if (widget.controller != null) {
+      needScrollCenter = true;
+    } else {
+      needScrollCenter = false;
+    }
     currentIndex = _tabController?.index ?? widget.currentIndex;
     super.initState();
   }
@@ -199,6 +207,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
     Widget tabStack = IntrinsicWidth(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Stack(
             children: <Widget>[
@@ -295,6 +304,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
     if (widget.scrollable) {
       tabStack = SingleChildScrollView(
+        controller: tabScrollController,
         scrollDirection: Axis.horizontal,
         child: tabStack,
       );

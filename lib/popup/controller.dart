@@ -14,6 +14,8 @@ abstract class PopupController {
   /// 刪除事件的回調
   List<VoidCallback> _removeEventCallbackList = [];
 
+  bool get isRemoved => _isRemoved;
+
   /// 註冊動畫控制器
   void registerController(AnimatedCombController controller) {
     if (_isRemoved) {

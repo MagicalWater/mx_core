@@ -52,6 +52,10 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
   /// 此為搭配 [TabController] 時使用的偏移變數
   double indexOffset;
 
+  ScrollController tabScrollController;
+
+  bool needScrollCenter = false;
+
   @override
   @mustCallSuper
   void initState() {
@@ -149,6 +153,14 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
           this.totalSize = totalSize;
           syncIndicator();
           WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            if (needScrollCenter) {
+              // print('自動轉移: ${tabScrollController != null} => ${tabRectMap[currentIndex].left}');
+              tabScrollController?.animateTo(
+                tabRectMap[currentIndex].left,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.fastLinearToSlowEaseIn,
+              );
+            }
             setState(() {});
           });
         },
@@ -218,9 +230,9 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
         var percent = indexOffset - indexShow;
 
         var leftOffset =
-            nextRect.left.subtract(showRect.left).multiply(percent);
+        nextRect.left.subtract(showRect.left).multiply(percent);
         var rightOffset =
-            nextRect.right.subtract(showRect.right).multiply(percent);
+        nextRect.right.subtract(showRect.right).multiply(percent);
 
         indicatorStart = showRect.left.add(leftOffset).divide(totalSize.width);
         indicatorEnd = showRect.right.add(rightOffset).divide(totalSize.width);
@@ -234,7 +246,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
 
         var leftOffset = showRect.left.subtract(preRect.left).multiply(percent);
         var rightOffset =
-            showRect.right.subtract(preRect.right).multiply(percent);
+        showRect.right.subtract(preRect.right).multiply(percent);
 
         indicatorStart = preRect.left.add(leftOffset).divide(totalSize.width);
         indicatorEnd = preRect.right.add(rightOffset).divide(totalSize.width);
