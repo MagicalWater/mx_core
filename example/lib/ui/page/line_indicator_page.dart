@@ -33,22 +33,36 @@ class _LineIndicatorPageState extends State<LineIndicatorPage> {
         child: Container(
 //          color: Colors.blueAccent,
           alignment: Alignment.center,
-          child: Stack(
-            children: <Widget>[
-//                LineIndicator(
-//                  color: Colors.green,
-//                  start: 0.2,
-//                  end: 0.5,
-//                ),
-              LineIndicator(
-                color: Colors.blue,
-                start: 0.1,
-                end: 1,
-                size: 10.scaleA,
-                direction: Axis.vertical,
-                alignment: Alignment.topRight,
-                duration: Duration(seconds: 5),
-                appearAnimation: false,
+          child: Column(
+            children: [
+              Text('線條指示'),
+              Container(
+                color: Colors.red,
+                child: LineIndicator(
+                  color: Colors.blue.withOpacity(0.9  ),
+                  start: 0.1,
+                  end: 1,
+                  size: 10.scaleA,
+                  direction: Axis.horizontal,
+                  alignment: Alignment.topRight,
+                  duration: Duration(seconds: 5),
+                  appearAnimation: false,
+                  places: [
+                    LinePlace(
+                      start: 0.25,
+                      end: 0.28,
+                      color: Colors.green,
+                      placeUp: true
+                    ),
+
+                    LinePlace(
+                        start: 0.65,
+                        end: 0.90,
+                        color: Colors.black,
+                        placeUp: true
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
