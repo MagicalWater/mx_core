@@ -341,7 +341,7 @@ class _LinePainter extends CustomPainter {
     var fgPlace = placePainters?.where((element) => (element.placeUp ?? true))
         ?.toList() ?? [];
 
-    print('背景: ${bgPlace.length}, 前景: ${fgPlace.length}');
+    // print('背景: ${bgPlace.length}, 前景: ${fgPlace.length}');
 
     switch (direction) {
       case Axis.horizontal:

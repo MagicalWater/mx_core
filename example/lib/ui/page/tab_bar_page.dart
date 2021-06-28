@@ -154,7 +154,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         padding: EdgeInsets.symmetric(horizontal: 20.scaleA),
       ),
       tabWidth: TabWidth.shrinkWrap(),
-      scrollable: false,
+      scrollable: true,
       tabHeight: 40.scaleA,
       gapBuilder: (context, index) => Container(width: 10.scaleW),
       header: Container(

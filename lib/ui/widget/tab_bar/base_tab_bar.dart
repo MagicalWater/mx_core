@@ -160,6 +160,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
                 duration: Duration(milliseconds: 300),
                 curve: Curves.fastLinearToSlowEaseIn,
               );
+              needScrollCenter = false;
             }
             setState(() {});
           });
