@@ -10,18 +10,16 @@ class FileUtil {
   FileUtil._();
 
   /// 取得外部儲存資料夾路徑
-  static Future<File> get exStorageDirectory async {
-    var dir = (await getExternalStorageDirectory()).path;
-    return File(dir);
+  static Future<Directory?> get exStorageDirectory {
+    return getExternalStorageDirectory();
   }
 
-  static Future<Directory> get cacheDirectory async {
+  static Future<Directory> get cacheDirectory {
     return getTemporaryDirectory();
   }
 
-  static Future<String> getAppDir() async {
-    var dir = (await getApplicationDocumentsDirectory()).path;
-    return dir;
+  static Future<Directory> get appDir {
+    return getApplicationDocumentsDirectory();
   }
 
   static Future<File> _getFile(String name) async {
@@ -31,8 +29,8 @@ class FileUtil {
 
   /// 寫入 文件/網路請求 文件到本地
   static Future<File> write({
-    @required String name,
-    @required String content,
+    required String name,
+    required String content,
   }) async {
     var file = await (await _getFile(name)).create(recursive: true);
     print("寫入檔案: ${file.path}");
@@ -40,33 +38,32 @@ class FileUtil {
   }
 
   /// 刪除本地文件
-  static Future<File> delete({
-    @required String name,
+  static Future<FileSystemEntity?> delete({
+    required String name,
   }) async {
-    var file = await _getFile(name);
-    var isFileExist = await file.exists();
+    var isFileExist = await exists(name: name);
     if (isFileExist) {
+      var file = await _getFile(name);
       print("刪除檔案: ${file.path}");
       await (file).delete(recursive: true);
     }
+    return null;
   }
 
   /// 檢查文件是否存在
   static Future<bool> exists({
-    @required String name,
+    required String name,
   }) async {
-    var file = await _getFile(name);
-    return await file.exists();
+    return (await _getFile(name)).exists();
   }
 
   /// 取得文件
-  static Future<String> readAsString({
-    @required String name,
+  static Future<String?> readAsString({
+    required String name,
   }) async {
-    var file = await _getFile(name);
     var isFileExist = await exists(name: name);
     if (isFileExist) {
-      return file.readAsString();
+      return (await _getFile(name)).readAsString();
     } else {
       return null;
     }
@@ -74,15 +71,16 @@ class FileUtil {
 
   /// 從網路下載文件
   static Future<File> writeFromNetwork({
-    @required String name,
-    @required HttpContent httpContent,
+    required String name,
+    required HttpContent httpContent,
   }) async {
     File file;
-    if (httpContent.saveInPath == null) {
+    var destination = httpContent.saveInPath;
+    if (destination != null) {
+      file = File(destination);
+    } else {
       file = await (await _getFile(name)).create(recursive: true);
       httpContent.saveInPath = file.path;
-    } else {
-      file = File(httpContent.saveInPath);
     }
     print("FileUtil - 準備連接取得資料 ${httpContent.url}");
     final _ = await HttpUtil().connect(httpContent,

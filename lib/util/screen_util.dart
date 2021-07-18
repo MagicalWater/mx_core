@@ -31,7 +31,7 @@ class Screen {
   /// 底部 bar 高
   static double get bottomBarHeight => _bottomBarH;
 
-  static ValueChanged<Orientation> orientationListener;
+  static ValueChanged<Orientation>? orientationListener;
 
   /// 裝置方向
   static Orientation get orientation => _mediaQueryData.orientation;
@@ -46,7 +46,7 @@ class Screen {
   static bool _isScreenDataBind = false;
 
   /// 最新的螢幕相關尺寸
-  static MediaQueryData _mediaQueryData;
+  static late MediaQueryData _mediaQueryData;
   static double _screenW = 360.0;
 
   /// 螢幕寬
@@ -80,8 +80,8 @@ class Screen {
   /// h 高
   /// density 像素密度
   static void setDesignWHD({
-    @required double w,
-    @required double h,
+    required double w,
+    required double h,
     double density = 3.0,
   }) {
     _designW = w;
@@ -114,14 +114,12 @@ class Screen {
       _bottomBarH = mediaQuery.padding.bottom;
       _appBarH = kToolbarHeight;
 
-      var _beforeOrientation = _mediaQueryData?.orientation;
+      var _beforeOrientation = _mediaQueryData.orientation;
       _mediaQueryData = mediaQuery;
-      var _afterOrientation = _mediaQueryData?.orientation;
+      var _afterOrientation = _mediaQueryData.orientation;
 
-      if (_beforeOrientation != null &&
-          _beforeOrientation != _afterOrientation &&
-          orientationListener != null) {
-        orientationListener(_afterOrientation);
+      if (_beforeOrientation != _afterOrientation) {
+        orientationListener?.call(_afterOrientation);
       }
 
       print('''
@@ -158,12 +156,12 @@ AppBar $appBarHeight
   }
 
   /// 返回根據螢幕寬適配尺寸
-  static double scaleW(double size, [BuildContext context]) {
+  static double scaleW(double size, [BuildContext? context]) {
     return size * _screenW / _designW;
   }
 
   /// 返回根據螢幕面積適配尺寸再依據tag乘上縮放係數
-  static double scaleA(double size, [String tag]) {
+  static double scaleA(double size, [String? tag]) {
     final scaling = _getAreaScalingCoefficient(tag);
     return _scaleA(size) * scaling;
   }
@@ -174,7 +172,7 @@ AppBar $appBarHeight
   }
 
   /// 返回根據螢面積寬適配字體尺寸再依據tag乘上對應縮放係數
-  static double scaleSp(double fontSize, [String tag]) {
+  static double scaleSp(double fontSize, [String? tag]) {
     final scaling = _getSpScalingCoefficient(tag);
     return _scaleA(fontSize) * scaling;
   }
@@ -194,13 +192,13 @@ AppBar $appBarHeight
   }
 
   /// 取得面積縮放係數
-  static double _getAreaScalingCoefficient(String tag) {
+  static double _getAreaScalingCoefficient(String? tag) {
     if (tag == null) return 1;
     return _areaScalingCoefficientMap[tag] ?? 1;
   }
 
   /// 取得字體縮放係數
-  static double _getSpScalingCoefficient(String tag) {
+  static double _getSpScalingCoefficient(String? tag) {
     if (tag == null) return 1;
     return _spScalingCoefficientMap[tag] ?? 1;
   }
@@ -217,7 +215,7 @@ AppBar $appBarHeight
     }
     if (!_isScreenDataBind) {
       _isScreenDataBind = true;
-      WidgetsBinding.instance.addObserver(_screenDataBinding);
+      WidgetsBinding.instance?.addObserver(_screenDataBinding);
     }
   }
 }

@@ -5,7 +5,7 @@ class MoneyUtil {
   MoneyUtil._();
 
   /// 每隔三位數加一個逗點, 保留多少逗點
-  static String format(num money, {int fractionDigits}) {
+  static String format(num money, {int? fractionDigits}) {
     String numString;
 
     numString = fractionDigits != null
@@ -41,7 +41,7 @@ class MoneyUtil {
   }
 
   /// 將數字字串轉為num
-  static num convert(String numText) {
+  static num? convert(String numText) {
     // 驗證數字格式是否合法
     if (!verify(numText)) return null;
 
@@ -113,31 +113,33 @@ class MoneyUtil {
     return true;
   }
 
-  static void setDefaultMoneyFormat([String pattern, String locale]) {
+  static void setDefaultMoneyFormat([String? pattern, String? locale]) {
     _defaultMoneyFormatPattern = pattern;
     _defaultMoneyFormatLocale = locale;
   }
 }
 
-String _defaultMoneyFormatPattern;
-String _defaultMoneyFormatLocale;
+String? _defaultMoneyFormatPattern;
+String? _defaultMoneyFormatLocale;
 
 extension MoneyFormat on num {
-
   String moneyFormat({
-    int minimumFractionDigits = 0,
-    int maximumFractionDigits = 10,
-    String newPattern,
-    String locale,
+    int? minimumFractionDigits = 0,
+    int? maximumFractionDigits = 10,
+    String? newPattern,
+    String? locale,
   }) {
     var format = NumberFormat(
       newPattern ?? _defaultMoneyFormatPattern,
       locale ?? _defaultMoneyFormatLocale,
     );
-    if (maximumFractionDigits != null) {
+    if (minimumFractionDigits != null) {
       format.minimumFractionDigits = minimumFractionDigits;
+    }
+    if (maximumFractionDigits != null) {
       format.maximumFractionDigits = maximumFractionDigits;
     }
+
     return format.format(this);
   }
 }

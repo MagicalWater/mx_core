@@ -8,13 +8,13 @@ import 'span.dart';
 /// 在 SpanGrid 底下, 請以此替代 [Column]
 class SpanColumn extends Column with _SpanFlexMixin {
   SpanColumn({
-    Key key,
+    Key? key,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     MainAxisSize mainAxisSize = MainAxisSize.max,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-    TextDirection textDirection,
+    TextDirection? textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
-    TextBaseline textBaseline,
+    TextBaseline? textBaseline,
     List<Widget> children = const <Widget>[],
   }) : super(
           key: key,
@@ -31,13 +31,14 @@ class SpanColumn extends Column with _SpanFlexMixin {
 /// 在 SpanGrid 底下, 請以此替代 [Row]
 class SpanRow extends Row with _SpanFlexMixin {
   SpanRow({
-    Key key,
+    Key? key,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     MainAxisSize mainAxisSize = MainAxisSize.max,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-    TextDirection textDirection,
+    TextDirection? textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
-    TextBaseline textBaseline,
+    TextBaseline?
+        textBaseline, // NO DEFAULT: we don't know what the text's baseline should be
     List<Widget> children = const <Widget>[],
   }) : super(
           key: key,
@@ -73,14 +74,15 @@ mixin _SpanFlexMixin on Flex {
 /// 或者是恢復 [Expanded] 的 flex 值
 class SpanFlex extends RenderFlex {
   SpanFlex({
-    List<RenderBox> children,
+    List<RenderBox>? children,
     Axis direction = Axis.horizontal,
     MainAxisSize mainAxisSize = MainAxisSize.max,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-    TextDirection textDirection,
+    TextDirection? textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
-    TextBaseline textBaseline,
+    TextBaseline? textBaseline,
+    Clip clipBehavior = Clip.none,
   }) : super(
           children: children,
           direction: direction,
@@ -90,6 +92,7 @@ class SpanFlex extends RenderFlex {
           textDirection: textDirection,
           verticalDirection: verticalDirection,
           textBaseline: textBaseline,
+          clipBehavior: clipBehavior,
         );
 
   Map<int, int> _oriFlex = {};
@@ -117,11 +120,11 @@ class SpanFlex extends RenderFlex {
   }
 
   T findParentRenderObject<T extends RenderBox>() {
-    AbstractNode parentBox = parent;
-    while (parentBox is! T && parentBox != null) {
-      parentBox = parentBox.parent;
+    AbstractNode? parentBox = parent;
+    while (parentBox != null && parentBox is! T) {
+      parentBox = parentBox.parent!;
     }
-    if (parentBox != null) {
+    if (parentBox != null && parentBox is T) {
       return parentBox;
     } else {
       throw '無法尋找到類型為 ${T.runtimeType.toString()} 的父親渲染類';
@@ -144,12 +147,12 @@ class SpanFlex extends RenderFlex {
 
   /// 取得所有的 flex 對應
   Map<int, int> _getAllFlex() {
-    RenderBox child = firstChild;
+    RenderBox? child = firstChild;
     var index = 0;
     var flexMap = <int, int>{};
     while (child != null) {
-      final FlexParentData childParentData = child.parentData;
-      flexMap[index] = childParentData.flex;
+      final childParentData = child.parentData as FlexParentData;
+      flexMap[index] = childParentData.flex!;
       index++;
       child = childParentData.nextSibling;
     }
@@ -159,9 +162,9 @@ class SpanFlex extends RenderFlex {
   /// 修改所有的 flex
   void _modifyAllFlex(int flex) {
     _oriFlex = _getAllFlex();
-    RenderBox child = firstChild;
+    RenderBox? child = firstChild;
     while (child != null) {
-      final FlexParentData childParentData = child.parentData;
+      final childParentData = child.parentData as FlexParentData;
       childParentData.flex = flex;
       child = childParentData.nextSibling;
     }
@@ -172,10 +175,10 @@ class SpanFlex extends RenderFlex {
     if (_oriFlex.isEmpty) {
       return;
     }
-    RenderBox child = firstChild;
+    RenderBox? child = firstChild;
     var index = 0;
     while (child != null) {
-      final FlexParentData childParentData = child.parentData;
+      final childParentData = child.parentData as FlexParentData;
       childParentData.flex = _oriFlex[index];
       index++;
       child = childParentData.nextSibling;

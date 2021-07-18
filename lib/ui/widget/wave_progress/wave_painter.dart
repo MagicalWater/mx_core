@@ -2,8 +2,8 @@ part of 'wave_progress.dart';
 
 /// 波浪進度繪製
 class _WaveProgressPainter extends CustomPainter {
-  Paint _paint1;
-  Paint _paint2;
+  late Paint _paint1;
+  late Paint _paint2;
 
   /// 構成波浪path的 offset
   final List<Offset> points1;
@@ -22,14 +22,14 @@ class _WaveProgressPainter extends CustomPainter {
   double radius;
 
   _WaveProgressPainter({
-    this.points1,
-    this.points2,
-    this.percent,
-    this.amplitude,
-    this.shape,
-    this.radius,
-    Color waveColor,
-    Color secondWaveColor,
+    required this.points1,
+    required this.points2,
+    required this.percent,
+    required this.amplitude,
+    required this.shape,
+    this.radius = 0,
+    required Color waveColor,
+    Color? secondWaveColor,
   }) {
     _paint1 = Paint()
       ..strokeWidth = 1
@@ -60,7 +60,7 @@ class _WaveProgressPainter extends CustomPainter {
       0,
       size.width,
       size.height,
-      Radius.circular(radius ?? 0),
+      Radius.circular(radius),
     );
     switch (shape) {
       case BoxShape.rectangle:

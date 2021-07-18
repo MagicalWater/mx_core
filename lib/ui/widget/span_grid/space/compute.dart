@@ -15,17 +15,17 @@ part 'vertical.dart';
 
 /// 空間計算
 class SpaceCompute {
-  Axis direction;
+  Axis get direction => remainSpace.direction;
 
   _RemainSpace remainSpace;
 
   SpaceCompute({
-    int segmentCount,
-    this.direction,
-    double segmentWidth,
-    double segmentHeight,
-    double verticalSpace,
-    double horizontalSpace,
+    required int segmentCount,
+    required Axis direction,
+    required double segmentWidth,
+    required double segmentHeight,
+    required double verticalSpace,
+    required double horizontalSpace,
   }) : remainSpace = _RemainSpace(
           segmentCount: segmentCount,
           direction: direction,
@@ -53,12 +53,14 @@ class SpaceCompute {
   }
 
   /// 橫向計算空間分配
-  List<SpaceResult> _horizontalCompute({List<AlignChildInfo> childInfo}) {
+  List<SpaceResult> _horizontalCompute(
+      {required List<AlignChildInfo> childInfo}) {
     return childInfo.map((e) => remainSpace.getFreeSpace(e)).toList();
   }
 
   /// 直向計算空間分配
-  List<SpaceResult> _verticalCompute({List<AlignChildInfo> childInfo}) {
+  List<SpaceResult> _verticalCompute(
+      {required List<AlignChildInfo> childInfo}) {
     return childInfo.map((e) => remainSpace.getFreeSpace(e)).toList();
   }
 }

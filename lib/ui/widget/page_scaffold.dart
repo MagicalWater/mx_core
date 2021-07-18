@@ -11,42 +11,42 @@ AlignmentGeometry _defaultLinearBgEnd = Alignment.bottomCenter;
 List<Color> _defaultLinearBg = [Colors.white];
 
 /// 默認 background, 優先度在 _defaultLinearBg 之上
-WidgetBuilder _defaultBackgroundBuilder;
+WidgetBuilder? _defaultBackgroundBuilder;
 
 /// 默認 menu
-WidgetBuilder _defaultMenuBuilder;
+WidgetBuilder? _defaultMenuBuilder;
 
 typedef PreferredSizeWidgetBuilder = PreferredSizeWidget Function(
   BuildContext context,
-  Widget leading,
-  String title,
-  List<Widget> actions,
+  Widget? leading,
+  String? title,
+  List<Widget>? actions,
 );
 
 /// 默認 appBar
-PreferredSizeWidgetBuilder _defaultAppBarBuilder;
+PreferredSizeWidgetBuilder? _defaultAppBarBuilder;
 
 /// 頁面基礎元件
 class PageScaffold extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
 
   /// appBar的 leading, 當 [appBar] 有值時失效
-  final Widget leading;
+  final Widget? leading;
 
   /// 純文字抬頭, 當 [appBar] 有值時失效
-  final String title;
+  final String? title;
 
   /// 抬頭元件, 優先於 [title]
-  final PreferredSizeWidget appBar;
+  final PreferredSizeWidget? appBar;
 
   /// loading 狀態顯示的 loading 元件大小
-  final double loadSize;
+  final double? loadSize;
 
   /// loading 狀態顯示的 loading 元件顏色
-  final Color loadColor;
+  final Color? loadColor;
 
   /// loading 狀態串流, 以此控制loading狀態
-  final Stream<bool> loadStream;
+  final Stream<bool>? loadStream;
 
   /// 是否有 menu
   final bool showMenu;
@@ -55,33 +55,33 @@ class PageScaffold extends StatelessWidget {
   final bool showAppBar;
 
   /// 開啟 [menu] 時的背景遮罩顏色
-  final Color drawerScrimColor;
+  final Color? drawerScrimColor;
 
   /// appBar 的 action
   /// 只有 呼叫了 [PageScaffold.setDefaultAppBar] 後才有效
-  final List<Widget> actions;
+  final List<Widget>? actions;
 
   /// 背景顏色, 當 [background] 有值時失效
-  final Color color;
+  final Color? color;
 
   /// 背景元件, 優先於 [color]
-  final Widget background;
+  final Widget? background;
 
   /// 側邊欄元件
-  final Widget menu;
+  final Widget? menu;
 
   /// 是否會因為鍵盤的盤出影響到布局
   /// 默認為 true
   final bool resizeToAvoidBottomInset;
 
   /// 下方導航欄
-  final Widget bottomNavigationBar;
+  final Widget? bottomNavigationBar;
 
   /// 背景是否蓋住 app bar
   final bool backgroundCoverAppbar;
 
   PageScaffold._({
-    @required this.child,
+    this.child,
     this.showMenu = true,
     this.showAppBar = true,
     this.loadStream,
@@ -93,28 +93,28 @@ class PageScaffold extends StatelessWidget {
     this.leading,
     this.title,
     this.background,
-    this.backgroundCoverAppbar,
+    this.backgroundCoverAppbar = false,
     this.drawerScrimColor,
-    this.resizeToAvoidBottomInset,
+    this.resizeToAvoidBottomInset = true,
     this.bottomNavigationBar,
     this.actions,
   });
 
   factory PageScaffold({
-    Widget child,
+    Widget? child,
     bool haveMenu = true,
     bool haveAppBar = true,
-    Color color,
-    PreferredSizeWidget appBar,
-    Widget menu,
-    Widget leading,
-    String title,
-    Widget background,
+    Color? color,
+    PreferredSizeWidget? appBar,
+    Widget? menu,
+    Widget? leading,
+    String? title,
+    Widget? background,
     bool backgroundCoverAppbar = false,
-    Color drawerScrimColor,
+    Color? drawerScrimColor,
     bool resizeToAvoidBottomInset = true,
-    Widget bottomNavigationBar,
-    List<Widget> actions,
+    Widget? bottomNavigationBar,
+    List<Widget>? actions,
   }) {
     // 假如有帶入 appbar 或 menu, 則對應的 haveAppBar 即 haveMenu 強制設定為 true
     if (appBar != null) haveAppBar = true;
@@ -145,7 +145,7 @@ class PageScaffold extends StatelessWidget {
     List<Color> linearColors = const [],
     AlignmentGeometry linearBegin = Alignment.topCenter,
     AlignmentGeometry linearEnd = Alignment.bottomCenter,
-    WidgetBuilder builder,
+    WidgetBuilder? builder,
   }) {
     if (linearColors.isEmpty) {
       _defaultLinearBg = [Colors.transparent];
@@ -176,18 +176,18 @@ class PageScaffold extends StatelessWidget {
         (appBar != null || _defaultAppBarBuilder != null || title != null);
 
     // 最後顯示的 menu
-    Widget lastShowMenu;
+    Widget? lastShowMenu;
     if (menuShow) {
-      lastShowMenu = menu ?? _defaultMenuBuilder(context);
+      lastShowMenu = menu ?? _defaultMenuBuilder?.call(context);
     }
 
     // 最後顯示的 appBar
-    PreferredSizeWidget lastShowAppBar;
+    PreferredSizeWidget? lastShowAppBar;
     if (appBarShow) {
       if (appBar != null) {
         lastShowAppBar = appBar;
       } else {
-        lastShowAppBar = _defaultAppBarBuilder(
+        lastShowAppBar = _defaultAppBarBuilder?.call(
           context,
           leading,
           title ?? "",
@@ -196,7 +196,7 @@ class PageScaffold extends StatelessWidget {
       }
     }
 
-    Widget backgroundWidget;
+    Widget? backgroundWidget;
 
     if (background != null) {
       // 有背景元件
@@ -208,7 +208,7 @@ class PageScaffold extends StatelessWidget {
       );
     } else if (_defaultBackgroundBuilder != null) {
       // 使用預設背景元件構建類
-      backgroundWidget = _defaultBackgroundBuilder(context);
+      backgroundWidget = _defaultBackgroundBuilder!.call(context);
     } else if (!(_defaultLinearBg.length == 1 &&
         _defaultLinearBg[0] == Colors.transparent)) {
       // _defaultLinearBg 不為空, 並且不是只有單值且顏色為透明
@@ -245,7 +245,7 @@ class PageScaffold extends StatelessWidget {
     if (loadStream != null) {
       bodyWidget = LoadProvider(
         child: bodyWidget,
-        loadStream: loadStream,
+        loadStream: loadStream!,
         style: LoadStyle(
           color: loadColor ?? Colors.blueAccent,
           size: loadSize ?? 50,
@@ -258,7 +258,7 @@ class PageScaffold extends StatelessWidget {
       if (!backgroundCoverAppbar && appBar != null) {
         backgroundWidget = Container(
           padding: EdgeInsets.only(
-            top: appBar.preferredSize.height + Screen.statusBarHeight,
+            top: appBar!.preferredSize.height + Screen.statusBarHeight,
           ),
           child: backgroundWidget,
         );

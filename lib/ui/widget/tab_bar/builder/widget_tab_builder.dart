@@ -16,37 +16,34 @@ typedef T TabStyleBuilder<T>(
 
 class WidgetTabBuilder implements SwipeTabBuilder {
   @override
-  int get actionCount => _actionCount;
+  final int tabCount;
 
   @override
-  int get tabCount => _tabCount;
-
-  final int _tabCount;
-  final int _actionCount;
+  final int actionCount;
 
   final TabWidgetBuilder tabBuilder;
-  final IndexedWidgetBuilder actionBuilder;
+  final IndexedWidgetBuilder? actionBuilder;
 
-  final TabStyleBuilder<Decoration> tabDecoration;
-  final Decoration actionDecoration;
-
-  @override
-  final EdgeInsetsGeometry padding;
+  final TabStyleBuilder<Decoration>? tabDecoration;
+  final Decoration? actionDecoration;
 
   @override
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+
+  @override
+  final EdgeInsetsGeometry? margin;
 
   WidgetTabBuilder({
-    @required this.tabBuilder,
+    required this.tabBuilder,
+    required this.tabCount,
     this.actionBuilder,
     this.tabDecoration,
     this.actionDecoration,
     this.padding,
     this.margin,
-    @required int tabCount,
-    int actionCount = 0,
-  })  : this._tabCount = tabCount,
-        this._actionCount = actionCount;
+    this.actionCount = 0,
+  }) : assert(tabCount > 0 &&
+            ((actionCount > 0 && actionBuilder != null) || actionCount == 0));
 
   TabStyleBuilder<Decoration> get swipeDecoration =>
       tabDecoration ?? _defaultDecoration;
@@ -76,7 +73,8 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   };
 
   @override
-  Widget buildActionBackground({BuildContext context, int index}) {
+  Widget buildActionBackground(
+      {required BuildContext context, required int index}) {
     var decoration = actionDecoration ?? _defaultActionDecoration;
     return Padding(
       padding: margin ?? EdgeInsets.zero,
@@ -89,7 +87,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
           ignoring: true,
           child: Opacity(
             opacity: 0,
-            child: actionBuilder(context, index),
+            child: actionBuilder!(context, index),
           ),
         ),
       ),
@@ -98,7 +96,10 @@ class WidgetTabBuilder implements SwipeTabBuilder {
 
   @override
   Widget buildActionForeground(
-      {BuildContext context, Size size, int index, onTap}) {
+      {required BuildContext context,
+      required Size size,
+      required int index,
+      required VoidCallback onTap}) {
     var decoration = actionDecoration ?? _defaultActionDecoration;
 
     return SizedOverflowBox(
@@ -117,7 +118,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
               height: size.height,
               alignment: Alignment.center,
               padding: padding,
-              child: actionBuilder(context, index),
+              child: actionBuilder!(context, index),
             ),
           ),
         ),
@@ -126,7 +127,10 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   }
 
   @override
-  Widget buildTabBackground({BuildContext context, bool selected, int index}) {
+  Widget buildTabBackground(
+      {required BuildContext context,
+      required bool selected,
+      required int index}) {
     var decoration = tabDecoration?.call(index, false) ??
         _defaultDecoration(index, selected);
 
@@ -150,7 +154,11 @@ class WidgetTabBuilder implements SwipeTabBuilder {
 
   @override
   Widget buildTabForeground(
-      {BuildContext context, Size size, bool selected, int index, onTap}) {
+      {required BuildContext context,
+      required Size size,
+      required bool selected,
+      required int index,
+      required VoidCallback onTap}) {
     var decoration =
         tabDecoration?.call(index, false) ?? _defaultDecoration(index, false);
 
@@ -180,7 +188,8 @@ class WidgetTabBuilder implements SwipeTabBuilder {
 
   BorderRadius getBorderRadius(Decoration decoration) {
     if (decoration is BoxDecoration) {
-      return decoration.borderRadius;
+      return (decoration.borderRadius as BorderRadius?) ??
+          BorderRadius.circular(9999);
     }
     return BorderRadius.zero;
   }

@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 /// 本地推送工具
 class LocalNotificationUtil {
   LocalNotificationUtil({
-    @required String androidIcon,
+    required String androidIcon,
   }) {
     /// 初始化通知設定
     FlutterLocalNotificationsPlugin plugin = FlutterLocalNotificationsPlugin();
@@ -16,28 +16,30 @@ class LocalNotificationUtil {
       android: settingsAndroid,
       iOS: settingsIOS,
     );
-    plugin.initialize(settings, onSelectNotification: onSelectNotification);
+    plugin.initialize(
+      settings,
+      onSelectNotification: onSelectNotification,
+    );
   }
 
   /// 當 iOS 版本 < 10.0, 並且應用位於前台時, 在此處可收到通知, 但是並不會顯示在螢幕上, 因此需要手動呼叫
   Future<dynamic> onReceiveIOS(
-      int id, String title, String body, String payload) {
+      int id, String? title, String? body, String? payload) async {
     print("收到前台通知: 標題 - $title, 內容 - $body");
-    return null;
   }
 
   /// 當通知被點擊時, 觸發此方法
-  Future<dynamic> onSelectNotification(String payload) {
+  Future<dynamic> onSelectNotification(String? payload) async {
     print("通知被點擊: payload - ${payload ?? "null"}");
-    return null;
   }
 
   /// 顯示一個通知
-  Future<void> showNotification(
-      {@required int id,
-      @required String title,
-      @required String content,
-      String payload}) async {
+  Future<void> showNotification({
+    required int id,
+    required String title,
+    required String content,
+    String? payload,
+  }) {
     FlutterLocalNotificationsPlugin notificationsPlugin =
         FlutterLocalNotificationsPlugin();
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -53,8 +55,13 @@ class LocalNotificationUtil {
       iOS: iOSPlatformChannelSpecifics,
     );
 //    print("觸發通知開始");
-    await notificationsPlugin.show(id, title, content, channelSpecifics,
-        payload: payload);
+    return notificationsPlugin.show(
+      id,
+      title,
+      content,
+      channelSpecifics,
+      payload: payload,
+    );
 //    print("觸發通知結束");
   }
 }

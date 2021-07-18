@@ -11,29 +11,31 @@ import 'tab_width.dart';
 
 class SwipeTabBar extends AbstractTabWidget {
   final SwipeTabBuilder tabBuilder;
-  final void Function(int preIndex, int index) onTabTap;
-  final ValueChanged<int> onActionTap;
-  final double tabHeight;
-  final TabIndicator indicator;
-  final IndexedWidgetBuilder gapBuilder;
-  final Widget header;
-  final Widget footer;
+  final void Function(int preIndex, int index)? onTabTap;
+  final ValueChanged<int>? onActionTap;
+
+  /// 默認 40.scale
+  final double? tabHeight;
+  final TabIndicator? indicator;
+  final IndexedWidgetBuilder? gapBuilder;
+  final Widget? header;
+  final Widget? footer;
 
   /// 控制器, 當有帶入值時, [currentIndex] 失效
   /// [TabController] 會接手控制 tab 的選擇
-  final TabController controller;
+  final TabController? controller;
 
   /// 點選tab後自動置中, 當[scrollable]為true時有效
   final bool autoScrollCenter;
 
   SwipeTabBar({
-    int currentIndex,
+    required this.tabBuilder,
+    int? currentIndex,
     bool scrollable = false,
     this.autoScrollCenter = true,
-    ActionWidth actionWidth,
-    TabWidth tabWidth,
+    ActionWidth actionWidth = const ActionWidth.shrinkWrap(),
+    TabWidth tabWidth = const TabWidth.shrinkWrap(),
     this.controller,
-    this.tabBuilder,
     this.indicator,
     this.tabHeight,
     this.gapBuilder,
@@ -41,30 +43,31 @@ class SwipeTabBar extends AbstractTabWidget {
     this.footer,
     this.onTabTap,
     this.onActionTap,
-  }) : super(
-          currentIndex: currentIndex,
+  })  : assert(currentIndex != null || controller != null),
+        super(
           scrollable: scrollable,
           actionWidth: actionWidth,
+          currentIndex: currentIndex,
           tabWidth: tabWidth,
           tabCount: tabBuilder.tabCount,
           actionCount: tabBuilder.actionCount,
         );
 
   factory SwipeTabBar.text({
-    int currentIndex,
-    TabController controller,
-    TextTabBuilder tabBuilder,
+    required TextTabBuilder tabBuilder,
+    int? currentIndex,
+    TabController? controller,
     bool scrollable = false,
     bool autoScrollCenter = true,
-    ActionWidth actionWidth,
-    TabWidth tabWidth,
-    double tabHeight,
-    TabIndicator indicator,
-    IndexedWidgetBuilder gapBuilder,
-    Widget header,
-    Widget footer,
-    void Function(int preIndex, int index) onTabTap,
-    ValueChanged<int> onActionTap,
+    ActionWidth actionWidth = const ActionWidth.shrinkWrap(),
+    TabWidth tabWidth = const TabWidth.shrinkWrap(),
+    double? tabHeight,
+    TabIndicator? indicator,
+    IndexedWidgetBuilder? gapBuilder,
+    Widget? header,
+    Widget? footer,
+    void Function(int preIndex, int index)? onTabTap,
+    ValueChanged<int>? onActionTap,
   }) {
     return SwipeTabBar(
       currentIndex: currentIndex,
@@ -93,7 +96,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   var _defaultHeader = Container();
   var _defaultFooter = Container();
 
-  TabController _tabController;
+  TabController? _tabController;
 
   @override
   void initState() {
@@ -106,7 +109,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
     } else {
       needScrollCenter = false;
     }
-    currentIndex = _tabController?.index ?? widget.currentIndex;
+    currentIndex = _tabController?.index ?? widget.currentIndex!;
     super.initState();
   }
 
@@ -114,12 +117,12 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   void didUpdateWidget(covariant SwipeTabBar oldWidget) {
     bindController(widget.controller);
     if (_tabController == null) {
-      currentIndex = widget.currentIndex;
+      currentIndex = widget.currentIndex!;
     }
     super.didUpdateWidget(oldWidget);
   }
 
-  void bindController(TabController controller) {
+  void bindController(TabController? controller) {
     // 先取消綁定舊有
     unbindController();
 
@@ -130,7 +133,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
   void unbindController() {
     if (_tabController != null) {
-      _tabController.removeListener(_handleControllerCallback);
+      _tabController?.removeListener(_handleControllerCallback);
       _tabController?.animation?.removeListener(_handlePageOffsetCallback);
     }
     _tabController = null;
@@ -143,17 +146,17 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   }
 
   void _handlePageOffsetCallback() {
-    indexOffset = _tabController.animation.value;
+    indexOffset = _tabController!.animation!.value;
     syncIndicator();
     // print('offset = $indexOffset');
     setState(() {});
   }
 
   void _handleControllerCallback() {
-    if (_tabController.index != currentIndex) {
+    if (_tabController!.index != currentIndex) {
       // 同步 currentIndex
       // print('切換 index: ${_tabController.index}, ${_tabController.indexIsChanging}');
-      currentIndex = _tabController.index;
+      currentIndex = _tabController!.index;
       centerSelect(currentIndex);
       syncIndicator();
       setState(() {});
@@ -165,38 +168,38 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
     var tabHeight = widget.tabHeight ?? 40.scaleA;
     double topHeight = 0, bottomHeight = 0;
     double topPadding = 0, bottomPadding = 0;
-    Widget upContainer, downContainer;
+    Widget? upContainer, downContainer;
 
-    if (widget.indicator != null && widget.indicator.height > 0) {
-      var indicatorBg = widget.indicator.bgDecoration;
-      if (indicatorBg == null && widget.indicator.bgColor != null) {
-        indicatorBg = BoxDecoration(color: widget.indicator.bgColor);
+    if (widget.indicator != null && widget.indicator!.height > 0) {
+      var indicatorBg = widget.indicator?.bgDecoration;
+      if (indicatorBg == null && widget.indicator!.bgColor != null) {
+        indicatorBg = BoxDecoration(color: widget.indicator!.bgColor);
       }
       var lineIndicator = Container(
         decoration: indicatorBg,
         child: LineIndicator(
-          decoration: widget.indicator.decoration,
-          color: widget.indicator.color,
+          decoration: widget.indicator!.decoration,
+          color: widget.indicator!.color,
           start: indicatorStart ?? 0,
           end: indicatorEnd ?? 0,
-          duration: widget.indicator.duration,
-          curve: widget.indicator.curve,
-          maxLength: widget.indicator.maxWidth,
-          size: widget.indicator.height,
+          duration: widget.indicator!.duration,
+          curve: widget.indicator!.curve,
+          maxLength: widget.indicator!.maxWidth,
+          size: widget.indicator!.height,
           direction: Axis.horizontal,
           appearAnimation: false,
           animation: _tabController == null,
         ),
       );
 
-      switch (widget.indicator.position) {
+      switch (widget.indicator!.position) {
         case VerticalDirection.up:
-          topHeight = widget.indicator.height;
+          topHeight = widget.indicator!.height;
           bottomPadding = tabHeight;
           upContainer = lineIndicator;
           break;
         case VerticalDirection.down:
-          bottomHeight = widget.indicator.height;
+          bottomHeight = widget.indicator!.height;
           topPadding = tabHeight;
           downContainer = lineIndicator;
           break;
@@ -221,18 +224,21 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
                   child: componentTabRow(
                     selectTab: (context, index) {
                       return widget.tabBuilder.buildTabBackground(
+                        context: context,
                         selected: currentIndex == index,
                         index: index,
                       );
                     },
                     unSelectTab: (context, index) {
                       return widget.tabBuilder.buildTabBackground(
+                        context: context,
                         selected: currentIndex == index,
                         index: index,
                       );
                     },
                     action: (context, index) {
                       return widget.tabBuilder.buildActionBackground(
+                        context: context,
                         index: index,
                       );
                     },
@@ -313,11 +319,12 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
     return tabStack;
   }
 
-  Widget _buildTab({int index}) {
+  Widget _buildTab({required int index}) {
     var currentSelectedIndex = currentIndex;
     var isSelected = currentSelectedIndex == index;
     return widget.tabBuilder.buildTabForeground(
-      size: tabRectMap[index].size,
+      context: context,
+      size: tabRectMap[index]!.size,
       selected: isSelected,
       index: index,
       onTap: () {
@@ -328,9 +335,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
         centerSelect(index);
 
-        if (_tabController != null) {
-          _tabController.animateTo(index);
-        }
+        _tabController?.animateTo(index);
 
         widget.onTabTap?.call(currentSelectedIndex, index);
       },
@@ -342,7 +347,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
         widget.scrollable &&
         childKeyList.length > index) {
       Scrollable.ensureVisible(
-        childKeyList[index].currentContext,
+        childKeyList[index].currentContext!,
         alignment: 0.5,
         duration: Duration(milliseconds: 300),
       );
@@ -350,15 +355,14 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
   }
 
   /// 構建 action
-  Widget _buildAction({int index}) {
-    print('構建: action = ${actionRectMap[index].size}');
+  Widget _buildAction({required int index}) {
+    // print('構建: action = ${actionRectMap[index].size}');
     return widget.tabBuilder.buildActionForeground(
-      size: actionRectMap[index].size,
+      context: context,
+      size: actionRectMap[index]!.size,
       index: index,
       onTap: () {
-        if (widget.onActionTap != null) {
-          widget.onActionTap(index);
-        }
+        widget.onActionTap?.call(index);
       },
     );
   }

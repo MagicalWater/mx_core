@@ -49,10 +49,10 @@ class _BulletPainter extends CustomPainter {
   final Paint _paint = Paint();
 
   _BulletPainter({
-    this.startPos,
-    this.endPos,
-    this.direction,
-    this.color,
+    required this.startPos,
+    required this.endPos,
+    required this.direction,
+    required this.color,
   });
 
   @override
@@ -171,13 +171,10 @@ class BulletPosition {
     switch (direction) {
       case AxisDirection.up:
         return _calculateUp(size);
-        break;
       case AxisDirection.right:
         return _calculateRight(size);
-        break;
       case AxisDirection.down:
         return _calculateDown(size);
-        break;
       case AxisDirection.left:
         return _calculateLeft(size);
     }

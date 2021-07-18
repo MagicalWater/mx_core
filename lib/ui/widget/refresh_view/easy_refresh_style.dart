@@ -8,11 +8,11 @@ class EasyRefreshStyle {
   final bool taskIndependence;
 
   /// Header
-  final Header header;
+  final Header? header;
   final int headerIndex;
 
   /// Footer
-  final Footer footer;
+  final Footer? footer;
 
   /// 子组件构造器
   final EasyRefreshChildBuilder builder;
@@ -25,12 +25,12 @@ class EasyRefreshStyle {
 
   /// 首次刷新组件
   /// 不设置时使用header
-  final Widget firstRefreshWidget;
+  final Widget? firstRefreshWidget;
 
   /// 空视图
   /// 当不为null时,只会显示空视图
   /// 保留[headerIndex]以上的内容
-  final Widget emptyWidget;
+  final Widget? emptyWidget;
 
   /// 顶部回弹(onRefresh为null时生效)
   final bool topBouncing;
@@ -46,7 +46,7 @@ class EasyRefreshStyle {
 
   /// 反向
   final bool reverse;
-  ScrollController scrollController;
+  ScrollController? scrollController;
   final bool primary;
   final bool shrinkWrap;
   final Key center;
@@ -58,18 +58,18 @@ class EasyRefreshStyle {
   /// 默认构造器
   /// 将child转换为CustomScrollView可用的slivers
   EasyRefreshStyle({
+    required this.child,
     this.taskIndependence = false,
     this.scrollController,
     this.header,
     this.footer,
-    this.firstRefresh,
+    this.firstRefresh = false,
     this.firstRefreshWidget,
-    this.headerIndex,
+    this.headerIndex = 0,
     this.emptyWidget,
     this.topBouncing = true,
     this.bottomBouncing = true,
-    @required this.child,
-  })  : this.scrollDirection = null,
+  })  : this.scrollDirection = Axis.vertical,
         this.reverse = null,
         this.builder = null,
         this.primary = null,
@@ -87,7 +87,7 @@ class EasyRefreshStyle {
   EasyRefreshStyle.custom({
     this.taskIndependence = false,
     this.header,
-    this.headerIndex,
+    this.headerIndex = 0,
     this.footer,
     this.scrollDirection = Axis.vertical,
     this.reverse = false,
@@ -104,7 +104,7 @@ class EasyRefreshStyle {
     this.emptyWidget,
     this.topBouncing = true,
     this.bottomBouncing = true,
-    @required this.slivers,
+    required this.slivers,
   })  : this.builder = null,
         this.child = null,
         this.constructorType = _EasyRefreshConstructorType.custom;
@@ -119,8 +119,8 @@ class EasyRefreshStyle {
     this.firstRefresh,
     this.topBouncing = true,
     this.bottomBouncing = true,
-    @required this.builder,
-  })  : this.scrollDirection = null,
+    required this.builder,
+  })  : this.scrollDirection = Axis.vertical,
         this.reverse = null,
         this.child = null,
         this.primary = null,

@@ -3,18 +3,14 @@ import 'dart:core';
 import 'package:intl/intl.dart';
 
 class DateUtil {
-
   DateUtil._();
 
   /// 得到某年的每月天數
   /// 閏年2月有29天
   /// 平年2月有28天
   /// 當 date 與 year 都帶時, 以 year 為主, 當都沒有帶時, 默認為今年
-  static List<int> getYearMonthDay({
-    DateTime date,
-    int year,
-  }) {
-    var februaryDays = isLeapYear(date: date, year: year) ? 29 : 28;
+  static List<int> getYearMonthDay(int year) {
+    var februaryDays = isLeapYear(year) ? 29 : 28;
     return [
       31, // 1月
       februaryDays, // 2月
@@ -38,24 +34,15 @@ class DateUtil {
   /// 判斷是否閏年, 滿足以下其中一條件即可
   /// 1. 年數是否能被4整除, 且不能被100整除
   /// 2. 能被400整除
-  static bool isLeapYear({
-    DateTime date,
+  static bool isLeapYear(
     int year,
-  }) {
-    var y = year ?? date?.year ?? DateTime
-        .now()
-        .year;
+  ) {
+    var y = year;
     if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) {
       return true;
     } else {
       return false;
     }
-  }
-
-  /// 使用默認的日期解析
-  static DateTime getDateTime(String date) {
-    DateTime dateTime = DateTime.tryParse(date);
-    return dateTime;
   }
 
   /// [date] 默認為今天
@@ -64,18 +51,18 @@ class DateUtil {
   /// [differentDayFormat]  不同天的格式
   /// [builder] 自訂格式, function 回調 [dateTime] 與當前的時間差距
   ///   * 當實現 [builder], 則 [format], [sameDayFormat], [differentDayFormat] 失效
-  static String getDateStr({
-    DateTime date,
+  static String getDateStr(
+    DateTime date, {
     String format = "yyyy-MM-dd HH:mm:ss",
-    String sameDayFormat,
-    String differentDayFormat,
-    String Function(Duration diff) builder,
+    String? sameDayFormat,
+    String? differentDayFormat,
+    String Function(Duration diff)? builder,
   }) {
-    var baseDate = date ?? DateTime.now();
+    var baseDate = date;
     String dateFormat;
     if (builder != null) {
       dateFormat = builder(baseDate.difference(DateTime.now()));
-    } else if (DateUtil.isToday(baseDate.millisecondsSinceEpoch)) {
+    } else if (DateUtil.dayIsEqual(DateTime.now(), baseDate)) {
       dateFormat = sameDayFormat ?? format;
     } else {
       dateFormat = differentDayFormat ?? format;
@@ -83,31 +70,32 @@ class DateUtil {
     return DateFormat(dateFormat).format(baseDate);
   }
 
-  /// 是否是今天
-  static bool isToday(int milliseconds, {bool isUtc = false}) {
-    if (milliseconds == null || milliseconds == 0) return false;
-    DateTime old =
-    DateTime.fromMillisecondsSinceEpoch(milliseconds, isUtc: isUtc);
-    DateTime now = isUtc ? DateTime.now().toUtc() : DateTime.now().toLocal();
-    return old.year == now.year && old.month == now.month && old.day == now.day;
-  }
-
   /// 是否同年
   static bool yearIsEqual(DateTime date1, DateTime date2) {
     return date1.year == date2.year;
   }
 
+  /// 是否同一月
+  static bool monthIsEqual(
+    DateTime date1,
+    DateTime date2,
+  ) {
+    return yearIsEqual(date1, date2) && date1.month == date2.month;
+  }
+
   /// 是否同一天
   static bool dayIsEqual(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month &&
-        date1.day == date2.day;
+    return monthIsEqual(date1, date2) && date1.day == date2.day;
+  }
+
+  /// 是否同一小時
+  static bool hourIsEqual(DateTime date1, DateTime date2) {
+    return dayIsEqual(date1, date2) && date1.hour == date2.hour;
   }
 
   /// 是否同一分鐘
   static bool minuteIsEqual(DateTime date1, DateTime date2) {
-    return date1.year == date2.year && date1.month == date2.month &&
-        date1.day == date2.day && date1.hour == date2.hour &&
-        date1.minute == date2.minute;
+    return hourIsEqual(date1, date2) && date1.minute == date2.minute;
   }
 
   /// 取得兩個時間的差距
@@ -133,7 +121,7 @@ class DateUtil {
         /// 兩個日期的差距年份
         var years = List.generate(
           endDate.year - startDate.year,
-              (index) {
+          (index) {
             return startYear + index;
           },
         );
@@ -175,7 +163,7 @@ class DateDiff {
   /// 差值數值
   int diff;
 
-  DateDiff({this.type, this.diff});
+  DateDiff({required this.type, required this.diff});
 }
 
 /// 日期類型

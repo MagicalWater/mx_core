@@ -13,10 +13,10 @@ class FocusLayout extends StatefulWidget {
   final List<Widget> children;
 
   /// 控制是否專注在某個 view
-  final FocusController controller;
+  final FocusController? controller;
 
   FocusLayout({
-    this.children,
+    required this.children,
     this.controller,
   });
 
@@ -25,10 +25,9 @@ class FocusLayout extends StatefulWidget {
 }
 
 class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
-  Orientation currentOrientation;
   PublishSubject<bool> _debounceSubject = PublishSubject();
-  TimerCore countdownDebounce;
-  StreamSubscription _subscription;
+  late TimerCore countdownDebounce;
+  late StreamSubscription _subscription;
 
   bool _currentFocus = false;
 
@@ -100,7 +99,7 @@ class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
     );
   }
 
-  List<Widget> _convertChildren({double focusHeight}) {
+  List<Widget> _convertChildren({double? focusHeight}) {
     return widget.children.map((e) {
       if (e is FocusChild) {
         var child = e.child;
@@ -130,10 +129,10 @@ class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
 }
 
 class FocusChild extends StatelessWidget {
-  final double height;
+  final double? height;
   final Widget child;
 
-  FocusChild({Key key, this.child, this.height}) : super(key: key);
+  FocusChild({Key? key, required this.child, this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -142,14 +141,14 @@ class FocusChild extends StatelessWidget {
 }
 
 class FocusController implements FocusDelegate {
-  FocusDelegate _delegate;
+  FocusDelegate? _delegate;
 
   void _bind(FocusDelegate delegate) {
     _delegate = delegate;
   }
 
   @override
-  bool get isFocus => _delegate?.isFocus;
+  bool get isFocus => _delegate?.isFocus ?? false;
 
   @override
   set isFocus(bool _isFocus) {
@@ -158,5 +157,5 @@ class FocusController implements FocusDelegate {
 }
 
 abstract class FocusDelegate {
-  bool isFocus;
+  late bool isFocus;
 }

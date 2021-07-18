@@ -41,7 +41,7 @@ class SpanGrid extends MultiChildRenderObjectWidget {
   final bool shrinkWrap;
 
   SpanGrid({
-    Key key,
+    Key? key,
     this.segmentCount = 1,
     this.direction = Axis.vertical,
     this.align = AlignType.max,
@@ -52,24 +52,23 @@ class SpanGrid extends MultiChildRenderObjectWidget {
   }) : super(
             key: key,
             children: children.map((e) {
-              if (e is Span) {
-                return e;
-              } else {
-                return Span(
-                  child: e,
-                );
-              }
+              return e is Span
+                  ? e
+                  : Span(
+                      child: e,
+                    );
             }).toList());
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return SplitBox()
-      ..segmentCount = segmentCount
-      ..direction = direction
-      ..align = align
-      ..verticalSpace = verticalSpace
-      ..horizontalSpace = horizontalSpace
-      ..shrinkWrap = shrinkWrap;
+    return SplitBox(
+      segmentCount: segmentCount,
+      direction: direction,
+      align: align,
+      verticalSpace: verticalSpace,
+      horizontalSpace: horizontalSpace,
+      shrinkWrap: shrinkWrap,
+    );
   }
 
   @override
@@ -94,8 +93,17 @@ class SplitBox extends RenderBox
   double horizontalSpace;
   bool shrinkWrap;
 
-  BoxConstraints _containerConstraint;
-  BoxConstraints _childConstraint;
+  late BoxConstraints _containerConstraint;
+  late BoxConstraints _childConstraint;
+
+  SplitBox({
+    required this.segmentCount,
+    required this.direction,
+    required this.align,
+    required this.verticalSpace,
+    required this.horizontalSpace,
+    required this.shrinkWrap,
+  }) : super();
 
   @override
   void setupParentData(RenderObject child) {
@@ -110,7 +118,7 @@ class SplitBox extends RenderBox
   }
 
   @override
-  bool hitTestChildren(BoxHitTestResult result, { Offset position }) {
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
     return defaultHitTestChildren(result, position: position);
   }
 
@@ -227,7 +235,7 @@ class SplitBox extends RenderBox
 //        });
 
         // 對齊最大的size, 因此需要再次確認layout
-        Size maxSize;
+        Size? maxSize;
 
         // 若沒有任何的 childInfo
         // 即是子元件全都為 fill 屬性
@@ -237,14 +245,14 @@ class SplitBox extends RenderBox
             switch (direction) {
               case Axis.horizontal:
                 maxSize = Size(
-                  max(maxSize.width, e.size.width),
+                  max(maxSize!.width, e.size.width),
                   _childConstraint.maxHeight,
                 );
                 break;
               case Axis.vertical:
                 maxSize = Size(
                   _childConstraint.maxWidth,
-                  max(maxSize.height, e.size.height),
+                  max(maxSize!.height, e.size.height),
                 );
                 break;
             }
@@ -252,9 +260,9 @@ class SplitBox extends RenderBox
           adjustmentInfo = _getAllChildInfo(
             childConstraint: BoxConstraints(
               minWidth: _childConstraint.minWidth,
-              maxWidth: maxSize.width,
+              maxWidth: maxSize!.width,
               minHeight: _childConstraint.minHeight,
-              maxHeight: maxSize.height,
+              maxHeight: maxSize!.height,
             ).toAlignExpanded(true),
             ignoreFill: false,
             fullSpan: false,
@@ -277,15 +285,15 @@ class SplitBox extends RenderBox
       case Axis.horizontal:
         // 如果高度無限, 則以第一個 child 為主
         if (constraints.maxHeight.isInfinite && firstChild != null) {
-          firstChild.layout(
+          firstChild!.layout(
             constraints.toAlignExpanded(false),
             parentUsesSize: true,
           );
           _childConstraint = constraints.copyWith(
-            minHeight: constraints.minHeight > firstChild.size.height
-                ? firstChild.size.height
+            minHeight: constraints.minHeight > firstChild!.size.height
+                ? firstChild!.size.height
                 : null,
-            maxHeight: firstChild.size.height,
+            maxHeight: firstChild!.size.height,
           );
           var maxHeight = (_childConstraint.maxHeight * segmentCount) +
               (segmentCount - 1) * verticalSpace;
@@ -310,16 +318,16 @@ class SplitBox extends RenderBox
       case Axis.vertical:
         // 如果寬度無限, 則以第一個 child 為主
         if (constraints.maxWidth.isInfinite && firstChild != null) {
-          firstChild.layout(
+          firstChild!.layout(
             constraints.toAlignExpanded(false),
             parentUsesSize: true,
           );
 
           _childConstraint = constraints.copyWith(
-            minWidth: constraints.minWidth > firstChild.size.width
-                ? firstChild.size.width
+            minWidth: constraints.minWidth > firstChild!.size.width
+                ? firstChild!.size.width
                 : null,
-            maxWidth: firstChild.size.width,
+            maxWidth: firstChild!.size.width,
           );
 
           var maxWidth = (_childConstraint.maxWidth * segmentCount) +
@@ -355,9 +363,9 @@ class SplitBox extends RenderBox
   /// [ignoreFill] - 忽略含有 fill 的 parentData
   /// [fullSpan] - 是否每個 fill 的子元件都滿 span
   List<AlignChildInfo> _getAllChildInfo({
-    AlignExpandedConstraints childConstraint,
-    bool ignoreFill,
-    bool fullSpan,
+    required AlignExpandedConstraints childConstraint,
+    required bool ignoreFill,
+    required bool fullSpan,
   }) {
     var allChildInfo = <AlignChildInfo>[];
     var child = firstChild;
@@ -430,7 +438,7 @@ class AlignChildInfo {
   Size size;
   int span;
 
-  AlignChildInfo({this.size, this.span});
+  AlignChildInfo({required this.size, required this.span});
 
   @override
   String toString() {

@@ -5,5 +5,5 @@ class SpaceResult {
   final Size size;
   final Offset offset;
 
-  SpaceResult({this.offset, this.size});
+  SpaceResult({required this.offset, required this.size});
 }

@@ -233,12 +233,12 @@ class Popup {
     return controller;
   }
 
-  static PopupController showArrow({
-    BuildContext context,
+  static PopupController? showArrow({
+    required BuildContext context,
+    required PopupWidgetBuilder builder,
     ArrowPopupStyle style = const ArrowPopupStyle(),
-    @required PopupWidgetBuilder builder,
-    Color maskColor,
-    void Function(PopupController controller) onTapSpace,
+    Color? maskColor,
+    void Function(PopupController controller)? onTapSpace,
   }) {
     // 先取得要 attach 到的 widget context
     var attachRect = _getRect(context);

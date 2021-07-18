@@ -8,23 +8,21 @@ class _VerticalSpace implements _AlignSpace<_VerticalSpace> {
   double top;
 
   /// 真正開始的y軸位置
-  double realTop;
+  late double realTop;
 
   double height;
 
   _VerticalSpace({
-    this.x,
-    this.span,
-    this.top,
-    this.realTop,
+    required this.x,
+    required this.top,
+    this.span = 1,
+    double? realTop,
     this.height = double.infinity,
-  }) {
-    if (realTop == null) this.realTop = top;
-  }
+  }) : this.realTop = realTop ?? top;
 
   /// 假如此空間可以容納 [info] 時, 取得將會佔用的空間, 否則返回 null
   @override
-  _VerticalSpace getSpaceIfContain(AlignChildInfo info, double verticalSpace) {
+  _VerticalSpace? getSpaceIfContain(AlignChildInfo info, double verticalSpace) {
     // 寬度佔位不夠
     if (span < info.span) return null;
 

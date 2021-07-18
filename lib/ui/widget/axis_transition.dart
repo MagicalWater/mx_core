@@ -23,21 +23,21 @@ class AxisTransition extends AnimatedWidget {
 
   AxisTransition._(
     this._tween, {
-    Key key,
-    @required this.position,
-    @required this.child,
+    Key? key,
+    required this.position,
+    required this.child,
     this.transformHitTests = true,
     this.slideIn = TransDirection.left,
-    this.slideOut,
+    this.slideOut = TransDirection.left,
   }) : super(key: key, listenable: position);
 
   factory AxisTransition({
-    Key key,
-    @required Animation<double> position,
-    @required Widget child,
+    Key? key,
+    required Animation<double> position,
+    required Widget child,
     bool transformHitTests = true,
     TransDirection slideIn = TransDirection.left,
-    TransDirection slideOut,
+    TransDirection? slideOut,
   }) {
     slideOut ??= _getReverseDirection(slideIn);
     var tween = _getInTween(slideIn);

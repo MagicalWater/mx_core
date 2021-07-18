@@ -27,32 +27,32 @@ abstract class TabBuilder implements _BaseBuilder {
 
 abstract class SwipeTabBuilder implements _BaseBuilder {
   TabStyleBuilder<Decoration> get swipeDecoration;
-  EdgeInsetsGeometry get padding;
-  EdgeInsetsGeometry get margin;
+  EdgeInsetsGeometry? get padding;
+  EdgeInsetsGeometry? get margin;
 
   Widget buildTabBackground({
-    BuildContext context,
-    bool selected,
-    int index,
+    required BuildContext context,
+    required bool selected,
+    required int index,
   });
 
   Widget buildTabForeground({
-    BuildContext context,
-    Size size,
-    bool selected,
-    int index,
-    VoidCallback onTap,
+    required BuildContext context,
+    required Size size,
+    required bool selected,
+    required int index,
+    required VoidCallback onTap,
   });
 
   Widget buildActionBackground({
-    BuildContext context,
-    int index,
+    required BuildContext context,
+    required int index,
   });
 
   Widget buildActionForeground({
-    BuildContext context,
-    Size size,
-    int index,
-    VoidCallback onTap,
+    required BuildContext context,
+    required Size size,
+    required int index,
+    required VoidCallback onTap,
   });
 }

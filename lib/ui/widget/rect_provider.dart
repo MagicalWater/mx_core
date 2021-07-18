@@ -14,9 +14,9 @@ mixin RectProviderMixin<T extends StatefulWidget> on State<T> {
 
   Stream<Rect> get widgetRectStream => _rectController.stream;
 
-  Rect _widgetRect;
+  Rect? _widgetRect;
 
-  Rect get widgetRect => _widgetRect;
+  Rect? get widgetRect => _widgetRect;
 
   /// 延遲多久取得 rect, 一般延遲越久越準確
   Duration delayGetRect() => Duration(milliseconds: 300);
@@ -59,14 +59,14 @@ mixin RectProviderMixin<T extends StatefulWidget> on State<T> {
 class RectProvider extends StatefulWidget {
   final Widget child;
 
-  final void Function(Rect rect) onRect;
+  final void Function(Rect rect)? onRect;
 
-  final void Function(Stream<Rect> rectStream) onCreated;
+  final void Function(Stream<Rect> rectStream)? onCreated;
 
-  final Duration delayGetRect;
+  final Duration? delayGetRect;
 
   RectProvider({
-    @required this.child,
+    required this.child,
     this.onCreated,
     this.onRect,
     this.delayGetRect,
@@ -80,7 +80,7 @@ class RectProvider extends StatefulWidget {
 
 class _RectProviderState extends State<RectProvider>
     with RectProviderMixin<RectProvider> {
-  StreamSubscription subscription;
+  StreamSubscription? subscription;
 
   @override
   Duration delayGetRect() {
@@ -89,12 +89,10 @@ class _RectProviderState extends State<RectProvider>
 
   @override
   void initState() {
-    if (widget.onCreated != null) {
-      widget.onCreated(widgetRectStream);
-    }
+    widget.onCreated?.call(widgetRectStream);
     if (widget.onRect != null) {
       subscription = widgetRectStream.listen((rect) {
-        widget.onRect(rect);
+        widget.onRect?.call(rect);
       });
     }
     super.initState();
@@ -115,19 +113,19 @@ class _RectProviderState extends State<RectProvider>
 /// 取得元件的rect
 /// 若 [delay] 不為 null, 則會進行等待一定時間後再進行 rect 的獲取
 /// 因此會需要等待
-FutureOr<Rect> getWidgetRect(
+FutureOr<Rect?> getWidgetRect(
   BuildContext context, {
-  Duration delay,
+  Duration? delay,
 }) async {
-  Rect rect;
+  Rect? rect;
   if (delay != null) {
     await Future.delayed(delay);
   }
-  RenderBox renderObject = context?.findRenderObject();
+  var renderObject = context.findRenderObject() as RenderBox?;
   if (renderObject != null && renderObject.attached && renderObject.hasSize) {
     Size size = renderObject.paintBounds.size;
-    var vector3 = renderObject.getTransformTo(null)?.getTranslation();
-    rect = Rect.fromLTWH(vector3?.x, vector3?.y, size?.width, size?.height);
+    var vector3 = renderObject.getTransformTo(null).getTranslation();
+    rect = Rect.fromLTWH(vector3.x, vector3.y, size.width, size.height);
   }
   return rect;
 }

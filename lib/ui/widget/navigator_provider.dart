@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-NavigatorState get navigatorIns {
+NavigatorState? get navigatorIns {
   var ins = _navigatorInitCallback?.call();
   assert(() {
     if (ins == null) {
@@ -17,7 +17,7 @@ NavigatorState get navigatorIns {
   return ins;
 }
 
-NavigatorState Function() _navigatorInitCallback;
+NavigatorState? Function()? _navigatorInitCallback;
 
 /// 提供 mx_core 使用 navigator 的類別
 /// 用於
@@ -30,7 +30,7 @@ NavigatorState Function() _navigatorInitCallback;
 ///   child: MaterialApp(),
 /// )
 class MxCoreInit extends _NavigatorProvider {
-  MxCoreInit({Key key, Widget child}) : super(key: key, child: child);
+  MxCoreInit({Key? key, required Widget child}) : super(key: key, child: child);
 
   @override
   _NavigatorProviderState createState() => _MxCoreInitState();
@@ -43,7 +43,7 @@ class _MxCoreInitState extends _NavigatorProviderState {
     super.initState();
   }
 
-  NavigatorState _getNavigator() {
+  NavigatorState? _getNavigator() {
     if (_needSearchNavigator) {
       try {
         _searchNavigatorState(context);
@@ -59,7 +59,7 @@ class _MxCoreInitState extends _NavigatorProviderState {
 class _NavigatorProvider extends StatefulWidget {
   final Widget child;
 
-  _NavigatorProvider({Key key, this.child}) : super(key: key);
+  _NavigatorProvider({Key? key, required this.child}) : super(key: key);
 
   @override
   _NavigatorProviderState createState() => _NavigatorProviderState();
@@ -67,9 +67,9 @@ class _NavigatorProvider extends StatefulWidget {
 
 class _NavigatorProviderState extends State<_NavigatorProvider> {
   /// 是否需要搜索 navigator
-  bool _needSearchNavigator;
+  late bool _needSearchNavigator;
 
-  NavigatorState _navigatorState;
+  NavigatorState? _navigatorState;
 
   @override
   void initState() {
@@ -96,7 +96,7 @@ class _NavigatorProviderState extends State<_NavigatorProvider> {
       if (element.widget is Navigator) {
         if (_navigatorState == null ||
             _navigatorState != (element as StatefulElement).state) {
-          _navigatorState = (element as StatefulElement).state;
+          _navigatorState = (element as StatefulElement).state as NavigatorState;
         }
       } else {
         element.visitChildElements(visitor);

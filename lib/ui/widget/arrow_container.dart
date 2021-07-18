@@ -27,25 +27,25 @@ class ArrowContainer extends SingleChildRenderObjectWidget {
   final double radius;
 
   /// 框內顏色
-  final Color color;
+  final Color? color;
 
   /// 框內的漸變
-  final Gradient gradient;
+  final Gradient? gradient;
 
   /// 外框顏色
-  final Color strokeColor;
+  final Color? strokeColor;
 
   /// 外框漸變
-  final Gradient strokeGradient;
+  final Gradient? strokeGradient;
 
   /// 外框size
   final double strokeWidth;
 
   /// 元件 Size callback
-  final void Function(Size size) onSized;
+  final void Function(Size size)? onSized;
 
   ArrowContainer({
-    Widget child,
+    required Widget child,
     this.shiftLeafPercent = 0,
     this.shiftRootPercent = 0,
     this.direction = AxisDirection.up,
@@ -81,10 +81,10 @@ class ArrowContainer extends SingleChildRenderObjectWidget {
 
 class _ArrowShiftBox extends RenderShiftedBox {
   /// 繪製內容的畫筆
-  Paint _fillPaint;
+  late Paint _fillPaint;
 
   /// 繪製外框的畫筆
-  Paint _strokePaint;
+  Paint? _strokePaint;
 
   /// 箭頭尖端偏移
   final double shiftLeafPercent;
@@ -112,24 +112,24 @@ class _ArrowShiftBox extends RenderShiftedBox {
       direction == AxisDirection.left || direction == AxisDirection.right;
 
   /// 子元件的 offset
-  Offset get childOffset => (child.parentData as BoxParentData).offset;
+  Offset get childOffset => (child!.parentData as BoxParentData).offset;
 
   /// 框內顏色
-  final Color color;
+  final Color? color;
 
   /// 框內漸變顏色
-  final Gradient gradient;
+  final Gradient? gradient;
 
   /// 外框漸變
-  final Gradient strokeGradient;
+  final Gradient? strokeGradient;
 
   /// 外框顏色
-  final Color strokeColor;
+  final Color? strokeColor;
 
   /// 外框size
   final double strokeWidth;
 
-  void Function(Size size) onSized;
+  void Function(Size size)? onSized;
 
   /// 因為外框size需要內縮的距離
   double get diffStrokeWidth {
@@ -140,13 +140,13 @@ class _ArrowShiftBox extends RenderShiftedBox {
   }
 
   /// 已經繪製好的 fillPath
-  Path fillPath;
+  Path? fillPath;
 
   /// 已經繪製好的 strokePath
-  Path strokePath;
+  Path? strokePath;
 
   /// 當前繪製的 Rect
-  Rect currentRect;
+  Rect? currentRect;
 
   _ArrowShiftBox({
     this.shiftLeafPercent = 0,
@@ -202,11 +202,11 @@ class _ArrowShiftBox extends RenderShiftedBox {
       minHeight: minH,
       maxHeight: maxH,
     );
-    child.layout(childConstraint, parentUsesSize: true);
+    child!.layout(childConstraint, parentUsesSize: true);
 
 //    print('childConstraint: $childConstraint, max = $constraints');
 
-    final childParentData = child.parentData as BoxParentData;
+    final childParentData = child!.parentData as BoxParentData;
     childParentData.offset = Offset(
       direction == AxisDirection.left ? arrowSize : 0,
       direction == AxisDirection.up ? arrowSize : 0,
@@ -216,13 +216,13 @@ class _ArrowShiftBox extends RenderShiftedBox {
 
     if (isArrowHorizontal) {
       size = Size(
-        child.size.width + arrowSize + diffStrokeWidth * 2,
-        child.size.height + diffStrokeWidth * 2,
+        child!.size.width + arrowSize + diffStrokeWidth * 2,
+        child!.size.height + diffStrokeWidth * 2,
       );
     } else {
       size = Size(
-        child.size.width + diffStrokeWidth * 2,
-        child.size.height + arrowSize + diffStrokeWidth * 2,
+        child!.size.width + diffStrokeWidth * 2,
+        child!.size.height + arrowSize + diffStrokeWidth * 2,
       );
     }
 
@@ -230,9 +230,7 @@ class _ArrowShiftBox extends RenderShiftedBox {
 
 //    print('size: $size');
 
-    if (onSized != null) {
-      onSized(size);
-    }
+    onSized?.call(size);
   }
 
   @override
@@ -243,8 +241,8 @@ class _ArrowShiftBox extends RenderShiftedBox {
     Rect rect = Rect.fromLTWH(
       offset.dx + childOffset.dx - diffStrokeWidth,
       offset.dy + childOffset.dy - diffStrokeWidth,
-      child.size.width + diffStrokeWidth * 2,
-      child.size.height + diffStrokeWidth * 2,
+      child!.size.width + diffStrokeWidth * 2,
+      child!.size.height + diffStrokeWidth * 2,
     );
 
     if (rect != currentRect) {
@@ -256,7 +254,7 @@ class _ArrowShiftBox extends RenderShiftedBox {
     if (fillPath == null) {
       if (gradient != null) {
         // 使用漸變
-        _fillPaint.shader = gradient.createShader(rect);
+        _fillPaint.shader = gradient!.createShader(rect);
       } else {
         // 使用純色
         _fillPaint.color = color ?? Colors.transparent;
@@ -267,9 +265,9 @@ class _ArrowShiftBox extends RenderShiftedBox {
     if (_strokePaint != null) {
       if (strokePath == null) {
         if (strokeGradient != null) {
-          _strokePaint.shader = strokeGradient.createShader(rect);
+          _strokePaint!.shader = strokeGradient!.createShader(rect);
         } else {
-          _strokePaint.color = strokeColor ?? Colors.transparent;
+          _strokePaint!.color = strokeColor ?? Colors.transparent;
         }
         strokePath = _buildPath(rect, diffStrokeWidth);
       }
@@ -278,14 +276,14 @@ class _ArrowShiftBox extends RenderShiftedBox {
       // 當 strokeWidth 會出現 fill color 凸出的問題
       // 因此先將 canvas 狀態存起來, 根據 strokePath 進行裁減
       canvas.save();
-      canvas.clipPath(strokePath);
-      canvas.drawPath(fillPath, _fillPaint);
+      canvas.clipPath(strokePath!);
+      canvas.drawPath(fillPath!, _fillPaint);
       canvas.restore();
-      canvas.clipPath(fillPath);
-      canvas.drawPath(strokePath, _strokePaint);
+      canvas.clipPath(fillPath!);
+      canvas.drawPath(strokePath!, _strokePaint!);
     } else {
-      canvas.drawPath(fillPath, _fillPaint);
-      canvas.clipPath(fillPath);
+      canvas.drawPath(fillPath!, _fillPaint);
+      canvas.clipPath(fillPath!);
     }
 
     super.paint(context, offset);

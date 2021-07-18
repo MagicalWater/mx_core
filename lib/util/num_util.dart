@@ -2,55 +2,19 @@ import 'dart:math';
 
 import 'package:decimal/decimal.dart';
 
-/**
- * @Author: Sky24n
- * @GitHub: https://github.com/Sky24n
- * @Description: Num Util.
- * @Date: 2018/9/18
- */
 
-/// Num Util.
+/// 來源 https://github.com/Sky24n
+/// 原作者 Sky24n
+/// 修改者 Water
+///
+/// 數字工具
 class NumUtil {
-  /// The parameter [fractionDigits] must be an integer satisfying: `0 <= fractionDigits <= 20`.
-  static num getNumByValueStr(String valueStr, {int fractionDigits}) {
-    double value = double.tryParse(valueStr);
-    return fractionDigits == null
-        ? value
-        : getNumByValueDouble(value, fractionDigits);
-  }
-
-  /// The parameter [fractionDigits] must be an integer satisfying: `0 <= fractionDigits <= 20`.
-  static num getNumByValueDouble(double value, int fractionDigits) {
-    if (value == null) return null;
-    String valueStr = value.toStringAsFixed(fractionDigits);
-    return fractionDigits == 0
-        ? int.tryParse(valueStr)
-        : double.tryParse(valueStr);
-  }
-
-  /// get int by value str.
-  static int getIntByValueStr(String valueStr, {int defValue = 0}) {
-    return int.tryParse(valueStr) ?? defValue;
-  }
-
-  /// get double by value str.
-  static double getDoubleByValueStr(String valueStr, {double defValue = 0}) {
-    return double.tryParse(valueStr) ?? defValue;
-  }
-
-  ///isZero
-  static bool isZero(num value) {
-    return value == null || value == 0;
-  }
-
   /// 加 (精确相加,防止精度丢失).
-  /// add (without loosing precision).
   static double add(num a, num b) {
     return addDec(a, b).toDouble();
   }
 
   /// 减 (精确相减,防止精度丢失).
-  /// subtract (without loosing precision).
   static double subtract(num a, num b) {
     return subtractDec(a, b).toDouble();
   }
@@ -96,26 +60,6 @@ class NumUtil {
     return remainderDecStr(a.toString(), b.toString());
   }
 
-  /// Relational less than operator.
-  static bool lessThan(num a, num b) {
-    return lessThanDecStr(a.toString(), b.toString());
-  }
-
-  /// Relational less than or equal operator.
-  static bool thanOrEqual(num a, num b) {
-    return thanOrEqualDecStr(a.toString(), b.toString());
-  }
-
-  /// Relational greater than operator.
-  static bool greaterThan(num a, num b) {
-    return greaterThanDecStr(a.toString(), b.toString());
-  }
-
-  /// Relational greater than or equal operator.
-  static bool greaterOrEqual(num a, num b) {
-    return greaterOrEqualDecStr(a.toString(), b.toString());
-  }
-
   /// 加
   static Decimal addDecStr(String a, String b) {
     return Decimal.parse(a) + Decimal.parse(b);
@@ -139,26 +83,6 @@ class NumUtil {
   /// 余数
   static Decimal remainderDecStr(String a, String b) {
     return Decimal.parse(a) % Decimal.parse(b);
-  }
-
-  /// Relational less than operator.
-  static bool lessThanDecStr(String a, String b) {
-    return Decimal.parse(a) < Decimal.parse(b);
-  }
-
-  /// Relational less than or equal operator.
-  static bool thanOrEqualDecStr(String a, String b) {
-    return Decimal.parse(a) <= Decimal.parse(b);
-  }
-
-  /// Relational greater than operator.
-  static bool greaterThanDecStr(String a, String b) {
-    return Decimal.parse(a) > Decimal.parse(b);
-  }
-
-  /// Relational greater than or equal operator.
-  static bool greaterOrEqualDecStr(String a, String b) {
-    return Decimal.parse(a) >= Decimal.parse(b);
   }
 }
 

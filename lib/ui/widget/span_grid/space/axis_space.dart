@@ -2,7 +2,7 @@ part of 'compute.dart';
 
 abstract class _AlignSpace<T> implements Comparable<T> {
   /// 假如此空間可以容納 [info] 時, 取得將會佔用的空間, 否則返回 null
-  T getSpaceIfContain(AlignChildInfo info, double space);
+  T? getSpaceIfContain(AlignChildInfo info, double space);
 
   /// 從此空間切下一部分空間, 回傳剩餘的空間
   List<T> cut(T other);

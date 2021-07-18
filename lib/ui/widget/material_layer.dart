@@ -13,26 +13,26 @@ import 'package:flutter/material.dart';
 /// => InkWell
 /// => child
 class MaterialLayer extends StatelessWidget {
-  final List<LayerProperties> layers;
-  final VoidCallback onTap;
-  final BorderRadius borderRadius;
+  final List<LayerProperties>? layers;
+  final VoidCallback? onTap;
+  final BorderRadius? borderRadius;
   final Widget child;
 
   MaterialLayer._({
-    this.child,
+    required this.child,
     this.layers,
     this.borderRadius,
     this.onTap,
   });
 
   factory MaterialLayer({
-    Widget child,
-    List<LayerProperties> layers,
-    TapFeedback tapStyle,
-    VoidCallback onTap,
+    required Widget child,
+    List<LayerProperties>? layers,
+    TapFeedback? tapStyle,
+    VoidCallback? onTap,
   }) {
     layers ??= [];
-    BorderRadius borderRadius;
+    BorderRadius? borderRadius;
     if (onTap != null && layers.isNotEmpty) {
       borderRadius = _getBorderRadius(layers, child);
     }
@@ -68,10 +68,10 @@ class MaterialLayer extends StatelessWidget {
   }
 
   factory MaterialLayer.single({
-    Widget child,
-    LayerProperties layer,
-    TapFeedback tapStyle,
-    VoidCallback onTap,
+    required Widget child,
+    LayerProperties? layer,
+    TapFeedback? tapStyle,
+    VoidCallback? onTap,
   }) {
     return MaterialLayer(
       layers: layer == null ? null : [layer],
@@ -88,16 +88,16 @@ class MaterialLayer extends StatelessWidget {
 }
 
 class LayerProperties {
-  AlignmentGeometry alignment;
-  EdgeInsetsGeometry padding;
-  Color color;
-  Decoration decoration;
-  Decoration foregroundDecoration;
-  double width;
-  double height;
-  BoxConstraints constraints;
-  EdgeInsetsGeometry margin;
-  Matrix4 transform;
+  AlignmentGeometry? alignment;
+  EdgeInsetsGeometry? padding;
+  Color? color;
+  Decoration? decoration;
+  Decoration? foregroundDecoration;
+  double? width;
+  double? height;
+  BoxConstraints? constraints;
+  EdgeInsetsGeometry? margin;
+  Matrix4? transform;
 
   LayerProperties({
     this.alignment,
@@ -114,8 +114,8 @@ class LayerProperties {
 }
 
 /// 從 layers 取得應該設置給 InkWell 的 borderRadius
-BorderRadius _getBorderRadius(List<LayerProperties> layers, Widget child) {
-  BorderRadius borderRadius;
+BorderRadius? _getBorderRadius(List<LayerProperties> layers, Widget child) {
+  BorderRadius? borderRadius;
 
   // 找出擁有 radius 的所有 layers
   var boxDecorationList = layers
@@ -125,14 +125,10 @@ BorderRadius _getBorderRadius(List<LayerProperties> layers, Widget child) {
       .map((e) => e.decoration as BoxDecoration)
       .toList();
 
-  if (child is Container &&
-      child.decoration != null &&
-      child.decoration is BoxDecoration) {
-    boxDecorationList.add(child.decoration);
-  } else if (child is DecoratedBox &&
-      child.decoration != null &&
-      child.decoration is BoxDecoration) {
-    boxDecorationList.add(child.decoration);
+  if (child is Container && child.decoration is BoxDecoration) {
+    boxDecorationList.add(child.decoration as BoxDecoration);
+  } else if (child is DecoratedBox && child.decoration is BoxDecoration) {
+    boxDecorationList.add(child.decoration as BoxDecoration);
   }
 
   if (boxDecorationList.isNotEmpty) {
@@ -197,10 +193,10 @@ Container _convertLayerToContainer(LayerProperties layer, Widget child) {
 }
 
 class TapFeedback {
-  Color highlightColor;
-  Color splashColor;
-  Color focusColor;
-  Color hoverColor;
+  Color? highlightColor;
+  Color? splashColor;
+  Color? focusColor;
+  Color? hoverColor;
 
   TapFeedback({
     this.highlightColor,

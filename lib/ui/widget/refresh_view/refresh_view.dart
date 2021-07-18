@@ -24,49 +24,49 @@ typedef RefreshFooterBuilder = Footer Function(
 );
 
 /// 預設 header
-RefreshHeaderBuilder _defaultHeaderBuilder;
+RefreshHeaderBuilder? _defaultHeaderBuilder;
 
 /// 預設 footer
-RefreshFooterBuilder _defaultFooterBuilder;
+RefreshFooterBuilder? _defaultFooterBuilder;
 
 /// 預設佔位提示屬性
-PlaceStyle _defaultPlaceStyle;
+PlaceStyle? _defaultPlaceStyle;
 
 /// 預設的自訂佔位元件
-RefreshBuilder _defaultPlaceBuilder;
+RefreshBuilder? _defaultPlaceBuilder;
 
 /// 可刷新元件, 內部封裝了第三方庫 [EasyRefresh]
 class RefreshView extends StatefulWidget {
   final EasyRefreshStyle _easyRefresh;
 
   /// 下拉刷新回調, null 為沒有下拉刷新
-  final VoidCallback onRefresh;
+  final VoidCallback? onRefresh;
 
   /// 初始化列表的狀態
   final RefreshState initState;
 
   /// 列表狀態流
-  final Stream<RefreshState> stateStream;
+  final Stream<RefreshState>? stateStream;
 
   /// 加載更多回調, null 為沒有加載更多
-  final VoidCallback onLoad;
+  final VoidCallback? onLoad;
 
   /// 自訂列表狀態佔位元件, 回傳 null 代表不處理, 使用預設顯示
   /// 若要顯示空則回傳 Container()
-  final RefreshBuilder placeBuilder;
+  final RefreshBuilder? placeBuilder;
 
   /// 佔位提示屬性
-  final PlaceStyle placeStyle;
+  final PlaceStyle? placeStyle;
 
   /// 中間的讀取圓圈風格
-  final RefreshLoadStyle loadStyle;
+  final RefreshLoadStyle? loadStyle;
 
   /// loading 延遲關閉時間
-  final Duration loadingDebounce;
+  final Duration? loadingDebounce;
 
   RefreshView._({
-    Key key,
-    EasyRefreshStyle easyRefreshStyle,
+    Key? key,
+    required EasyRefreshStyle easyRefreshStyle,
     this.onRefresh,
     this.onLoad,
     this.initState = const RefreshState._init(),

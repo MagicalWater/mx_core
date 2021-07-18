@@ -14,10 +14,10 @@ typedef ValueCallback<T> = Function(T);
 /// 封裝對 library - sqflite 的引用
 class DBUtil {
   /// 初始化 db, 若不存在則自動創建
-  Database _db;
+  late Database _db;
 
   /// 初始化 db 的串流
-  Future<Database> _dbFuture;
+  Future<Database>? _dbFuture;
 
   /// 初始化db, 不存在會自動創建
   /// 回調按照下列順序
@@ -25,13 +25,13 @@ class DBUtil {
   /// 2. [onCreate]或[onUpgrade]或[onDowngrade] - 數據庫不存在/版本升級/版本降級 回調
   /// 5. [onOpen] - 數據庫開啟前最後一次回調
   Future<void> initDB({
-    @required String dbName,
-    int version,
-    OnDatabaseConfigureFn onConfigure,
-    ValueCallback<int> onCreate,
-    DatabaseVersionChange onUpgrade,
-    DatabaseVersionChange onDowngrade,
-    VoidCallback onOpen,
+    required String dbName,
+    int? version,
+    OnDatabaseConfigureFn? onConfigure,
+    ValueCallback<int>? onCreate,
+    DatabaseVersionChange? onUpgrade,
+    DatabaseVersionChange? onDowngrade,
+    VoidCallback? onOpen,
   }) async {
     var databasesPath = await getDatabasesPath();
 
@@ -48,28 +48,20 @@ class DBUtil {
       version: version,
       onConfigure: onConfigure,
       onCreate: (_, ver) {
-        if (onCreate != null) {
-          onCreate(ver);
-        }
+        onCreate?.call(ver);
       },
       onUpgrade: (_, oldVer, newVer) {
-        if (onUpgrade != null) {
-          onUpgrade(oldVer, newVer);
-        }
+        onUpgrade?.call(oldVer, newVer);
       },
       onDowngrade: (_, oldVer, newVer) {
-        if (onDowngrade != null) {
-          onDowngrade(oldVer, newVer);
-        }
+        onDowngrade?.call(oldVer, newVer);
       },
       onOpen: (_) {
-        if (onOpen != null) {
-          onOpen();
-        }
+        onOpen?.call();
       },
     );
 
-    _db = await _dbFuture;
+    _db = await _dbFuture!;
   }
 
   /// 等待 db 的初始化完成
@@ -91,7 +83,7 @@ class DBUtil {
   /// 新增一筆
   Future<int> insertItem(
     SQLiteTable table, {
-    @required Map<String, dynamic> values,
+    required Map<String, Object?> values,
   }) async {
     await _dbInitCheck();
     return _db.insert("${table.tableName}", values);
@@ -105,7 +97,7 @@ class DBUtil {
   }
 
   /// 查詢總筆數
-  Future<int> getTotalCount(SQLiteTable table) async {
+  Future<int?> getTotalCount(SQLiteTable table) async {
     await _dbInitCheck();
     return Sqflite.firstIntValue(
         await _db.rawQuery("SELECT COUNT(*) FROM ${table.tableName}"));
@@ -117,8 +109,8 @@ class DBUtil {
   /// whereArgs - [codeValue, dataValue]
   Future<List<Map<String, dynamic>>> getItem(
     SQLiteTable table, {
-    String where,
-    List<dynamic> whereArgs,
+    String? where,
+    List<dynamic>? whereArgs,
   }) async {
     await _dbInitCheck();
     return await _db.query(table.tableName, where: where, whereArgs: whereArgs);
@@ -133,23 +125,31 @@ class DBUtil {
   /// 根據條件刪除
   Future<int> deleteItem(
     SQLiteTable table, {
-    String where,
-    List<dynamic> whereArgs,
+    String? where,
+    List<Object?>? whereArgs,
   }) async {
     await _dbInitCheck();
-    return _db.delete(table.tableName, where: where, whereArgs: whereArgs);
+    return _db.delete(
+      table.tableName,
+      where: where,
+      whereArgs: whereArgs,
+    );
   }
 
   /// 修改/更新
   Future<int> updateItem(
     SQLiteTable table, {
-    @required Map<String, dynamic> values,
-    String where,
-    List<dynamic> whereArgs,
+    required Map<String, Object?> values,
+    String? where,
+    List<Object?>? whereArgs,
   }) async {
     await _dbInitCheck();
-    return _db.update(table.tableName, values,
-        where: where, whereArgs: whereArgs);
+    return _db.update(
+      table.tableName,
+      values,
+      where: where,
+      whereArgs: whereArgs,
+    );
   }
 
   /// 關閉 db
@@ -157,7 +157,6 @@ class DBUtil {
     await _dbInitCheck();
     _dbFuture = null;
     await _db.close();
-    _db = null;
   }
 
   /// 取得創建表的命令

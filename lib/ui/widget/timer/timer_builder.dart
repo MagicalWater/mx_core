@@ -20,13 +20,13 @@ class TimerBuilder extends StatefulWidget {
   final TimerWidgetBuilder builder;
 
   /// 倒數時間, 當 [timerCore] 有值時失效
-  final Duration time;
+  final Duration? time;
 
   /// 觸發tick間隔, 當 [timerCore] 有值時失效
-  final Duration tickInterval;
+  final Duration? tickInterval;
 
   /// 回傳倒數計時控制器
-  final OnTimerWidgetCreated onCreated;
+  final OnTimerWidgetCreated? onCreated;
 
   /// 由外部傳入 timer 倒數計時核心
   /// 此參數傳入時將忽略 [time] 以及 [tickInterval] 參數
@@ -34,7 +34,7 @@ class TimerBuilder extends StatefulWidget {
   /// 通常用於全局
   /// 生命週期由外部自行控制
   /// 此元件 dispose 時將不會自動 dispose timerCore
-  final TimerCore timerCore;
+  final TimerCore? timerCore;
 
   /// 是否自動開始倒數
   final bool autoStart;
@@ -43,9 +43,9 @@ class TimerBuilder extends StatefulWidget {
     this.time,
     this.tickInterval,
     this.timerCore,
-    this.autoStart,
+    this.autoStart = false,
     this.onCreated,
-    @required this.builder,
+    required this.builder,
   }) : assert((time != null && tickInterval != null) || timerCore != null);
 
   @override
@@ -53,31 +53,29 @@ class TimerBuilder extends StatefulWidget {
 }
 
 class _TimerBuilderState extends State<TimerBuilder> implements TimerController {
-  TimerCore _timerCore;
+  late TimerCore _timerCore;
 
-  StreamSubscription _timerEventSubscription;
+  late StreamSubscription _timerEventSubscription;
 
   @override
   bool get isActive => _timerCore.status != TimerStatus.active;
 
   /// 是否由外部自行傳入的 timerCore
-  bool isCustomTimerCore;
+  late bool isCustomTimerCore;
 
   @override
   void initState() {
     isCustomTimerCore = widget.timerCore != null;
     _timerCore = widget.timerCore ??
         TimerCore(
-          totalTime: widget.time,
-          tickInterval: widget.tickInterval,
+          totalTime: widget.time!,
+          tickInterval: widget.tickInterval!,
         );
     _timerEventSubscription = _timerCore.timerStream.listen((data) {
       setState(() {});
     });
-    if (widget.onCreated != null) {
-      widget.onCreated(this);
-    }
-    if (widget.autoStart == true) {
+    widget.onCreated?.call(this);
+    if (widget.autoStart) {
       start();
     }
     super.initState();
@@ -112,10 +110,10 @@ class _TimerBuilderState extends State<TimerBuilder> implements TimerController 
 
   @override
   void dispose() {
-    _timerEventSubscription?.cancel();
+    _timerEventSubscription.cancel();
     // 若 timerCore 是由外部傳入, 則不動作
     if (!isCustomTimerCore) {
-      _timerCore?.dispose();
+      _timerCore.dispose();
     }
     super.dispose();
   }

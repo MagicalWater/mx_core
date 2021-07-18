@@ -9,22 +9,27 @@ class _PlacePainter {
   double start, end;
   bool placeUp;
 
-  _PlacePainter(
-      {this.decoration, this.painter, this.start, this.end, this.placeUp});
+  _PlacePainter({
+    required this.decoration,
+    required this.painter,
+    required this.start,
+    required this.end,
+    required this.placeUp,
+  });
 }
 
 class LinePlace {
   double start, end;
-  Decoration decoration;
-  Color color;
+  Decoration? decoration;
+  Color? color;
   bool placeUp;
 
   LinePlace({
-    this.start,
-    this.end,
+    required this.start,
+    required this.end,
     this.decoration,
     this.color,
-    this.placeUp,
+    this.placeUp = true,
   });
 }
 
@@ -35,29 +40,29 @@ class LineIndicator extends StatefulWidget {
   final Axis direction;
 
   /// 線的粗細, 沒帶入則占滿
-  final double size;
+  final double? size;
 
   /// 線最大長度
   /// 依照 [direction] 不同所指不同
   /// [Axis.horizontal] => 線條最大寬度
   /// [Axis.vertical] => 線條最大高度
-  final double maxLength;
+  final double? maxLength;
 
   /// 線的邊距
   /// 依照 [direction] 不同所指不同
   /// [Axis.horizontal] => 線條橫向邊距
   /// [Axis.vertical] => 線條最大高度
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   /// 此參數優先於 color
-  final Decoration decoration;
+  final Decoration? decoration;
 
   /// 若線條空間沒填滿
   /// 則需要設置對齊位置
   final Alignment alignment;
 
   /// 線條顏色
-  final Color color;
+  final Color? color;
 
   /// 線條開始百分比位置, 0 < value < 1
   final double start;
@@ -78,9 +83,11 @@ class LineIndicator extends StatefulWidget {
   final bool animation;
 
   /// 線條佔位
-  final List<LinePlace> places;
+  final List<LinePlace>? places;
 
   LineIndicator({
+    required this.start,
+    required this.end,
     this.color,
     this.decoration,
     this.direction = Axis.horizontal,
@@ -88,8 +95,6 @@ class LineIndicator extends StatefulWidget {
     this.size,
     this.maxLength,
     this.padding,
-    this.start,
-    this.end,
     this.curve = Curves.easeInOutSine,
     this.duration = const Duration(milliseconds: 300),
     this.places,
@@ -103,22 +108,22 @@ class LineIndicator extends StatefulWidget {
 
 class _LineIndicatorState extends State<LineIndicator>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
-  Tween<double> startTween;
-  Tween<double> endTween;
+  Tween<double>? startTween;
+  Tween<double>? endTween;
 
-  Animation<double> startAnim;
-  Animation<double> endAnim;
+  Animation<double>? startAnim;
+  Animation<double>? endAnim;
 
-  double currentStart;
-  double currentEnd;
+  double currentStart = 0;
+  double currentEnd = 0;
 
-  BoxPainter painter;
+  BoxPainter? painter;
 
   List<_PlacePainter> placePainter = [];
 
-  Decoration currentDecoration;
+  Decoration? currentDecoration;
 
   @override
   void initState() {
@@ -132,16 +137,16 @@ class _LineIndicatorState extends State<LineIndicator>
   }
 
   void _handleAnimValueUpdate() {
-    currentStart = startAnim.value;
-    currentEnd = endAnim.value;
+    currentStart = startAnim!.value;
+    currentEnd = endAnim!.value;
     setState(() {});
   }
 
   void releaseAllPlacePainter() {
-    placePainter?.forEach((element) {
-      element.painter?.dispose();
+    placePainter.forEach((element) {
+      element.painter.dispose();
     });
-    placePainter?.clear();
+    placePainter.clear();
   }
 
   @override
@@ -160,37 +165,36 @@ class _LineIndicatorState extends State<LineIndicator>
     }
 
     currentDecoration = newDecoration;
-    painter ??= currentDecoration.createBoxPainter(() {
+    painter ??= currentDecoration!.createBoxPainter(() {
       print('需要重繪');
       setState(() {});
     });
 
     // 同步 widget.places 與 placePainter 的數量
     void _syncPlacePainter() {
-      if (widget.places == null || widget.places.isEmpty) {
+      var places = widget.places ?? [];
+      if (places.isEmpty) {
         releaseAllPlacePainter();
         return;
       }
 
-      for (var i = 0; i < (widget.places?.length ?? 0); i++) {
-        var newPlace = widget.places[i];
-        var placeDecoration = newPlace.decoration ??
-            BoxDecoration(color: newPlace.color);
+      for (var i = 0; i < places.length; i++) {
+        var newPlace = widget.places![i];
+        var placeDecoration =
+            newPlace.decoration ?? BoxDecoration(color: newPlace.color);
         if (placePainter.length > i) {
           var painterPair = placePainter[i];
-          if (painterPair.decoration != null &&
-              painterPair.decoration != placeDecoration) {
-            painterPair.painter?.dispose();
-            painterPair.painter = null;
+          if (painterPair.decoration != placeDecoration) {
+            painterPair.painter.dispose();
+            painterPair.decoration = placeDecoration;
+            painterPair.painter = painterPair.decoration.createBoxPainter(() {
+              setState(() {});
+            });
           }
 
           painterPair.start = newPlace.start;
           painterPair.end = newPlace.end;
           painterPair.placeUp = newPlace.placeUp;
-          painterPair.decoration = placeDecoration;
-          painterPair.painter ??= painterPair.decoration.createBoxPainter(() {
-            setState(() {});
-          });
         } else {
           var painter = _PlacePainter(
             decoration: placeDecoration,
@@ -205,26 +209,20 @@ class _LineIndicatorState extends State<LineIndicator>
         }
       }
 
-      if (placePainter.length > widget.places.length) {
-        placePainter
-            .removeLast()
-            .painter
-            ?.dispose();
+      if (placePainter.length > places.length) {
+        placePainter.removeLast().painter.dispose();
       }
     }
 
     _syncPlacePainter();
 
-    if (currentStart != null &&
-        currentStart == widget.start &&
-        currentEnd != null &&
-        currentEnd == widget.end) {
+    if (currentStart == widget.start && currentEnd == widget.end) {
       return;
     }
 
     if (!widget.appearAnimation) {
-      var isStartAppear = currentStart == null || (currentStart == currentEnd);
-      var isEndAppear = currentEnd == null || (currentStart == currentEnd);
+      var isStartAppear = currentStart == 0 || (currentStart == currentEnd);
+      var isEndAppear = currentEnd == 0 || (currentStart == currentEnd);
 
       if (isStartAppear && isEndAppear) {
         currentStart = widget.start;
@@ -240,33 +238,37 @@ class _LineIndicatorState extends State<LineIndicator>
     }
 
     if (startTween != null) {
-      startTween.begin = currentStart ?? 0;
-      startTween.end = widget.start;
+      startTween!.begin = currentStart;
+      startTween!.end = widget.start;
     } else {
       double startPoint;
-      if (currentStart == null && currentEnd == null) {
+      if (currentStart == 0 && currentEnd == 0) {
         startPoint = (widget.start + widget.end) / 2;
       } else {
-        startPoint = currentStart ?? 0;
+        startPoint = currentStart;
       }
       startTween = Tween(begin: startPoint, end: widget.start);
-      startAnim = startTween
-          .animate(CurvedAnimation(parent: _controller, curve: widget.curve));
+      startAnim = startTween!.animate(CurvedAnimation(
+        parent: _controller,
+        curve: widget.curve,
+      ));
     }
 
     if (endTween != null) {
-      endTween.begin = currentEnd ?? 0;
-      endTween.end = widget.end;
+      endTween!.begin = currentEnd;
+      endTween!.end = widget.end;
     } else {
       double endPoint;
-      if (currentStart == null && currentEnd == null) {
+      if (currentStart == 0 && currentEnd == 0) {
         endPoint = (widget.start + widget.end) / 2;
       } else {
-        endPoint = currentEnd ?? 0;
+        endPoint = currentEnd;
       }
       endTween = Tween(begin: endPoint, end: widget.end);
-      endAnim = endTween
-          .animate(CurvedAnimation(parent: _controller, curve: widget.curve));
+      endAnim = endTween!.animate(CurvedAnimation(
+        parent: _controller,
+        curve: widget.curve,
+      ));
     }
 
     _controller.reset();
@@ -280,14 +282,14 @@ class _LineIndicatorState extends State<LineIndicator>
       height: widget.direction == Axis.horizontal ? widget.size : null,
       child: CustomPaint(
         painter: _LinePainter(
-          start: currentStart ?? 0,
-          end: currentEnd ?? 0,
+          start: currentStart,
+          end: currentEnd,
           lineSize: widget.size,
           maxLength: widget.maxLength,
           padding: widget.padding ?? EdgeInsets.zero,
           direction: widget.direction,
           alignment: widget.alignment,
-          painter: painter,
+          painter: painter!,
           placePainters: placePainter,
         ),
         child: Container(),
@@ -312,9 +314,9 @@ class _LinePainter extends CustomPainter {
   /// 元件大小, 整個粒子運動空間
   final double start, end;
 
-  double lineSize;
+  double? lineSize;
   final Axis direction;
-  final double maxLength;
+  final double? maxLength;
   final EdgeInsetsGeometry padding;
   final Alignment alignment;
 
@@ -323,23 +325,21 @@ class _LinePainter extends CustomPainter {
   List<_PlacePainter> placePainters;
 
   _LinePainter({
-    this.start,
-    this.end,
+    required this.start,
+    required this.end,
+    required this.padding,
+    required this.direction,
+    required this.alignment,
+    required this.painter,
+    required this.placePainters,
     this.lineSize,
     this.maxLength,
-    this.padding,
-    this.direction,
-    this.alignment,
-    this.painter,
-    this.placePainters,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    var bgPlace = placePainters?.where((element) => !(element.placeUp ?? true))
-        ?.toList() ?? [];
-    var fgPlace = placePainters?.where((element) => (element.placeUp ?? true))
-        ?.toList() ?? [];
+    var bgPlace = placePainters.where((element) => !element.placeUp).toList();
+    var fgPlace = placePainters.where((element) => element.placeUp).toList();
 
     // print('背景: ${bgPlace.length}, 前景: ${fgPlace.length}');
 
@@ -347,33 +347,37 @@ class _LinePainter extends CustomPainter {
       case Axis.horizontal:
         lineSize ??= size.height;
         bgPlace.forEach((element) {
-          _paintHorizontal(canvas, size, element.painter, element.start, element.end);
+          _paintHorizontal(
+              canvas, size, element.painter, element.start, element.end);
         });
         _paintHorizontal(canvas, size, painter, start, end);
         fgPlace.forEach((element) {
-          _paintHorizontal(canvas, size, element.painter, element.start, element.end);
+          _paintHorizontal(
+              canvas, size, element.painter, element.start, element.end);
         });
         break;
       case Axis.vertical:
         lineSize ??= size.width;
         bgPlace.forEach((element) {
-          _paintVertical(canvas, size, element.painter, element.start, element.end);
+          _paintVertical(
+              canvas, size, element.painter, element.start, element.end);
         });
         _paintVertical(canvas, size, painter, start, end);
         fgPlace.forEach((element) {
-          _paintVertical(canvas, size, element.painter, element.start, element.end);
+          _paintVertical(
+              canvas, size, element.painter, element.start, element.end);
         });
         break;
     }
   }
 
-  void _paintVertical(Canvas canvas, Size size, BoxPainter painter,
-      double start, double end) {
+  void _paintVertical(
+      Canvas canvas, Size size, BoxPainter painter, double start, double end) {
     var startPos = size.height * start;
     var endPos = size.height * end;
 
     double startX = 0;
-    var lineWidth = min(lineSize, size.width);
+    var lineWidth = min(lineSize ?? double.infinity, size.width);
 
     if (padding is EdgeInsets) {
       startPos += (padding as EdgeInsets).top;
@@ -395,8 +399,8 @@ class _LinePainter extends CustomPainter {
 
     var length = endPos - startPos;
 
-    if (maxLength != null && maxLength < length) {
-      var halfLength = NumUtil.divide(maxLength, 2);
+    if (maxLength != null && maxLength! < length) {
+      var halfLength = NumUtil.divide(maxLength!, 2);
 
       var minPos = startPos + halfLength;
       var maxPos = endPos - halfLength;
@@ -404,7 +408,7 @@ class _LinePainter extends CustomPainter {
       var startOffset = alignment.withinRect(rect);
 
       startPos = startOffset.dy - halfLength;
-      endPos = startPos + maxLength;
+      endPos = startPos + maxLength!;
     }
 
     painter.paint(
@@ -416,13 +420,13 @@ class _LinePainter extends CustomPainter {
     );
   }
 
-  void _paintHorizontal(Canvas canvas, Size size, BoxPainter painter,
-      double start, double end) {
+  void _paintHorizontal(
+      Canvas canvas, Size size, BoxPainter painter, double start, double end) {
     var startPos = size.width * start;
     var endPos = size.width * end;
 
     double startY = 0;
-    var lineWidth = min(lineSize, size.height);
+    var lineWidth = min(lineSize ?? double.infinity, size.height);
 
     if (padding is EdgeInsets) {
       startPos += (padding as EdgeInsets).left;
@@ -443,8 +447,8 @@ class _LinePainter extends CustomPainter {
 
     var length = endPos - startPos;
 
-    if (maxLength != null && maxLength < length) {
-      var halfLength = NumUtil.divide(maxLength, 2);
+    if (maxLength != null && maxLength! < length) {
+      var halfLength = NumUtil.divide(maxLength!, 2);
 
       var minPos = startPos + halfLength;
       var maxPos = endPos - halfLength;
@@ -452,7 +456,7 @@ class _LinePainter extends CustomPainter {
       var startOffset = alignment.withinRect(rect);
 
       startPos = startOffset.dx - halfLength;
-      endPos = startPos + maxLength;
+      endPos = startPos + maxLength!;
     }
 
     painter.paint(

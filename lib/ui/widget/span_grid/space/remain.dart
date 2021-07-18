@@ -9,15 +9,15 @@ class _RemainSpace {
   double verticalSpace;
   double horizontalSpace;
 
-  List<_AlignSpace> remainSpace;
+  late List<_AlignSpace> remainSpace;
 
   _RemainSpace({
-    this.segmentCount,
-    this.direction,
-    this.segmentHeight,
-    this.segmentWidth,
-    this.verticalSpace,
-    this.horizontalSpace,
+    required this.segmentCount,
+    required this.direction,
+    required this.segmentHeight,
+    required this.segmentWidth,
+    required this.verticalSpace,
+    required this.horizontalSpace,
   }) {
     switch (direction) {
       case Axis.horizontal:
@@ -37,7 +37,7 @@ class _RemainSpace {
 //    print('尋找需要空間: $info');
 
     // 遍歷所有的剩餘空間, 尋找可容納child的
-    _AlignSpace findSpace;
+    _AlignSpace? findSpace;
     remainSpace.firstWhere((e) {
       findSpace = e.getSpaceIfContain(
         info,

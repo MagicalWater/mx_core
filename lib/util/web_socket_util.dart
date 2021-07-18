@@ -9,16 +9,16 @@ class WebSocketUtil {
   int errorRetry;
 
   /// 保持連線的 ping 間隔
-  Duration pingInterval;
+  Duration? pingInterval;
 
   /// 等待 pong 回應的 timeout 時間
-  Duration pongTimeout;
+  Duration? pongTimeout;
 
   /// 重新嘗試連接的間隔, 默認 5 秒
   Duration retryInterval;
 
   /// 當時間到需要再進行 ping 時
-  void Function() onPing;
+  void Function()? onPing;
 
   WebSocketUtil({
     this.errorRetry = 1,
@@ -31,11 +31,11 @@ class WebSocketUtil {
   }
 
   /// 當前連接的相關屬性, 給外部 get 看得
-  String get url => _url;
+  String? get url => _url;
 
-  Iterable<String> get protocols => _protocols;
+  Iterable<String>? get protocols => _protocols;
 
-  Map<String, dynamic> get headers => _headers;
+  Map<String, dynamic>? get headers => _headers;
 
   /// 狀態串流
   Stream<SocketStatus> get statusStream => _statusSubject.stream;
@@ -55,16 +55,16 @@ class WebSocketUtil {
   /// 當前是否是連線狀態
   bool get isConnecting => status == SocketStatus.connect;
 
-  WebSocket _webSocket;
+  WebSocket? _webSocket;
 
   /// ping 的倒數監聽
-  StreamSubscription _pingSubscription;
+  StreamSubscription? _pingSubscription;
 
   /// pong 的倒數監聽
-  StreamSubscription _pongSubscription;
+  StreamSubscription? _pongSubscription;
 
   /// 重新嘗試連線的倒數監聽
-  StreamSubscription _retrySubscription;
+  StreamSubscription? _retrySubscription;
 
   /// 當前發生錯誤的次數
   int _nowRetryCount = 0;
@@ -81,18 +81,18 @@ class WebSocketUtil {
   BehaviorSubject<dynamic> _errorSubject = BehaviorSubject();
 
   /// 當前連接的相關屬性
-  String _url;
-  Iterable<String> _protocols;
-  Map<String, dynamic> _headers;
+  String? _url;
+  Iterable<String>? _protocols;
+  Map<String, dynamic>? _headers;
 
-  StreamSubscription _streamSubscription;
+  StreamSubscription? _streamSubscription;
 
   /// 連接伺服器
   /// [autoRetry] 第一次連線失敗後是否自動嘗試重新連線
   Future<bool> connect({
-    @required String url,
-    Iterable<String> protocols,
-    Map<String, dynamic> headers,
+    required String url,
+    Iterable<String>? protocols,
+    Map<String, dynamic>? headers,
     bool failRetry = true,
   }) async {
     disconnect();
@@ -135,7 +135,7 @@ class WebSocketUtil {
     _startPingPeriodic(url);
 
     // 監聽訊息
-    _streamSubscription = _webSocket.listen((data) {
+    _streamSubscription = _webSocket?.listen((data) {
 //      print("WebSocket 監聽: $data");
       /// 接收到資料, 重設 pingpong 倒數計時器
       _startPingPeriodic(url);
@@ -166,7 +166,7 @@ class WebSocketUtil {
   }
 
   /// 斷開連接
-  Future<Null> disconnect({int closeCode, String closeReason}) async {
+  Future<Null> disconnect({int? closeCode, String? closeReason}) async {
     print('關閉 socket');
     await _streamSubscription?.cancel();
     await _webSocket?.close(closeCode, closeReason);
@@ -179,9 +179,9 @@ class WebSocketUtil {
 
   /// 嘗試重新連線,
   void retryConnect({
-    @required String url,
-    Iterable<String> protocols,
-    Map<String, dynamic> headers,
+    required String url,
+    Iterable<String>? protocols,
+    Map<String, dynamic>? headers,
   }) {
     _cancelCountdown();
     print(
@@ -212,14 +212,16 @@ class WebSocketUtil {
   /// 開始 ping 倒數
   void _startPingPeriodic(String url) {
     _cancelCountdown();
-    if (pingInterval != null && pongTimeout != null && onPing != null) {
-      _pingSubscription = TimerStream('', pingInterval).listen((_) {
+    final pPing = pingInterval;
+    final pPong = pongTimeout;
+    if (pPing != null && pPong != null && onPing != null) {
+      _pingSubscription = TimerStream('', pPing).listen((_) {
         /// 請外部發送 ping
-        onPing();
+        onPing?.call();
 
         /// 等待 pong
         print("等待心跳");
-        _startPongCountdown(url);
+        _startPongCountdown(url, pPong);
       });
     } else {
 //      print("WebSocketUtil: pingInterval 或 onPing 是 null, 不進行 ping 間隔保活");
@@ -227,7 +229,7 @@ class WebSocketUtil {
   }
 
   /// 開始 pong timeout 倒數
-  void _startPongCountdown(String url) {
+  void _startPongCountdown(String url, Duration pongTimeout) {
     _pongSubscription = TimerStream('', pongTimeout).listen((_) {
       print("WebSocketUtil pong timeout: 斷線");
       if (errorRetry > 0) {
@@ -243,6 +245,11 @@ class WebSocketUtil {
     _pingSubscription?.cancel();
     _pongSubscription?.cancel();
     _retrySubscription?.cancel();
+
+    _pingSubscription = null;
+    _pongSubscription = null;
+    _retrySubscription = null;
+
   }
 }
 

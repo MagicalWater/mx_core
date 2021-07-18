@@ -21,8 +21,8 @@ class ProjectCore {
   /// [designSize] - 設計版面 size
   /// [routeSetting] - 專案若有用到跳頁面以及route相關的事情, 則需要帶入
   static void setting({
-    @required DesignSize designSize,
-    RouteSetting routeSetting,
+    required DesignSize designSize,
+    RouteSetting? routeSetting,
   }) {
     // 設定設計版面size
     Screen.setDesignWHD(
@@ -67,7 +67,7 @@ class RouteSetting {
   RouteWidgetBase widgetImpl;
 
   RouteSetting({
-    @required this.mixinImpl,
-    @required this.widgetImpl,
+    required this.mixinImpl,
+    required this.widgetImpl,
   });
 }

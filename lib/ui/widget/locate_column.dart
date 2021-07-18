@@ -3,16 +3,16 @@ import 'package:flutter/rendering.dart';
 
 class LocateColumn extends Flex {
   /// 孩子的位置有所變更時呼叫
-  final void Function(List<Rect> locates, Size total) onLocateChanged;
+  final void Function(List<Rect> locates, Size total)? onLocateChanged;
 
   LocateColumn({
-    Key key,
+    Key? key,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     MainAxisSize mainAxisSize = MainAxisSize.max,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-    TextDirection textDirection,
+    TextDirection? textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
-    TextBaseline textBaseline,
+    TextBaseline? textBaseline,
     List<Widget> children = const <Widget>[],
     this.onLocateChanged,
   }) : super(
@@ -50,19 +50,19 @@ class LocateColumn extends Flex {
 
 class _LocateColumnState extends RenderFlex {
   /// 孩子的位置有所變更時呼叫
-  void Function(List<Rect> locates, Size total) _onLocateChanged;
+  void Function(List<Rect> locates, Size total)? _onLocateChanged;
 
   List<Rect> tempLocate = [];
 
   _LocateColumnState({
-    List<RenderBox> children,
+    List<RenderBox>? children,
     Axis direction = Axis.horizontal,
     MainAxisSize mainAxisSize = MainAxisSize.max,
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
-    TextDirection textDirection,
+    TextDirection? textDirection,
     VerticalDirection verticalDirection = VerticalDirection.down,
-    TextBaseline textBaseline,
+    TextBaseline? textBaseline,
   }) : super(
           children: children,
           direction: direction,
@@ -79,7 +79,7 @@ class _LocateColumnState extends RenderFlex {
     super.performLayout();
 
     // 取得每個孩子的位置
-    RenderBox child = firstChild;
+    RenderBox? child = firstChild;
     var childRect = <Rect>[];
     while (child != null) {
       final FlexParentData childParentData = child.parentData as FlexParentData;

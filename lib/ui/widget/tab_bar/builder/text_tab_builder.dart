@@ -16,21 +16,21 @@ TextStyle get _defaultActionTextStyle {
 }
 
 class TextTabBuilder extends WidgetTabBuilder {
-  final TabStyleBuilder<TextStyle> tabTextStyle;
-  final TextStyle actionTextStyle;
+  final TabStyleBuilder<TextStyle>? tabTextStyle;
+  final TextStyle? actionTextStyle;
   final Duration animationDuration = const Duration(milliseconds: 300);
   final Curve animationCurve = Curves.fastOutSlowIn;
   final TextAlign textAlign;
 
   TextTabBuilder({
-    List<String> texts,
-    EdgeInsetsGeometry padding,
-    EdgeInsetsGeometry margin,
-    List<String> actions,
-    TabStyleBuilder<Decoration> tabDecoration,
-    this.textAlign,
+    required List<String> texts,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    List<String>? actions,
+    TabStyleBuilder<Decoration>? tabDecoration,
+    this.textAlign = TextAlign.center,
     this.tabTextStyle,
-    Decoration actionDecoration,
+    Decoration? actionDecoration,
     Duration textAnimationDuration = const Duration(milliseconds: 300),
     Curve textAnimationCurve = Curves.fastOutSlowIn,
     this.actionTextStyle,
@@ -45,7 +45,7 @@ class TextTabBuilder extends WidgetTabBuilder {
                 _defaultTextStyle(index, selected);
             return AnimatedDefaultTextStyle(
               child: Text(texts[index]),
-              textAlign: textAlign ?? TextAlign.center,
+              textAlign: textAlign,
               style: textStyle,
               duration: textAnimationDuration,
               curve: textAnimationCurve,
@@ -54,8 +54,8 @@ class TextTabBuilder extends WidgetTabBuilder {
           actionBuilder: (BuildContext context, int index) {
             var textStyle = actionTextStyle ?? _defaultActionTextStyle;
             return Text(
-              actions[index],
-              textAlign: textAlign ?? TextAlign.center,
+              actions![index],
+              textAlign: textAlign,
               style: textStyle,
               maxLines: 1,
               overflow: TextOverflow.clip,

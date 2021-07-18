@@ -13,9 +13,9 @@ class Span extends ParentDataWidget<AlignGridParentData> {
   final int span;
 
   Span({
+    required Widget child,
     this.fill = false,
     this.span = 1,
-    Widget child,
   }) : super(child: _Expanded(child: child));
 
   @override
@@ -30,7 +30,7 @@ class Span extends ParentDataWidget<AlignGridParentData> {
 }
 
 class _Expanded extends SingleChildRenderObjectWidget {
-  _Expanded({Widget child}) : super(child: child);
+  _Expanded({required Widget child}) : super(child: child);
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -41,15 +41,15 @@ class _Expanded extends SingleChildRenderObjectWidget {
 class ExpandedRenderBox extends RenderBox
     with RenderObjectWithChildMixin<RenderBox> {
   @override
-  bool hitTestChildren(BoxHitTestResult result, {Offset position}) {
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
     if (child != null) {
-      final BoxParentData childParentData = child.parentData;
+      final childParentData = child!.parentData as BoxParentData;
       return result.addWithPaintOffset(
         offset: childParentData.offset,
         position: position,
         hitTest: (BoxHitTestResult result, Offset transformed) {
           assert(transformed == position - childParentData.offset);
-          return child.hitTest(result, position: transformed);
+          return child!.hitTest(result, position: transformed);
         },
       );
     }
@@ -67,16 +67,16 @@ class ExpandedRenderBox extends RenderBox
       // 佔滿整個 expand
       var expandConstraint = constraints;
 //      print('擴展 from: $constraints, to: $expandConstraint');
-      child.layout(expandConstraint, parentUsesSize: true);
+      child!.layout(expandConstraint, parentUsesSize: true);
       double maxWidth, maxHeight;
       if (constraints.maxWidth.isInfinite) {
-        maxWidth = child.size.width;
+        maxWidth = child!.size.width;
       } else {
         maxWidth = constraints.maxWidth;
       }
 
       if (constraints.maxHeight.isInfinite) {
-        maxHeight = child.size.height;
+        maxHeight = child!.size.height;
       } else {
         maxHeight = constraints.maxHeight;
       }
@@ -86,15 +86,15 @@ class ExpandedRenderBox extends RenderBox
     } else {
       // 不考慮 expand, 以原始 size 為主
 //      print('縮起 from: $constraints');
-      child.layout(constraints, parentUsesSize: true);
-      size = child.size;
+      child!.layout(constraints, parentUsesSize: true);
+      size = child!.size;
 //      print('expand確認 - 縮起 size: $size, 給定約束: $constraints, isTight: ${constraints.isTight}');
     }
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    final childParentData = child.parentData as BoxParentData;
-    context.paintChild(child, childParentData.offset + offset);
+    final childParentData = child!.parentData as BoxParentData;
+    context.paintChild(child!, childParentData.offset + offset);
   }
 }

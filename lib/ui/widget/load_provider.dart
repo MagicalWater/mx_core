@@ -3,25 +3,26 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
+import 'package:mx_core/ui/widget/chart/utils/date_format_util.dart';
 
 /// 根節點的 loadController
-LoadController _rootLoadController;
+LoadController? _rootLoadController;
 
 /// 預設的loading元件
-Widget Function(BuildContext context, LoadStyle style) _defaultLoadingBuilder;
+Widget Function(BuildContext context, LoadStyle style)? _defaultLoadingBuilder;
 
 /// 設置根節點的 load 顯示與否
 Future<void> setRootLoad(
   bool show, {
-  LoadStyle style,
+  LoadStyle? style,
 }) async {
   if (_rootLoadController == null) {
     print("找不到根節點的 load, 設置失效");
   } else {
     if (show) {
-      await _rootLoadController.show(style: style);
+      await _rootLoadController?.show(style: style);
     } else {
-      await _rootLoadController.hide();
+      await _rootLoadController?.hide();
     }
   }
 }
@@ -37,7 +38,7 @@ class LoadStyle {
   final Duration animationDuration;
 
   /// 背景遮罩顏色
-  final Color maskColor;
+  final Color? maskColor;
 
   LoadStyle({
     this.size = 50,
@@ -49,11 +50,12 @@ class LoadStyle {
 
 class LoadProvider extends StatefulWidget {
   final Widget child;
-  final void Function(LoadController controller) onCreated;
-  final Stream<bool> loadStream;
-  final Widget Function(BuildContext context, LoadStyle style) builder;
+  final void Function(LoadController controller)? onCreated;
+  final Stream<bool>? loadStream;
+  final Widget Function(BuildContext context, LoadStyle style)? builder;
 
-  static void setDefaultLoading(Widget Function(BuildContext context, LoadStyle style) builder) {
+  static void setDefaultLoading(
+      Widget Function(BuildContext context, LoadStyle style) builder) {
     _defaultLoadingBuilder = builder;
   }
 
@@ -61,7 +63,7 @@ class LoadProvider extends StatefulWidget {
   final bool tapThrough;
 
   /// 顯示的load樣式
-  final LoadStyle style;
+  final LoadStyle? style;
 
   /// 是否放置在根節點
   /// 當 [root] = true 時
@@ -69,7 +71,7 @@ class LoadProvider extends StatefulWidget {
   final bool root;
 
   LoadProvider({
-    this.child,
+    required this.child,
     this.style,
     this.onCreated,
     this.tapThrough = false,
@@ -85,19 +87,19 @@ class LoadProvider extends StatefulWidget {
 class _LoadProviderState extends State<LoadProvider>
     with SingleTickerProviderStateMixin
     implements LoadController {
-  AnimatedSyncTick _animatedSync;
+  late AnimatedSyncTick _animatedSync;
 
-  LoadStyle _currentStyle;
-  bool _currentShow;
+  late LoadStyle _currentStyle;
+  late bool _currentShow;
 
   StreamController<bool> _loadStreamController = StreamController();
 
-  Stream<bool> loadStream;
+  late Stream<bool> loadStream;
 
-  Offset _showPos;
-  Size _showSize;
+  Offset? _showPos;
+  Size? _showSize;
 
-  StreamSubscription _listenSubscription;
+  StreamSubscription? _listenSubscription;
 
   @override
   void initState() {
@@ -114,9 +116,7 @@ class _LoadProviderState extends State<LoadProvider>
       vsync: this,
     );
 
-    if (widget.onCreated != null) {
-      widget.onCreated(this);
-    }
+    widget.onCreated?.call(this);
 
     if (widget.root) {
       _rootLoadController = this;
@@ -138,9 +138,8 @@ class _LoadProviderState extends State<LoadProvider>
       initialData: _currentShow,
       stream: loadStream,
       builder: (context, snapshot) {
-        List<Widget> stack = [];
         Widget loadAttach;
-        if (snapshot.data) {
+        if (snapshot.data!) {
           loadAttach = Container(
             color: Colors.transparent,
             alignment: Alignment.center,
@@ -185,10 +184,11 @@ class _LoadProviderState extends State<LoadProvider>
         return Positioned.fill(
           left: _showPos?.dx,
           top: _showPos?.dy,
-          right:
-              hasPos ? (Screen.width - (_showPos.dx + _showSize.width)) : null,
+          right: hasPos
+              ? (Screen.width - (_showPos!.dx + _showSize!.width))
+              : null,
           bottom: hasPos
-              ? (Screen.height - (_showPos.dy + _showSize.height))
+              ? (Screen.height - (_showPos!.dy + _showSize!.height))
               : null,
           child: IgnorePointer(
             ignoring: !_currentShow || widget.tapThrough,
@@ -225,8 +225,6 @@ class _LoadProviderState extends State<LoadProvider>
     _animatedSync.toggle(false);
     _animatedSync.dispose();
     _loadStreamController.close();
-    _loadStreamController = null;
-    _animatedSync = null;
     super.dispose();
   }
 
@@ -236,7 +234,7 @@ class _LoadProviderState extends State<LoadProvider>
   }
 
   @override
-  Future<void> toggle({BuildContext attach}) {
+  Future<void> toggle({BuildContext? attach}) {
     if (isShowing()) {
       return hide();
     } else {
@@ -246,8 +244,8 @@ class _LoadProviderState extends State<LoadProvider>
 
   @override
   Future<void> show({
-    BuildContext attach,
-    LoadStyle style,
+    BuildContext? attach,
+    LoadStyle? style,
   }) async {
     if (style != null) {
       _currentStyle = style;
@@ -268,27 +266,27 @@ class _LoadProviderState extends State<LoadProvider>
     _loadStreamController?.add(_currentShow);
   }
 
-  FutureOr<void> _attach(BuildContext context) async {
+  FutureOr<void> _attach(BuildContext? context) async {
     if (context == null) {
       _showPos = null;
       _showSize = null;
       return;
     }
 
-    RenderBox selfBox = context.findRenderObject();
+    var selfBox = context.findRenderObject() as RenderBox?;
     if (selfBox == null || !selfBox.hasSize) {
       print("box 為 null 或尚未有 size, 進行等待");
       await _waitWidgetRender();
-      selfBox = context.findRenderObject();
+      selfBox = context.findRenderObject() as RenderBox?;
     }
 
     RenderBox parentScrollBox = context
         .findAncestorStateOfType<ScrollableState>()
         ?.context
-        ?.findRenderObject();
+        .findRenderObject()! as RenderBox;
 
-    var selfPos = selfBox.localToGlobal(Offset.zero);
-    var selfSize = selfBox.size;
+    var selfPos = selfBox!.localToGlobal(Offset.zero);
+    var selfSize = selfBox!.size;
     var parentSize = parentScrollBox?.size;
 //  print("檢測 兒子 size = $selfSize, pos = $selfPos");
 
@@ -331,8 +329,8 @@ abstract class LoadController {
 
   /// [style] => 顯示的樣式
   Future<void> show({
-    BuildContext attach,
-    LoadStyle style,
+    BuildContext? attach,
+    LoadStyle? style,
   });
 
   Future<void> hide();
@@ -341,8 +339,13 @@ abstract class LoadController {
 /// 等待元件渲染
 Future<void> _waitWidgetRender() async {
   var waitRender = Completer<void>();
-  WidgetsBinding.instance.addPostFrameCallback((Duration timeStamp) {
+  var bindingIns = WidgetsBinding.instance;
+  if (bindingIns == null) {
     waitRender.complete(null);
-  });
+  } else {
+    bindingIns.addPostFrameCallback((Duration timeStamp) {
+      waitRender.complete(null);
+    });
+  }
   return waitRender.future;
 }

@@ -7,13 +7,13 @@ import 'server_response.dart';
 
 ///http的請求body, 對於 HttpUtils 的接口封裝
 class HttpContent with HttpContentMixin {
-  String scheme;
-  String host;
-  String path;
-  HttpMethod method = HttpMethod.get;
+  late String scheme;
+  late String host;
+  late String path;
+  HttpMethod method;
 
-  /// 此參數只在 Method 為 download 時有效, 下載木調
-  String saveInPath;
+  /// 此參數只在 Method 為 download 時有效, 下載目的
+  String? saveInPath;
 
   Uri get uri => Uri(
       scheme: scheme,
@@ -26,9 +26,9 @@ class HttpContent with HttpContentMixin {
 
   HttpContent.parse(
     String url, {
-    this.method,
+    this.method = HttpMethod.get,
     this.saveInPath,
-    ContentType contentType,
+    ContentType? contentType,
   }) {
     var parsed = Uri.parse(url);
     this.scheme = parsed.scheme;

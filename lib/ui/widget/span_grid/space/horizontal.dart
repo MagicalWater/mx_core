@@ -8,23 +8,21 @@ class _HorizontalSpace implements _AlignSpace<_HorizontalSpace> {
   double left;
 
   /// 真正開始的y軸位置
-  double realLeft;
+  late double realLeft;
 
   double width;
 
   _HorizontalSpace({
-    this.y,
-    this.span,
-    this.left,
-    this.realLeft,
+    required this.y,
+    required this.left,
+    this.span = 1,
+    double? realLeft,
     this.width = double.infinity,
-  }) {
-    if (realLeft == null) this.realLeft = left;
-  }
+  }) : this.realLeft = realLeft ?? left;
 
   /// 假如此空間可以容納 [info] 時, 取得將會佔用的空間, 否則返回 null
   @override
-  _HorizontalSpace getSpaceIfContain(AlignChildInfo info, double space) {
+  _HorizontalSpace? getSpaceIfContain(AlignChildInfo info, double space) {
     // 寬度佔位不夠
     if (span < info.span) return null;
 
@@ -63,7 +61,7 @@ class _HorizontalSpace implements _AlignSpace<_HorizontalSpace> {
 
     // 取得兩個空間重疊的 space
     _HorizontalSpace intersectSpace = intersect(other);
-    
+
 //    print('從 $this 取出');
 //    print('空間 $other');
 //    print('交集 $intersectSpace');

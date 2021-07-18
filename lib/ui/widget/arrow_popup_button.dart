@@ -24,13 +24,13 @@ class ArrowPopupButton extends StatefulWidget {
   final Widget child;
 
   /// 點擊控制器, 只有在 [feedbackType] = [FeedbackType.toggle] 時有效
-  final PopupAction controller;
+  final PopupAction? controller;
 
-  final Color maskColor;
+  final Color? maskColor;
 
   ArrowPopupButton._({
-    this.child,
-    @required this.popupBuilder,
+    required this.child,
+    required this.popupBuilder,
     this.feedback = const HitFeedback(),
     this.feedbackType = FeedbackType.toggle,
     this.popupStyle = const ArrowPopupStyle(),
@@ -39,13 +39,13 @@ class ArrowPopupButton extends StatefulWidget {
   });
 
   factory ArrowPopupButton({
-    Widget child,
-    @required PopupWidgetBuilder popupBuilder,
+    required Widget child,
+    required PopupWidgetBuilder popupBuilder,
     HitFeedback feedback = const HitFeedback(),
     FeedbackType feedbackType = FeedbackType.toggle,
     ArrowPopupStyle popupStyle = const ArrowPopupStyle(),
-    PopupAction controller,
-    Color maskColor,
+    PopupAction? controller,
+    Color? maskColor,
   }) {
     return ArrowPopupButton._(
       child: AbsorbPointer(
@@ -65,8 +65,8 @@ class ArrowPopupButton extends StatefulWidget {
 }
 
 class _ArrowPopupButtonState extends State<ArrowPopupButton> {
-  AnimatedSyncTick toggleController;
-  PopupController popupController;
+  late AnimatedSyncTick toggleController;
+  PopupController? popupController;
 
   @override
   void initState() {
@@ -74,12 +74,12 @@ class _ArrowPopupButtonState extends State<ArrowPopupButton> {
     if (widget.feedbackType == FeedbackType.toggle) {
       widget.controller?._bind(
         show: () async {
-          toggleController?.toggle(true);
+          toggleController.toggle(true);
           _showArrowPopup();
         },
         hide: () async {
-          await toggleController?.toggle(false);
-          await popupController.remove();
+          await toggleController.toggle(false);
+          await popupController?.remove();
           popupController = null;
         },
       );
@@ -102,11 +102,10 @@ class _ArrowPopupButtonState extends State<ArrowPopupButton> {
           sync: toggleController,
           animatedList: _getFeedbackAnimated(),
           onTap: () {
-            toggleController?.toggle(true);
+            toggleController.toggle(true);
             _showArrowPopup();
           },
         );
-        break;
       case FeedbackType.tap:
         return AnimatedComb(
           type: AnimatedType.tap,
@@ -114,31 +113,28 @@ class _ArrowPopupButtonState extends State<ArrowPopupButton> {
           animatedList: _getFeedbackAnimated(),
           onTap: _showArrowPopup,
         );
-        break;
       case FeedbackType.material:
         return MaterialLayer.single(
           child: widget.child,
           onTap: _showArrowPopup,
         );
-        break;
     }
-    return Container();
   }
 
   List<Comb> _getFeedbackAnimated() {
     List<Comb> list = [];
     if (widget.feedback.opacity != null) {
-      var animated = Comb.opacity(end: widget.feedback.opacity);
+      var animated = Comb.opacity(end: widget.feedback.opacity!);
       list.add(animated);
     }
     if (widget.feedback.scale != null) {
       var animated = Comb.scale(
-        end: Size.square(widget.feedback.scale),
+        end: Size.square(widget.feedback.scale!),
       );
       list.add(animated);
     }
     if (widget.feedback.rotate != null) {
-      var animated = Comb.rotateZ(end: widget.feedback.rotate);
+      var animated = Comb.rotateZ(end: widget.feedback.rotate!);
       list.add(animated);
     }
     return [Comb.parallel(animatedList: list)];
@@ -156,7 +152,7 @@ class _ArrowPopupButtonState extends State<ArrowPopupButton> {
         // 若 FeedbackType 的類型為 toggle
         // 則需要註冊監聽關閉事件, 這樣此處才可以進行控制
         (controller as OverlayController).registerRemoveEventCallback(() {
-          toggleController?.toggle();
+          toggleController.toggle();
         });
         return widget.popupBuilder(controller);
       },
@@ -166,9 +162,9 @@ class _ArrowPopupButtonState extends State<ArrowPopupButton> {
 
 /// 點擊回饋
 class HitFeedback {
-  final double opacity;
-  final double scale;
-  final double rotate;
+  final double? opacity;
+  final double? scale;
+  final double? rotate;
 
   const HitFeedback({
     this.opacity = 0.8,
@@ -185,22 +181,22 @@ enum FeedbackType {
 }
 
 class PopupAction {
-  Future<void> Function() _show;
-  Future<void> Function() _hide;
+  Future<void> Function()? _show;
+  Future<void> Function()? _hide;
 
   Future<void> show() async {
     if (_show != null) {
-      return _show();
+      return _show?.call();
     }
   }
 
   Future<void> hide() async {
     if (_hide != null) {
-      return _hide();
+      return _hide?.call();
     }
   }
 
-  void _bind({Future<void> Function() show, Future<void> Function() hide}) {
+  void _bind({Future<void> Function()? show, Future<void> Function()? hide}) {
     _show = show;
     _hide = hide;
   }

@@ -17,7 +17,7 @@ class HttpContentMixin {
   /// rawData的 body
   String _rawBody = '';
 
-  ContentType _contentType;
+  ContentType? _contentType;
 
   int port;
 
@@ -25,7 +25,7 @@ class HttpContentMixin {
   HttpBodyType bodyType = HttpBodyType.formUrlencoded;
 
   /// contentType, null時根據 body 帶入對應contentType
-  ContentType get contentType {
+  ContentType? get contentType {
     if (_contentType != null) {
       return _contentType;
     } else if (_rawBody.isNotEmpty || _keyValueBody.isNotEmpty) {
@@ -109,7 +109,7 @@ class HttpContentMixin {
     });
   }
 
-  void setContentType(ContentType type) {
+  void setContentType(ContentType? type) {
     _contentType = type;
   }
 

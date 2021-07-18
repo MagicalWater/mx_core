@@ -10,10 +10,10 @@ import 'package:package_info/package_info.dart';
 
 class InfoPopup extends StatefulWidget {
   final Widget child;
-  final InfoPopupAction controller;
+  final InfoPopupAction? controller;
 
   InfoPopup({
-    this.child,
+    required this.child,
     this.controller,
   });
 
@@ -24,9 +24,9 @@ class InfoPopup extends StatefulWidget {
 class _InfoPopupState extends State<InfoPopup> {
   int _detectTapCount = 3;
   double _currentTap = 0;
-  PopupController _popupController;
+  PopupController? _popupController;
 
-  Timer timer;
+  Timer? timer;
 
   @override
   void initState() {
@@ -203,23 +203,23 @@ class __DeviceInfoState extends State<_DeviceInfo> {
 }
 
 class InfoPopupAction {
-  Future<void> Function() _show;
-  Future<void> Function() _hide;
+  Future<void> Function()? _show;
+  Future<void> Function()? _hide;
 
   Future<void> show() async {
     if (_show != null) {
-      return _show();
+      return _show!.call();
     }
   }
 
   Future<void> hide() async {
     if (_hide != null) {
-      return _hide();
+      return _hide!.call();
     }
   }
 
   @protected
-  void _bind({Future<void> Function() show, Future<void> Function() hide}) {
+  void _bind({Future<void> Function()? show, Future<void> Function()? hide}) {
     _show = show;
     _hide = hide;
   }

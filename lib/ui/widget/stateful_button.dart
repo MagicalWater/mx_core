@@ -13,16 +13,16 @@ class StatefulButton extends StatefulWidget {
   final double width;
   final double height;
 
-  final Widget child;
+  final Widget? child;
 
   /// 按鈕的 feed back
   final TapFeedback tapStyle;
 
   /// 按鈕裝飾
-  final Decoration decoration;
+  final Decoration? decoration;
 
   /// 讀取狀態流監聽
-  final Stream<bool> loadStream;
+  final Stream<bool>? loadStream;
 
   /// 動畫時間
   final Duration duration;
@@ -34,25 +34,25 @@ class StatefulButton extends StatefulWidget {
   final bool initAnimated;
 
   /// loading 狀態時的 size
-  final StateStyle loadStyle;
+  final StateStyle? loadStyle;
 
   /// 在元件初始化時, 會將讀取狀態控制器打出去
-  final void Function(StatefulButtonController controller) onCreated;
+  final void Function(StatefulButtonController controller)? onCreated;
 
   /// 按鈕點擊時觸發
-  final StatefulButtonTapCallback onTap;
+  final StatefulButtonTapCallback? onTap;
 
   final Duration changeInterval;
 
   StatefulButton({
-    @required this.width,
-    @required this.height,
+    required this.width,
+    required this.height,
+    required this.tapStyle,
     this.child,
     this.decoration,
     this.initLoad = false,
     this.initAnimated = false,
-    this.duration,
-    this.tapStyle,
+    this.duration = const Duration(milliseconds: 100),
     this.loadStyle,
     this.loadStream,
     this.changeInterval = const Duration(seconds: 1),
@@ -67,13 +67,13 @@ class StatefulButton extends StatefulWidget {
 class _StatefulButtonState extends State<StatefulButton>
     implements StatefulButtonController {
   /// 當前是否正在開放狀態[非讀取]
-  bool _isStandby;
+  late bool _isStandby;
 
   /// 真正控制 loading 狀態的控制器
-  AnimatedSyncTick _controller;
+  late AnimatedSyncTick _controller;
 
   /// 監聽 load stream 的訂閱
-  StreamSubscription _loadSubscription;
+  StreamSubscription? _loadSubscription;
 
   /// 當前是否讀取中
   @override
@@ -81,33 +81,24 @@ class _StatefulButtonState extends State<StatefulButton>
 
   /// 讀取的 style
   StateStyle get _loadStyle {
-    if (widget.loadStyle == null) {
-      return StateStyle(
-        color: Colors.blueAccent,
-        size: min(widget.width, widget.height),
-      );
-    }
-
-    return widget.loadStyle;
+    return widget.loadStyle ??
+        StateStyle(
+          color: Colors.blueAccent,
+          size: min(widget.width, widget.height),
+        );
   }
 
   /// 動畫時間
   Duration get _animDuration {
-    if (widget.duration == null) {
-      return Duration(milliseconds: 100);
-    }
     return widget.duration;
   }
 
   /// 動畫時間
   Duration get _sizeDuration {
-    if (widget.duration == null) {
-      return Duration(milliseconds: 300);
-    }
     return widget.duration;
   }
 
-  bool willEnable;
+  bool? willEnable;
 
   @override
   void initState() {
@@ -129,15 +120,15 @@ class _StatefulButtonState extends State<StatefulButton>
         }
       });
     // 如果有 load 狀態 stream, 進行監聽
-    if (widget.loadStream != null) {
-      _loadSubscription = widget.loadStream.listen((enable) {
-        setLoad(enable);
-      });
-    }
+    _loadSubscription = widget.loadStream?.listen((enable) {
+      setLoad(enable);
+    });
+
+    widget.onCreated?.call(this);
     super.initState();
   }
 
-  Timer _syncTimer;
+  Timer? _syncTimer;
 
   void _startSyncTimer() {
     _endSyncTimer();
@@ -146,7 +137,7 @@ class _StatefulButtonState extends State<StatefulButton>
       () {
         _syncTimer = null;
         if (!_controller.isAnimating && willEnable != null) {
-          _isStandby = !willEnable;
+          _isStandby = !willEnable!;
           willEnable = null;
           _syncLoadState();
         }
@@ -155,8 +146,8 @@ class _StatefulButtonState extends State<StatefulButton>
   }
 
   void _endSyncTimer() {
-    if (_syncTimer != null && _syncTimer.isActive) {
-      _syncTimer.cancel();
+    if (_syncTimer != null && _syncTimer!.isActive) {
+      _syncTimer!.cancel();
     }
     _syncTimer = null;
   }
@@ -190,9 +181,7 @@ class _StatefulButtonState extends State<StatefulButton>
               switchOutCurve: Interval(0.7, 1.0),
             ),
             onTap: () {
-              if (widget.onTap != null) {
-                widget.onTap(this);
-              }
+              widget.onTap?.call(this);
             },
           );
           return anim.component(child);
@@ -263,5 +252,5 @@ class StateStyle {
   Color color;
   double size;
 
-  StateStyle({this.color, this.size});
+  StateStyle({required this.color, required this.size});
 }

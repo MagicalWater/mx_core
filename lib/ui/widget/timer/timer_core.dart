@@ -21,22 +21,22 @@ class TimerCore {
   TimerStatus get status => _status;
 
   /// tick 觸發間隔
-  Duration _tickInterval;
+  late Duration _tickInterval;
 
   /// 依據 tick 跳動的 timer
-  Timer _tickTimer;
+  Timer? _tickTimer;
 
   /// 設定總倒數時間
-  Duration _totalTime;
+  late Duration _totalTime;
 
   /// 經過時間
   Duration get elapsedTime => _totalTime - _remainingTime;
 
   /// 剩餘的倒數時間
-  Duration _remainingTime;
+  late Duration _remainingTime;
 
   /// 最後衝刺倒數計時
-  Timer _lastTimer;
+  Timer? _lastTimer;
 
   /// 計時器狀態
   TimerStatus _status = TimerStatus.standby;
@@ -52,8 +52,8 @@ class TimerCore {
       timerStream.where((e) => e.status == TimerStatus.complete);
 
   TimerCore({
-    @required Duration totalTime,
-    @required Duration tickInterval,
+    required Duration totalTime,
+    required Duration tickInterval,
   }) {
     this._tickInterval = tickInterval;
     this._totalTime = totalTime;
@@ -62,8 +62,7 @@ class TimerCore {
     if (this._remainingTime.inMilliseconds > this._totalTime.inMilliseconds) {
       // 剩餘時間不得超過總時間
       print(
-          "剩餘時間(${this._remainingTime})不得超過總時間(${this
-              ._totalTime}), 強制將剩餘時間設定為總時間");
+          "剩餘時間(${this._remainingTime})不得超過總時間(${this._totalTime}), 強制將剩餘時間設定為總時間");
       this._remainingTime = this._totalTime;
     }
 
@@ -73,9 +72,9 @@ class TimerCore {
   /// 變更倒數計時時間
   /// 只有在非倒數計時期間才可以變更
   void modify({
-    Duration totalTime,
-    Duration remainingTime,
-    Duration tickInterval,
+    Duration? totalTime,
+    Duration? remainingTime,
+    Duration? tickInterval,
   }) {
     if (_status == TimerStatus.active) {
       print("當前正在倒數計時, 禁止修改時間");
@@ -91,8 +90,7 @@ class TimerCore {
     if (this._remainingTime.inMilliseconds > this._totalTime.inMilliseconds) {
       // 剩餘時間不得超過總時間
       print(
-          "此次修改剩餘時間(${this._remainingTime})將會超過總時間(${this
-              ._totalTime}), 強制將剩餘時間設定為總時間");
+          "此次修改剩餘時間(${this._remainingTime})將會超過總時間(${this._totalTime}), 強制將剩餘時間設定為總時間");
       this._remainingTime = this._totalTime;
     }
 
@@ -172,9 +170,11 @@ class TimerCore {
 
   /// 發送狀態變更事件
   void _sendTickEvent() {
-    _timerEventSubject.add(TickData(status: _status,
-        elapsedTime: elapsedTime,
-        remainingTime: _remainingTime));
+    _timerEventSubject.add(TickData(
+      status: _status,
+      elapsedTime: elapsedTime,
+      remainingTime: _remainingTime,
+    ));
   }
 
   /// 執行剩餘時間倒數計時
@@ -206,7 +206,7 @@ class TimerCore {
   void dispose() {
     _endTicker();
     _endRemainingTimer();
-    _timerEventSubject?.close();
+    _timerEventSubject.close();
   }
 }
 
@@ -230,5 +230,21 @@ class TickData {
   final Duration remainingTime;
   final Duration elapsedTime;
 
-  TickData({this.status, this.elapsedTime, this.remainingTime});
+  TickData(
+      {required this.status,
+      required this.elapsedTime,
+      required this.remainingTime});
+
+  @override
+  bool operator ==(Object other) {
+    if (other is TickData) {
+      return status == other.status &&
+          remainingTime == other.remainingTime &&
+          elapsedTime == other.elapsedTime;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => super.hashCode;
 }

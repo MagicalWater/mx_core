@@ -10,7 +10,7 @@ abstract class ProgressController {
   double get currentProgress;
 
   /// 設置進度
-  void setProgress(double progress, [double total]);
+  void setProgress(double progress, [double? total]);
 }
 
 /// 進度元件構建
@@ -23,7 +23,7 @@ class WaveProgress extends StatefulWidget {
   final Color waveColor;
 
   /// 第二道波浪顏色
-  final Color secondWaveColor;
+  final Color? secondWaveColor;
 
   /// 波浪速率
   final double velocity;
@@ -32,7 +32,7 @@ class WaveProgress extends StatefulWidget {
   final double amplitudeMultiple;
 
   /// 子元件構建類
-  final ProgressWidgetBuilder builder;
+  final ProgressWidgetBuilder? builder;
 
   /// 滿進度
   final double maxProgress;
@@ -47,10 +47,10 @@ class WaveProgress extends StatefulWidget {
   final WaveStyle style;
 
   /// 進度 stream, 也可使用 stream 方式更改進度
-  final Stream<double> progressStream;
+  final Stream<double>? progressStream;
 
   /// 取得控制器
-  final Function(ProgressController) onCreated;
+  final Function(ProgressController)? onCreated;
 
   WaveProgress({
     this.builder,
@@ -73,16 +73,15 @@ class WaveProgress extends StatefulWidget {
 class _WaveProgressState extends State<WaveProgress>
     with TickerProviderStateMixin
     implements ProgressController {
-
   /// 當前進度
   @override
   double get currentProgress => _currentProgress;
 
   /// 近處的波浪
-  AnimationController _waveAnimationController1;
+  late AnimationController _waveAnimationController1;
 
   /// 遠方的波浪
-  AnimationController _waveAnimationController2;
+  late AnimationController _waveAnimationController2;
 
   /// 構成波浪path的 offset
   List<Offset> _wavePoints1 = [];
@@ -90,21 +89,21 @@ class _WaveProgressState extends State<WaveProgress>
   List<Offset> _wavePoints2 = [];
 
   /// 當前的波浪震幅
-  double _waveAmplitude;
+  late double _waveAmplitude;
 
   /// 滿進度
-  double _totalProgress;
+  late double _totalProgress;
 
   /// 動畫賦予的進度暫存值
-  double _tempAnimatedProgress;
+  late double _tempAnimatedProgress;
 
   /// 當前進度
-  double _currentProgress;
+  late double _currentProgress;
 
   /// 當前進度轉換為比例
   double get _progressPercent => min(_tempAnimatedProgress / _totalProgress, 1);
 
-  StreamSubscription _progressStreamSubscription;
+  StreamSubscription? _progressStreamSubscription;
 
   @override
   void initState() {
@@ -145,7 +144,7 @@ class _WaveProgressState extends State<WaveProgress>
     );
 
     _waveAnimationController1.addListener(() {
-      RenderBox stackBox = context.findRenderObject();
+      RenderBox stackBox = context.findRenderObject() as RenderBox;
       if (!stackBox.hasSize) {
         _wavePoints1.clear();
         _wavePoints2.clear();
@@ -185,8 +184,9 @@ class _WaveProgressState extends State<WaveProgress>
       // 此比值單純為個人認為最好的比值
       var waveCount = pointCount / 300;
       var progressDiff = (_progressPercent - 0.5).abs() * 20;
-      var _waveAmplitude = 15 * ((100 - progressDiff) / 100);
-      _waveAmplitude = ((widgetWidth * widgetHeight) * _waveAmplitude)/ (200 * 300) ;
+      _waveAmplitude = 15 * ((100 - progressDiff) / 100);
+      _waveAmplitude =
+          ((widgetWidth * widgetHeight) * _waveAmplitude) / (200 * 300);
       _waveAmplitude *= widget.amplitudeMultiple;
 
       // 依照當前的 size, 設置構成波浪的 offset
@@ -207,9 +207,7 @@ class _WaveProgressState extends State<WaveProgress>
     _waveAnimationController1.repeat();
     _waveAnimationController2.repeat();
 
-    if (widget.onCreated != null) {
-      widget.onCreated(this);
-    }
+    widget.onCreated?.call(this);
 
     super.initState();
   }
@@ -229,7 +227,18 @@ class _WaveProgressState extends State<WaveProgress>
           Widget childWidget;
           if (widget.builder != null) {
             childWidget =
-                widget.builder(context, _tempAnimatedProgress, _totalProgress);
+                widget.builder!(context, _tempAnimatedProgress, _totalProgress);
+          } else {
+            childWidget = Container(
+              alignment: Alignment.center,
+              child: Text(
+                "${((_tempAnimatedProgress / _totalProgress) * 100).toInt()}%",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            );
           }
           return CustomPaint(
             child: childWidget,
@@ -239,7 +248,7 @@ class _WaveProgressState extends State<WaveProgress>
               points2: _wavePoints2,
               amplitude: _waveAmplitude,
               shape: widget.shape,
-              radius: widget.style?.radius,
+              radius: widget.style.radius ?? 0,
               waveColor: widget.waveColor,
               secondWaveColor: widget.secondWaveColor,
             ),
@@ -260,7 +269,7 @@ class _WaveProgressState extends State<WaveProgress>
 
   /// 設置進度
   @override
-  void setProgress(double progress, [double total]) {
+  void setProgress(double progress, [double? total]) {
     if (total != null && total > 0) {
       _totalProgress = total;
     }
@@ -280,10 +289,10 @@ class _WaveProgressState extends State<WaveProgress>
   /// [waveCount] - 波浪的數量
   /// [amplitude] - 波浪震幅高度
   List<Offset> _getWavePoints({
-    double animatedValue,
-    int totalPoint,
-    double waveCount,
-    double amplitude,
+    required double animatedValue,
+    required int totalPoint,
+    required double waveCount,
+    required double amplitude,
   }) {
     // 依照 [waveCount] 的數量, 取得應該將多長的曲線拉滿
     // 例如當 [waveCount] 為 3 時, 則依照比例, 長度應該要拉為6pi
@@ -298,11 +307,6 @@ class _WaveProgressState extends State<WaveProgress>
   /// 從 shape 以及 borderStyle 取得 Decoration
   Decoration _getDecoration() {
     var style = widget.style;
-    if (style == null) {
-      return BoxDecoration(
-        shape: widget.shape,
-      );
-    }
     return BoxDecoration(
       shape: widget.shape,
       borderRadius: widget.shape == BoxShape.circle
@@ -311,8 +315,8 @@ class _WaveProgressState extends State<WaveProgress>
       border: style.borderWidth == 0
           ? null
           : Border.all(
-              color: style.borderColor ?? Colors.black,
-              width: style.borderWidth ?? 0,
+              color: style.borderColor,
+              width: style.borderWidth,
             ),
       color: style.color,
       gradient: style.gradient,
@@ -329,13 +333,13 @@ class WaveStyle {
   final Color borderColor;
 
   /// 內容漸變
-  final Gradient gradient;
+  final Gradient? gradient;
 
   /// 內容顏色
-  final Color color;
+  final Color? color;
 
   /// 圓角
-  final double radius;
+  final double? radius;
 
   const WaveStyle({
     this.borderWidth = 1,
