@@ -14,61 +14,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/http_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_content.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/http_query_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_query_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/mx_core.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/mx_core.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/arrow_container.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/arrow_container.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/arrow_popup_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/arrow_popup_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/axis_transition.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/axis_transition.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/bullet_paint.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/bullet_paint.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/focus_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/focus_layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/info_popup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/info_popup.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/line_indicator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/line_indicator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/load_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/load_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/locate_column.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/locate_column.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/locate_row.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/locate_row.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/material_layer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/material_layer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/navigator_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/navigator_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_scaffold.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/rect_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/rect_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/easy_refresh_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/easy_refresh_style.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/constraints.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/constraints.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/flex.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/flex.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/parent_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/parent_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/axis_space.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/axis_space.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/compute.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/compute.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/horizontal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/horizontal.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/remain.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/remain.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/result.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/result.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/vertical.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/space/vertical.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/span_grid/span.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/span_grid/span.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/stateful_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/stateful_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/action_width.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/action_width.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/base_tab_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/base_tab_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/indicator_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/indicator_style.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/tab_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/tab_style.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/tab_width.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/tab_width.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/timer/timer_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/timer/timer_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/timer/timer_core.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/timer/timer_core.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/wave_progress/wave_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/wave_progress/wave_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/wave_progress/wave_progress.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/wave_progress/wave_progress.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/date_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/date_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/db_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/db_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/file_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/file_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/local_notification_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/local_notification_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/money_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/money_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/num_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/num_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/screen_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/screen_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/web_socket_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/web_socket_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,15 +196,14 @@
     </state>
     <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619425038957" />
     <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622618997268" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1624588711409">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1626682407590">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619425596822" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626682407590" />
     <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1624588711409" />
     <state x="577" y="227" width="766" height="740" key="search.everywhere.popup" timestamp="1624936883637">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="505" y="231" width="670" height="671" key="search.everywhere.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1617697252856" />
     <state x="577" y="227" width="766" height="740" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1624936883637" />
   </component>
 </project>

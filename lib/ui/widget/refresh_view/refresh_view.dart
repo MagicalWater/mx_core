@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_easyrefresh/src/behavior/scroll_behavior.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../load_provider.dart';
@@ -37,7 +38,7 @@ RefreshBuilder? _defaultPlaceBuilder;
 
 /// 可刷新元件, 內部封裝了第三方庫 [EasyRefresh]
 class RefreshView extends StatefulWidget {
-  final EasyRefreshStyle _easyRefresh;
+  late final EasyRefreshStyle _easyRefresh;
 
   /// 下拉刷新回調, null 為沒有下拉刷新
   final VoidCallback? onRefresh;
@@ -83,24 +84,24 @@ class RefreshView extends StatefulWidget {
   factory RefreshView({
     key,
     RefreshState initState = const RefreshState._init(),
-    Stream<RefreshState> stateStream,
-    PlaceStyle placeStyle,
-    RefreshBuilder placeBuilder,
-    VoidCallback onRefresh,
-    VoidCallback onLoadMore,
+    Stream<RefreshState>? stateStream,
+    PlaceStyle? placeStyle,
+    RefreshBuilder? placeBuilder,
+    VoidCallback? onRefresh,
+    VoidCallback? onLoadMore,
     bool taskIndependence = false,
-    ScrollController scrollController,
-    Header header,
-    Footer footer,
-    Widget emptyWidget,
+    ScrollController? scrollController,
+    Header? header,
+    Footer? footer,
+    Widget? emptyWidget,
     bool firstRefresh = false,
-    Widget firstRefreshWidget,
+    Widget? firstRefreshWidget,
     int headerIndex = 0,
     bool topBouncing = true,
     bool bottomBouncing = true,
-    RefreshLoadStyle loadStyle,
-    Duration loadingDebounce,
-    @required Widget child,
+    RefreshLoadStyle? loadStyle,
+    Duration? loadingDebounce,
+    required Widget child,
   }) {
     var refresh = EasyRefreshStyle(
       taskIndependence: taskIndependence,
@@ -134,33 +135,33 @@ class RefreshView extends StatefulWidget {
   factory RefreshView.custom({
     key,
     RefreshState initState = const RefreshState._init(),
-    Stream<RefreshState> stateStream,
-    PlaceStyle placeStyle,
-    RefreshBuilder placeBuilder,
-    VoidCallback onRefresh,
-    VoidCallback onLoadMore,
-    Widget emptyWidget,
+    Stream<RefreshState>? stateStream,
+    PlaceStyle? placeStyle,
+    RefreshBuilder? placeBuilder,
+    VoidCallback? onRefresh,
+    VoidCallback? onLoadMore,
+    Widget? emptyWidget,
     bool taskIndependence = false,
-    Header header,
+    Header? header,
     bool firstRefresh = false,
-    Widget firstRefreshWidget,
+    Widget? firstRefreshWidget,
     int headerIndex = 0,
-    Footer footer,
+    Footer? footer,
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
-    ScrollController scrollController,
-    bool primary,
+    ScrollController? scrollController,
+    bool? primary,
     bool shrinkWrap = false,
-    Key center,
+    Key? center,
     double anchor = 0.0,
-    double cacheExtent,
-    int semanticChildCount,
+    double? cacheExtent,
+    int? semanticChildCount,
     DragStartBehavior dragStartBehavior = DragStartBehavior.start,
     bool topBouncing = true,
     bool bottomBouncing = true,
-    RefreshLoadStyle loadStyle,
-    Duration loadingDebounce,
-    @required List<Widget> slivers,
+    RefreshLoadStyle? loadStyle,
+    Duration? loadingDebounce,
+    required List<Widget> slivers,
   }) {
     var refresh = EasyRefreshStyle.custom(
       taskIndependence: taskIndependence,
@@ -204,23 +205,23 @@ class RefreshView extends StatefulWidget {
   factory RefreshView.builder({
     key,
     RefreshState initState = const RefreshState._init(),
-    Stream<RefreshState> stateStream,
-    PlaceStyle placeStyle,
+    Stream<RefreshState>? stateStream,
+    PlaceStyle? placeStyle,
     bool firstRefresh = false,
-    Widget firstRefreshWidget,
+    Widget? firstRefreshWidget,
     int headerIndex = 0,
-    RefreshBuilder placeBuilder,
-    VoidCallback onRefresh,
-    VoidCallback onLoadMore,
+    RefreshBuilder? placeBuilder,
+    VoidCallback? onRefresh,
+    VoidCallback? onLoadMore,
     bool taskIndependence = false,
-    ScrollController scrollController,
-    Header header,
-    Footer footer,
+    ScrollController? scrollController,
+    Header? header,
+    Footer? footer,
     bool topBouncing = true,
     bool bottomBouncing = true,
-    @required EasyRefreshChildBuilder builder,
-    RefreshLoadStyle loadStyle,
-    Duration loadingDebounce,
+    required EasyRefreshChildBuilder builder,
+    RefreshLoadStyle? loadStyle,
+    Duration? loadingDebounce,
   }) {
     var refresh = EasyRefreshStyle.builder(
       taskIndependence: taskIndependence,
@@ -259,8 +260,8 @@ class RefreshView extends StatefulWidget {
 
   /// 設定預設 Header Footer Builder
   static void setDefaultStyle({
-    RefreshHeaderBuilder headerBuilder,
-    RefreshFooterBuilder footerBuilder,
+    RefreshHeaderBuilder? headerBuilder,
+    RefreshFooterBuilder? footerBuilder,
   }) {
     _defaultHeaderBuilder = headerBuilder;
     _defaultFooterBuilder = footerBuilder;
@@ -286,13 +287,13 @@ class _RefreshViewState extends State<RefreshView> {
   EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   /// 內部的列表元件實際上是一個 [EasyRefresh]
-  EasyRefresh _easyRefresh;
+  late EasyRefresh _easyRefresh;
 
   /// 元件滾動的通知
-  NotificationListener _easyRefreshNotification;
+  NotificationListener? _easyRefreshNotification;
 
   /// 狀態監聽
-  StreamSubscription _stateStreamSubscription;
+  StreamSubscription? _stateStreamSubscription;
 
   /// 凍結觸摸狀態
   bool _freezeTouch = false;
@@ -313,7 +314,7 @@ class _RefreshViewState extends State<RefreshView> {
   var _isDebounceActive = false;
 
   /// 啟動延遲接受命令的訂閱
-  StreamSubscription _disableSubscription;
+  StreamSubscription? _disableSubscription;
 
   Stream<bool> get debounceLoadStream {
     return _stateSubject.stream.map((e) {
@@ -344,18 +345,18 @@ class _RefreshViewState extends State<RefreshView> {
   /// 最終顯示的 header
   Header get _showHeader {
     if (widget._easyRefresh.header == null && _defaultHeaderBuilder != null) {
-      return _defaultHeaderBuilder(context);
+      return _defaultHeaderBuilder!(context);
     } else {
-      return widget._easyRefresh.header;
+      return widget._easyRefresh.header!;
     }
   }
 
   /// 最終顯示的 footer
   Footer get _showFooter {
     if (widget._easyRefresh.header == null && _defaultFooterBuilder != null) {
-      return _defaultFooterBuilder(context);
+      return _defaultFooterBuilder!(context);
     } else {
-      return widget._easyRefresh.footer;
+      return widget._easyRefresh.footer!;
     }
   }
 
@@ -369,7 +370,7 @@ class _RefreshViewState extends State<RefreshView> {
     });
 
     if (widget.loadingDebounce != null &&
-        widget.loadingDebounce > Duration.zero) {
+        widget.loadingDebounce! > Duration.zero) {
       dataHandleStream = dataHandleStream?.debounce((e) {
         _activeDebounce();
         if (e.isLoading || !_isDebounceActive) {
@@ -459,10 +460,10 @@ class _RefreshViewState extends State<RefreshView> {
   void _triggerScrollPosDetect() {
     // 在下一幀之後, 直接推移一個非常非常小的距離
     // 目的只為觸發 NotificationListener 監聽 scrollView 的 size
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       _firstTrigger = true;
-      widget._easyRefresh.scrollController
-          .jumpTo(widget._easyRefresh.scrollController.offset - 0.0000001);
+      var scrollController = widget._easyRefresh.scrollController!;
+      scrollController.jumpTo(scrollController.offset - 0.0000001);
     });
   }
 
@@ -511,7 +512,7 @@ class _RefreshViewState extends State<RefreshView> {
 //              print("發出刷新");
               if (_cancelOutRefreshCount == 0) {
                 _isRefreshing = true;
-                widget.onRefresh();
+                widget.onRefresh!();
               }
               _cancelOutRefreshCount = 0;
             },
@@ -520,7 +521,7 @@ class _RefreshViewState extends State<RefreshView> {
           : () async {
               if (_cancelOutLoadMoreCount == 0) {
                 _isLoadingMore = true;
-                widget.onLoad();
+                widget.onLoad!();
               }
               _cancelOutLoadMoreCount = 0;
             },
@@ -549,7 +550,7 @@ class _RefreshViewState extends State<RefreshView> {
               );
               _handleRefreshState(state);
               _stateSubject.add(state);
-              widget.onLoad();
+              widget.onLoad!();
             }
 
             // 頂部
@@ -570,21 +571,21 @@ class _RefreshViewState extends State<RefreshView> {
         stream: _stateSubject.stream,
         builder: (context, snapshot) {
 //          print("取得資料~~~");
-          Widget child;
+          Widget? child;
 
-          RefreshBuilder childBuilder =
+          RefreshBuilder? childBuilder =
               widget.placeBuilder ?? _defaultPlaceBuilder;
 
           if (childBuilder != null) {
             // 代表有實現自定義 佔位 元件
             child = childBuilder(
               context,
-              snapshot.data,
+              snapshot.data!,
               _placeStyle,
             );
           }
 
-          child ??= _getDefaultPlaceWidget(snapshot.data);
+          child ??= _getDefaultPlaceWidget(snapshot.data!);
           return AbsorbPointer(
             absorbing: _freezeTouch,
             child: child,
@@ -613,8 +614,8 @@ class _RefreshViewState extends State<RefreshView> {
           return Container(
             alignment: Alignment.center,
             child: Text(
-              _placeStyle?.empty ?? "",
-              style: _placeStyle?.textStyle,
+              _placeStyle.empty,
+              style: _placeStyle.textStyle,
             ),
           );
         } else if (!state.success) {
@@ -622,8 +623,8 @@ class _RefreshViewState extends State<RefreshView> {
           return Container(
             alignment: Alignment.center,
             child: Text(
-              _placeStyle?.error ?? "",
-              style: _placeStyle?.textStyle,
+              _placeStyle.error,
+              style: _placeStyle.textStyle,
             ),
           );
         }
@@ -662,7 +663,7 @@ class PlaceStyle {
   final String error;
   final String empty;
 
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   static PlaceStyle _default = PlaceStyle();
 
