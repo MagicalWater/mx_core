@@ -20,12 +20,12 @@ class _SideDetect {
   double sideSpace;
 
   _SideDetect({
-    this.center,
-    this.mainRadius,
-    this.actionRadius,
-    this.expandRadius,
-    this.containerSize,
-    this.sideSpace,
+    required this.center,
+    required this.mainRadius,
+    required this.actionRadius,
+    required this.expandRadius,
+    required this.containerSize,
+    required this.sideSpace,
   });
 
   /// 檢測是否超出邊界
@@ -40,7 +40,6 @@ class _SideDetect {
       case AxisDirection.left:
         return _left();
     }
-    return null;
   }
 
   /// 檢測右邊是否超出邊界

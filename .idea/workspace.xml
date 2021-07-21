@@ -12,28 +12,10 @@
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin_base.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/depth_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/depth_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/axis.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/axis.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/delegate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/delegate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/space.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/coordinate_layout/space.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/loading/loading.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/loading/loading.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/loading/widget/fade_circle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/loading/widget/fade_circle.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/loading/widget/round_spring.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/loading/widget/round_spring.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/loading/widget/spring.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/loading/widget/spring.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/marquee/vertical_marquee.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/marquee/vertical_marquee.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/page_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_switcher/page_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/scroll_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_switcher/scroll_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/stack_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/page_switcher/stack_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/particle_animation/bomb_animation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/particle_animation/bomb_animation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/particle_animation/particle/ball_particle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/particle_animation/particle/ball_particle.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/particle_animation/particle/particle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/particle_animation/particle/particle.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/particle_animation/particle_animation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/particle_animation/particle_animation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/particle_animation/particle_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/particle_animation/particle_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/comb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/comb.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/assist_touch/assist_touch.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/assist_touch/assist_touch.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/assist_touch/circle_range.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/assist_touch/circle_range.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/assist_touch/side_detect.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/assist_touch/side_detect.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,10 +196,10 @@
     </state>
     <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619425038957" />
     <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622618997268" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1626764581298">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1626832546322">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626764581298" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626832546322" />
     <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1624588711409" />
     <state x="577" y="227" width="766" height="740" key="search.everywhere.popup" timestamp="1624936883637">
       <screen x="0" y="0" width="1920" height="1040" />

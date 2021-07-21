@@ -46,7 +46,7 @@ class _CircleRange {
     }
   }
 
-  _CircleRange._({this.begin, this.end});
+  _CircleRange._({required this.begin, required this.end});
 
   /// [center] - 主按鈕的中心點
   /// [mainRadius] - 主按鈕半徑
@@ -55,12 +55,12 @@ class _CircleRange {
   /// [containerSize] - 裝載整個物件的 size
   /// [sideSpace] - 距離邊界的空間
   factory _CircleRange({
-    Offset center,
-    double mainRadius,
-    double actionRadius,
-    double expandRadius,
-    Size containerSize,
-    double sideSpace,
+    required Offset center,
+    required double mainRadius,
+    required double actionRadius,
+    required double expandRadius,
+    required Size containerSize,
+    required double sideSpace,
   }) {
     // 檢測四個方向是否超出邊界
     var sideOutsideDetect = _SideDetect(

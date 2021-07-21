@@ -10,7 +10,7 @@ part 'circle_range.dart';
 
 part 'side_detect.dart';
 
-typedef ExpandProgressBuilder = Widget Function(
+typedef ExpandProgressBuilder = Widget? Function(
   BuildContext context,
   double progress,
 );
@@ -18,7 +18,7 @@ typedef ExpandProgressBuilder = Widget Function(
 /// 輔助按鈕, 類似於ios小白點
 class AssistTouch extends StatefulWidget {
   /// 主按鈕外框
-  final Decoration decoration;
+  final Decoration? decoration;
 
   /// 主按鈕的 child
   final Widget child;
@@ -61,64 +61,25 @@ class AssistTouch extends StatefulWidget {
   final double boardRadius;
 
   /// 面板元件構建類
-  final ExpandProgressBuilder boardBuilder;
+  final ExpandProgressBuilder? boardBuilder;
 
   AssistTouch._({
-    this.initOffset,
+    required this.initOffset,
+    required this.child,
     this.maskColor = Colors.transparent,
     this.maskOpacity = 1,
     this.decoration,
-    this.child,
     this.rotateAction = false,
     this.animationDuration = const Duration(milliseconds: 200),
     this.sideSpace = 50,
     this.expandRadius = 100,
     this.boardRadius = 150,
     this.size = 100,
-    this.actionSize,
+    double? actionSize,
     this.draggable = true,
     this.actions = const [],
     this.boardBuilder,
-  });
-
-  factory AssistTouch({
-    Offset initOffset,
-    Color maskColor = Colors.transparent,
-    double maskOpacity = 1,
-    Decoration decoration,
-    Widget child,
-    bool rotateAction = false,
-    Duration animationDuration = const Duration(milliseconds: 200),
-    double sideSpace = 50,
-    double expandRadius = 100,
-    double boardRadius = 150,
-    double size = 100,
-    double actionSize,
-    bool draggable = true,
-    List<Widget> actions = const [],
-    ExpandProgressBuilder boardBuilder,
-  }) {
-    if (actionSize == null) {
-      actionSize = size;
-    }
-    return AssistTouch._(
-      initOffset: initOffset,
-      maskColor: maskColor,
-      maskOpacity: maskOpacity,
-      decoration: decoration,
-      child: child,
-      rotateAction: rotateAction,
-      animationDuration: animationDuration,
-      sideSpace: sideSpace,
-      expandRadius: expandRadius,
-      boardRadius: boardRadius,
-      size: size,
-      actionSize: actionSize,
-      draggable: draggable,
-      actions: actions,
-      boardBuilder: boardBuilder,
-    );
-  }
+  }) : this.actionSize = actionSize ?? size;
 
   @override
   _AssistTouchState createState() => _AssistTouchState();
@@ -127,20 +88,20 @@ class AssistTouch extends StatefulWidget {
 class _AssistTouchState extends State<AssistTouch>
     with SingleTickerProviderStateMixin {
   /// 主按鈕拖曳後的位移動畫控制器
-  AnimationController animationController;
+  late AnimationController animationController;
 
   /// 主按鈕拖曳後的位移動畫
-  Animation<Offset> mainDragAnimation;
+  late Animation<Offset> mainDragAnimation;
 
-  Tween<Offset> mainTween;
+  late Tween<Offset> mainTween;
 
-  Tween<double> actionTween;
+  late Tween<double> actionTween;
 
   /// 展開的位移動畫
-  Animation<double> actionAnimation;
+  late Animation<double> actionAnimation;
 
   /// 主按鈕的偏移
-  Offset mainOffset;
+  late Offset mainOffset;
 
   /// 是否為展開狀態
   bool isExpand = false;
@@ -149,15 +110,15 @@ class _AssistTouchState extends State<AssistTouch>
   double expandProgress = 0;
 
   /// 子元件展開相關屬性
-  List<_ActionExpanded> actionExpanded;
+  late List<_ActionExpanded> actionExpanded;
 
   /// 展開的角度範圍
-  _CircleRange circleRange;
+  _CircleRange? circleRange;
 
   @override
   void initState() {
     // 初始化主按鈕的偏移
-    mainOffset = widget.initOffset ?? Offset.zero;
+    mainOffset = widget.initOffset;
 
     // 初始化所有子按鈕的偏移
     actionExpanded = List.generate(
@@ -266,7 +227,7 @@ class _AssistTouchState extends State<AssistTouch>
 //          print("位移訊息(onDraggableCanceled): $offset");
 
           // 將 offset 轉為局部 offset
-          RenderBox stackBox = context.findRenderObject();
+          var stackBox = context.findRenderObject() as RenderBox;
           Offset stackDiff = stackBox.globalToLocal(Offset.zero);
 
           // 因為 draggable 的 dy 是下方, 所以要再減去 元件高度
@@ -288,7 +249,7 @@ class _AssistTouchState extends State<AssistTouch>
   }
 
   /// 展開後的背景遮罩元件
-  Widget buildExpandMaskWidget() {
+  Widget? buildExpandMaskWidget() {
     if (expandProgress != 0) {
       // 當展開進度是不等於0的時候, 需要加入跟進度一樣的漸變動畫
       // 依照當前進度取得透明度
@@ -326,10 +287,10 @@ class _AssistTouchState extends State<AssistTouch>
   }
 
   /// 展開後的面板元件
-  Widget buildBorderWidget() {
-    Widget borderWidget;
+  Widget? buildBorderWidget() {
+    Widget? borderWidget;
     if (widget.boardBuilder != null && expandProgress >= 0) {
-      borderWidget = widget.boardBuilder(context, expandProgress);
+      borderWidget = widget.boardBuilder!(context, expandProgress);
       if (borderWidget != null) {
         borderWidget = Positioned(
           left: mainOffset.dx + (widget.size / 2) - widget.boardRadius,
@@ -403,7 +364,7 @@ class _AssistTouchState extends State<AssistTouch>
   }
 
   /// 拖拉主按鈕之後, 若超過邊界則要開始位移動畫
-  void startTranslateAnimation({Offset from, Offset to}) {
+  void startTranslateAnimation({required Offset from, required Offset to}) {
     mainDragAnimation.removeListener(mainDragAnimationListener);
     mainDragAnimation.addListener(mainDragAnimationListener);
     actionAnimation.removeListener(actionExpandAnimationListener);
@@ -443,8 +404,8 @@ class _AssistTouchState extends State<AssistTouch>
     double lastDx = willOffset.dx;
     double lastDy = willOffset.dy;
 
-    var parentWidth = context.size.width;
-    var parentHeight = context.size.height;
+    var parentWidth = context.size!.width;
+    var parentHeight = context.size!.height;
 
     if (lastDx <= 0) {
       // 主按鈕的位置超出左邊界, 強制設定為最左邊
@@ -479,7 +440,7 @@ class _AssistTouchState extends State<AssistTouch>
     );
 
     // 取得按鈕的角度
-    var actionAngle = circleRange.getTheta(widget.actions.length, widgetIndex);
+    var actionAngle = circleRange!.getTheta(widget.actions.length, widgetIndex);
 
     // 將角度轉換為弧度/弳度
     var radian = vector.radians(actionAngle);
@@ -551,7 +512,7 @@ class _AssistTouchState extends State<AssistTouch>
 
   /// 更新可以展開的範圍
   void updateExpandRange(BuildContext context) {
-    var containerSize = context.size;
+    var containerSize = context.size!;
     var mainCenter = Offset(
         mainOffset.dx + widget.size / 2, mainOffset.dy + widget.size / 2);
 
@@ -567,11 +528,11 @@ class _AssistTouchState extends State<AssistTouch>
 
   /// 傳入兩個範圍, 取得範圍1中的某個點在範圍2中相同比例時的位置
   double _progressConvert({
-    double lower1,
-    double upper1,
-    double value1,
-    double lower2,
-    double upper2,
+    required double lower1,
+    required double upper1,
+    required double value1,
+    required double lower2,
+    required double upper2,
   }) {
     var proportion1 = (value1 - lower1) / (upper1 - lower1);
     var value2 = (upper2 - lower2) * proportion1 + lower2;
@@ -584,5 +545,5 @@ class _ActionExpanded {
   final Offset offset;
   final double angle;
 
-  _ActionExpanded({this.offset, this.angle = 0});
+  _ActionExpanded({required this.offset, this.angle = 0});
 }

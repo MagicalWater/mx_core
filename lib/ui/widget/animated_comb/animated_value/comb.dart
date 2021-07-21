@@ -35,17 +35,17 @@ part 'translate_value.dart';
 /// [Comb.height] - 高度size動畫
 /// [Comb.color] - 背景色變換動畫
 abstract class Comb<T> {
-  T begin;
-  T end;
+  T get begin;
+  T get end;
 
   /// 延遲時間
-  int delayed;
+  int get delayed;
 
   /// 動畫時間
-  int duration;
+  int? get duration;
 
   /// 動畫差值器
-  Curve curve;
+  Curve get curve;
 
   /// 錨點
 //  Alignment alignment;
