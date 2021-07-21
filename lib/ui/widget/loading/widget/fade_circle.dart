@@ -12,7 +12,7 @@ class FadeCircle extends StatefulWidget {
   final int duration;
 
   /// 顏色
-  final Color color;
+  final Color? color;
 
   /// 共要建造幾顆圓球出來
   final int count;
@@ -20,7 +20,7 @@ class FadeCircle extends StatefulWidget {
   /// 圓動畫共有多少個頭
   final int headCount;
 
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
 
   FadeCircle({
     this.size = 50,
@@ -37,7 +37,7 @@ class FadeCircle extends StatefulWidget {
 
 class _FadeCircleState extends State<FadeCircle>
     with SingleTickerProviderStateMixin {
-  AnimatedSyncTick _animatedSyncTick;
+  late AnimatedSyncTick _animatedSyncTick;
 
   @override
   void initState() {

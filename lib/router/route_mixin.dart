@@ -628,7 +628,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
     bool entryPoint = false,
-    Key key,
+    Key? key,
   }) {
     RouteData data;
     if (route is RouteData) {

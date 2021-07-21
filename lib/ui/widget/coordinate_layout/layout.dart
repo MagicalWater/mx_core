@@ -17,10 +17,10 @@ class CoordinateLayout extends StatefulWidget {
 
   final List<AxisItem> children;
 
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   /// 每列高度
-  final double rowHeight;
+  final double? rowHeight;
 
   /// y軸每列空隙
   final double verticalSpace;
@@ -31,19 +31,19 @@ class CoordinateLayout extends StatefulWidget {
   /// 最後一個 child 是否自動填滿剩下的寬度
   final bool lastFillWidth;
 
-  final Color color;
+  final Color? color;
 
   /// 預估高度(當外層是個 scrollView / column 這種沒有限界高度的元件時, 請給一個大約預測高度, 可以超過元件總高度, 但別小於)
-  final double estimatedHeight;
+  final double? estimatedHeight;
 
   CoordinateLayout({
+    required this.segmentCount,
+    required this.children,
     this.padding,
     this.color,
-    @required this.segmentCount,
-    @required this.children,
     this.rowHeight,
-    this.horizontalSpace,
-    this.verticalSpace,
+    this.horizontalSpace = 0,
+    this.verticalSpace = 0,
     this.lastFillWidth = false,
     this.estimatedHeight,
   }) {
@@ -75,13 +75,13 @@ class CoordinateLayout extends StatefulWidget {
 }
 
 class _CoordinateLayoutState extends State<CoordinateLayout> {
-  double flowHeight;
+  double? flowHeight;
 
   /// 新舊資料是否不同
   bool isDataDifference = false;
 
   /// 當前 delegate
-  _CoordinateDelegate currentDelegate;
+  _CoordinateDelegate? currentDelegate;
 
   @override
   void initState() {
@@ -115,12 +115,12 @@ class _CoordinateLayoutState extends State<CoordinateLayout> {
   Widget build(BuildContext context) {
     if (widget.children.isEmpty) return Container();
 
-    double specialHeight;
+    double? specialHeight;
 
     // 只有在有確定內容高度以及資料一樣的情況下, 才設置整體高度
     if (flowHeight != null && !isDataDifference) {
 //      print("指定高度: ${flowHeight}, ${widget.padding?.top}, ${widget.padding?.bottom}");
-      specialHeight = flowHeight +
+      specialHeight = flowHeight! +
           (widget.padding?.top ?? 0) +
           (widget.padding?.bottom ?? 0);
     }
@@ -154,7 +154,7 @@ class _CoordinateLayoutState extends State<CoordinateLayout> {
       isDataDifference: isDataDifference,
       lastFillWidth: widget.lastFillWidth,
       onUpdate: (allHeight) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
           isDataDifference = false;
           flowHeight = allHeight;
           setState(() {});
@@ -164,20 +164,20 @@ class _CoordinateLayoutState extends State<CoordinateLayout> {
     if (currentDelegate != null) {
       if (isDataDifference) {
         // 資料不同, 只繼承 rowHeight
-        newDelegate.rowHeight = currentDelegate.rowHeight;
+        newDelegate.rowHeight = currentDelegate!.rowHeight;
         currentDelegate = newDelegate;
       } else {
-        newDelegate._spaces = currentDelegate._spaces;
-        newDelegate._spaceCompute = currentDelegate._spaceCompute;
-        newDelegate.rowHeight = currentDelegate.rowHeight;
-        newDelegate.columnWidth = currentDelegate.columnWidth;
-        newDelegate.allHeight = currentDelegate.allHeight;
-        newDelegate.needReLayout = currentDelegate.needReLayout;
+        newDelegate._spaces = currentDelegate!._spaces;
+        newDelegate._spaceCompute = currentDelegate!._spaceCompute;
+        newDelegate.rowHeight = currentDelegate!.rowHeight;
+        newDelegate.columnWidth = currentDelegate!.columnWidth;
+        newDelegate.allHeight = currentDelegate!.allHeight;
+        newDelegate.needReLayout = currentDelegate!.needReLayout;
         currentDelegate = newDelegate;
       }
     } else {
       currentDelegate = newDelegate;
     }
-    return currentDelegate;
+    return currentDelegate!;
   }
 }

@@ -11,8 +11,8 @@ class DepthChart extends StatefulWidget {
   final DepthStyle style;
 
   DepthChart({
-    @required this.bids,
-    @required this.asks,
+    required this.bids,
+    required this.asks,
     this.style = const DepthStyle.light(),
   });
 

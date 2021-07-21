@@ -2,13 +2,13 @@ part of 'layout.dart';
 
 /// 空間計算
 class _SpaceCompute {
-  double totalWidth;
-  double totalHeight;
+  late double totalWidth;
+  late double totalHeight;
 
   var xSegmentCount;
   var ySegmentCount;
 
-  double rowHeight;
+  late double rowHeight;
 
   /// 空閒的空間
   List<_Space> freeSpace = [];
@@ -36,7 +36,7 @@ class _SpaceCompute {
   /// 取得空置的空間
   /// [fillLast] - 填滿剩下的寬度, 若當前無剩下寬度, 則填滿新的一列
   _Space getFreeSpace(AxisItem item, bool fillLast) {
-    _Space findSpace;
+    _Space? findSpace;
 
     if (fillLast && freeSpace.isNotEmpty) {
       // 需要填滿剩下的寬度, 尋找當下 空閑空間 最尾端
@@ -119,7 +119,7 @@ class _SpaceCompute {
 
     // 最後在遍歷所有空間, 將重複的空間 cut 掉
     var step1 = freeSpace.map((e) {
-      return e.cut(findSpace);
+      return e.cut(findSpace!);
     });
 
     var step2 = step1.expand((e) => e).toList();
@@ -166,10 +166,10 @@ class _Space {
   bool isForce;
 
   _Space({
-    this.x,
-    this.y,
-    this.xSpan,
-    this.ySpan,
+    required this.x,
+    required this.y,
+    required this.xSpan,
+    required this.ySpan,
     this.isForce = false,
   });
 
@@ -192,7 +192,7 @@ class _Space {
   /// 判斷是否能包含某個位置
   /// 可以 => 返回 [_Space]
   /// 不行 => 返回 null
-  _Space getSpaceIfContain(AxisItem item) {
+  _Space? getSpaceIfContain(AxisItem item) {
     // 先確認 width, height 空間夠不夠
     if (xSpan < item.xSpan || ySpan < item.ySpan) {
       return null;
@@ -213,12 +213,12 @@ class _Space {
 
     if (item.x != null) {
       // x 有限制位置
-      isXOk = item.x >= x && item.x + item.xSpan <= x + xSpan;
+      isXOk = item.x! >= x && item.x! + item.xSpan <= x + xSpan;
     }
 
     if (item.y != null) {
       // y 有限制位置
-      isXOk = item.y >= y && item.y + item.ySpan <= y + ySpan;
+      isXOk = item.y! >= y && item.y! + item.ySpan <= y + ySpan;
     }
 
     if (isXOk && isYOk) {

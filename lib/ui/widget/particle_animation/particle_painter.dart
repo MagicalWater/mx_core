@@ -7,7 +7,7 @@ class ParticlePainter extends CustomPainter {
   Particle particle;
 
   /// 元件大小, 整個粒子運動空間
-  double width, height;
+  double? width, height;
 
   /// 粒子物件畫筆
   Paint _particlePaint = Paint();
@@ -16,7 +16,7 @@ class ParticlePainter extends CustomPainter {
   Paint _bgPaint = Paint();
 
   ParticlePainter({
-    this.particle,
+    required this.particle,
     this.width,
     this.height,
   });

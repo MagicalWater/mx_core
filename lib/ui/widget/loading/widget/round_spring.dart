@@ -16,10 +16,10 @@ class RoundSpring extends StatefulWidget {
   final int duration;
 
   /// 裝飾
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
 
   /// 顏色
-  final Color color;
+  final Color? color;
 
   RoundSpring({
     this.springMultiple = 1,
@@ -36,7 +36,7 @@ class RoundSpring extends StatefulWidget {
 
 class _RoundSpringState extends State<RoundSpring>
     with TickerProviderStateMixin {
-  AnimatedSyncTick _animatedSyncTick;
+  late AnimatedSyncTick _animatedSyncTick;
 
   @override
   void initState() {

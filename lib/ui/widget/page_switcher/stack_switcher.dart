@@ -16,27 +16,27 @@ class StackSwitcher extends StatefulWidget {
 
   /// 當尚未有 route 傳入時, 所顯示的空元件
   /// 默認為 Container()
-  final Widget emptyWidget;
+  final Widget? emptyWidget;
 
   final Duration duration;
 
   /// 縮放係數 - 0~1, 1代表不縮放
-  final double scaleIn;
+  final double? scaleIn;
 
   /// 透明係數 - 0~1, 1代表不透明
-  final double opacityIn;
+  final double? opacityIn;
 
   /// 位移係數
-  final Offset translateIn;
+  final Offset? translateIn;
 
   /// 縮放係數 - 0~1, 1代表不縮放
-  final double scaleOut;
+  final double? scaleOut;
 
   /// 透明係數 - 0~1, 1代表不透明
-  final double opacityOut;
+  final double? opacityOut;
 
   /// 位移係數
-  final Offset translateOut;
+  final Offset? translateOut;
 
   /// 回退位移方向
   /// 預設 [AxisDirection.right] 右滑回退
@@ -56,7 +56,7 @@ class StackSwitcher extends StatefulWidget {
   final bool animateEnabled;
 
   /// 動畫陰影
-  final BoxShadow animatedShadow;
+  final BoxShadow? animatedShadow;
 
   /// 對齊方向
   final Alignment alignment;
@@ -65,49 +65,49 @@ class StackSwitcher extends StatefulWidget {
   final StackConfig stackConfig;
 
   StackSwitcher._({
-    this.routes,
-    this.stream,
-    this.duration,
+    required this.routes,
+    required this.stream,
+    required this.duration,
+    required this.swipeBackEnabled,
+    required this.triggerSwipeDistance,
+    required this.alignment,
+    required this.stackConfig,
+    required this.animateEnabled,
+    required this.onBackPage,
+    this.backDirection = AxisDirection.right,
+    this.animatedShadow,
     this.emptyWidget,
     this.scaleIn,
     this.opacityIn,
     this.translateIn,
-    this.backDirection = AxisDirection.right,
     this.scaleOut,
     this.opacityOut,
-    this.swipeBackEnabled,
-    this.triggerSwipeDistance,
     this.translateOut,
-    this.alignment,
-    this.stackConfig,
-    this.animateEnabled,
-    this.animatedShadow,
-    this.onBackPage,
   });
 
   factory StackSwitcher({
-    List<String> routes,
-    Stream<List<RouteData>> stream,
+    required List<String> routes,
+    required Stream<List<RouteData>> stream,
+    required VoidCallback onBackPage,
     Duration duration = const Duration(milliseconds: 200),
-    Widget emptyWidget,
-    double scaleIn = 1,
-    double opacityIn = 0,
-    Offset translateIn = Offset.zero,
-    double scaleOut,
-    double opacityOut,
-    Offset translateOut,
     AxisDirection backDirection = AxisDirection.right,
     double triggerSwipeDistance = 40,
     Alignment alignment = Alignment.center,
     StackConfig stackConfig = const StackConfig(),
     bool swipeBackEnabled = true,
     bool animateEnabled = true,
-    BoxShadow animatedShadow = const BoxShadow(
+    BoxShadow? animatedShadow = const BoxShadow(
       color: Colors.black26,
       blurRadius: 5,
       spreadRadius: 0,
     ),
-    VoidCallback onBackPage,
+    Widget? emptyWidget,
+    double? scaleIn = 1,
+    double? opacityIn = 0,
+    Offset? translateIn = Offset.zero,
+    double? scaleOut,
+    double? opacityOut,
+    Offset? translateOut,
   }) {
     if (scaleOut == null && scaleIn != null) {
       scaleOut = scaleIn;
@@ -148,7 +148,7 @@ class _StackSwitcherState extends State<StackSwitcher>
     with TickerProviderStateMixin {
   List<GlobalKey> cacheKey = [];
 
-  GlobalKey get _topPageBoundaryKey {
+  GlobalKey? get _topPageBoundaryKey {
     if (cacheKey.isNotEmpty) {
       return cacheKey.last;
     }
@@ -157,23 +157,23 @@ class _StackSwitcherState extends State<StackSwitcher>
 
   GlobalKey _allBoundaryKey = GlobalKey();
 
-  List<WidgetBuilder> _showChildren;
-  int showIndex;
+  List<WidgetBuilder>? _showChildren;
+  late int showIndex;
 
   /// 當前的轉場是 push 或 pop 嗎
-  bool _transitionPush;
-  ui.Image _transitionImage;
+  late bool _transitionPush;
+  ui.Image? _transitionImage;
 
-  AnimationController _controller;
-  Animation<double> _fadeIn;
-  Animation<double> _scaleIn;
-  Animation<Offset> _translateIn;
+  late AnimationController _controller;
+  Animation<double>? _fadeIn;
+  Animation<double>? _scaleIn;
+  Animation<Offset>? _translateIn;
 
-  Animation<double> _fadeOut;
-  Animation<double> _scaleOut;
-  Animation<Offset> _translateOut;
+  Animation<double>? _fadeOut;
+  Animation<double>? _scaleOut;
+  Animation<Offset>? _translateOut;
 
-  StreamSubscription _subscription;
+  late StreamSubscription _subscription;
 
   /// 當前的設定是 push 或者 pop
   bool isNowSettingPush = true;
@@ -206,31 +206,31 @@ class _StackSwitcherState extends State<StackSwitcher>
   /// ======== 以下為滑動回退的相關參數 ========
 
   /// 初始偏移
-  Offset _initPageOffset;
+  Offset? _initPageOffset;
 
   /// 移出偏移
-  Offset pageOutOffset;
+  Offset? pageOutOffset;
 
   /// 移入偏移
-  Offset pageInOffset;
+  Offset? pageInOffset;
 
   /// 移出透明值
-  double pageOutOpacity;
+  double? pageOutOpacity;
 
   /// 移入透明值
-  double pageInOpacity;
+  double? pageInOpacity;
 
   /// 移出縮放值
-  double pageOutScale;
+  double? pageOutScale;
 
   /// 移入縮放值
-  double pageInScale;
+  double? pageInScale;
 
   /// 返回前頁的進度百分比
-  double backPageSwipeRate;
+  double? backPageSwipeRate;
 
   /// 重置滑出的頁面動畫位置
-  Animation<Offset> restoreSwipePageAnimation;
+  Animation<Offset>? restoreSwipePageAnimation;
 
   @override
   void initState() {
@@ -340,7 +340,7 @@ class _StackSwitcherState extends State<StackSwitcher>
 
     if (backPageSwipeRate != null) {
       // 正在返回頁面中, 使用頂端頁面的截圖
-      usedBoundaryKey = _topPageBoundaryKey;
+      usedBoundaryKey = _topPageBoundaryKey!;
     } else {
       // 不是返回頁面, 使用全局頁面的截圖
       usedBoundaryKey = _allBoundaryKey;
@@ -355,11 +355,11 @@ class _StackSwitcherState extends State<StackSwitcher>
       return;
     }
 
-    RenderRepaintBoundary boundary =
-        usedBoundaryKey.currentContext.findRenderObject();
+    var boundary = usedBoundaryKey.currentContext!.findRenderObject()
+        as RenderRepaintBoundary;
 
-    if (!kReleaseMode && (boundary.debugNeedsPaint ?? false)) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    if (!kReleaseMode && boundary.debugNeedsPaint) {
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
         _cacheCapture(datas);
       });
       return;
@@ -374,7 +374,7 @@ class _StackSwitcherState extends State<StackSwitcher>
     }
 
     if (backPageSwipeRate != null) {
-      _controller.value = backPageSwipeRate;
+      _controller.value = backPageSwipeRate!;
       clearBackSwipeInfo();
       // print('rate = $backRate');
     }
@@ -455,9 +455,9 @@ class _StackSwitcherState extends State<StackSwitcher>
       pageOutOffset = widget.translateIn;
       pageInOffset = Offset.zero;
     } else {
-      pageOutOffset = widget.translateIn * backPageSwipeRate;
+      pageOutOffset = widget.translateIn! * backPageSwipeRate!;
       pageInOffset =
-          widget.translateOut - (widget.translateOut * backPageSwipeRate);
+          widget.translateOut! - (widget.translateOut! * backPageSwipeRate!);
     }
   }
 
@@ -466,7 +466,7 @@ class _StackSwitcherState extends State<StackSwitcher>
       return;
     }
 
-    var diffOffset = details.globalPosition - _initPageOffset;
+    var diffOffset = details.globalPosition - _initPageOffset!;
 
     // 依照回退方向, 計算出回退百分比
     switch (widget.backDirection) {
@@ -474,40 +474,40 @@ class _StackSwitcherState extends State<StackSwitcher>
         // 上滑回退
         if (diffOffset.dy > 0) {
           backPageSwipeRate = 0;
-        } else if (diffOffset.dy < widget.translateIn.dy) {
+        } else if (diffOffset.dy < widget.translateIn!.dy) {
           backPageSwipeRate = 1;
         } else {
-          backPageSwipeRate = diffOffset.dy.divide(widget.translateIn.dy);
+          backPageSwipeRate = diffOffset.dy.divide(widget.translateIn!.dy);
         }
         break;
       case AxisDirection.down:
         // 下滑回退
         if (diffOffset.dy < 0) {
           backPageSwipeRate = 0;
-        } else if (diffOffset.dy > widget.translateIn.dy) {
+        } else if (diffOffset.dy > widget.translateIn!.dy) {
           backPageSwipeRate = 1;
         } else {
-          backPageSwipeRate = diffOffset.dy.divide(widget.translateIn.dy);
+          backPageSwipeRate = diffOffset.dy.divide(widget.translateIn!.dy);
         }
         break;
       case AxisDirection.right:
         // 右滑回退
         if (diffOffset.dx < 0) {
           backPageSwipeRate = 0;
-        } else if (diffOffset.dx > widget.translateIn.dx) {
+        } else if (diffOffset.dx > widget.translateIn!.dx) {
           backPageSwipeRate = 1;
         } else {
-          backPageSwipeRate = diffOffset.dx.divide(widget.translateIn.dx);
+          backPageSwipeRate = diffOffset.dx.divide(widget.translateIn!.dx);
         }
         break;
       case AxisDirection.left:
         // 左滑回退
         if (diffOffset.dx > 0) {
           backPageSwipeRate = 0;
-        } else if (diffOffset.dx < widget.translateIn.dx) {
+        } else if (diffOffset.dx < widget.translateIn!.dx) {
           backPageSwipeRate = 1;
         } else {
-          backPageSwipeRate = diffOffset.dx.divide(widget.translateIn.dx);
+          backPageSwipeRate = diffOffset.dx.divide(widget.translateIn!.dx);
         }
         break;
     }
@@ -516,44 +516,44 @@ class _StackSwitcherState extends State<StackSwitcher>
 
     // 透過移出百分比同步移出透明值
     if (haveOpacityIn) {
-      var diffIn = 1.0.subtract(widget.opacityIn);
-      var convertDiff = diffIn.multiply(backPageSwipeRate);
+      var diffIn = 1.0.subtract(widget.opacityIn!);
+      var convertDiff = diffIn.multiply(backPageSwipeRate!);
       pageOutOpacity = 1.0.subtract(convertDiff);
     }
 
     // 透過移出百分比同步移入透明值
     if (haveOpacityOut) {
-      var diffOut = 1.0.subtract(widget.opacityOut);
-      var convertDiff = diffOut.multiply(backPageSwipeRate);
-      pageInOpacity = widget.opacityOut.add(convertDiff);
+      var diffOut = 1.0.subtract(widget.opacityOut!);
+      var convertDiff = diffOut.multiply(backPageSwipeRate!);
+      pageInOpacity = widget.opacityOut!.add(convertDiff);
     }
 
     // 透過移出百分比同步移出縮放
     if (haveScaleIn) {
       double diffIn;
-      if (widget.scaleIn > 1.0) {
+      if (widget.scaleIn! > 1.0) {
         // 放大, 因此要倒過來減
-        diffIn = widget.scaleIn.subtract(1.0);
-        var convertDiff = diffIn.multiply(backPageSwipeRate);
+        diffIn = widget.scaleIn!.subtract(1.0);
+        var convertDiff = diffIn.multiply(backPageSwipeRate!);
         pageOutScale = 1.0.add(convertDiff);
       } else {
         // 縮小
-        diffIn = 1.0.subtract(widget.scaleIn);
-        var convertDiff = diffIn.multiply(backPageSwipeRate);
+        diffIn = 1.0.subtract(widget.scaleIn!);
+        var convertDiff = diffIn.multiply(backPageSwipeRate!);
         pageOutScale = 1.0.subtract(convertDiff);
       }
     }
 
     // 透過移出百分比同步移入縮放
     if (haveScaleOut) {
-      if (widget.scaleOut > 1.0) {
-        var diffOut = widget.scaleOut.subtract(1.0);
-        var convertDiff = diffOut.multiply(backPageSwipeRate);
-        pageInScale = widget.scaleOut.add(convertDiff);
+      if (widget.scaleOut! > 1.0) {
+        var diffOut = widget.scaleOut!.subtract(1.0);
+        var convertDiff = diffOut.multiply(backPageSwipeRate!);
+        pageInScale = widget.scaleOut!.add(convertDiff);
       } else {
-        var diffOut = 1.0.subtract(widget.scaleOut);
-        var convertDiff = diffOut.multiply(backPageSwipeRate);
-        pageInScale = widget.scaleOut.add(convertDiff);
+        var diffOut = 1.0.subtract(widget.scaleOut!);
+        var convertDiff = diffOut.multiply(backPageSwipeRate!);
+        pageInScale = widget.scaleOut!.add(convertDiff);
       }
     }
 
@@ -566,7 +566,7 @@ class _StackSwitcherState extends State<StackSwitcher>
       return;
     }
 
-    bool backEvent;
+    bool? backEvent;
 
     // 依照加速度決定是否切換上一頁
     switch (widget.backDirection) {
@@ -594,7 +594,7 @@ class _StackSwitcherState extends State<StackSwitcher>
 
     if (backEvent == null) {
       // 檢查是否滑動超過螢幕一半
-      if (backPageSwipeRate >= 0.5) {
+      if (backPageSwipeRate! >= 0.5) {
         // 超過螢幕一半代表切換上一頁
         print('回到上一頁: 滑動超過一半螢幕');
         _popPage();
@@ -622,9 +622,8 @@ class _StackSwitcherState extends State<StackSwitcher>
     restoreSwipePageAnimation =
         Tween<Offset>(begin: pageOutOffset, end: Offset.zero)
             .chain(CurveTween(curve: widget.curve))
-            .animate(_controller);
-
-    restoreSwipePageAnimation.addListener(restoreAnimationUpdateOffset);
+            .animate(_controller)
+              ..addListener(restoreAnimationUpdateOffset);
 
     if (_controller.isAnimating) {
       _controller.reset();
@@ -636,16 +635,16 @@ class _StackSwitcherState extends State<StackSwitcher>
   void restoreAnimationUpdateOffset() {
     if (!_controller.isAnimating || restoreSwipePageAnimation == null) return;
 
-    pageOutOffset = restoreSwipePageAnimation.value;
+    pageOutOffset = restoreSwipePageAnimation!.value;
 
     switch (widget.backDirection) {
       case AxisDirection.up:
       case AxisDirection.down:
-        backPageSwipeRate = pageOutOffset.dy.divide(widget.translateIn.dy);
+        backPageSwipeRate = pageOutOffset!.dy.divide(widget.translateIn!.dy);
         break;
       case AxisDirection.right:
       case AxisDirection.left:
-        backPageSwipeRate = pageOutOffset.dx.divide(widget.translateIn.dx);
+        backPageSwipeRate = pageOutOffset!.dx.divide(widget.translateIn!.dx);
         break;
     }
 
@@ -653,44 +652,44 @@ class _StackSwitcherState extends State<StackSwitcher>
 
     // 透過移出百分比同步移出透明值
     if (haveOpacityIn) {
-      var diffIn = 1.0.subtract(widget.opacityIn);
-      var convertDiff = diffIn.multiply(backPageSwipeRate);
+      var diffIn = 1.0.subtract(widget.opacityIn!);
+      var convertDiff = diffIn.multiply(backPageSwipeRate!);
       pageOutOpacity = 1.0.subtract(convertDiff);
     }
 
     // 透過移出百分比同步移入透明值
     if (haveOpacityOut) {
-      var diffOut = 1.0.subtract(widget.opacityOut);
-      var convertDiff = diffOut.multiply(backPageSwipeRate);
-      pageInOpacity = widget.opacityOut.add(convertDiff);
+      var diffOut = 1.0.subtract(widget.opacityOut!);
+      var convertDiff = diffOut.multiply(backPageSwipeRate!);
+      pageInOpacity = widget.opacityOut!.add(convertDiff);
     }
 
     // 透過移出百分比同步移出縮放
     if (haveScaleIn) {
       double diffIn;
-      if (widget.scaleIn > 1.0) {
+      if (widget.scaleIn! > 1.0) {
         // 放大, 因此要倒過來減
-        diffIn = widget.scaleIn.subtract(1.0);
-        var convertDiff = diffIn.multiply(backPageSwipeRate);
+        diffIn = widget.scaleIn!.subtract(1.0);
+        var convertDiff = diffIn.multiply(backPageSwipeRate!);
         pageOutScale = 1.0.add(convertDiff);
       } else {
         // 縮小
-        diffIn = 1.0.subtract(widget.scaleIn);
-        var convertDiff = diffIn.multiply(backPageSwipeRate);
+        diffIn = 1.0.subtract(widget.scaleIn!);
+        var convertDiff = diffIn.multiply(backPageSwipeRate!);
         pageOutScale = 1.0.subtract(convertDiff);
       }
     }
 
     // 透過移出百分比同步移入縮放
     if (haveScaleOut) {
-      if (widget.scaleOut > 1.0) {
-        var diffOut = widget.scaleOut.subtract(1.0);
-        var convertDiff = diffOut.multiply(backPageSwipeRate);
-        pageInScale = widget.scaleOut.add(convertDiff);
+      if (widget.scaleOut! > 1.0) {
+        var diffOut = widget.scaleOut!.subtract(1.0);
+        var convertDiff = diffOut.multiply(backPageSwipeRate!);
+        pageInScale = widget.scaleOut!.add(convertDiff);
       } else {
-        var diffOut = 1.0.subtract(widget.scaleOut);
-        var convertDiff = diffOut.multiply(backPageSwipeRate);
-        pageInScale = widget.scaleOut.add(convertDiff);
+        var diffOut = 1.0.subtract(widget.scaleOut!);
+        var convertDiff = diffOut.multiply(backPageSwipeRate!);
+        pageInScale = widget.scaleOut!.add(convertDiff);
       }
     }
   }
@@ -701,30 +700,30 @@ class _StackSwitcherState extends State<StackSwitcher>
       return Container();
     }
 
-    Widget oldDownWidget;
-    Widget oldUpWidget;
+    Widget? oldDownWidget;
+    Widget? oldUpWidget;
 
     Widget newWidget = Stack(
-      children: _showChildren.indexMap((e, i) {
+      children: _showChildren!.indexMap((e, i) {
         var pageWidget = e.call(context);
         if (!widget.swipeBackEnabled) {
           return pageWidget;
         }
 
-        var isLast = i == _showChildren.length - 1;
+        var isLast = i == _showChildren!.length - 1;
         var enableSwipe =
-            isLast && _showChildren.length > 1 && !_controller.isAnimating;
+            isLast && _showChildren!.length > 1 && !_controller.isAnimating;
         var enableTransform = false;
-        Offset pageOffset;
-        double pageOpacity;
-        double pageScale;
-        if (backPageSwipeRate != null && backPageSwipeRate > 0) {
+        Offset? pageOffset;
+        double? pageOpacity;
+        double? pageScale;
+        if (backPageSwipeRate != null && backPageSwipeRate! > 0) {
           if (isLast) {
             enableTransform = true;
             pageOffset = pageOutOffset;
             pageOpacity = pageOutOpacity;
             pageScale = pageOutScale;
-          } else if (i == _showChildren.length - 2) {
+          } else if (i == _showChildren!.length - 2) {
             enableTransform = true;
             pageOffset = pageInOffset;
             pageOpacity = pageInOpacity;
@@ -757,10 +756,11 @@ class _StackSwitcherState extends State<StackSwitcher>
             decoration: enableSwipe &&
                     enableTransform &&
                     pageOffset != null &&
-                    pageOffset != Offset.zero
+                    pageOffset != Offset.zero &&
+                    widget.animatedShadow != null
                 ? BoxDecoration(
                     color: Colors.transparent,
-                    boxShadow: [widget.animatedShadow],
+                    boxShadow: [widget.animatedShadow!],
                   )
                 : BoxDecoration(color: Colors.transparent),
             alignment: widget.alignment,
@@ -774,8 +774,6 @@ class _StackSwitcherState extends State<StackSwitcher>
             ),
           ),
         );
-
-        return e.call(context);
       }).toList(),
     );
 
@@ -783,12 +781,12 @@ class _StackSwitcherState extends State<StackSwitcher>
       var config =
           _transitionPush ? widget.stackConfig.push : widget.stackConfig.pop;
 
-      BoxDecoration boxShadow;
+      BoxDecoration? boxShadow;
       if (widget.animatedShadow != null &&
           (haveTranslateIn || haveTranslateOut)) {
         boxShadow = BoxDecoration(
           color: Colors.transparent,
-          boxShadow: [widget.animatedShadow],
+          boxShadow: [widget.animatedShadow!],
         );
       }
 
@@ -796,18 +794,18 @@ class _StackSwitcherState extends State<StackSwitcher>
 
       targetShowOldWidget = CustomPaint(
         painter: _ImagePainter(
-          image: _transitionImage,
+          image: _transitionImage!,
         ),
       );
 
       var oldMatrix = Matrix4.identity();
 
       if (_translateOut != null) {
-        oldMatrix.translate(_translateOut.value.dx, _translateOut.value.dy);
+        oldMatrix.translate(_translateOut!.value.dx, _translateOut!.value.dy);
       }
 
       if (_scaleOut != null) {
-        oldMatrix.scale(_scaleOut.value, _scaleOut.value);
+        oldMatrix.scale(_scaleOut!.value, _scaleOut!.value);
       }
 
       targetShowOldWidget = Container(
@@ -818,21 +816,21 @@ class _StackSwitcherState extends State<StackSwitcher>
 
       if (_fadeOut != null) {
         targetShowOldWidget = Opacity(
-          opacity: _fadeOut.value,
+          opacity: _fadeOut!.value,
           child: targetShowOldWidget,
         );
       }
 
       var newMatrix = Matrix4.identity();
       if (_translateIn != null) {
-        newMatrix.translate(_translateIn.value.dx, _translateIn.value.dy);
+        newMatrix.translate(_translateIn!.value.dx, _translateIn!.value.dy);
       }
       if (_scaleIn != null) {
-        newMatrix.scale(_scaleIn.value, _scaleIn.value);
+        newMatrix.scale(_scaleIn!.value, _scaleIn!.value);
       }
 
       newWidget = Opacity(
-        opacity: _fadeIn != null ? _fadeIn.value : 1,
+        opacity: _fadeIn != null ? _fadeIn!.value : 1,
         child: Container(
           decoration: config == StackSort.oldDown && boxShadow != null
               ? boxShadow
@@ -883,7 +881,7 @@ class _StackSwitcherState extends State<StackSwitcher>
 
   @override
   void dispose() {
-    _subscription?.cancel();
+    _subscription.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -894,7 +892,7 @@ class _ImagePainter extends CustomPainter {
 
   final Paint mainPaint = Paint()..isAntiAlias = true;
 
-  _ImagePainter({this.image});
+  _ImagePainter({required this.image});
 
   @override
   void paint(Canvas canvas, Size size) {

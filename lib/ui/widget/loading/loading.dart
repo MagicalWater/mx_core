@@ -11,8 +11,8 @@ class Loading {
     int springMultiple = 1,
     double size = 50,
     int duration = 500,
-    BoxDecoration decoration,
-    Color color,
+    BoxDecoration? decoration,
+    Color? color,
     Axis direction = Axis.horizontal,
   }) =>
       Spring(
@@ -30,8 +30,8 @@ class Loading {
     int springMultiple = 1,
     double size = 50,
     int duration = 500,
-    BoxDecoration decoration,
-    Color color,
+    BoxDecoration? decoration,
+    Color? color,
   }) =>
       RoundSpring(
         ballCount: ballCount,
@@ -46,8 +46,8 @@ class Loading {
   static FadeCircle circle({
     double size = 50,
     int duration = 1000,
-    BoxDecoration decoration,
-    Color color,
+    BoxDecoration? decoration,
+    Color? color,
     int count = 12,
     int headCount = 1,
   }) =>

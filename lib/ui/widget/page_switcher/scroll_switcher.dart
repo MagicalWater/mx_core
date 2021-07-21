@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
@@ -11,7 +12,7 @@ class ScrollSwitcher extends StatefulWidget {
 
   /// 當尚未有 route 傳入時, 所顯示的空元件
   /// 默認為 Container()
-  final Widget emptyWidget;
+  final Widget? emptyWidget;
 
   final Duration duration;
 
@@ -21,26 +22,26 @@ class ScrollSwitcher extends StatefulWidget {
   /// 動畫總開關
   final bool animateEnabled;
 
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
 
   ScrollSwitcher._({
-    this.routes,
-    this.stream,
-    this.duration,
+    required this.routes,
+    required this.stream,
+    required this.duration,
+    required this.curve,
+    required this.animateEnabled,
     this.emptyWidget,
-    this.curve,
-    this.animateEnabled,
     this.physics,
   });
 
   factory ScrollSwitcher({
-    List<String> routes,
-    Stream<List<RouteData>> stream,
+    required List<String> routes,
+    required Stream<List<RouteData>> stream,
     Duration duration = const Duration(milliseconds: 300),
-    Widget emptyWidget,
+    Widget? emptyWidget,
     Curve curve = Curves.ease,
     bool animateEnabled = true,
-    ScrollPhysics physics,
+    ScrollPhysics? physics,
   }) {
     return ScrollSwitcher._(
       routes: routes,
@@ -60,16 +61,16 @@ class ScrollSwitcher extends StatefulWidget {
 class _ScrollSwitcherState extends State<ScrollSwitcher> {
   Map<String, ValueKey<int>> cacheKey = {};
 
-  PageController _pageController;
+  PageController? _pageController;
 
-  List<WidgetBuilder> _showChildren;
+  List<WidgetBuilder>? _showChildren;
 
-  StreamSubscription _subscription;
+  late StreamSubscription _subscription;
 
-  int toIndex;
+  int? toIndex;
 
   /// 使用者切換的忽略
-  int userIgnore;
+  int? userIgnore;
 
   @override
   void initState() {
@@ -90,9 +91,8 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
     var oldLen = _showChildren?.length ?? 0;
 
     _showChildren = widget.routes.map((e) {
-      var finded = datas.firstWhere(
+      var finded = datas.firstWhereOrNull(
         (element) => element.route == e,
-        orElse: () => null,
       );
       if (finded != null) {
         ValueKey<int> key;
@@ -104,7 +104,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
           cacheKey[finded.route] = key;
           showNew = true;
         } else {
-          key = cacheKey[finded.route];
+          key = cacheKey[finded.route]!;
         }
         return (_) => routeMixinImpl.getPage(finded, key: key);
       } else {
@@ -126,7 +126,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
 
       print('外部設置滑動到 index = $showIndex');
       toIndex = showIndex;
-      _pageController.animateToPage(
+      _pageController!.animateToPage(
         showIndex,
         duration: widget.duration,
         curve: widget.curve,
@@ -145,7 +145,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
       return Container();
     }
     return PageView(
-      children: _showChildren.map((e) => e.call(context)).toList(),
+      children: _showChildren!.map((e) => e.call(context)).toList(),
       controller: _pageController,
       physics: widget.physics,
       onPageChanged: (index) {
@@ -158,7 +158,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
           return;
         }
         userIgnore = index;
-        routeMixinImpl?.forceModifyPageDetail(widget.routes[index]);
+        routeMixinImpl.forceModifyPageDetail(widget.routes[index]);
       },
     );
   }
@@ -166,7 +166,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
   @override
   void dispose() {
     _subscription.cancel();
-    _pageController.dispose();
+    _pageController?.dispose();
     super.dispose();
   }
 }

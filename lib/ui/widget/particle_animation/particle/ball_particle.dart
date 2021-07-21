@@ -23,7 +23,7 @@ class BallParticle extends Particle {
   double radiusLowerBound = 3;
 
   BallParticle({
-    this.color,
+    required this.color,
     this.radius = 10,
     double x = 0,
     double y = 0,
@@ -34,13 +34,13 @@ class BallParticle extends Particle {
     this.restitution = 1.0,
     this.boundLimit = 2,
   }) : super(
-    x: x,
-    y: y,
-    velocityX: velocityX,
-    velocityY: velocityY,
-    accX: accX,
-    accY: accY,
-  ) {
+          x: x,
+          y: y,
+          velocityX: velocityX,
+          velocityY: velocityY,
+          accX: accX,
+          accY: accY,
+        ) {
     radius = max(radius, radiusLowerBound);
   }
 
@@ -103,7 +103,6 @@ class BallParticle extends Particle {
       velocityX = -(velocityX - accX) * restitution;
       _currentBoundTimes += 1;
       isOutHorizontalBound = true;
-
     }
 
     if (x > rect.right - radius) {
@@ -131,7 +130,7 @@ class BallParticle extends Particle {
   @override
   bool isNeedDisappear() {
     // 當半徑小於2時, 需要隱藏
-    if (radius < radiusLowerBound || (boundLimit != null && _currentBoundTimes >= boundLimit)) {
+    if (radius < radiusLowerBound || _currentBoundTimes >= boundLimit) {
 //      print("粒子需要隱藏: $radius, $_currentBoundTimes");
       return true;
     }

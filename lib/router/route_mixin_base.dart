@@ -79,7 +79,7 @@ abstract class RoutePageBase {
   ///   若帶入 [RouteData], 則 [pageQuery] 以及 [blocQuery] 失效
   Widget getPage(
     dynamic route, {
-    Key key,
+    Key? key,
     Map<String, dynamic> pageQuery,
     Map<String, dynamic> blocQuery,
   });

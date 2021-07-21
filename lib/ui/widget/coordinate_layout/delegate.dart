@@ -1,7 +1,7 @@
 part of 'layout.dart';
 
 class _CoordinateDelegate extends FlowDelegate {
-  ValueChanged<double> onUpdate;
+  ValueChanged<double?> onUpdate;
 
   final int segmentCount;
 
@@ -15,10 +15,10 @@ class _CoordinateDelegate extends FlowDelegate {
   _SpaceCompute _spaceCompute = _SpaceCompute();
 
   /// 每列的高度, 沒有意外將以第 0 個child為主
-  double rowHeight;
+  double? rowHeight;
 
   /// 每行的寬度
-  double columnWidth;
+  double? columnWidth;
 
   /// 空隙高度
   double ySpace;
@@ -33,22 +33,21 @@ class _CoordinateDelegate extends FlowDelegate {
   final bool isDataDifference;
 
   /// 共佔用的高度
-  double allHeight;
+  late double allHeight;
 
   /// 最後一個 child 是否佔滿剩下的空間
   bool lastFillWidth;
 
   _CoordinateDelegate({
-    this.segmentCount,
-    this.items,
-    this.onUpdate,
+    required this.segmentCount,
+    required this.items,
+    required this.onUpdate,
+    required this.isDataDifference,
+    required this.lastFillWidth,
     this.rowHeight,
-    this.isDataDifference,
-    this.lastFillWidth,
-    double ySpace,
-    double xSpace,
-  })  : this.ySpace = ySpace ?? 0,
-        this.xSpace = xSpace ?? 0;
+    this.ySpace = 0,
+    this.xSpace = 0,
+  });
 
   /// 針對每個 child 的 constraint 再予以複寫
   @override
@@ -58,18 +57,18 @@ class _CoordinateDelegate extends FlowDelegate {
     var item = items[itemIndex];
     if (rowHeight != null) {
       if (_spaces.length > itemIndex) {
-        maxHeight = _spaces[itemIndex].ySpan * rowHeight +
+        maxHeight = _spaces[itemIndex].ySpan * rowHeight! +
             (_spaces[itemIndex].ySpan - 1) * ySpace;
       } else {
-        maxHeight = item.ySpan * rowHeight + (item.ySpan - 1) * ySpace;
+        maxHeight = item.ySpan * rowHeight! + (item.ySpan - 1) * ySpace;
       }
     }
     if (columnWidth != null) {
       if (_spaces.length > itemIndex) {
-        maxWidth = _spaces[itemIndex].xSpan * columnWidth +
+        maxWidth = _spaces[itemIndex].xSpan * columnWidth! +
             (_spaces[itemIndex].xSpan - 1) * xSpace;
       } else {
-        maxWidth = item.xSpan * columnWidth + (item.xSpan - 1) * xSpace;
+        maxWidth = item.xSpan * columnWidth! + (item.xSpan - 1) * xSpace;
       }
     }
 //    print("打印: ${maxWidth}, ${maxHeight}, ${constraints}");
@@ -117,7 +116,7 @@ class _CoordinateDelegate extends FlowDelegate {
       // 沒有指定高度, 因此遍歷 children, 取得以哪個 children 為主
       for (var i = 0; i < context.childCount; i++) {
         if (items[i].heightBase) {
-          rowHeight = context.getChildSize(i).height;
+          rowHeight = context.getChildSize(i)!.height;
 //          print("指定高度基底: ${i} = $rowHeight");
         }
 //        print("高度: ${i} = ${context.getChildSize(i).height}");
@@ -125,7 +124,7 @@ class _CoordinateDelegate extends FlowDelegate {
 
       // 沒有 children 指定為準的高度, 默認取用第一個
       if (rowHeight == null) {
-        rowHeight = context.getChildSize(0).height;
+        rowHeight = context.getChildSize(0)!.height;
       }
 
 //      print(
@@ -135,7 +134,7 @@ class _CoordinateDelegate extends FlowDelegate {
     }
 
     // 設定初始屬性
-    _spaceCompute.setTotal(totalWidth, totalHeight, segmentCount, rowHeight);
+    _spaceCompute.setTotal(totalWidth, totalHeight, segmentCount, rowHeight!);
 
     // 開始依照屬性計算每個位置
     for (int i = 0; i < context.childCount; i++) {
@@ -156,7 +155,7 @@ class _CoordinateDelegate extends FlowDelegate {
 
     _spaces.forEach((e) {
       var itemHeight =
-          (e.y * rowHeight) + (e.ySpan * rowHeight) + (e.y * ySpace);
+          (e.y * rowHeight!) + (e.ySpan * rowHeight!) + (e.y * ySpace);
       maxHeight = max(maxHeight, itemHeight);
     });
 
@@ -175,8 +174,8 @@ class _CoordinateDelegate extends FlowDelegate {
         context.paintChild(
           i,
           transform: Matrix4.translationValues(
-            space.x * columnWidth + space.x * xSpace,
-            space.y * rowHeight + space.y * ySpace,
+            space.x * columnWidth! + space.x * xSpace,
+            space.y * rowHeight! + space.y * ySpace,
             0,
           ),
         );

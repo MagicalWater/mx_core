@@ -44,12 +44,12 @@ abstract class Particle {
   }
 
   Particle({
-    this.x,
-    this.y,
-    this.accX,
-    this.accY,
-    this.velocityX,
-    this.velocityY,
+    required this.x,
+    required this.y,
+    required this.accX,
+    required this.accY,
+    required this.velocityX,
+    required this.velocityY,
   });
 
   void draw(Canvas canvas, Paint paint);

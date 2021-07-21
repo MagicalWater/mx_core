@@ -3,18 +3,18 @@ part of 'layout.dart';
 /// 座標元件
 class AxisItem extends StatelessWidget {
   /// 第 x 的位置, null 代表自動
-  final int x;
+  final int? x;
 
   /// 第 y 個位置, null 代表自動
-  final int y;
+  final int? y;
 
-  /// x 軸跨行數, null 自動帶入1
+  /// x 軸跨行數
   final int xSpan;
 
-  /// y 軸跨行數, null 自動帶入1
+  /// y 軸跨行數
   final int ySpan;
 
-  final Color color;
+  final Color? color;
 
   /// 每列高度是否以此為準
   final bool heightBase;
@@ -22,10 +22,10 @@ class AxisItem extends StatelessWidget {
   /// 是否指定位置
   bool get _specialPosition => x != null || y != null;
 
-  final Widget child;
+  // final Widget child;
 
   AxisItem({
-    this.child,
+    // required this.child,
     this.color,
     this.x,
     this.y,
@@ -48,26 +48,22 @@ class AxisItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: color,
-      child: child,
+      // child: child,
     );
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.debug}) {
     String xInfo = "";
-    if (x != null && xSpan != null) {
+    if (x != null) {
       xInfo = "x - (p: $x, s: $xSpan)";
-    } else if (x != null) {
-      xInfo = "x - (p: $x)";
-    } else if (xSpan != null) {
+    } else {
       xInfo = "x - (s: $xSpan)";
     }
     String yInfo = "";
-    if (y != null && ySpan != null) {
+    if (y != null) {
       yInfo = "y - (p: $y, s: $ySpan)";
-    } else if (y != null) {
-      yInfo = "y - (p: $y)";
-    } else if (ySpan != null) {
+    } else {
       yInfo = "y - (s: $ySpan)";
     }
     return "$xInfo\n$yInfo";

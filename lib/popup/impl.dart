@@ -50,11 +50,11 @@ class Popup {
   /// [onTapSpace] - 點擊空白處
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
   static PopupController showRoute({
-    PopupOption option,
-    PopupWidgetBuilder builder,
-    List<Comb> animated = const [],
-    void Function(PopupController controller) onTapSpace,
-    void Function(PopupController controller) onTapBack,
+    required PopupWidgetBuilder builder,
+    PopupOption? option,
+    List<Comb>? animated = const [],
+    void Function(PopupController controller)? onTapSpace,
+    void Function(PopupController controller)? onTapBack,
   }) {
     if (animated?.isEmpty == true) {
       animated = [
@@ -129,7 +129,7 @@ class Popup {
         ),
       ),
     );
-    navigatorIns.push(layout);
+    navigatorIns!.push(layout);
     controller
       ..registerController(childSync)
       ..registerController(backgroundSync);
@@ -142,12 +142,12 @@ class Popup {
   /// [onTapSpace] - 點擊空白處回調, 只有在 [hitRule] 等於 [HitRule.intercept] 時有效
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
   static PopupController showOverlay({
-    PopupWidgetBuilder builder,
-    PopupOption option,
+    required PopupWidgetBuilder builder,
+    PopupOption? option,
     HitRule hitRule = HitRule.intercept,
-    List<Comb> animated = const [],
-    void Function(PopupController controller) onTapSpace,
-    void Function(PopupController controller) onTapBack,
+    List<Comb>? animated = const [],
+    void Function(PopupController controller)? onTapSpace,
+    void Function(PopupController controller)? onTapBack,
   }) {
     if (animated?.isEmpty == true) {
       animated = [
@@ -224,7 +224,7 @@ class Popup {
         );
       },
     );
-    navigatorIns.overlay.insert(entry);
+    navigatorIns!.overlay!.insert(entry);
     controller
       ..registerController(backgroundSync)
       ..registerController(childSync)

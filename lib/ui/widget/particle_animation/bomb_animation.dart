@@ -19,7 +19,7 @@ class BombAnimation extends StatefulWidget {
   final double height;
 
   /// 粒子可以活動的範圍
-  final Rect activeRect;
+  // final Rect activeRect;
 
   /// 此元件的 child
   final Widget child;
@@ -34,12 +34,12 @@ class BombAnimation extends StatefulWidget {
   final ParticleType particleType;
 
   BombAnimation({
-    this.width,
-    this.height,
-    this.child,
-    this.activeRect,
-    this.splitWidth,
-    this.splitHeight,
+    required this.width,
+    required this.height,
+    required this.child,
+    // this.activeRect,
+    required this.splitWidth,
+    required this.splitHeight,
     this.onEnd,
     this.particleType = ParticleType.ball,
   });
@@ -55,7 +55,6 @@ class _BombAnimationState extends State<BombAnimation> {
 
   @override
   void dispose() {
-    boundaryKey = null;
     super.dispose();
   }
 
@@ -91,16 +90,17 @@ class _BombAnimationState extends State<BombAnimation> {
   Future<void> showParticlePopup() async {
     // 先將此元件的圖片截下來
     RenderRepaintBoundary boundary =
-        boundaryKey.currentContext.findRenderObject();
+        boundaryKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
 
     // 取得元件的全局座標
     var offset = boundary.localToGlobal(Offset.zero);
     ui.Image image = await boundary.toImage(pixelRatio: 1);
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData byteData =
+        (await image.toByteData(format: ui.ImageByteFormat.png))!;
     var pngBytes = byteData.buffer.asUint8List();
     var bs64 = base64Encode(pngBytes);
     // 將圖片轉換成 顯示的球球
-    img.Image decodeImage = img.decodeImage(pngBytes);
+    img.Image decodeImage = img.decodeImage(pngBytes)!;
     var particles = splitImageToParticle(decodeImage);
 
     isBoomOut = true;
@@ -162,10 +162,10 @@ class _BombAnimationState extends State<BombAnimation> {
 
   /// 根據 [widget.particleType] 構建出對應的隨機粒子
   Particle buildParticle({
-    double radius,
-    Color color,
-    double x,
-    double y,
+    required double radius,
+    required Color color,
+    required double x,
+    required double y,
   }) {
     Particle particle;
     switch (widget.particleType) {

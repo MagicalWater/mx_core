@@ -11,13 +11,10 @@ class ParticleAnimation extends StatefulWidget {
   final double height;
 
   /// 粒子可以活動的範圍
-  final Rect activeRect;
+  final Rect? activeRect;
 
   /// 粒子列表
   final List<Particle> particles;
-
-  /// 此元件的 child
-  final Widget child;
 
   /// 是否自動執行粒子動畫
   final bool auto;
@@ -29,11 +26,10 @@ class ParticleAnimation extends StatefulWidget {
   final ParticleType particleType;
 
   ParticleAnimation({
-    this.width,
-    this.height,
-    this.child,
+    required this.width,
+    required this.height,
+    required this.particles,
     this.activeRect,
-    this.particles,
     this.auto = false,
     this.onEnd,
     this.particleType = ParticleType.ball,
@@ -45,7 +41,7 @@ class ParticleAnimation extends StatefulWidget {
 
 class _ParticleAnimationState extends State<ParticleAnimation>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
 
   @override
   void initState() {
@@ -59,7 +55,7 @@ class _ParticleAnimationState extends State<ParticleAnimation>
       });
 
     if (widget.auto) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => startAnimation());
+      WidgetsBinding.instance!.addPostFrameCallback((_) => startAnimation());
     }
     super.initState();
   }
@@ -107,7 +103,7 @@ class _ParticleAnimationState extends State<ParticleAnimation>
 
   /// 開始粒子動畫
   void startAnimation() {
-    animationController.forward();
+    animationController?.forward();
   }
 
   void disposeAnimation() {
@@ -142,7 +138,7 @@ class _ParticleAnimationState extends State<ParticleAnimation>
   /// 更新粒子的屬性為下一幀
   void updateParticle(Particle particle) {
     if (widget.activeRect != null) {
-      particle.updateNext(widget.activeRect);
+      particle.updateNext(widget.activeRect!);
     } else {
 //      print("更新下個位置");
       particle.updateNext(Rect.fromLTWH(0, 0, widget.width, widget.height));

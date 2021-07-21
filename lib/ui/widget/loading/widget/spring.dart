@@ -13,10 +13,10 @@ class Spring extends StatelessWidget {
   final int duration;
 
   /// 裝飾
-  final BoxDecoration decoration;
+  final BoxDecoration? decoration;
 
   /// 顏色
-  final Color color;
+  final Color? color;
 
   /// 晃動方向
   final Axis direction;

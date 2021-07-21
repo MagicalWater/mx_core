@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui' as ui;
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,27 +15,27 @@ class PageSwitcher extends StatefulWidget {
 
   /// 當尚未有 route 傳入時, 所顯示的空元件
   /// 默認為 Container()
-  final Widget emptyWidget;
+  final Widget? emptyWidget;
 
   final Duration duration;
 
   /// 縮放係數 - 0~1, 1代表不縮放
-  final double scaleIn;
+  final double? scaleIn;
 
   /// 透明係數 - 0~1, 1代表不透明
-  final double opacityIn;
+  final double? opacityIn;
 
   /// 位移係數
-  final Offset translateIn;
+  final Offset? translateIn;
 
   /// 縮放係數 - 0~1, 1代表不縮放
-  final double scaleOut;
+  final double? scaleOut;
 
   /// 透明係數 - 0~1, 1代表不透明
-  final double opacityOut;
+  final double? opacityOut;
 
   /// 位移係數
-  final Offset translateOut;
+  final Offset? translateOut;
 
   /// 動畫差值器
   final Curve curve;
@@ -43,7 +44,7 @@ class PageSwitcher extends StatefulWidget {
   final bool animateEnabled;
 
   /// 動畫陰影
-  final BoxShadow animatedShadow;
+  final BoxShadow? animatedShadow;
 
   /// 對齊方向
   final Alignment alignment;
@@ -52,9 +53,14 @@ class PageSwitcher extends StatefulWidget {
   final StackConfig stackConfig;
 
   PageSwitcher._({
-    this.routes,
-    this.stream,
-    this.duration,
+    required this.routes,
+    required this.stream,
+    required this.duration,
+    required this.curve,
+    required this.alignment,
+    required this.stackConfig,
+    required this.animateEnabled,
+    this.animatedShadow,
     this.emptyWidget,
     this.scaleIn,
     this.opacityIn,
@@ -62,24 +68,19 @@ class PageSwitcher extends StatefulWidget {
     this.scaleOut,
     this.opacityOut,
     this.translateOut,
-    this.curve,
-    this.alignment,
-    this.stackConfig,
-    this.animateEnabled,
-    this.animatedShadow,
   });
 
   factory PageSwitcher({
-    List<String> routes,
-    Stream<List<RouteData>> stream,
+    required List<String> routes,
+    required Stream<List<RouteData>> stream,
+    required Widget emptyWidget,
     Duration duration = const Duration(milliseconds: 300),
-    Widget emptyWidget,
-    double scaleIn = 1,
-    double opacityIn = 0,
-    Offset translateIn = Offset.zero,
-    double scaleOut,
-    double opacityOut,
-    Offset translateOut,
+    double? scaleIn = 1,
+    double? opacityIn = 0,
+    Offset? translateIn = Offset.zero,
+    double? scaleOut,
+    double? opacityOut,
+    Offset? translateOut,
     Curve curve = Curves.ease,
     Alignment alignment = Alignment.center,
     StackConfig stackConfig = const StackConfig(),
@@ -128,23 +129,23 @@ class _PageSwitcherState extends State<PageSwitcher>
 
   GlobalKey _boundaryKey = GlobalKey();
 
-  List<WidgetBuilder> _showChildren;
-  int showIndex;
+  List<WidgetBuilder>? _showChildren;
+  late int showIndex;
 
   /// 當前的轉場是 push 或 pop 嗎
-  bool _transitionPush;
-  ui.Image _transitionImage;
+  late bool _transitionPush;
+  ui.Image? _transitionImage;
 
-  AnimationController _controller;
-  Animation<double> _fadeIn;
-  Animation<double> _scaleIn;
-  Animation<Offset> _translateIn;
+  late AnimationController _controller;
+  Animation<double>? _fadeIn;
+  Animation<double>? _scaleIn;
+  Animation<Offset>? _translateIn;
 
-  Animation<double> _fadeOut;
-  Animation<double> _scaleOut;
-  Animation<Offset> _translateOut;
+  Animation<double>? _fadeOut;
+  Animation<double>? _scaleOut;
+  Animation<Offset>? _translateOut;
 
-  StreamSubscription _subscription;
+  late StreamSubscription _subscription;
 
   /// 當前的設定是 push 或者 pop
   bool isNowSettingPush = true;
@@ -278,11 +279,11 @@ class _PageSwitcherState extends State<PageSwitcher>
       return;
     }
 
-    RenderRepaintBoundary boundary =
-        _boundaryKey.currentContext.findRenderObject();
+    var boundary = _boundaryKey.currentContext!.findRenderObject()
+        as RenderRepaintBoundary;
 
-    if (!kReleaseMode && (boundary.debugNeedsPaint ?? false)) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    if (!kReleaseMode && boundary.debugNeedsPaint) {
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
         _cacheCapture(datas);
       });
       return;
@@ -310,9 +311,8 @@ class _PageSwitcherState extends State<PageSwitcher>
     }
 
     _showChildren = widget.routes.map((e) {
-      var finded = datas.firstWhere(
+      var finded = datas.firstWhereOrNull(
         (element) => element.route == e,
-        orElse: () => null,
       );
       if (finded != null) {
         ValueKey<int> key;
@@ -323,7 +323,7 @@ class _PageSwitcherState extends State<PageSwitcher>
           key = ValueKey(showIndex);
           cacheKey[finded.route] = key;
         } else {
-          key = cacheKey[finded.route];
+          key = cacheKey[finded.route]!;
         }
         return (_) => routeMixinImpl.getPage(finded, key: key);
       } else {
@@ -338,24 +338,24 @@ class _PageSwitcherState extends State<PageSwitcher>
       return Container();
     }
 
-    Widget oldDownWidget;
-    Widget oldUpWidget;
+    Widget? oldDownWidget;
+    Widget? oldUpWidget;
 
     Widget newWidget = IndexedStack(
       index: showIndex,
-      children: _showChildren.map((e) => e.call(context)).toList(),
+      children: _showChildren!.map((e) => e.call(context)).toList(),
     );
 
     if (_transitionImage != null) {
       var config =
           _transitionPush ? widget.stackConfig.push : widget.stackConfig.pop;
 
-      BoxDecoration boxShadow;
+      BoxDecoration? boxShadow;
       if (widget.animatedShadow != null &&
           (haveTranslateIn || haveTranslateOut)) {
         boxShadow = BoxDecoration(
           color: Colors.transparent,
-          boxShadow: [widget.animatedShadow],
+          boxShadow: [widget.animatedShadow!],
         );
       }
 
@@ -363,18 +363,18 @@ class _PageSwitcherState extends State<PageSwitcher>
 
       targetShowOldWidget = CustomPaint(
         painter: _ImagePainter(
-          image: _transitionImage,
+          image: _transitionImage!,
         ),
       );
 
       var oldMatrix = Matrix4.identity();
 
       if (_translateOut != null) {
-        oldMatrix.translate(_translateOut.value.dx, _translateOut.value.dy);
+        oldMatrix.translate(_translateOut!.value.dx, _translateOut!.value.dy);
       }
 
       if (_scaleOut != null) {
-        oldMatrix.scale(_scaleOut.value, _scaleOut.value);
+        oldMatrix.scale(_scaleOut!.value, _scaleOut!.value);
       }
 
       targetShowOldWidget = Container(
@@ -385,21 +385,21 @@ class _PageSwitcherState extends State<PageSwitcher>
 
       if (_fadeOut != null) {
         targetShowOldWidget = Opacity(
-          opacity: _fadeOut.value,
+          opacity: _fadeOut!.value,
           child: targetShowOldWidget,
         );
       }
 
       var newMatrix = Matrix4.identity();
       if (_translateIn != null) {
-        newMatrix.translate(_translateIn.value.dx, _translateIn.value.dy);
+        newMatrix.translate(_translateIn!.value.dx, _translateIn!.value.dy);
       }
       if (_scaleIn != null) {
-        newMatrix.scale(_scaleIn.value, _scaleIn.value);
+        newMatrix.scale(_scaleIn!.value, _scaleIn!.value);
       }
 
       newWidget = Opacity(
-        opacity: _fadeIn != null ? _fadeIn.value : 1,
+        opacity: _fadeIn != null ? _fadeIn!.value : 1,
         child: Container(
           decoration: config == StackSort.oldDown && boxShadow != null
               ? boxShadow
@@ -461,7 +461,7 @@ class _ImagePainter extends CustomPainter {
 
   final Paint mainPaint = Paint()..isAntiAlias = true;
 
-  _ImagePainter({this.image});
+  _ImagePainter({required this.image});
 
   @override
   void paint(Canvas canvas, Size size) {

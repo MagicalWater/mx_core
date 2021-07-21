@@ -8,7 +8,7 @@ class Marquee extends StatefulWidget {
   final List<Widget> children;
 
   /// 預設[邊緣]元件
-  final Widget preset;
+  final Widget? preset;
 
   /// 滾動速率
   final int velocity;
@@ -23,16 +23,16 @@ class Marquee extends StatefulWidget {
   final bool auto;
 
   /// 跑馬燈幾次循環, null 為無限次數
-  final int times;
+  final int? times;
 
   /// 跑馬燈每次結束的回調
-  final void Function(int times) onEnd;
+  final void Function(int times)? onEnd;
 
   /// 跑馬燈開始時回調
-  final void Function() onStart;
+  final void Function()? onStart;
 
   /// 跑馬燈控制器
-  final Function(MarqueeController controller) onCreated;
+  final Function(MarqueeController controller)? onCreated;
 
   /// 跑馬燈高度
   final double height;
@@ -40,12 +40,12 @@ class Marquee extends StatefulWidget {
   /// 邊緣透明
   final bool fadeSide;
 
-  final Function(int index) onTap;
+  final Function(int index)? onTap;
 
   Marquee({
-    @required this.children,
-    Key key,
-    this.height,
+    Key? key,
+    required this.children,
+    required this.height,
     this.preset,
     this.fadeSide = true,
     this.auto = true,
@@ -60,17 +60,17 @@ class Marquee extends StatefulWidget {
   }) : super(key: key);
 
   factory Marquee.text({
-    @required List<String> texts,
-    String preset,
-    double height,
-    TextStyle style,
-    Key key,
+    Key? key,
+    required List<String> texts,
+    required double height,
+    String? preset,
+    TextStyle? style,
     bool auto = true,
-    int times,
-    final Function(MarqueeController controller) onCreated,
-    VoidCallback onStart,
-    Function(int times) onEnd,
-    Function(int index) onTap,
+    int? times,
+    final Function(MarqueeController controller)? onCreated,
+    VoidCallback? onStart,
+    Function(int times)? onEnd,
+    Function(int index)? onTap,
     int velocity = 100,
     Duration interval = const Duration(milliseconds: 1000),
     Duration nextDuration = const Duration(milliseconds: 500),
@@ -117,22 +117,22 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
   bool scrollEnabled = true;
 
   /// 列表的位置控制
-  ScrollController mainScrollController;
+  late ScrollController mainScrollController;
 
   /// 每個列表的滾動控制
-  List<ScrollController> itemScrollController;
+  late List<ScrollController?> itemScrollController;
 
   /// 當前是否正在滾動中
   bool isScrolling = false;
 
   /// 顯示元件列表
-  List<Widget> showWidget;
+  late List<Widget> showWidget;
 
   Widget get sideWidget => widget.preset != null
-      ? _coverWidget(widget.preset)
+      ? _coverWidget(widget.preset!)
       : Container(height: widget.height);
 
-  int scrollStartIndex;
+  late int scrollStartIndex;
 
   bool childrenUpdate = false;
   bool sideUpdate1 = false;
@@ -154,15 +154,13 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
     itemScrollController =
         List.generate(showWidget.length, (_) => ScrollController());
 
-    if (widget.onCreated != null) {
-      widget.onCreated(this);
-    }
+    widget.onCreated?.call(this);
 
     initScroll();
     super.initState();
   }
 
-  Widget _coverWidget(Widget child, {int index}) {
+  Widget _coverWidget(Widget child, {int? index}) {
     var conver = Container(
       color: Colors.transparent,
       height: widget.height,
@@ -221,7 +219,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
       var diff = currentControllerLen - needLen;
       for (var i = 0; i < diff; i++) {
         var lastController = itemScrollController.removeLast();
-        lastController.dispose();
+        lastController?.dispose();
       }
     } else if (needLen > currentControllerLen) {
       var diff = needLen - currentControllerLen;
@@ -244,12 +242,12 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
   /// 順帶檢測 widgetRect 是否已經取得
   /// 等待 scrollController attach 到view上
   /// 回傳是否可正常往下執行
-  Future<bool> waitScrollControllerAttach([int index]) async {
-    ScrollController detectController() {
+  Future<bool> waitScrollControllerAttach([int? index]) async {
+    ScrollController? detectController() {
       return index == null ? mainScrollController : itemScrollController[index];
     }
 
-    while (detectController() != null && !detectController().hasClients) {
+    while (detectController() != null && !detectController()!.hasClients) {
       await Future.delayed(Duration(seconds: 1));
     }
     if (detectController() == null) {
@@ -336,9 +334,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
     // 等待 scrollController attach 到 view 上
     if (!(await waitScrollControllerAttach())) return;
 
-    if (widget.onStart != null) {
-      widget.onStart();
-    }
+    widget.onStart?.call();
 
     var keepScroll = true;
     var currentTimes = 0;
@@ -407,7 +403,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
           }
 
           // 取得當前位置的滾動控制器
-          var currentController = itemScrollController[i];
+          var currentController = itemScrollController[i]!;
 
           // 等待 scrollController attach 到 view 上
           if (!(await waitScrollControllerAttach(i))) return;
@@ -483,7 +479,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
       scrollStartIndex = 0;
 
       if (widget.times != null) {
-        if (currentTimes >= widget.times) {
+        if (currentTimes >= widget.times!) {
           // 如果滑動次數到了, 則停止滑動
           // 通知外部 onEnd 在 isScrolling 設置後呼叫
           keepScroll = false;
@@ -497,9 +493,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
     }
 
     isScrolling = false;
-    if (widget.onEnd != null) {
-      widget.onEnd(currentTimes);
-    }
+    widget.onEnd?.call(currentTimes);
   }
 
   @override
@@ -519,8 +513,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
   void dispose() {
     scrollEnabled = false;
 
-    mainScrollController?.dispose();
-    mainScrollController = null;
+    mainScrollController.dispose();
 
     itemScrollController.forEach((e) => e?.dispose());
     itemScrollController = itemScrollController.map((e) => null).toList();

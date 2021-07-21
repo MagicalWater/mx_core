@@ -703,7 +703,7 @@ class RefreshState {
   final bool resetLoadMore;
 
   /// 用於刷新之後設置加載更多的 noMore
-  final bool noLoadMore;
+  final bool? noLoadMore;
 
   const RefreshState._init()
       : this.empty = false,
@@ -735,7 +735,7 @@ class RefreshState {
 
   /// 設置刷新的結果
   RefreshState.refresh({
-    this.success,
+    required this.success,
     this.empty = false,
     this.noMore = false,
     this.resetLoadMore = true,
@@ -748,7 +748,7 @@ class RefreshState {
 
   /// 設置加載更多的結果
   RefreshState.loadMore({
-    this.success,
+    required this.success,
     this.empty = false,
     this.noMore = false,
     this.resetRefresh = false,
@@ -770,8 +770,8 @@ enum RefreshType {
 }
 
 class RefreshLoadStyle {
-  Color color;
-  double size;
+  Color? color;
+  double? size;
 
   RefreshLoadStyle({this.color, this.size});
 }
