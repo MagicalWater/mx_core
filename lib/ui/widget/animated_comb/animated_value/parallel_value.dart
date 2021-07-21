@@ -9,8 +9,8 @@ class CombParallel extends Comb {
   /// [defaultCurve] - 在此動畫群組底下的動畫, 預設動插值器
   CombParallel._({
     this.delayed,
-    int defaultDuration,
-    Curve defaultCurve,
+    int? defaultDuration,
+    Curve? defaultCurve,
     this.animatedList = const [],
   }) {
     duration = defaultDuration;
@@ -63,14 +63,14 @@ class CombParallel extends Comb {
   var begin;
 
   @override
-  Curve curve;
-
-  @override
-  int delayed;
-
-  @override
-  int duration;
-
-  @override
   var end;
+
+  @override
+  int? delayed;
+
+  @override
+  int? duration;
+
+  @override
+  Curve? curve;
 }

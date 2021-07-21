@@ -9,13 +9,13 @@ class CombOpacity extends Comb<double> {
   double end;
 
   @override
-  int delayed;
+  int? delayed;
 
   @override
-  int duration;
+  int? duration;
 
   @override
-  Curve curve;
+  Curve? curve;
 
   CombOpacity._({
     this.begin = 1.0,

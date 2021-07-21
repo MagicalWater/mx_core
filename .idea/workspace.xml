@@ -12,10 +12,17 @@
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_comb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_comb.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/color_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/color_value.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/comb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/comb.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/assist_touch/assist_touch.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/assist_touch/assist_touch.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/assist_touch/circle_range.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/assist_touch/circle_range.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/assist_touch/side_detect.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/assist_touch/side_detect.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/delay_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/delay_value.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/opacity_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/opacity_value.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/parallel_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/parallel_value.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/rotate_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/rotate_value.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/scale_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/scale_value.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/size_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/size_value.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/translate_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/translate_value.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,14 +203,15 @@
     </state>
     <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619425038957" />
     <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622618997268" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1626832546322">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1626856161802">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626832546322" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626856161802" />
     <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1624588711409" />
-    <state x="577" y="227" width="766" height="740" key="search.everywhere.popup" timestamp="1624936883637">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="505" y="231" width="671" height="672" key="search.everywhere.popup" timestamp="1626853090221">
+      <screen x="0" y="25" width="1680" height="944" />
     </state>
+    <state x="505" y="231" width="671" height="672" key="search.everywhere.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626853090221" />
     <state x="577" y="227" width="766" height="740" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1624936883637" />
   </component>
 </project>

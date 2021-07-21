@@ -6,7 +6,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   int _currentUnique = 0;
 
   /// 動畫控制核心
-  AnimationController _controller;
+  AnimationController? _controller;
 
   /// 觸發動畫 tick 的串流
   StreamController<void> _tickController = StreamController.broadcast();
@@ -40,7 +40,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   AnimatedType get type => _type;
 
   /// 當前動畫的運行 Method
-  AnimationMethod _currentMethod;
+  AnimationMethod? _currentMethod;
 
   /// 當前動畫開關是否開啟
   bool get currentToggle => _currentToggle;
@@ -64,6 +64,7 @@ class AnimatedSyncTick implements AnimatedCombController {
     this.initToggle = false,
     this.initAnimated = true,
     this.autoStart = true,
+    rAnimatedType type,
   })  : this._controller = null,
         this._isNeedRegisterTicker = true;
 
@@ -71,9 +72,9 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 帶入 [vsync] 可達到多個元件同步動畫 tick 的效果
   /// [type] - 動畫類型,
   AnimatedSyncTick({
-    @required AnimatedType type,
-    @required TickerProvider vsync,
-    this.initToggle,
+    required AnimatedType type,
+    required TickerProvider vsync,
+    this.initToggle = false,
     this.initAnimated = true,
     this.autoStart = true,
   })  : this._isNeedRegisterTicker = false,

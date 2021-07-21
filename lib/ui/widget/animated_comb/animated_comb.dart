@@ -22,10 +22,10 @@ typedef CombWidgetBuilder = Widget Function(
 /// 多動畫組合
 class AnimatedComb extends StatefulWidget {
   /// 固定式 child
-  final Widget child;
+  final Widget? child;
 
   /// 可根據動畫數值以及toggle值自訂不同的 child
-  final CombWidgetBuilder builder;
+  final CombWidgetBuilder? builder;
 
   /// 動畫列表 - 整個列表動畫是串連的行為
   /// <p>主要由以下幾種動畫構成</p>
@@ -68,10 +68,10 @@ class AnimatedComb extends StatefulWidget {
   final int shiftDuration;
 
   /// 點擊回調
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   /// 點擊動畫回覆後回調
-  final VoidCallback onTapAfterAnimated;
+  final VoidCallback? onTapAfterAnimated;
 
   /// 動畫操作與轉換核心
   /// 由此類控制將 [animatedList] 轉化為真正執行的動畫數值
@@ -80,44 +80,44 @@ class AnimatedComb extends StatefulWidget {
   ///
   /// 若外部只是單純需要操控單個元件, 則使用帶入 [AnimatedSyncTick.identity] 工廠方法構建 tick
   /// 若需要多個元件同步 tick, 則直接呼叫 AnimatedSyncTick 建構子
-  final AnimatedSyncTick animatedSyncTick;
+  final AnimatedSyncTick? animatedSyncTick;
 
   /// 動畫類型
   final AnimatedType type;
 
   AnimatedComb._({
-    Key key,
+    Key? key,
     this.child,
     this.builder,
     this.multipleAnimationController = false,
     this.animatedSyncTick,
-    this.type,
     this.curve = Curves.easeInOut,
     this.shiftDuration = 0,
     this.duration = 300,
     this.alignment = FractionalOffset.center,
     this.onTap,
     this.onTapAfterAnimated,
-    @required this.animatedList,
+    required this.type,
+    required this.animatedList,
   })  : assert(child != null || builder != null),
         super(key: key);
 
   /// 可深層訂製動畫組合
   /// [sync] 以及 [type] 皆有值時, 以 [sync.type] 為主
   factory AnimatedComb({
-    Key key,
-    Widget child,
-    CombWidgetBuilder builder,
-    AnimatedSyncTick sync,
-    AnimatedType type,
+    Key? key,
+    Widget? child,
+    CombWidgetBuilder? builder,
+    AnimatedSyncTick? sync,
     bool multipleAnimationController = false,
     Curve curve = Curves.easeInOut,
     int duration = 300,
     int shiftDuration = 0,
     Alignment alignment = FractionalOffset.center,
-    VoidCallback onTap,
-    VoidCallback onTapAfterAnimated,
-    @required List<Comb> animatedList,
+    VoidCallback? onTap,
+    VoidCallback? onTapAfterAnimated,
+    required AnimatedType type,
+    required List<Comb> animatedList,
   }) {
     return AnimatedComb._(
       key: key,
@@ -139,24 +139,24 @@ class AnimatedComb extends StatefulWidget {
   /// 快速設置併發且多元件同步的動畫
   /// [sync] 以及 [type] 皆有值時, 以 [sync.type] 為主
   factory AnimatedComb.quick({
-    Key key,
-    Widget child,
-    CombWidgetBuilder builder,
-    AnimatedSyncTick sync,
-    AnimatedType type,
+    Key? key,
+    Widget? child,
+    CombWidgetBuilder? builder,
+    AnimatedSyncTick? sync,
+    required AnimatedType type,
     bool multipleAnimationController = false,
     Curve curve = Curves.easeInOut,
     int duration = 300,
     int shiftDuration = 0,
     Alignment alignment = FractionalOffset.center,
-    VoidCallback onTap,
-    VoidCallback onTapAfterAnimated,
-    CombRotate rotate,
-    CombOpacity opacity,
-    CombScale scale,
-    CombTranslate translate,
-    CombSize size,
-    CombColor color,
+    VoidCallback? onTap,
+    VoidCallback? onTapAfterAnimated,
+    CombRotate? rotate,
+    CombOpacity? opacity,
+    CombScale? scale,
+    CombTranslate? translate,
+    CombSize? size,
+    CombColor? color,
   }) {
     List<Comb> animateList = [];
     if (rotate != null) animateList.add(rotate);
@@ -191,34 +191,34 @@ class AnimatedComb extends StatefulWidget {
 abstract class _CombState extends State<AnimatedComb>
     implements TickerProvider {
   /// 當前的動畫 tick
-  AnimatedSyncTick _currentAnimatedTick;
+  late AnimatedSyncTick _currentAnimatedTick;
 
   /// 當前的動畫是否已經初始化完成
   bool isAnimatedInitComplete = false;
 
   /// 註冊動畫列表到 [AnimatedSyncTick] 後得到的 id
-  int _syncAnimateId;
+  late int _syncAnimateId;
 
   /// 動畫 tick 監聽
-  StreamSubscription _tickStreamSubscription;
+  late StreamSubscription _tickStreamSubscription;
 
   /// sync tick 的綁定方式
   /// 會決定到 dispose 時控制器的釋放與否
-  _SyncTickBindingType _syncTickBindingType;
+  late _SyncTickBindingType _syncTickBindingType;
 
   @override
   void initState() {
     if (widget.animatedSyncTick == null) {
       _syncTickBindingType = _SyncTickBindingType.inside;
       _currentAnimatedTick = AnimatedSyncTick(type: widget.type, vsync: this);
-    } else if (widget.animatedSyncTick._isNeedRegisterTicker) {
+    } else if (widget.animatedSyncTick!._isNeedRegisterTicker) {
       _syncTickBindingType = _SyncTickBindingType.outsideNeedReset;
       // 外部單純帶入控制器, 在此進行 ticker 註冊
-      widget.animatedSyncTick._registerTicker(widget.type, this);
-      _currentAnimatedTick = widget.animatedSyncTick;
+      widget.animatedSyncTick!._registerTicker(widget.type, this);
+      _currentAnimatedTick = widget.animatedSyncTick!;
     } else {
       _syncTickBindingType = _SyncTickBindingType.outsideSelf;
-      _currentAnimatedTick = widget.animatedSyncTick;
+      _currentAnimatedTick = widget.animatedSyncTick!;
     }
 
     _initAnimated();
@@ -249,7 +249,7 @@ abstract class _CombState extends State<AnimatedComb>
       duration: widget.duration,
       curve: widget.curve,
       id: _syncAnimateId,
-      shiftDuration: widget.shiftDuration ?? 0,
+      shiftDuration: widget.shiftDuration,
     );
   }
 
@@ -284,9 +284,9 @@ abstract class _CombState extends State<AnimatedComb>
     animValue._alignment = widget.alignment;
 
     if (widget.builder != null) {
-      childChain = widget.builder(context, animValue);
+      childChain = widget.builder!(context, animValue);
     } else {
-      childChain = animValue.component(widget.child);
+      childChain = animValue.component(widget.child!);
     }
 
     // 檢查並添加點擊行為
@@ -296,9 +296,7 @@ abstract class _CombState extends State<AnimatedComb>
         onTapDown: (_) => _currentAnimatedTick._forward(),
         onTapUp: (_) async {
           await _currentAnimatedTick._reverse();
-          if (widget.onTapAfterAnimated != null) {
-            widget.onTapAfterAnimated();
-          }
+          widget.onTapAfterAnimated?.call();
         },
         onTapCancel: () => _currentAnimatedTick._reverse(),
         onTap: widget.onTap,
@@ -326,15 +324,12 @@ class _SingleCombState extends _CombState with SingleTickerProviderStateMixin {
         break;
       case _SyncTickBindingType.outsideNeedReset:
         _currentAnimatedTick._reset();
-        _currentAnimatedTick = null;
         break;
       case _SyncTickBindingType.inside:
         _currentAnimatedTick.dispose();
-        _currentAnimatedTick = null;
         break;
     }
-    _tickStreamSubscription?.cancel();
-    _tickStreamSubscription = null;
+    _tickStreamSubscription.cancel();
     super.dispose();
   }
 }
@@ -349,15 +344,12 @@ class _MultipleCombState extends _CombState with TickerProviderStateMixin {
         break;
       case _SyncTickBindingType.outsideNeedReset:
         _currentAnimatedTick._reset();
-        _currentAnimatedTick = null;
         break;
       case _SyncTickBindingType.inside:
         _currentAnimatedTick.dispose();
-        _currentAnimatedTick = null;
         break;
     }
-    _tickStreamSubscription?.cancel();
-    _tickStreamSubscription = null;
+    _tickStreamSubscription.cancel();
     super.dispose();
   }
 }

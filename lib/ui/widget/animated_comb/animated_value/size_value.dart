@@ -8,21 +8,21 @@ class CombSize extends Comb<Size> {
   Size begin;
 
   @override
-  int delayed;
-
-  @override
-  int duration;
-
-  @override
   Size end;
 
   @override
-  Curve curve;
+  int? delayed;
+
+  @override
+  int? duration;
+
+  @override
+  Curve? curve;
 
   CombSize._(
     this.type, {
-    this.begin,
-    this.end,
+    required this.begin,
+    required this.end,
     this.delayed,
     this.duration,
     this.curve,

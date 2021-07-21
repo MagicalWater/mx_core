@@ -8,21 +8,21 @@ class CombTranslate extends Comb<Offset> {
   Offset begin;
 
   @override
-  int delayed;
-
-  @override
-  int duration;
-
-  @override
   Offset end;
 
   @override
-  Curve curve;
+  int? delayed;
+
+  @override
+  int? duration;
+
+  @override
+  Curve? curve;
 
   CombTranslate._(
     this.type, {
-    this.begin,
-    this.end,
+    required this.begin,
+    required this.end,
     this.delayed,
     this.duration,
     this.curve,

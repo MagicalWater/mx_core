@@ -9,17 +9,17 @@ class CombColor extends Comb<Color> {
   Color end;
 
   @override
-  int delayed;
+  int? delayed;
 
   @override
-  int duration;
+  int? duration;
 
   @override
-  Curve curve;
+  Curve? curve;
 
   CombColor._({
-    this.begin,
-    this.end,
+    required this.begin,
+    required this.end,
     this.delayed,
     this.duration,
     this.curve,

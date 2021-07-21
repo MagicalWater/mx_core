@@ -9,16 +9,13 @@ class CombDelay extends Comb<void> {
   void end;
 
   @override
-  int delayed;
+  int? delayed;
 
   @override
-  int duration;
+  int? duration;
 
   @override
-  Curve curve;
-
-  @override
-  Alignment alignment;
+  Curve? curve;
 
   int totalDuration(int defaultDuration) => duration ?? defaultDuration;
 

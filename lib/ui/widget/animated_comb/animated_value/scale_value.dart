@@ -8,16 +8,16 @@ class CombScale extends Comb<Size> {
   Size begin;
 
   @override
-  int delayed;
-
-  @override
-  int duration;
-
-  @override
   Size end;
 
   @override
-  Curve curve;
+  int? delayed;
+
+  @override
+  int? duration;
+
+  @override
+  Curve? curve;
 
   CombScale._(
     this.type, {

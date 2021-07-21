@@ -36,16 +36,17 @@ part 'translate_value.dart';
 /// [Comb.color] - 背景色變換動畫
 abstract class Comb<T> {
   T get begin;
+
   T get end;
 
   /// 延遲時間
-  int get delayed;
+  int? get delayed;
 
   /// 動畫時間
   int? get duration;
 
   /// 動畫差值器
-  Curve get curve;
+  Curve? get curve;
 
   /// 錨點
 //  Alignment alignment;
@@ -69,10 +70,9 @@ abstract class Comb<T> {
 
   /// 並行動畫
   static CombParallel parallel({
-    int delay,
-    int duration,
-    Curve curve,
-    Alignment alignment,
+    int? delay,
+    int? duration,
+    Curve? curve,
     List<Comb> animatedList = const [],
   }) =>
       CombParallel._(
@@ -92,10 +92,9 @@ abstract class Comb<T> {
   static CombScale scale({
     Size begin = const Size(1, 1),
     Size end = const Size(1, 1),
-    int delay,
-    int duration,
-    Curve curve,
-    Alignment alignment,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombScale._(
         ScaleType.all,
@@ -109,11 +108,10 @@ abstract class Comb<T> {
   static CombScale scaleX({
     double begin = 1.0,
     double end = 1.0,
-    double y,
-    int delay,
-    int duration,
-    Curve curve,
-    Alignment alignment,
+    double? y,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombScale._(
         y != null ? ScaleType.all : ScaleType.width,
@@ -127,11 +125,10 @@ abstract class Comb<T> {
   static CombScale scaleY({
     double begin = 1.0,
     double end = 1.0,
-    double x,
-    int delay,
-    int duration,
-    Curve curve,
-    Alignment alignment,
+    double? x,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombScale._(
         x != null ? ScaleType.all : ScaleType.height,
@@ -144,11 +141,11 @@ abstract class Comb<T> {
 
   /// size動畫
   static CombSize size({
-    Size begin,
-    Size end,
-    int delay,
-    int duration,
-    Curve curve,
+    required Size begin,
+    required Size end,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombSize._(
         SizeType.all,
@@ -161,12 +158,12 @@ abstract class Comb<T> {
 
   /// 寬度size動畫
   static CombSize width({
-    double begin,
-    double end,
-    double height,
-    int delay,
-    int duration,
-    Curve curve,
+    required double begin,
+    required double end,
+    double? height,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombSize._(
         height != null ? SizeType.all : SizeType.width,
@@ -179,12 +176,12 @@ abstract class Comb<T> {
 
   /// 高度size動畫
   static CombSize height({
-    double begin,
-    double end,
-    double width,
-    int delay,
-    int duration,
-    Curve curve,
+    required double begin,
+    required double end,
+    double? width,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombSize._(
         width != null ? SizeType.all : SizeType.height,
@@ -199,9 +196,9 @@ abstract class Comb<T> {
   static CombTranslate translate({
     Offset begin = Offset.zero,
     Offset end = Offset.zero,
-    int delay,
-    int duration,
-    Curve curve,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombTranslate._(
         TransType.all,
@@ -215,10 +212,10 @@ abstract class Comb<T> {
   static CombTranslate translateX({
     double begin = 0,
     double end = 0,
-    double y,
-    int delay,
-    int duration,
-    Curve curve,
+    double? y,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombTranslate._(
         y != null ? TransType.all : TransType.x,
@@ -232,10 +229,10 @@ abstract class Comb<T> {
   static CombTranslate translateY({
     double begin = 0,
     double end = 0,
-    double x,
-    int delay,
-    int duration,
-    Curve curve,
+    double? x,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombTranslate._(
         x != null ? TransType.all : TransType.y,
@@ -250,10 +247,9 @@ abstract class Comb<T> {
   static CombRotate rotateZ({
     double begin = 0.0,
     double end = 0.0,
-    int delay,
-    int duration,
-    Curve curve,
-    Alignment alignment,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombRotate._(
         RotateType.z,
@@ -268,10 +264,9 @@ abstract class Comb<T> {
   static CombRotate rotateX({
     double begin = 0.0,
     double end = 0.0,
-    int delay,
-    int duration,
-    Curve curve,
-    Alignment alignment,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombRotate._(
         RotateType.x,
@@ -286,10 +281,9 @@ abstract class Comb<T> {
   static CombRotate rotateY({
     double begin = 0.0,
     double end = 0.0,
-    int delay,
-    int duration,
-    Curve curve,
-    Alignment alignment,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombRotate._(
         RotateType.y,
@@ -304,9 +298,9 @@ abstract class Comb<T> {
   static CombOpacity opacity({
     double begin = 1.0,
     double end = 1.0,
-    int delay,
-    int duration,
-    Curve curve,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombOpacity._(
         begin: begin,
@@ -318,11 +312,11 @@ abstract class Comb<T> {
 
   /// 背景色變換動畫
   static CombColor color({
-    Color begin,
-    Color end,
-    int delay,
-    int duration,
-    Curve curve,
+    required Color begin,
+    required Color end,
+    int? delay,
+    int? duration,
+    Curve? curve,
   }) =>
       CombColor._(
         begin: begin,

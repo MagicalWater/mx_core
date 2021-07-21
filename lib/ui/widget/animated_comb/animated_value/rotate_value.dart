@@ -8,16 +8,16 @@ class CombRotate extends Comb<double> {
   double begin;
 
   @override
-  int delayed;
-
-  @override
-  int duration;
-
-  @override
   double end;
 
   @override
-  Curve curve;
+  int? delayed;
+
+  @override
+  int? duration;
+
+  @override
+  Curve? curve;
 
   CombRotate._(
     this.type, {
