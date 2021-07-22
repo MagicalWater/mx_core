@@ -14,11 +14,12 @@ class SecureStorage {
   /// 檢查方式 -
   ///   檢查 [PlainStorage] 是否含有 key - [_firstInstallKey] 的 bool
   /// 基本上只有ios需要做這件事情
-  static Future<void> resetWhenFirstActiveApp() async {
+  static Future<bool> resetWhenFirstActiveApp() async {
     var isFirstActive = await PlainStorage.readBool(key: _firstInstallKey);
     if (isFirstActive != null) {
       // 並非第一次運行, 因此相關鍵值保留
       print('並非第一次運行app, 保留相關鑰匙圈鍵值');
+      return true;
     } else {
       // 第一次運行app
       print('第一次運行app, 刪除鑰匙圈鍵值');
@@ -27,7 +28,7 @@ class SecureStorage {
     }
   }
 
-  static Future<void> write({String key, dynamic value}) async {
+  static Future<bool> write({required String key, dynamic value}) async {
     if (value == null) {
       return delete(key: key);
     }
@@ -45,44 +46,44 @@ class SecureStorage {
     }
   }
 
-  static Future<void> writeInt({String key, int value}) async {
+  static Future<bool> writeInt({required String key, int? value}) async {
     if (value == null) {
       return delete(key: key);
     }
     var text = value.toString();
-    await writeString(key: key, value: text);
+    return writeString(key: key, value: text);
   }
 
-  static Future<void> writeDouble({String key, double value}) async {
+  static Future<bool> writeDouble({required String key, double? value}) async {
     if (value == null) {
       return delete(key: key);
     }
     var text = value.toString();
-    await writeString(key: key, value: text);
+    return writeString(key: key, value: text);
   }
 
-  static Future<void> writeBool({String key, bool value}) async {
+  static Future<bool> writeBool({required String key, bool? value}) async {
     if (value == null) {
       return delete(key: key);
     }
     var text = toBoolStorage(value);
-    await writeString(key: key, value: text);
+    return writeString(key: key, value: text);
   }
 
-  static Future<void> writeString({String key, String value}) async {
+  static Future<bool> writeString({required String key, String? value}) async {
     if (value == null) {
       return delete(key: key);
     }
-    await _storage.write(key: key, value: value);
+    return _storage.write(key: key, value: value).then((value) => true);
   }
 
-  static Future<void> writeObject({String key, dynamic value}) async {
+  static Future<bool> writeObject({required String key, dynamic value}) async {
     if (value == null) {
       return delete(key: key);
     }
 
     // 嘗試使用json方式儲存
-    String text;
+    String? text;
     try {
       text = json.encode(value);
     } catch (e) {
@@ -90,11 +91,13 @@ class SecureStorage {
     }
 
     if (text != null) {
-      await writeString(key: key, value: text);
+      return writeString(key: key, value: text);
+    } else {
+      return false;
     }
   }
 
-  static Future<int> readInt({String key}) async {
+  static Future<int?> readInt({required String key}) async {
     var value = await readString(key: key);
     if (value != null && value.isNotEmpty) {
       return int.tryParse(value);
@@ -102,7 +105,7 @@ class SecureStorage {
     return null;
   }
 
-  static Future<double> readDouble({String key}) async {
+  static Future<double?> readDouble({required String key}) async {
     var value = await readString(key: key);
     if (value != null && value.isNotEmpty) {
       return double.tryParse(value);
@@ -110,7 +113,7 @@ class SecureStorage {
     return null;
   }
 
-  static Future<bool> readBool({String key}) async {
+  static Future<bool?> readBool({required String key}) async {
     var value = await readString(key: key);
     if (value != null && value.isNotEmpty) {
       return _parseBoolStorage(value);
@@ -118,11 +121,11 @@ class SecureStorage {
     return null;
   }
 
-  static Future<String> readString({String key}) async {
+  static Future<String?> readString({required String key}) async {
     return _storage.read(key: key);
   }
 
-  static Future<dynamic> readObject({String key}) async {
+  static Future<dynamic> readObject({required String key}) async {
     var value = await readString(key: key);
     if (value != null && value.isNotEmpty) {
       // 嘗試使用json方式解析
@@ -136,7 +139,7 @@ class SecureStorage {
   }
 
   /// 讀取列表
-  static Future<List<T>> readList<T>({String key}) async {
+  static Future<List<T>?> readList<T>({required String key}) async {
     var value = await readObject(key: key);
     if (value != null && value is List) {
       return value.map((e) => e as T).toList();
@@ -145,7 +148,7 @@ class SecureStorage {
   }
 
   /// 讀取Map
-  static Future<Map<T, R>> readMap<T, R>({String key}) async {
+  static Future<Map<T, R>?> readMap<T, R>({required String key}) async {
     var value = await readObject(key: key);
     if (value != null && value is Map) {
       return value.map((key, value) => MapEntry(key as T, value as R));
@@ -155,13 +158,13 @@ class SecureStorage {
 
   /// 清除值
   /// [rememberValue] - 是否也將本地儲存區的值餐廚
-  static Future<void> delete({String key}) async {
-    return _storage.delete(key: key);
+  static Future<bool> delete({required String key}) async {
+    return _storage.delete(key: key).then((value) => true);
   }
 
   /// 清除全部
-  static Future<void> deleteAll() async {
-    return _storage.deleteAll();
+  static Future<bool> deleteAll() async {
+    return _storage.deleteAll().then((value) => true);
   }
 
   /// 遍歷全部的key
@@ -181,7 +184,7 @@ String toBoolStorage(bool value) {
   }
 }
 
-bool _parseBoolStorage(String string) {
+bool? _parseBoolStorage(String string) {
   if (string.toLowerCase() == _trueString) {
     return true;
   } else if (string.toLowerCase() == _falseString) {

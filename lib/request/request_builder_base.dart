@@ -23,44 +23,44 @@ abstract class RequestBuilderBase {
     return client;
   }
 
-  int port(int client) {
+  int? port(int? client) {
     return client;
   }
 
   /// 預設 contentType
-  HttpContentType contentType(HttpContentType client) {
+  HttpContentType? contentType(HttpContentType? client) {
     return client;
   }
 
   /// 預設 bodyType
-  HttpBodyType bodyType(HttpBodyType client) {
+  HttpBodyType? bodyType(HttpBodyType? client) {
     return client;
   }
 
   /// 預設 qp
-  Map<String, String> queryParams(Map<String, String> client) {
+  Map<String, String>? queryParams(Map<String, String>? client) {
     return client;
   }
 
   /// 預設 header
-  Map<String, String> headers(Map<String, String> client) {
+  Map<String, String>? headers(Map<String, String>? client) {
     return client;
   }
 
   ///設置http產生器的默認屬性
   void setDefault({
-    String clientScheme,
-    String clientHost,
-    Map<String, String> clientQueryParams,
-    Map<String, String> clientHeaders,
+    required String clientScheme,
+    required String clientHost,
+    Map<String, String>? clientQueryParams,
+    Map<String, String>? clientHeaders,
     dynamic clientBody,
-    HttpBodyType clientBodyType,
-    HttpContentType clientContentType,
-    int clientPort,
+    HttpBodyType? clientBodyType,
+    HttpContentType? clientContentType,
+    int? clientPort,
   }) {
     generator.clear();
-    generator.defaultScheme = scheme(clientScheme) ?? generator.defaultScheme;
-    generator.defaultHost = host(clientHost) ?? generator.defaultHost;
+    generator.defaultScheme = scheme(clientScheme);
+    generator.defaultHost = host(clientHost);
     generator.addQueryParams(queryParams(clientQueryParams));
     generator.addHeaders(headers(clientHeaders));
     var bodyData = body(clientBody);

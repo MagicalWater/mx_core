@@ -14,14 +14,14 @@ abstract class RequestClientBase {
   Map<String, String> headers() => {};
 
   /// 預設 contentType
-  HttpContentType contentType() => null;
+  HttpContentType? contentType() => null;
 
   /// 預設 bodyType
-  HttpBodyType bodyType() => null;
+  HttpBodyType? bodyType() => null;
 
   dynamic body() => null;
 
-  int port() => null;
+  int? port() => null;
 
   /// api 的構建器
   /// 在此初始化並回傳

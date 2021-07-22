@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-NavigatorState? get navigatorIns {
+NavigatorState get navigatorIns {
   var ins = _navigatorInitCallback?.call();
   assert(() {
     if (ins == null) {
@@ -14,7 +14,7 @@ NavigatorState? get navigatorIns {
     child: MaterialApp(),
   )
   ''');
-  return ins;
+  return ins!;
 }
 
 NavigatorState? Function()? _navigatorInitCallback;

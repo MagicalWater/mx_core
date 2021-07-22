@@ -12,7 +12,7 @@ class PlainStorage {
   static Future<SharedPreferences> get _preferencesIns =>
       SharedPreferences.getInstance();
 
-  static Future<void> write({String key, dynamic value}) async {
+  static Future<bool> write({required String key, dynamic value}) async {
     if (value == null) {
       return delete(key: key);
     }
@@ -30,41 +30,41 @@ class PlainStorage {
     }
   }
 
-  static Future<bool> writeInt({String key, int value}) async {
+  static Future<bool> writeInt({required String key, int? value}) async {
     if (value == null) {
       return delete(key: key);
     }
     return (await _preferencesIns).setInt(key, value);
   }
 
-  static Future<bool> writeDouble({String key, double value}) async {
+  static Future<bool> writeDouble({required String key, double? value}) async {
     if (value == null) {
       return delete(key: key);
     }
     return (await _preferencesIns).setDouble(key, value);
   }
 
-  static Future<bool> writeBool({String key, bool value}) async {
+  static Future<bool> writeBool({required String key, bool? value}) async {
     if (value == null) {
       return delete(key: key);
     }
     return (await _preferencesIns).setBool(key, value);
   }
 
-  static Future<bool> writeString({String key, String value}) async {
+  static Future<bool> writeString({required String key, String? value}) async {
     if (value == null) {
       return delete(key: key);
     }
     return (await _preferencesIns).setString(key, value);
   }
 
-  static Future<void> writeObject({String key, dynamic value}) async {
+  static Future<bool> writeObject({required String key, dynamic value}) async {
     if (value == null) {
       return delete(key: key);
     }
 
     // 嘗試使用json方式儲存
-    String text;
+    String? text;
     try {
       text = json.encode(value);
     } catch (e) {
@@ -72,27 +72,29 @@ class PlainStorage {
     }
 
     if (text != null) {
-      await writeString(key: key, value: text);
+      return writeString(key: key, value: text);
+    } else {
+      return false;
     }
   }
 
-  static Future<int> readInt({String key}) async {
+  static Future<int?> readInt({required String key}) async {
     return (await _preferencesIns).getInt(key);
   }
 
-  static Future<double> readDouble({String key}) async {
+  static Future<double?> readDouble({required String key}) async {
     return (await _preferencesIns).getDouble(key);
   }
 
-  static Future<bool> readBool({String key}) async {
+  static Future<bool?> readBool({required String key}) async {
     return (await _preferencesIns).getBool(key);
   }
 
-  static Future<String> readString({String key}) async {
+  static Future<String?> readString({required String key}) async {
     return (await _preferencesIns).getString(key);
   }
 
-  static Future<dynamic> readObject({String key}) async {
+  static Future<dynamic> readObject({required String key}) async {
     var value = await readString(key: key);
     if (value != null && value.isNotEmpty) {
       // 嘗試使用json方式解析
@@ -106,7 +108,7 @@ class PlainStorage {
   }
 
   /// 讀取列表
-  static Future<List<T>> readList<T>({String key}) async {
+  static Future<List<T>?> readList<T>({required String key}) async {
     var value = await readObject(key: key);
     if (value != null && value is List) {
       return value.map((e) => e as T).toList();
@@ -115,7 +117,7 @@ class PlainStorage {
   }
 
   /// 讀取Map
-  static Future<Map<T, R>> readMap<T, R>({String key}) async {
+  static Future<Map<T, R>?> readMap<T, R>({required String key}) async {
     var value = await readObject(key: key);
     if (value != null && value is Map) {
       return value.map((key, value) => MapEntry(key as T, value as R));
@@ -125,7 +127,7 @@ class PlainStorage {
 
   /// 清除值
   /// [rememberValue] - 是否也將本地儲存區的值餐廚
-  static Future<bool> delete({String key}) async {
+  static Future<bool> delete({required String key}) async {
     return (await _preferencesIns).remove(key);
   }
 
@@ -154,7 +156,7 @@ class PlainStorage {
   /// 將資料全部移轉至加密的儲存區
   /// [migrateDecide] - 確認是否轉移
   static Future<void> migrateToSecureStorage({
-    bool Function(String key, dynamic value) migrateDecide,
+    bool Function(String key, dynamic value)? migrateDecide,
   }) async {
     var dataMap = await readAll();
 

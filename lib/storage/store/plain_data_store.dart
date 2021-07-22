@@ -6,8 +6,8 @@ part of 'store.dart';
 /// 基本類型 => int, double, String, bool
 class PlainDataStore<T> extends DataStore<T> {
   PlainDataStore({
-    @required String key,
-    T defaultValue,
+    required String key,
+    T? defaultValue,
   }) : super(key: key, defaultValue: defaultValue);
 
   @override
@@ -46,7 +46,7 @@ class PlainDataStore<T> extends DataStore<T> {
   }
 
   @override
-  Future<T> read() async {
+  Future<T?> read() async {
     if (T == int) {
       _value = await SecureStorage.readInt(key: key) as T;
     } else if (T == double) {
@@ -55,13 +55,13 @@ class PlainDataStore<T> extends DataStore<T> {
       _value = await SecureStorage.readBool(key: key) as T;
     } else if (T == String) {
       _value = await SecureStorage.readString(key: key) as T;
-    } else if (List<int>() is T) {
+    } else if (<int>[] is T) {
       _value = await SecureStorage.readList<int>(key: key) as T;
-    } else if (List<double>() is T) {
+    } else if (<double>[] is T) {
       _value = await SecureStorage.readList<double>(key: key) as T;
-    } else if (List<bool>() is T) {
+    } else if (<bool>[] is T) {
       _value = await SecureStorage.readList<bool>(key: key) as T;
-    } else if (List<String>() is T) {
+    } else if (<String>[] is T) {
       _value = await SecureStorage.readList<String>(key: key) as T;
     } else if (Map<String, int>() is T) {
       _value = await SecureStorage.readMap<String, int>(key: key) as T;

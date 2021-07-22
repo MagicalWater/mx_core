@@ -40,7 +40,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   AnimatedType get type => _type;
 
   /// 當前動畫的運行 Method
-  AnimationMethod? _currentMethod;
+  late AnimationMethod _currentMethod;
 
   /// 當前動畫開關是否開啟
   bool get currentToggle => _currentToggle;
@@ -58,15 +58,18 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   /// 動畫狀態
   @override
-  AnimationStatus get status => _controller.status;
+  AnimationStatus? get status => _controller?.status;
 
   AnimatedSyncTick._({
     this.initToggle = false,
     this.initAnimated = true,
     this.autoStart = true,
-    rAnimatedType type,
+    required AnimatedType type,
   })  : this._controller = null,
-        this._isNeedRegisterTicker = true;
+        this._isNeedRegisterTicker = true,
+        this._type = type {
+    _syncCurrentMethod();
+  }
 
   /// [vsync] - 動畫控制器 [TickerProvider]
   /// 帶入 [vsync] 可達到多個元件同步動畫 tick 的效果
@@ -84,7 +87,7 @@ class AnimatedSyncTick implements AnimatedCombController {
           vsync: vsync,
         ) {
     _syncCurrentMethod();
-    this._controller
+    this._controller!
       ..addListener(_controllerListener)
       ..addStatusListener(_statusListener);
   }
@@ -94,7 +97,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 因此由此類生成的物件不可給多個元件使用
   /// * [initToggle] - 若動畫類型行為 [AnimatedType.toggle], 則此值有效
   factory AnimatedSyncTick.identity({
-    AnimatedType type,
+    required AnimatedType type,
     bool initToggle = false,
     bool initAnimated = true,
     bool autoStart = true,
@@ -103,12 +106,13 @@ class AnimatedSyncTick implements AnimatedCombController {
       initToggle: initToggle,
       initAnimated: initAnimated,
       autoStart: autoStart,
-    ).._type = type;
+      type: type,
+    );
   }
 
   /// 控制器的 ticker 監聽
   void _controllerListener() {
-    var currentTick = _controller.value;
+    var currentTick = _controller!.value;
     _animatedParseMap.values.forEach((e) {
       e.syncTickValue(currentTick);
     });
@@ -132,7 +136,6 @@ class AnimatedSyncTick implements AnimatedCombController {
     dispose();
     _currentUnique = 0;
     _tickController = StreamController.broadcast();
-    _currentMethod = null;
     _currentToggle = false;
     _isNeedRegisterTicker = true;
   }
@@ -141,7 +144,6 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 只由 [AnimatedComb] 內部檢測到 ticker 狀態參數 [_isNeedRegisterTicker]
   /// 為 true 時才觸發
   void _registerTicker(
-    AnimatedType type,
     TickerProvider vsync,
   ) {
     if (_isNeedRegisterTicker && this._controller != null) {
@@ -150,37 +152,31 @@ class AnimatedSyncTick implements AnimatedCombController {
       // 這是錯誤的
       throw FlutterError("AnimatedCombController.identity 生成的動畫控制器不可同時給多個元件使用");
     }
-    if (this._type == null) {
-      this._type = type;
-      _syncCurrentMethod();
-    }
     this._controller = AnimationController(
       duration: Duration.zero,
       vsync: vsync,
-    );
-
-    this._controller
+    )
       ..addListener(_controllerListener)
       ..addStatusListener(_statusListener);
 
-    _outsideStatusListener?.forEach((element) {
-      this._controller.addStatusListener(element);
+    _outsideStatusListener.forEach((element) {
+      this._controller!.addStatusListener(element);
     });
   }
 
   /// 取得 [AnimationData]
   AnimationData _getAnimationData(int id) {
-    return _animatedParseMap[id]..current._toggle = _currentToggle;
+    return _animatedParseMap[id]!..current._toggle = _currentToggle;
   }
 
   /// 註冊動畫, 回傳一個註冊的 id
   /// 元件之後要獲取自己的動畫列表需透過此 id
   int _registerAnimated({
-    List<Comb> animateList,
-    int duration,
-    Curve curve,
-    int shiftDuration,
-    int id,
+    required List<Comb> animateList,
+    required int duration,
+    required Curve curve,
+    required int shiftDuration,
+    int? id,
   }) {
     var animatedComb = _AnimatedComb(
       animateList: animateList,
@@ -201,51 +197,51 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   /// 告知可以開始進行動畫
   void _start() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       if (_controller == null) {
         return;
       }
-      _controller.reset();
+      _controller!.reset();
       switch (type) {
         case AnimatedType.repeatReverse:
           _currentMethod = AnimationMethod.repeatReverse;
           if (autoStart) {
-            _controller.repeat(reverse: true);
+            _controller!.repeat(reverse: true);
           }
           break;
         case AnimatedType.repeat:
           _currentMethod = AnimationMethod.repeat;
           if (autoStart) {
-            _controller.repeat(reverse: false);
+            _controller!.repeat(reverse: false);
           }
           break;
         case AnimatedType.onceReverse:
           _currentMethod = AnimationMethod.onceReverse;
           if (autoStart) {
-            if (initAnimated ?? true) {
-              _controller.forward();
+            if (initAnimated) {
+              _controller!.forward();
             } else {
-              _controller.value = 1;
+              _controller!.value = 1;
             }
           }
           break;
         case AnimatedType.once:
           _currentMethod = AnimationMethod.once;
           if (autoStart) {
-            if (initAnimated ?? true) {
-              _controller.forward();
+            if (initAnimated) {
+              _controller!.forward();
             } else {
-              _controller.value = 1;
+              _controller!.value = 1;
             }
           }
           break;
         case AnimatedType.toggle:
-          if (initToggle ?? false) {
+          if (initToggle) {
             _currentMethod = AnimationMethod.once;
-            if (initAnimated ?? true) {
-              _controller.forward();
+            if (initAnimated) {
+              _controller!.forward();
             } else {
-              _controller.value = 1;
+              _controller!.value = 1;
             }
           }
           break;
@@ -280,23 +276,23 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   /// 執行單次動畫
   TickerFuture _forward() {
-    return _controller.forward();
+    return _controller!.forward();
   }
 
   /// 反轉動畫
   TickerFuture _reverse() {
-    return _controller.reverse();
+    return _controller!.reverse();
   }
 
   /// 停止
   void stop() {
-    _controller.stop();
+    _controller?.stop();
   }
 
   /// 呼叫動畫開始執行
-  TickerFuture _repeat(bool reverse) {
-    return _controller.repeat(reverse: reverse);
-  }
+  // TickerFuture _repeat(bool reverse) {
+  //   return _controller!.repeat(reverse: reverse);
+  // }
 
   /// 獲取一組新的獨立id
   int _getNewId() {
@@ -307,7 +303,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 並且依照需要花費的時間, 重新設置 [AnimationController] 的時長
   void _settingAnimated() {
     var totalMilliseconds = _getTotalDuration();
-    _controller.duration = Duration(milliseconds: totalMilliseconds);
+    _controller!.duration = Duration(milliseconds: totalMilliseconds);
 
     _animatedParseMap = _animatedMap.map((id, animateComb) {
       var animatedData = _convertToAnimatedData(
@@ -420,12 +416,12 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// [start], [end] - 動畫開始/結束時間(為佔整體時間的比例, 並非是真正意義上的時間)
   /// [delayPercent] - 動畫延遲百分比
   Future<void> _addCombToAnimationData({
-    AnimationData animationData,
-    Comb value,
-    double start,
-    double end,
-    Curve curve,
-    double shiftPercent,
+    required AnimationData animationData,
+    required Comb value,
+    required double start,
+    required double end,
+    required Curve curve,
+    required double shiftPercent,
   }) async {
     var beginValue = value.begin;
     var endValue = value.end;
@@ -435,7 +431,7 @@ class AnimatedSyncTick implements AnimatedCombController {
     var tween;
 
     ShiftAnimation intervalAnimation = ShiftAnimation(
-      parent: _controller,
+      parent: _controller!,
       curve: bindInterval,
       methodGetter: _currentAnimatedMethod,
       shift: shiftPercent,
@@ -463,7 +459,7 @@ class AnimatedSyncTick implements AnimatedCombController {
     switch (value.runtimeType) {
       case CombScale:
         AnimationBinder<Size> binder = AnimationBinder(
-          animation: animation,
+          animation: animation as Animation<Size>,
           interval: bindInterval,
           shift: intervalAnimation,
           scaleType: (value as CombScale).type,
@@ -473,7 +469,7 @@ class AnimatedSyncTick implements AnimatedCombController {
         break;
       case CombRotate:
         AnimationBinder<double> binder = AnimationBinder(
-          animation: animation,
+          animation: animation as Animation<double>,
           interval: bindInterval,
           shift: intervalAnimation,
           endValue: endValue,
@@ -495,7 +491,7 @@ class AnimatedSyncTick implements AnimatedCombController {
         break;
       case CombTranslate:
         AnimationBinder<Offset> binder = AnimationBinder(
-          animation: animation,
+          animation: animation as Animation<Offset>,
           interval: bindInterval,
           shift: intervalAnimation,
           transType: (value as CombTranslate).type,
@@ -505,7 +501,7 @@ class AnimatedSyncTick implements AnimatedCombController {
         break;
       case CombOpacity:
         AnimationBinder<double> binder = AnimationBinder(
-          animation: animation,
+          animation: animation as Animation<double>,
           interval: bindInterval,
           shift: intervalAnimation,
           endValue: endValue,
@@ -516,7 +512,7 @@ class AnimatedSyncTick implements AnimatedCombController {
         break;
       case CombSize:
         AnimationBinder<Size> binder = AnimationBinder(
-          animation: animation,
+          animation: animation as Animation<Size>,
           interval: bindInterval,
           shift: intervalAnimation,
           sizeType: (value as CombSize).type,
@@ -526,7 +522,7 @@ class AnimatedSyncTick implements AnimatedCombController {
         break;
       case CombColor:
         AnimationBinder<Color> binder = AnimationBinder(
-          animation: animation,
+          animation: animation as Animation<Color>,
           interval: bindInterval,
           shift: intervalAnimation,
           endValue: endValue,
@@ -539,7 +535,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 同步當前開關應該有的動畫
   Future<void> _syncToggleStatus() async {
     if (_controller != null) {
-      switch (_controller.status) {
+      switch (_controller!.status) {
         case AnimationStatus.dismissed:
         case AnimationStatus.reverse:
           if (_currentToggle) {
@@ -627,14 +623,14 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   /// 設置動畫行為
   @override
-  Future<void> setType(AnimatedType type, [bool toggle]) async {
+  Future<void> setType(AnimatedType type, [bool? toggle]) async {
     _type = type;
     if (_type == AnimatedType.toggle) {
       if (toggle != null) {
         await _syncToggleStatus();
       }
     } else {
-      await _handleAnimatedStatusChanged(_controller?.status);
+      await _handleAnimatedStatusChanged(_controller!.status);
     }
   }
 
@@ -642,7 +638,7 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 當 [value] 為 null 時直接切換開關
   /// 不為 null 則直接設置
   @override
-  Future<void> toggle([bool value]) async {
+  Future<void> toggle([bool? value]) async {
     if (type == AnimatedType.toggle) {
       _currentToggle = value ?? !_currentToggle;
       await _syncToggleStatus();
@@ -654,16 +650,15 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   /// 釋放動畫串流
   void dispose() {
-    _outsideStatusListener?.forEach((element) {
+    _outsideStatusListener.forEach((element) {
       _controller?.removeStatusListener(element);
     });
-    _outsideStatusListener?.clear();
+    _outsideStatusListener.clear();
     _controller?.removeListener(_controllerListener);
     _controller?.removeStatusListener(_statusListener);
     _controller?.dispose();
     _controller = null;
-    _tickController?.close();
-    _tickController = null;
+    _tickController.close();
     _animatedMap.clear();
     _animatedParseMap.clear();
   }
@@ -682,51 +677,51 @@ class _AnimatedComb {
   final int shiftDuration;
 
   _AnimatedComb({
-    this.animateList,
-    this.curve,
-    this.duration,
-    this.shiftDuration,
+    required this.animateList,
+    required this.curve,
+    required this.duration,
+    required this.shiftDuration,
   });
 }
 
 class AnimValue {
   /// 偏移
-  Offset get offset => _offset;
+  Offset? get offset => _offset;
 
   /// 旋轉
-  double get rotateZ => _rotateZ;
+  double? get rotateZ => _rotateZ;
 
   /// 水平翻轉
-  double get rotateY => _rotateY;
+  double? get rotateY => _rotateY;
 
   /// 垂直翻轉
-  double get rotateX => _rotateX;
+  double? get rotateX => _rotateX;
 
   /// 縮放
-  Size get scale => _scale;
+  Size? get scale => _scale;
 
   /// 透明
-  double get opacity => _opacity;
+  double? get opacity => _opacity;
 
   /// size
-  Size get size => _size;
+  Size? get size => _size;
 
   /// 顏色
-  Color get color => _color;
+  Color? get color => _color;
 
   /// 動畫 toggle
-  bool get toggle => _toggle;
+  bool? get toggle => _toggle;
 
-  Offset _offset;
-  double _rotateZ;
-  double _rotateY;
-  double _rotateX;
-  Size _scale;
-  double _opacity;
-  Size _size;
-  Color _color;
-  bool _toggle;
-  Alignment _alignment;
+  Offset? _offset;
+  double? _rotateZ;
+  double? _rotateY;
+  double? _rotateX;
+  Size? _scale;
+  double? _opacity;
+  Size? _size;
+  Color? _color;
+  bool? _toggle;
+  Alignment? _alignment;
 
   /// 將動畫數值組裝為元件
   Widget component(Widget child) {
@@ -735,23 +730,23 @@ class AnimValue {
     var transform = Matrix4.identity();
 
     if (rotateX != null) {
-      transform.rotateX(rotateX);
+      transform.rotateX(rotateX!);
     }
 
     if (rotateY != null) {
-      transform.rotateY(rotateY);
+      transform.rotateY(rotateY!);
     }
 
     if (rotateZ != null) {
-      transform.rotateZ(rotateZ);
+      transform.rotateZ(rotateZ!);
     }
 
     if (offset != null) {
-      transform.translate(offset.dx, offset.dy);
+      transform.translate(offset!.dx, offset!.dy);
     }
 
     if (scale != null) {
-      transform.scale(scale.width, scale.height);
+      transform.scale(scale!.width, scale!.height);
     }
 
     // 添加透明動畫
@@ -821,30 +816,24 @@ class AnimationData {
   /// 同步 [AnimationController] 的 value
   void syncTickValue(double t) {
     var scaleAnimComb = _scaleList.where((e) => e._isActive(t));
-    var rotateXAnim =
-        _rotateXList.firstWhere((e) => e._isActive(t), orElse: () => null);
-    var rotateYAnim =
-        _rotateYList.firstWhere((e) => e._isActive(t), orElse: () => null);
-    var rotateZAnim =
-        _rotateZList.firstWhere((e) => e._isActive(t), orElse: () => null);
+    var rotateXAnim = _rotateXList.firstWhereOrNull((e) => e._isActive(t));
+    var rotateYAnim = _rotateYList.firstWhereOrNull((e) => e._isActive(t));
+    var rotateZAnim = _rotateZList.firstWhereOrNull((e) => e._isActive(t));
     var offsetAnimComb = _offsetList.where((e) => e._isActive(t));
-    var opacityAnim =
-        _opacityList.firstWhere((e) => e._isActive(t), orElse: () => null);
+    var opacityAnim = _opacityList.firstWhereOrNull((e) => e._isActive(t));
     var sizeAnimComb = _sizeList.where((e) => e._isActive(t));
-    var colorAnim =
-        _colorList.firstWhere((e) => e._isActive(t), orElse: () => null);
+    var colorAnim = _colorList.firstWhereOrNull((e) => e._isActive(t));
 
     if (scaleAnimComb.isNotEmpty) {
       var first = scaleAnimComb.first;
-      switch (first.scaleType) {
+      switch (first.scaleType!) {
         case ScaleType.all:
           current._scale = first.animation.value;
           _last._scale = first.endValue;
           break;
         case ScaleType.width:
-          var second = scaleAnimComb.firstWhere(
+          var second = scaleAnimComb.firstWhereOrNull(
             (e) => e.scaleType == ScaleType.height,
-            orElse: () => null,
           );
           if (second != null) {
             current._scale = Size(
@@ -861,9 +850,8 @@ class AnimationData {
           }
           break;
         case ScaleType.height:
-          var second = scaleAnimComb.firstWhere(
+          var second = scaleAnimComb.firstWhereOrNull(
             (e) => e.scaleType == ScaleType.width,
-            orElse: () => null,
           );
           if (second != null) {
             current._scale = Size(
@@ -886,15 +874,14 @@ class AnimationData {
 
     if (sizeAnimComb.isNotEmpty) {
       var first = sizeAnimComb.first;
-      switch (first.sizeType) {
+      switch (first.sizeType!) {
         case SizeType.all:
           current._size = first.animation.value;
           _last._size = first.endValue;
           break;
         case SizeType.width:
-          var second = sizeAnimComb.firstWhere(
+          var second = sizeAnimComb.firstWhereOrNull(
             (e) => e.sizeType == SizeType.height,
-            orElse: () => null,
           );
           if (second != null) {
             current._size = Size(
@@ -911,9 +898,8 @@ class AnimationData {
           }
           break;
         case SizeType.height:
-          var second = sizeAnimComb.firstWhere(
+          var second = sizeAnimComb.firstWhereOrNull(
             (e) => e.sizeType == SizeType.width,
-            orElse: () => null,
           );
           if (second != null) {
             current._size = Size(
@@ -964,15 +950,14 @@ class AnimationData {
 
     if (offsetAnimComb.isNotEmpty) {
       var first = offsetAnimComb.first;
-      switch (first.transType) {
+      switch (first.transType!) {
         case TransType.all:
           current._offset = first.animation.value;
           _last._offset = first.endValue;
           break;
         case TransType.x:
-          var second = offsetAnimComb.firstWhere(
+          var second = offsetAnimComb.firstWhereOrNull(
             (e) => e.transType == TransType.y,
-            orElse: () => null,
           );
           if (second != null) {
             current._offset = Offset(
@@ -989,9 +974,8 @@ class AnimationData {
           }
           break;
         case TransType.y:
-          var second = offsetAnimComb.firstWhere(
+          var second = offsetAnimComb.firstWhereOrNull(
             (e) => e.transType == TransType.x,
-            orElse: () => null,
           );
           if (second != null) {
             current._offset = Offset(
@@ -1026,22 +1010,22 @@ class AnimationBinder<T> {
   Animation<T> animation;
   Interval interval;
 
-  SizeType sizeType;
-  ScaleType scaleType;
-  TransType transType;
+  SizeType? sizeType;
+  ScaleType? scaleType;
+  TransType? transType;
 
   T endValue;
 
   double get endTime => interval.end;
 
   AnimationBinder({
-    this.animation,
-    this.interval,
-    this.shift,
+    required this.animation,
+    required this.interval,
+    required this.shift,
+    required this.endValue,
     this.sizeType,
     this.scaleType,
     this.transType,
-    this.endValue,
   });
 
   bool _isActive(double t) {

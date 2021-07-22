@@ -12,17 +12,29 @@
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_query_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_query_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/arrow_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/arrow_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/option.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/option.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/request/request_builder_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/request/request_builder_base.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/request/request_client_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/request/request_client_base.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/router/route_compute.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_compute.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/router/route_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin_base.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/router/route_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/storage/plain_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/storage/plain_storage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/storage/secure_storage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/storage/secure_storage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/storage/store/plain_data_store.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/storage/store/plain_data_store.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/storage/store/secure_data_store.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/storage/store/secure_data_store.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/storage/store/store.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/storage/store/store.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_comb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_comb.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_comb_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_comb_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/color_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/color_value.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/comb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/comb.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/delay_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/delay_value.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/opacity_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/opacity_value.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/parallel_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/parallel_value.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/rotate_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/rotate_value.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/scale_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/scale_value.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/size_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/size_value.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/translate_value.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_value/translate_value.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/shift_animation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/shift_animation.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/navigator_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/navigator_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/stateful_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/stateful_button.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,16 +210,20 @@
       <screen x="-240" y="-1055" width="1920" height="1055" />
     </state>
     <state x="-231" y="-1041" width="1887" height="1033" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618370759591" />
-    <state x="563" y="254" width="1125" height="540" key="find.popup" timestamp="1622618997268">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619425038957" />
-    <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622618997268" />
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1626856161802">
+    <state x="493" y="256" width="984" height="490" key="find.popup" timestamp="1626920348478">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626856161802" />
+    <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626920348478" />
+    <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622618997268" />
+    <state width="600" height="428" key="javadoc.popup" timestamp="1626919798649">
+      <screen x="0" y="25" width="1680" height="944" />
+    </state>
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1626947215880">
+      <screen x="0" y="25" width="1680" height="944" />
+    </state>
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626947215880" />
     <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1624588711409" />
+    <state width="600" height="428" key="javadoc.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626919798649" />
     <state x="505" y="231" width="671" height="672" key="search.everywhere.popup" timestamp="1626853090221">
       <screen x="0" y="25" width="1680" height="944" />
     </state>

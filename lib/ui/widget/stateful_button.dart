@@ -106,6 +106,7 @@ class _StatefulButtonState extends State<StatefulButton>
     _controller = AnimatedSyncTick.identity(
       initToggle: _isStandby,
       initAnimated: widget.initAnimated,
+      type: AnimatedType.toggle,
     )..addStatusListener((status) {
         print('狀態變更: $status');
 
@@ -159,10 +160,9 @@ class _StatefulButtonState extends State<StatefulButton>
       child: AnimatedComb(
         sync: _controller,
         curve: Curves.fastOutSlowIn,
-        type: AnimatedType.toggle,
         builder: (context, anim) {
           var child = MaterialLayer.single(
-            tapStyle: anim.toggle
+            tapStyle: anim.toggle!
                 ? widget.tapStyle
                 : TapFeedback(
                     highlightColor: Colors.transparent,
@@ -170,7 +170,7 @@ class _StatefulButtonState extends State<StatefulButton>
                   ),
             layer: LayerProperties(decoration: widget.decoration),
             child: AnimatedSwitcher(
-              child: anim.toggle
+              child: anim.toggle!
                   ? (widget.child ?? Container())
                   : Loading.circle(
                       size: _loadStyle.size * 3 / 4,

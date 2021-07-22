@@ -129,7 +129,7 @@ class Popup {
         ),
       ),
     );
-    navigatorIns!.push(layout);
+    navigatorIns.push(layout);
     controller
       ..registerController(childSync)
       ..registerController(backgroundSync);
@@ -224,7 +224,7 @@ class Popup {
         );
       },
     );
-    navigatorIns!.overlay!.insert(entry);
+    navigatorIns.overlay!.insert(entry);
     controller
       ..registerController(backgroundSync)
       ..registerController(childSync)

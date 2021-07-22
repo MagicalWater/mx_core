@@ -9,9 +9,9 @@ typedef MixinRouteBuilder<T> = PageRoute<T> Function(
 );
 
 abstract class RouteWidgetBase {
-  List<String> pageList;
+  List<String> get pageList;
 
-  Widget getPage(RouteData data, {Key key});
+  Widget getPage(RouteData data, {Key? key});
 }
 
 /// 子頁面監聽 func
@@ -30,12 +30,12 @@ abstract class RouteMixinBase {
   /// [builder] - 自定義構建 PageRoute
   Future<dynamic> pushPage<T>(
     String route, {
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
-    bool replaceCurrent,
-    bool Function(String route) removeUntil,
-    MixinRouteBuilder<T> builder,
-    Key key,
+    Map<String, dynamic>? pageQuery,
+    Map<String, dynamic>? blocQuery,
+    bool? replaceCurrent,
+    bool Function(String? route)? removeUntil,
+    MixinRouteBuilder<T>? builder,
+    Key? key,
   });
 
   /// 返回的同時再 push
@@ -45,16 +45,16 @@ abstract class RouteMixinBase {
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   Future<dynamic> popAndPushPage<T>(
     String route, {
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
-    bool Function(String route) popUntil,
-    Object result,
+    Map<String, dynamic>? pageQuery,
+    Map<String, dynamic>? blocQuery,
+    bool Function(String? route)? popUntil,
+    Object? result,
   });
 
   /// 返回 page
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   bool popPage({
-    bool Function(String route) popUntil,
+    bool Function(String? route) popUntil,
     Object result,
   });
 
@@ -68,7 +68,7 @@ abstract class RouteMixinBase {
   bool popSubPage(
     String route, {
     PopLevel level = PopLevel.exact,
-    bool Function(String route) popUntil,
+    bool Function(String route)? popUntil,
   });
 }
 
@@ -80,20 +80,24 @@ abstract class RoutePageBase {
   Widget getPage(
     dynamic route, {
     Key? key,
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
+    Map<String, dynamic>? pageQuery,
+    Map<String, dynamic>? blocQuery,
+    bool entryPoint = false,
   });
 
   /// 註冊子頁面監聽
   void registerSubPageListener({
-    PageBlocInterface page,
-    bool Function(RouteData data) isHandleRoute,
-    bool Function(RouteData data, {bool Function(String route) popUntil})
+    required PageBlocInterface page,
+    required bool Function(RouteData data) isHandleRoute,
+    required bool Function(RouteData data,
+            {bool Function(String route)? popUntil})
         dispatchSubPage,
-    String Function({
-      bool Function(String route) popUntil,
+    required void Function(String route) forceModifyPageDetail,
+    required String? Function({
+      bool Function(String route)? popUntil,
     })
         popSubPage,
+    required void Function() notifyUpdate,
   });
 
   /// 取消註冊子頁面監聽

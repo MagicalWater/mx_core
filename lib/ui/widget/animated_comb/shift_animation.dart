@@ -1,9 +1,5 @@
 part of 'animated_comb.dart';
 
-//class ShiftTween extends CurvedAnimation {
-//
-//}
-
 /// 基準時間偏移Animation
 /// 內部直接將 [CurvedAnimation] 部分計算動畫時間的私有方法複製
 /// 只是在基礎時間上做的推移
@@ -17,7 +13,7 @@ class ShiftAnimation extends CurvedAnimation {
   String lastShow = '';
 
   /// 當前狀態是否為往前
-  bool _isCurrentForward;
+  bool? _isCurrentForward;
 
   /// 是否已經達到頂峰
   bool _isTimeUpperBound = false;
@@ -32,11 +28,11 @@ class ShiftAnimation extends CurvedAnimation {
   /// 此延遲開始時間並非是等待 [shift] 個百分比後開始
   /// 而是會在一開始的動畫時間基礎上, 往前推 [shift] 個的百分比
   ShiftAnimation({
-    Animation<double> parent,
-    Curve curve,
+    required Animation<double> parent,
+    required Curve curve,
+    required AnimationMethod Function() methodGetter,
     this.shift = 0,
-    AnimationMethod Function() methodGetter,
-    Curve reverseCurve,
+    Curve? reverseCurve,
   })  : this._methodGetter = methodGetter,
         super(
           parent: parent,
@@ -98,24 +94,19 @@ class ShiftAnimation extends CurvedAnimation {
         switch (currentMethod) {
           case AnimationMethod.repeatReverse:
             return _evaluateShiftValue(currentMethod, t - shift);
-            break;
           case AnimationMethod.onceReverse:
             if (shift > t - shift) {
               return shift;
             }
             return _evaluateShiftValue(currentMethod, t - shift);
-            break;
           case AnimationMethod.toggle:
             if (shift >= t) {
               return shift;
             }
             return _evaluateShiftValue(currentMethod, t);
-            break;
           default:
             return 1;
-            break;
         }
-        break;
       default:
 //        print("正向動畫");
         // 除了 reverse 的動畫之外, 全都為此
@@ -124,7 +115,6 @@ class ShiftAnimation extends CurvedAnimation {
         } else {
           return _evaluateShiftValue(currentMethod, t + shift);
         }
-        break;
     }
   }
 
@@ -135,56 +125,43 @@ class ShiftAnimation extends CurvedAnimation {
       switch (method) {
         case AnimationMethod.repeat:
           // 直接重0再開始計算
-//          _isCurrentForward = true;
           return _evaluateShiftValue(method, t - 1.0);
-          break;
         case AnimationMethod.repeatReverse:
           // 需要反向
           _isCurrentForward = false;
           return _evaluateShiftValue(method, 1.0 - (t - 1.0));
-          break;
         case AnimationMethod.once:
           // 需要需要停留在最後的位置
-//          _isCurrentForward = true;
           return 1;
-          break;
         case AnimationMethod.toggle:
           return 1;
-          break;
         case AnimationMethod.onceReverse:
           // 需要反向
           _isCurrentForward = false;
           return _evaluateShiftValue(method, 1.0 - (t - 1.0));
-          break;
         default:
           print("未知的動畫 Method = $method");
           throw FlutterError("未知的動畫 Method = $method");
-          break;
       }
     } else if (t < 0) {
       switch (method) {
         case AnimationMethod.repeat:
           // 從 1 開始往前
           return _evaluateShiftValue(method, 1.0 - (0 - t));
-          break;
         case AnimationMethod.repeatReverse:
           // 需要轉為正向
           return _evaluateShiftValue(method, 0 + (0 - t));
-          break;
         case AnimationMethod.once:
           // 需要需要停留在最後的位置
           return 1;
-          break;
         case AnimationMethod.onceReverse:
           // 停留在剛開始的位置
           return shift;
-          break;
         case AnimationMethod.toggle:
           return shift;
         default:
           print("未知的動畫 Method = $method");
           throw FlutterError("未知的動畫 Method = $method");
-          break;
       }
     } else {
       return t;
@@ -192,7 +169,7 @@ class ShiftAnimation extends CurvedAnimation {
   }
 
   //========== 以下直接複製 [CurvedAnimation] 的方法及參數
-  AnimationStatus _curveDirection;
+  AnimationStatus? _curveDirection;
 
   void _updateCurveDirection(AnimationStatus status) {
     switch (status) {
@@ -217,8 +194,9 @@ class ShiftAnimation extends CurvedAnimation {
   /// 此方法內容為 [CurvedAnimation] 的 value getter 內容
   /// 差別在於 [t] 為經過時間偏移後得出的
   double getSuperValue(double t) {
-    final Curve activeCurve = _useForwardCurve ? curve : reverseCurve;
+    final Curve? activeCurve = _useForwardCurve ? curve : reverseCurve;
 
+    final double t = parent.value;
     if (activeCurve == null) return t;
     if (t == 0.0 || t == 1.0) {
       assert(() {
@@ -226,10 +204,12 @@ class ShiftAnimation extends CurvedAnimation {
         final double roundedTransformedValue =
             transformedValue.round().toDouble();
         if (roundedTransformedValue != t) {
-          throw FlutterError('Invalid curve endpoint at $t.\n'
-              'Curves must map 0.0 to near zero and 1.0 to near one but '
-              '${activeCurve.runtimeType} mapped $t to $transformedValue, which '
-              'is near $roundedTransformedValue.');
+          throw FlutterError(
+            'Invalid curve endpoint at $t.\n'
+            'Curves must map 0.0 to near zero and 1.0 to near one but '
+            '${activeCurve.runtimeType} mapped $t to $transformedValue, which '
+            'is near $roundedTransformedValue.',
+          );
         }
         return true;
       }());

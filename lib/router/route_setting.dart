@@ -8,12 +8,12 @@ import 'route_mixin_base.dart';
 /// [routeWidget] - 上層專案 使用  RouteMixin 的實現類別
 /// 通常為 RouteWidget.getInstance()
 void settingRoute({
-  RouteMixin routeMixin,
-  RouteWidgetBase routeWidget,
+  required RouteMixin routeMixin,
+  required RouteWidgetBase routeWidget,
 }) {
   routeMixinImpl = routeMixin;
   routeWidgetImpl = routeWidget;
 }
 
-RouteMixin routeMixinImpl;
-RouteWidgetBase routeWidgetImpl;
+late RouteMixin routeMixinImpl;
+late RouteWidgetBase routeWidgetImpl;

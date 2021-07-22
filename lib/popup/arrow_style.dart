@@ -14,16 +14,16 @@ class ArrowPopupStyle {
   final Color strokeColor;
 
   /// 外框漸變
-  final Gradient strokeGradient;
+  final Gradient? strokeGradient;
 
   /// 內容顏色
   final Color color;
 
   /// 浮出視窗時的背景顏色
-  final Gradient gradient;
+  final Gradient? gradient;
 
   /// 外框圓角半徑
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// 箭頭大小
   final double radius;

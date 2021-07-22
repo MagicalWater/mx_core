@@ -73,7 +73,7 @@ class RouteController extends PopupController {
 
 /// Overlay彈窗控制器
 class OverlayController extends PopupController {
-  OverlayEntry _entry;
+  OverlayEntry? _entry;
 
   /// 註冊返回按鈕事件監聽的tag
   final String tag;

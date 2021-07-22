@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/util/screen_util.dart';
 
 class PopupOption {
-  double left;
-  double top;
-  double right;
-  double bottom;
-  double width;
-  double height;
+  double? left;
+  double? top;
+  double? right;
+  double? bottom;
+  double? width;
+  double? height;
   Alignment alignment;
 
   /// 背景遮罩顏色
-  Color maskColor;
+  Color? maskColor;
 
   PopupOption({
     this.maskColor,
@@ -32,10 +32,10 @@ class PopupOption {
       width != null ||
       height != null;
 
-  double _tempW, _tempH;
+  late double _tempW, _tempH;
 
   /// 根據 [left], [right], [top], [bottom], [width], [height] 構建出在螢幕上的padding
-  EdgeInsetsGeometry getOverlayPadding(bool isChildSafeArea) {
+  EdgeInsetsGeometry? getOverlayPadding(bool isChildSafeArea) {
     if (!isSpecialPos) return null;
 
 //    print("取得 width/height 應該有的 padding~~~: $width,$height");
@@ -114,6 +114,17 @@ class PopupOption {
       // 對齊下右
       confirmRect = _getRect(
         remainRect.right - _tempW,
+        remainRect.bottom - _tempH,
+      );
+    } else {
+      // 由於x範圍為-1~1, 因此固定+1, 將範圍定至 0~2, 再除以2即是比例
+      var xPercent = (alignment.x + 1) / 2;
+      var yPercent = (alignment.y + 1) / 2;
+
+      var rectLeft = remainRect.left + (remainRect.width * xPercent) - (_tempW / 2);
+
+      confirmRect = _getRect(
+        remainRect.left + _tempW,
         remainRect.bottom - _tempH,
       );
     }

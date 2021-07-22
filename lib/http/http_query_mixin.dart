@@ -98,12 +98,12 @@ class HttpContentMixin {
   }
 
   /// 直接設定param, 會替代掉原有的
-  void setQueryParams(Map<String, dynamic> iterable) {
+  void setQueryParams(Map<String, dynamic>? iterable) {
     this._queryParams.clear();
     iterable?.forEach((k, v) => addQueryParam(k, value: v));
   }
 
-  void addQueryParams(Map<String, dynamic> iterable) {
+  void addQueryParams(Map<String, dynamic>? iterable) {
     iterable?.forEach((key, value) {
       addQueryParam(key, value: value);
     });
@@ -165,14 +165,14 @@ class HttpContentMixin {
   }
 
   /// 純粹的 key value pair
-  void addBodys({Map<String, dynamic> iterable}) {
+  void addBodys({Map<String, dynamic>? iterable}) {
     iterable?.forEach((k, v) {
       addBody(key: k, value: v);
     });
   }
 
   /// 添加複數個抬頭
-  void addHeaders(Map<String, dynamic> iterable) {
+  void addHeaders(Map<String, dynamic>? iterable) {
     iterable?.forEach((key, value) {
       addHeader(key, value: value);
     });

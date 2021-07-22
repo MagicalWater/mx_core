@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -83,7 +84,7 @@ class AnimatedComb extends StatefulWidget {
   final AnimatedSyncTick? animatedSyncTick;
 
   /// 動畫類型
-  final AnimatedType type;
+  final AnimatedType? type;
 
   AnimatedComb._({
     Key? key,
@@ -97,9 +98,10 @@ class AnimatedComb extends StatefulWidget {
     this.alignment = FractionalOffset.center,
     this.onTap,
     this.onTapAfterAnimated,
-    required this.type,
+    this.type,
     required this.animatedList,
   })  : assert(child != null || builder != null),
+        assert(animatedSyncTick != null || type != null),
         super(key: key);
 
   /// 可深層訂製動畫組合
@@ -116,7 +118,7 @@ class AnimatedComb extends StatefulWidget {
     Alignment alignment = FractionalOffset.center,
     VoidCallback? onTap,
     VoidCallback? onTapAfterAnimated,
-    required AnimatedType type,
+    AnimatedType? type,
     required List<Comb> animatedList,
   }) {
     return AnimatedComb._(
@@ -143,7 +145,7 @@ class AnimatedComb extends StatefulWidget {
     Widget? child,
     CombWidgetBuilder? builder,
     AnimatedSyncTick? sync,
-    required AnimatedType type,
+    AnimatedType? type,
     bool multipleAnimationController = false,
     Curve curve = Curves.easeInOut,
     int duration = 300,
@@ -210,11 +212,11 @@ abstract class _CombState extends State<AnimatedComb>
   void initState() {
     if (widget.animatedSyncTick == null) {
       _syncTickBindingType = _SyncTickBindingType.inside;
-      _currentAnimatedTick = AnimatedSyncTick(type: widget.type, vsync: this);
+      _currentAnimatedTick = AnimatedSyncTick(type: widget.type!, vsync: this);
     } else if (widget.animatedSyncTick!._isNeedRegisterTicker) {
       _syncTickBindingType = _SyncTickBindingType.outsideNeedReset;
       // 外部單純帶入控制器, 在此進行 ticker 註冊
-      widget.animatedSyncTick!._registerTicker(widget.type, this);
+      widget.animatedSyncTick!._registerTicker(this);
       _currentAnimatedTick = widget.animatedSyncTick!;
     } else {
       _syncTickBindingType = _SyncTickBindingType.outsideSelf;

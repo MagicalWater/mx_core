@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 class RouteCompute {
   /// 傳入 [parent], [sub] 兩個擁有親子關西 route
   /// 取得 [parent] 路由下個節點 route
-  static String getNextRoute({String parent, String sub}) {
+  static String? getNextRoute({required String parent, required String sub}) {
     if (!isSubPage(parent, sub, depth: null)) {
       // parent 以及 sub 並非親子關西
       // 因此無法取得 parent 的下個節點
@@ -39,7 +39,7 @@ class RouteCompute {
   }
 
   /// 取得 route 的上個節點路徑
-  static String getParentRoute(String route) {
+  static String? getParentRoute(String route) {
     if (isAncestorRoute(route)) {
       print('根節點沒有父親: $route');
       return null;
@@ -56,7 +56,7 @@ class RouteCompute {
   /// 當 depth = 1 時, 為 true
   /// 當 depth = 2 時, 為 false
   /// 當 depth = null 時, 代表不需要檢查深度, 只要深度較深即可
-  static bool isSubPage(String parent, String sub, {int depth = 1}) {
+  static bool isSubPage(String parent, String sub, {int? depth = 1}) {
     var parentSplit = split(parent);
     var subSplit = split(sub);
 
