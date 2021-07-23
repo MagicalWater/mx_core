@@ -121,7 +121,17 @@ class PopupOption {
       var xPercent = (alignment.x + 1) / 2;
       var yPercent = (alignment.y + 1) / 2;
 
-      var rectLeft = remainRect.left + (remainRect.width * xPercent) - (_tempW / 2);
+      var rectCenterX = remainRect.left + (remainRect.width * xPercent);
+      var rectCenterY = remainRect.top + (remainRect.height * yPercent);
+
+      bool isLeftOut = rectCenterX - (_tempW / 2) < remainRect.left;
+      bool isRightOut = rectCenterX + (_tempW / 2) > remainRect.right;
+      bool isTopOut = rectCenterY - (_tempH / 2) < remainRect.top;
+      bool isBottomOut = rectCenterY + (_tempW / 2) > remainRect.bottom;
+
+      if (isLeftOut && isRightOut) {
+        
+      }
 
       confirmRect = _getRect(
         remainRect.left + _tempW,
