@@ -8,7 +8,10 @@ class KeyboardClient {
   final int connectionId;
   final TextInputConfiguration configuration;
 
-  KeyboardClient({this.connectionId, this.configuration});
+  KeyboardClient({
+    required this.connectionId,
+    required this.configuration,
+  });
 
   factory KeyboardClient.fromArgs(List<dynamic> args) {
     Map<String, dynamic> inputTypeMap = args[1]['inputType'];

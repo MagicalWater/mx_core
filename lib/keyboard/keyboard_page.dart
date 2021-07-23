@@ -6,7 +6,11 @@ class KeyboardPage extends StatefulWidget {
   final Widget child;
   final double height;
 
-  const KeyboardPage({this.child, this.height, Key key}) : super(key: key);
+  const KeyboardPage({
+    Key? key,
+    required this.child,
+    required this.height,
+  }) : super(key: key);
 
   @override
   KeyboardPageState createState() => KeyboardPageState();
@@ -14,8 +18,8 @@ class KeyboardPage extends StatefulWidget {
 
 class KeyboardPageState extends State<KeyboardPage>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> doubleAnimation;
+  late AnimationController animationController;
+  late Animation<double> doubleAnimation;
 
   @override
   void initState() {
@@ -27,7 +31,7 @@ class KeyboardPageState extends State<KeyboardPage>
 //        print("觸發動畫");
         setState(() {});
       });
-    final Animation curve = CurvedAnimation(
+    final Animation<double> curve = CurvedAnimation(
       parent: animationController,
       curve: Curves.easeOut,
       reverseCurve: Curves.easeOut,
@@ -50,6 +54,7 @@ class KeyboardPageState extends State<KeyboardPage>
   @override
   void dispose() {
     print("動畫 dispose");
+
     /// 當動畫狀態為正在執行時, 呼叫動畫狀態為 dismissed
     if (animationController.status == AnimationStatus.forward ||
         animationController.status == AnimationStatus.reverse) {

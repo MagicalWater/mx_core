@@ -63,81 +63,32 @@ class PopupOption {
     _tempW = width ?? remainWidth;
     _tempH = height ?? remainHeight;
 
-    Rect confirmRect;
+    // 由於x範圍為-1~1, 因此固定+1, 將範圍定至 0~2, 再除以2即是比例
+    var xPercent = (alignment.x + 1) / 2;
+    var yPercent = (alignment.y + 1) / 2;
 
-    if (alignment == Alignment.topLeft) {
-      // 對齊上左, 位置資訊不需改變
-      confirmRect = _getRect(remainRect.left, remainRect.top);
-    } else if (alignment == Alignment.topCenter) {
-      // 對齊上中
-      confirmRect = _getRect(
-        remainRect.center.dx - (_tempW) / 2,
-        remainRect.top,
-      );
-    } else if (alignment == Alignment.topRight) {
-      // 對齊上右
-      confirmRect = _getRect(
-        remainRect.right - _tempW,
-        remainRect.top,
-      );
-    } else if (alignment == Alignment.centerLeft) {
-      // 對齊中左
-      confirmRect = _getRect(
-        remainRect.left,
-        remainRect.center.dy - _tempH / 2,
-      );
-    } else if (alignment == Alignment.center) {
-      // 對齊中
-      confirmRect = _getRect(
-        remainRect.center.dx - _tempW / 2,
-        remainRect.center.dy - _tempH / 2,
-      );
-    } else if (alignment == Alignment.centerRight) {
-      // 對齊中右
-      confirmRect = _getRect(
-        remainRect.right - _tempW,
-        remainRect.center.dy - _tempH / 2,
-      );
-    } else if (alignment == Alignment.bottomLeft) {
-      // 對齊下左
-      confirmRect = _getRect(
-        remainRect.left,
-        remainRect.bottom - _tempH,
-      );
-    } else if (alignment == Alignment.bottomCenter) {
-      // 對齊下中
-      confirmRect = _getRect(
-        remainRect.center.dx - _tempW / 2,
-        remainRect.bottom - _tempH,
-      );
-    } else if (alignment == Alignment.bottomRight) {
-      // 對齊下右
-      confirmRect = _getRect(
-        remainRect.right - _tempW,
-        remainRect.bottom - _tempH,
-      );
+    var rectCenterX = remainRect.left + (remainRect.width * xPercent);
+    var rectCenterY = remainRect.top + (remainRect.height * yPercent);
+
+    double leftPos, topPos;
+
+    if (xPercent == 0) {
+      leftPos = remainRect.left;
+    } else if (xPercent == 1) {
+      leftPos = remainRect.right - _tempW;
     } else {
-      // 由於x範圍為-1~1, 因此固定+1, 將範圍定至 0~2, 再除以2即是比例
-      var xPercent = (alignment.x + 1) / 2;
-      var yPercent = (alignment.y + 1) / 2;
-
-      var rectCenterX = remainRect.left + (remainRect.width * xPercent);
-      var rectCenterY = remainRect.top + (remainRect.height * yPercent);
-
-      bool isLeftOut = rectCenterX - (_tempW / 2) < remainRect.left;
-      bool isRightOut = rectCenterX + (_tempW / 2) > remainRect.right;
-      bool isTopOut = rectCenterY - (_tempH / 2) < remainRect.top;
-      bool isBottomOut = rectCenterY + (_tempW / 2) > remainRect.bottom;
-
-      if (isLeftOut && isRightOut) {
-        
-      }
-
-      confirmRect = _getRect(
-        remainRect.left + _tempW,
-        remainRect.bottom - _tempH,
-      );
+      leftPos = rectCenterX - (_tempW / 2);
     }
+
+    if (yPercent == 0) {
+      topPos = remainRect.top;
+    } else if (yPercent == 1) {
+      topPos = remainRect.bottom - _tempH;
+    } else {
+      topPos = rectCenterY - (_tempH / 2);
+    }
+
+    var confirmRect = _getRect(leftPos, topPos);
 
     var p = EdgeInsets.only(
       left: confirmRect.left,

@@ -11,7 +11,35 @@
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_content.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_content_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_content_generator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_query_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_query_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/server_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/server_response.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_class_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_class_parser.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/header_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/header_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/http_content_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/http_content_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/init_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/init_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/param_content_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/param_content_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/client_mixin_class_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/client_mixin_class_parser.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/code_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/code_generator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/parser.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_client.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_intercept.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_intercept.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_media_query.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_media_query.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/keyboard/number_keyboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/number_keyboard.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/polling/polling_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/polling/polling_base.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/layout.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/popup/option.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/option.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/popup/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/widget.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,32 +179,32 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1626077863974" />
-    <state width="1638" height="215" key="GridCell.Tab.0.bottom" timestamp="1624860787038">
+    <state width="1638" height="130" key="GridCell.Tab.0.bottom" timestamp="1627021404915">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="1878" height="247" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619408036398" />
-    <state width="1638" height="215" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619408811986" />
+    <state width="1638" height="130" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627021404915" />
     <state width="1860" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622623186843" />
     <state width="1638" height="215" key="GridCell.Tab.0.bottom/0.25.1680.944@0.25.1680.944" timestamp="1624860787038" />
-    <state width="1638" height="215" key="GridCell.Tab.0.center" timestamp="1624860787037">
+    <state width="1638" height="130" key="GridCell.Tab.0.center" timestamp="1627021404915">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="1878" height="247" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619408036398" />
-    <state width="1638" height="215" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619408811985" />
+    <state width="1638" height="130" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627021404915" />
     <state width="1860" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622623186843" />
     <state width="1638" height="215" key="GridCell.Tab.0.center/0.25.1680.944@0.25.1680.944" timestamp="1624860787037" />
-    <state width="1638" height="215" key="GridCell.Tab.0.left" timestamp="1624860787037">
+    <state width="1638" height="130" key="GridCell.Tab.0.left" timestamp="1627021404914">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="1878" height="247" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619408036398" />
-    <state width="1638" height="215" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619408811985" />
+    <state width="1638" height="130" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627021404914" />
     <state width="1860" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622623186842" />
     <state width="1638" height="215" key="GridCell.Tab.0.left/0.25.1680.944@0.25.1680.944" timestamp="1624860787037" />
-    <state width="1638" height="215" key="GridCell.Tab.0.right" timestamp="1624860787037">
+    <state width="1638" height="130" key="GridCell.Tab.0.right" timestamp="1627021404915">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="1878" height="247" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@-240.-1055.1920.1055" timestamp="1619408036398" />
-    <state width="1638" height="215" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619408811986" />
+    <state width="1638" height="130" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627021404915" />
     <state width="1860" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622623186843" />
     <state width="1638" height="215" key="GridCell.Tab.0.right/0.25.1680.944@0.25.1680.944" timestamp="1624860787037" />
     <state x="341" y="126" key="SettingsEditor" timestamp="1619406320778">
@@ -195,16 +223,16 @@
     <state width="600" height="428" key="javadoc.popup" timestamp="1626919798649">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1627005431961">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1627032734980">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627005431961" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627032734980" />
     <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1624588711409" />
     <state width="600" height="428" key="javadoc.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626919798649" />
-    <state x="505" y="231" width="671" height="672" key="search.everywhere.popup" timestamp="1626853090221">
+    <state x="505" y="231" width="671" height="672" key="search.everywhere.popup" timestamp="1627023547392">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state x="505" y="231" width="671" height="672" key="search.everywhere.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626853090221" />
+    <state x="505" y="231" width="671" height="672" key="search.everywhere.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627023547392" />
     <state x="577" y="227" width="766" height="740" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1624936883637" />
   </component>
 </project>

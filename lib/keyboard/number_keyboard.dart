@@ -22,11 +22,15 @@ class NumberKeyboard extends StatelessWidget {
   final KeyboardController keyboardController;
 
   /// 快捷按鈕
-  final List<ShortcutPadButton> shortcuts;
+  final List<ShortcutPadButton>? shortcuts;
 
   final String confirmTitle;
 
-  NumberKeyboard({this.keyboardController, this.confirmTitle, this.shortcuts});
+  NumberKeyboard({
+    required this.keyboardController,
+    required this.confirmTitle,
+    this.shortcuts,
+  });
 
   /// 將此 keyboard 註冊到 keyboard intercept
   static void register({
@@ -60,7 +64,7 @@ class NumberKeyboard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Builder(builder: (context) {
-            if (shortcuts == null || shortcuts.isEmpty) return Container();
+            if (shortcuts == null || shortcuts!.isEmpty) return Container();
             return Expanded(
               flex: 1,
               child: Container(
@@ -68,10 +72,10 @@ class NumberKeyboard extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: Screen.scaleA(4)),
                 child: Row(
                   children: List.generate(
-                    shortcuts.length,
+                    shortcuts!.length,
                     (index) => _buildShortcutButton(
-                      text: shortcuts[index].title,
-                      onTap: shortcuts[index].onTap,
+                      text: shortcuts![index].title,
+                      onTap: shortcuts![index].onTap,
                     ),
                   ),
                 ),
@@ -141,8 +145,8 @@ class NumberKeyboard extends StatelessWidget {
   }
 
   Widget _buildShortcutButton({
-    String text,
-    void Function(KeyboardController controller) onTap,
+    required String text,
+    required void Function(KeyboardController controller) onTap,
   }) {
     return Expanded(
       flex: 1,
@@ -182,9 +186,9 @@ class NumberKeyboard extends StatelessWidget {
   }
 
   Widget _buildNumberButton({
-    String text,
-    IconData icon,
-    VoidCallback onTap,
+    String? text,
+    IconData? icon,
+    VoidCallback? onTap,
   }) {
     return Expanded(
       flex: 1,
@@ -222,14 +226,14 @@ class NumberKeyboard extends StatelessWidget {
                           color: Colors.black, fontSize: Screen.scaleA(22)),
                     ),
             ),
-            onTap: onTap ?? () => keyboardController.addText(text),
+            onTap: onTap ?? () => keyboardController.addText(text ?? ''),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildConfirmButton({String text}) {
+  Widget _buildConfirmButton({required String text}) {
     return Expanded(
       flex: 1,
       child: FractionallySizedBox(
@@ -279,5 +283,5 @@ class ShortcutPadButton {
 
   void Function(KeyboardController controller) onTap;
 
-  ShortcutPadButton({this.title, this.onTap});
+  ShortcutPadButton({required this.title, required this.onTap});
 }

@@ -2,8 +2,8 @@ part of 'impl.dart';
 
 class _DetectWidget extends SingleChildRenderObjectWidget {
   _DetectWidget({
-    Key key,
-    Widget child,
+    Key? key,
+    Widget? child,
   }) : super(key: key, child: child);
 
   @override
@@ -13,11 +13,11 @@ class _DetectWidget extends SingleChildRenderObjectWidget {
 }
 
 class _DetectBox extends RenderShiftedBox {
-  _DetectBox(RenderBox child) : super(child);
+  _DetectBox(RenderBox? child) : super(child);
 
   @override
   void performLayout() {
-    child.layout(constraints, parentUsesSize: false);
+    child?.layout(constraints, parentUsesSize: false);
     size = Size(
       constraints.maxWidth,
       constraints.maxHeight,
@@ -29,9 +29,9 @@ class _TapWidget extends SingleChildRenderObjectWidget {
   final HitRule hitRule;
 
   _TapWidget({
-    Key key,
-    this.hitRule,
-    Widget child,
+    Key? key,
+    Widget? child,
+    required this.hitRule,
   }) : super(key: key, child: child);
 
   @override
@@ -44,13 +44,13 @@ class _TapBox extends RenderShiftedBox {
   final HitRule hitRule;
 
   _TapBox({
-    RenderBox child,
-    this.hitRule,
+    RenderBox? child,
+    required this.hitRule,
   }) : super(child);
 
   @override
   void performLayout() {
-    child.layout(constraints, parentUsesSize: false);
+    child?.layout(constraints, parentUsesSize: false);
     size = Size(
       constraints.maxWidth,
       constraints.maxHeight,
@@ -58,7 +58,7 @@ class _TapBox extends RenderShiftedBox {
   }
 
   @override
-  bool hitTest(BoxHitTestResult result, {@required Offset position}) {
+  bool hitTest(BoxHitTestResult result, {required Offset position}) {
     if (!hasSize) {
       // 如果尚未有 size, 依照正常會拋出錯誤
       // 這邊不處理直接往上丟
@@ -72,10 +72,9 @@ class _TapBox extends RenderShiftedBox {
       case HitRule.through:
         // 完全穿透
         return false;
-        break;
       case HitRule.childIntercept:
         // 子元件不穿透, 其餘穿透
-        if (child.size.contains(position)) {
+        if (child!.size.contains(position)) {
           // 在子元件範圍
           // 檢查結果列表是否包含 _DetectBox
           var resultHandle = super.hitTest(result, position: position);
@@ -92,12 +91,9 @@ class _TapBox extends RenderShiftedBox {
           }
         }
         return false;
-        break;
       case HitRule.intercept:
         // 完全攔截
         return super.hitTest(result, position: position);
-        break;
     }
-    return false;
   }
 }

@@ -19,7 +19,7 @@ class HttpContentMixin {
 
   ContentType? _contentType;
 
-  int port;
+  int? port;
 
   /// body 的類型, 預設 [HttpBodyType.formUrlencoded]
   HttpBodyType bodyType = HttpBodyType.formUrlencoded;
@@ -85,7 +85,7 @@ class HttpContentMixin {
   }
 
   /// 將 bodyType 轉換為 contentType
-  ContentType _convertBodyType() {
+  ContentType? _convertBodyType() {
     switch (bodyType) {
       case HttpBodyType.formData:
         return null;
@@ -94,7 +94,6 @@ class HttpContentMixin {
       case HttpBodyType.raw:
         return ContentType.parse(HttpContentType.json.value);
     }
-    return null;
   }
 
   /// 直接設定param, 會替代掉原有的
@@ -115,7 +114,7 @@ class HttpContentMixin {
 
   /// 直接設定 body, 將會清空當前的 body
   /// 重新設置新值
-  void setBody({Map<String, dynamic> keyValue, String raw}) {
+  void setBody({Map<String, dynamic>? keyValue, String? raw}) {
     _keyValueBody.clear();
     _rawBody = '';
     if (keyValue != null) {
@@ -146,10 +145,10 @@ class HttpContentMixin {
   /// 當 [key] 等於 null, [raw] 有值, 則直接加入 raw, 並且
   /// raw 則是直接加入 content
   void addBody({
-    String key,
+    String? key,
     dynamic value,
-    String filename,
-    String filepath,
+    String? filename,
+    String? filepath,
   }) {
     if (key != null && value != null) {
       // 添加鍵值對應
@@ -204,8 +203,8 @@ class HttpContentMixin {
 
   void _addPair(
     String key, {
-    @required dynamic value,
-    @required Map<String, dynamic> target,
+    required dynamic value,
+    required Map<String, dynamic> target,
   }) {
     if (target.containsKey(key)) {
       var oriValue = target[key];
@@ -239,7 +238,7 @@ class HttpContentMixin {
       String realKey = key;
       if (regExp.hasMatch(key)) {
         //代表是個陣列
-        realKey = regExp.firstMatch(key).group(0);
+        realKey = regExp.firstMatch(key)!.group(0)!;
         addQueryParam(realKey, value: [value]);
       } else {
         //代表並非陣列

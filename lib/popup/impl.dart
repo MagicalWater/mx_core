@@ -310,10 +310,10 @@ class Popup {
         return StreamBuilder<Size>(
           stream: childSizeStreamController.stream,
           builder: (context, snapshot) {
-            var widgetOffset = snapshot.hasData && !snapshot.data.isEmpty
+            var widgetOffset = snapshot.hasData && !snapshot.data!.isEmpty
                 ? _getWidgetOffset(
                     alignmentPoint: alignmentPoint,
-                    widgetSize: snapshot.data,
+                    widgetSize: snapshot.data!,
                     maxRect: maxRect,
                     direction: style.direction,
                     arrowLeafPercent: style.arrowTargetPercent,
@@ -368,7 +368,6 @@ class Popup {
 
     popupController.registerRemoveEventCallback(() {
       childSizeStreamController.close();
-      childSizeStreamController = null;
     });
 
     return popupController;
@@ -391,11 +390,11 @@ class Popup {
     FractionalOffset anchor,
   ) {
     if (popupScale == PopupScale.vertical) {
-      return Comb.scaleY(begin: 0.8, alignment: anchor, x: 1);
+      return Comb.scaleY(begin: 0.8, x: 1);
     } else if (popupScale == PopupScale.horizontal) {
-      return Comb.scaleX(begin: 0.8, alignment: anchor, y: 1);
+      return Comb.scaleX(begin: 0.8, y: 1);
     } else {
-      return Comb.scale(begin: Size.square(0.8), alignment: anchor);
+      return Comb.scale(begin: Size.square(0.8));
     }
   }
 
@@ -411,21 +410,21 @@ class Popup {
       case AxisDirection.left:
         return AxisDirection.right;
     }
-    return widgetDirection;
   }
 
   /// 根據方向以及箭頭的指標百分比
   /// 取得 widget 的 Offset
   static _WidgetOffset _getWidgetOffset({
-    Point alignmentPoint,
-    Size widgetSize,
-    Rect maxRect,
-    AxisDirection direction,
-    double arrowLeafPercent,
+    required Point alignmentPoint,
+    required Size widgetSize,
+    required Rect maxRect,
+    required AxisDirection direction,
+    required double arrowLeafPercent,
   }) {
-    _WidgetOffset _widgetOffset = _WidgetOffset();
-    _widgetOffset.offset = Offset.zero;
-    _widgetOffset.arrowLeafPercent = arrowLeafPercent;
+    _WidgetOffset _widgetOffset = _WidgetOffset(
+      offset: Offset.zero,
+      arrowLeafPercent: arrowLeafPercent,
+    );
 
     double dx, dy;
     switch (direction) {
@@ -464,7 +463,7 @@ class Popup {
         }
         break;
       case AxisDirection.right:
-        dx = alignmentPoint.x;
+        dx = alignmentPoint.x.toDouble();
         dy = alignmentPoint.y - (widgetSize.height * arrowLeafPercent);
         if (dy < maxRect.top) {
           // 上方超出邊界, 需要修正
@@ -482,7 +481,7 @@ class Popup {
         break;
       case AxisDirection.down:
         dx = alignmentPoint.x - (widgetSize.width * arrowLeafPercent);
-        dy = alignmentPoint.y;
+        dy = alignmentPoint.y.toDouble();
         if (dx < maxRect.left) {
           // 左邊超出邊界, 需要修正
 //        print("左邊超出邊界, 需要修正");
@@ -515,12 +514,12 @@ class Popup {
           0,
           Screen.statusBarHeight,
           Screen.width,
-          alignmentPoint.y,
+          alignmentPoint.y.toDouble(),
         );
         break;
       case AxisDirection.right:
         maxRect = Rect.fromLTWH(
-          alignmentPoint.x,
+          alignmentPoint.x.toDouble(),
           safeArea ? Screen.statusBarHeight : 0,
           Screen.width - alignmentPoint.x,
           safeArea
@@ -531,7 +530,7 @@ class Popup {
       case AxisDirection.down:
         maxRect = Rect.fromLTWH(
           0,
-          alignmentPoint.y,
+          alignmentPoint.y.toDouble(),
           Screen.width,
           (Screen.contentHeight) - alignmentPoint.y,
         );
@@ -540,7 +539,7 @@ class Popup {
         maxRect = Rect.fromLTWH(
           0,
           safeArea ? Screen.statusBarHeight : 0,
-          alignmentPoint.x,
+          alignmentPoint.x.toDouble(),
           safeArea
               ? Screen.contentHeight
               : Screen.height - Screen.bottomBarHeight,
@@ -553,8 +552,8 @@ class Popup {
 
   /// 取得元件 Rect
   static Rect _getRect(BuildContext context) {
-    RenderBox box = context.findRenderObject();
-    if (box != null && box.semanticBounds != null) {
+    var box = context.findRenderObject() as RenderBox?;
+    if (box != null) {
       var offset = box.localToGlobal(Offset.zero);
       return Rect.fromLTWH(
           offset.dx, offset.dy, box.size.width, box.size.height);
@@ -572,7 +571,10 @@ class _WidgetOffset {
 
   double get dy => offset.dy;
 
-  _WidgetOffset();
+  _WidgetOffset({
+    required this.offset,
+    required this.arrowLeafPercent,
+  });
 
   @override
   String toString() {

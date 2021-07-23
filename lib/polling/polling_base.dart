@@ -8,7 +8,7 @@ abstract class PollingBase {
   Duration interval;
 
   /// 當前的 loop
-  _PollLoop _loop;
+  _PollLoop? _loop;
 
   /// 現在輪詢是否啟動中
   bool get isActive => _loop?.isLooping ?? false;
@@ -28,7 +28,7 @@ abstract class PollingBase {
   void start([bool immediately = false]) {
     end();
     _loop = _PollLoop(interval: () => interval, onPoll: onPolling);
-    _loop.start(immediately);
+    _loop?.start(immediately);
   }
 
   /// 停止輪詢
@@ -47,7 +47,7 @@ class _PollLoop {
   Duration Function() interval;
   Future<void> Function() onPoll;
 
-  _PollLoop({this.interval, this.onPoll});
+  _PollLoop({required this.interval, required this.onPoll});
 
   /// 輪詢是否啟動中
   bool isLooping = false;

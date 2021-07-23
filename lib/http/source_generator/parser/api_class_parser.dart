@@ -23,9 +23,9 @@ class ApiClassParser extends ApiParser {
 
   @override
   codeBuilder.Class generateApiClass({
-    String interfaceName,
-    String className,
-    List<codeBuilder.Method> methods,
+    required String interfaceName,
+    required String className,
+    required List<codeBuilder.Method> methods,
   }) {
     return codeBuilder.Class((c) {
       c
@@ -60,14 +60,14 @@ class ApiClassParser extends ApiParser {
     // 取得以及設置初始化參數
     // 取得 meta data 使用的類型
     var method = toApiMethod(methodAnnotation);
-    var path = methodAnnotation.peek('path').stringValue;
+    var path = methodAnnotation.peek('path')!.stringValue;
     var scheme = methodAnnotation.peek('scheme')?.stringValue;
     var host = methodAnnotation.peek('host')?.stringValue;
     var port = methodAnnotation.peek('port')?.intValue;
     var contentType = methodAnnotation
         .peek('contentType')
         ?.objectValue
-        ?.getField('_value')
+        .getField('_value')
         ?.toStringValue();
 
     contentBuilder.settingInit(
@@ -80,7 +80,7 @@ class ApiClassParser extends ApiParser {
     );
 
     // 解析取得 bodyType
-    HttpBodyType bodyType;
+    HttpBodyType? bodyType;
     var bodyTypePeek = methodAnnotation.peek('bodyType');
     if (bodyTypePeek != null) {
       var dartObj = bodyTypePeek.objectValue;
@@ -101,8 +101,11 @@ class ApiClassParser extends ApiParser {
         bodyType = HttpBodyType.raw;
       }
 
+      // 實際上可以設置的為enum
+      // 因此在經過上方的if else判斷後, bodyType 必定有值
+
       // 將 bodyType 設置到 builder
-      contentBuilder.setBodyType(bodyType);
+      contentBuilder.setBodyType(bodyType!);
     }
 
     // 常數 header
@@ -114,19 +117,19 @@ class ApiClassParser extends ApiParser {
 
     // 解析常數參數 (header/body/queryparam)
     (methodAnnotation.peek('headers')?.mapValue ?? {}).forEach((k, v) {
-      constantHeader[k.toStringValue()] = v.toStringValue();
+      constantHeader[k!.toStringValue()!] = v!.toStringValue()!;
     });
     (methodAnnotation.peek('queryParams')?.mapValue ?? {}).forEach((k, v) {
-      constantQueryParam[k.toStringValue()] = v.toStringValue();
+      constantQueryParam[k!.toStringValue()!] = v!.toStringValue()!;
     });
 
     var bodyPeek = methodAnnotation.peek('body');
     if (bodyPeek?.isString == true) {
-      constantBody = bodyPeek.stringValue;
+      constantBody = bodyPeek!.stringValue;
     } else if (bodyPeek?.isMap == true) {
       constantBody = Map<String, String>();
-      (bodyPeek.mapValue ?? {}).forEach((k, v) {
-        constantBody[k.toStringValue()] = v.toStringValue();
+      (bodyPeek!.mapValue).forEach((k, v) {
+        constantBody[k!.toStringValue()] = v!.toStringValue();
       });
     }
 
@@ -183,22 +186,23 @@ class ApiClassParser extends ApiParser {
             .map((f) => codeBuilder.CodeExpression(codeBuilder.Code(f)))
             .toList();
 
-        return p
+        p
           ..annotations.addAll(paramAnnotationCode)
-          ..type = codeBuilder.refer(e.type.displayName)
+          ..type =
+              codeBuilder.refer(e.type.getDisplayString(withNullability: true))
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null
               ? null
-              : codeBuilder.Code(e.defaultValueCode);
+              : codeBuilder.Code(e.defaultValueCode!);
       });
     }).toList();
   }
 
   /// 添加常數參數到 [v]
   void _addConstantQueryParam(
-      {HttpContentBuilder builder, Map<String, String> queryParams}) {
-    if (queryParams == null) return;
+      {required HttpContentBuilder builder, Map<String, String>? queryParams}) {
+    if (queryParams == null || queryParams.isEmpty) return;
     queryParams.forEach((k, v) {
       builder.addQueryParam(
         key: k,
@@ -210,8 +214,8 @@ class ApiClassParser extends ApiParser {
 
   /// 添加常數header到 [builder]
   void _addConstantHeader(
-      {HttpContentBuilder builder, Map<String, String> headers}) {
-    if (headers == null) return;
+      {required HttpContentBuilder builder, Map<String, String>? headers}) {
+    if (headers == null || headers.isEmpty) return;
     headers.forEach((k, v) {
       builder.addHeader(
         key: k,
@@ -222,7 +226,7 @@ class ApiClassParser extends ApiParser {
   }
 
   /// 添加常數body到 [builder]
-  void _addConstantBody({HttpContentBuilder builder, dynamic body}) {
+  void _addConstantBody({required HttpContentBuilder builder, dynamic body}) {
     if (body == null) return;
     if (body is Map<String, String>) {
       body.forEach((k, v) {
@@ -233,16 +237,17 @@ class ApiClassParser extends ApiParser {
         );
       });
     } else if (body is String) {
+      // 是 raw string
       builder.addBody(constantValue: body, fieldType: ApiFieldType.string);
     }
   }
 
   /// 添加參數設定到 [HttpContentBuilder]
   void _addParamToContentBuilder({
-    HttpContentBuilder builder,
-    String urlPath,
-    List<ParameterElement> params,
-    bool isRequired,
+    required HttpContentBuilder builder,
+    String? urlPath,
+    required List<ParameterElement> params,
+    required bool isRequired,
   }) {
     // 遍歷所有的參數, 依據參數的類型, 加入到對應的 Builder
     params.forEach((e) {
@@ -260,7 +265,7 @@ class ApiClassParser extends ApiParser {
 
       switch (paramType) {
         case ApiParamType.queryParam:
-          var key = paramAnnotation.peek('name')?.stringValue;
+          var key = paramAnnotation.peek('name')!.stringValue;
           builder.addQueryParam(
             required: isRequired,
             key: key,
@@ -269,7 +274,7 @@ class ApiClassParser extends ApiParser {
           );
           break;
         case ApiParamType.header:
-          var key = paramAnnotation.peek('name')?.stringValue;
+          var key = paramAnnotation.peek('name')!.stringValue;
           builder.addHeader(
             required: isRequired,
             key: key,
@@ -280,9 +285,9 @@ class ApiClassParser extends ApiParser {
         case ApiParamType.path:
           // path 不能放在可選
           if (isRequired) {
-            var key = paramAnnotation.peek('name').stringValue;
+            var key = paramAnnotation.peek('name')!.stringValue;
             // 將路徑裡面的 {variable} 做替換
-            urlPath = urlPath.replaceAll("{$key}", "\$$fieldName");
+            urlPath = urlPath!.replaceAll("{$key}", "\$$fieldName");
             builder.settingInit(path: urlPath);
           }
           break;

@@ -61,8 +61,8 @@ abstract class ApiParser {
 
   @protected
   codeBuilder.Class generateApiClass({
-    String interfaceName,
-    String className,
-    List<codeBuilder.Method> methods,
+    required String interfaceName,
+    required String className,
+    required List<codeBuilder.Method> methods,
   });
 }

@@ -3,20 +3,20 @@ import 'builder.dart';
 
 /// Http 初始化構建類
 class InitBuilder implements Builder {
-  String path;
-  ApiMethodType method;
-  String contentType;
-  String scheme;
-  String host;
-  int port;
+  late String path;
+  late ApiMethodType method;
+  late String contentType;
+  late String scheme;
+  late String host;
+  late int port;
 
   void setting({
-    String path,
-    ApiMethodType method,
-    String contentType,
-    String scheme,
-    String host,
-    int port,
+    String? path,
+    ApiMethodType? method,
+    String? contentType,
+    String? scheme,
+    String? host,
+    int? port,
   }) {
     this.path = path ?? this.path;
     this.method = method ?? this.method;

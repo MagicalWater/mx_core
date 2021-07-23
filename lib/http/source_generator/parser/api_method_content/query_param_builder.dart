@@ -4,9 +4,12 @@ import 'param_content_builder.dart';
 /// QueryParam 的構建類
 class QueryParamBuilder extends ParamContentBuilder<QueryParamContent> {
   @override
-  QueryParamContent getContent(
-      {String key, String fieldName, ApiFieldType fieldType}) {
-    return QueryParamContent.keyValue(key, fieldName, fieldType);
+  QueryParamContent getContent({
+    String? key,
+    required String fieldName,
+    required ApiFieldType fieldType,
+  }) {
+    return QueryParamContent.keyValue(key!, fieldName, fieldType);
   }
 
   @override
@@ -60,7 +63,7 @@ class QueryParamBuilder extends ParamContentBuilder<QueryParamContent> {
       case ApiFieldType.file:
       // query param 不能添加檔案, 所以不處理, 也不會進到此處
       case ApiFieldType.listFileInfo:
-      // query param 不能添加檔案, 所以不處理, 也不會進到此處
+        // query param 不能添加檔案, 所以不處理, 也不會進到此處
         break;
     }
 

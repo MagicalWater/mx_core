@@ -45,29 +45,23 @@ class HttpContent with HttpContentMixin {
     this.path,
     this.method, {
     this.saveInPath,
-    int port,
-    ContentType contentType,
-  })  : assert(scheme != null),
-        assert(host != null),
-        assert(path != null),
-        assert(method != null) {
+    int? port,
+    ContentType? contentType,
+  }) {
     this.setContentType(contentType);
     this.port = port;
   }
 
-  HttpContent({
-    String scheme,
-    String host,
-    String path,
+  factory HttpContent({
+    required String scheme,
+    required String host,
+    required String path,
     HttpMethod method = HttpMethod.get,
-    String saveInPath,
-    int port,
-    ContentType contentType,
-  })  : assert(scheme != null),
-        assert(host != null),
-        assert(path != null),
-        assert(method != null) {
-    HttpContent.comb(
+    String? saveInPath,
+    int? port,
+    ContentType? contentType,
+  }) {
+    return HttpContent.comb(
       scheme,
       host,
       path,
@@ -80,7 +74,7 @@ class HttpContent with HttpContentMixin {
 
   /// 使用此 http_content 發起 request
   /// [onReceiveProgress] 為下載進度監聽, 只在 [method] 為 [HttpMethod.download] 時有效
-  Stream<ServerResponse> connect({ProgressCallback onReceiveProgress}) =>
+  Stream<ServerResponse> connect({ProgressCallback? onReceiveProgress}) =>
       HttpUtil().connect(
         this,
         onReceiveProgress: onReceiveProgress,

@@ -7,17 +7,18 @@ import 'parser.dart';
 
 /// 產出 api 類
 class ClientMixinClassParser extends ApiParser {
-  CodeGenerator apiClassCoder;
+  late CodeGenerator apiClassCoder;
 
   void setApiClassCoder(CodeGenerator generator) {
     this.apiClassCoder = generator;
   }
 
   @override
-  codeBuilder.Class generateApiClass(
-      {String interfaceName,
-      String className,
-      List<codeBuilder.Method> methods}) {
+  codeBuilder.Class generateApiClass({
+    required String interfaceName,
+    required String className,
+    required List<codeBuilder.Method> methods,
+  }) {
     // class 要放入一個變數
     // 變數類型是 api_class_parser 的 class 名稱
     return codeBuilder.Class((c) {
@@ -27,7 +28,7 @@ class ClientMixinClassParser extends ApiParser {
         ..methods.addAll(methods)
         ..fields = ListBuilder([
           codeBuilder.Field((b) {
-            return b
+            b
               ..type = codeBuilder.refer(apiClassCoder.codeClass.name)
               ..name = _getApiInstanceName();
           }),
@@ -94,14 +95,14 @@ class ClientMixinClassParser extends ApiParser {
             .map((f) => codeBuilder.CodeExpression(codeBuilder.Code(f)))
             .toList();
 
-        return p
+        p
           ..annotations.addAll(paramAnnotationCode)
-          ..type = codeBuilder.refer(e.type.displayName)
+          ..type = codeBuilder.refer(e.type.getDisplayString(withNullability: true))
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null
               ? null
-              : codeBuilder.Code(e.defaultValueCode);
+              : codeBuilder.Code(e.defaultValueCode!);
       });
     }).toList();
   }

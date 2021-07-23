@@ -18,12 +18,12 @@ class HttpContentBuilder implements Builder {
 
   /// 設定初始化屬性
   void settingInit({
-    String path,
-    ApiMethodType method,
-    String contentType,
-    String scheme,
-    String host,
-    int port,
+    String? path,
+    ApiMethodType? method,
+    String? contentType,
+    String? scheme,
+    String? host,
+    int? port,
   }) {
     init.setting(
       path: path,
@@ -42,14 +42,14 @@ class HttpContentBuilder implements Builder {
 
   /// 添加 body
   void addBody({
-    bool required,
-    String key,
-    String fieldName,
-    String constantValue,
-    ApiFieldType fieldType,
+    bool? required,
+    String? key,
+    String? fieldName,
+    String? constantValue,
+    required ApiFieldType fieldType,
   }) {
     if (fieldName != null) {
-      if (required) {
+      if (required!) {
         body.addRequired(key: key, fieldName: fieldName, fieldType: fieldType);
       } else {
         body.addOptional(key: key, fieldName: fieldName, fieldType: fieldType);
@@ -67,14 +67,14 @@ class HttpContentBuilder implements Builder {
 
   /// 添加 header
   void addHeader({
-    bool required,
-    String key,
-    String fieldName,
-    String constantValue,
-    ApiFieldType fieldType,
+    bool? required,
+    required String key,
+    String? fieldName,
+    String? constantValue,
+    required ApiFieldType fieldType,
   }) {
     if (fieldName != null) {
-      if (required) {
+      if (required!) {
         header.addRequired(
             key: key, fieldName: fieldName, fieldType: fieldType);
       } else {
@@ -93,14 +93,14 @@ class HttpContentBuilder implements Builder {
 
   /// 添加 query param
   void addQueryParam({
-    bool required,
-    String key,
-    String fieldName,
-    String constantValue,
-    ApiFieldType fieldType,
+    bool? required,
+    required String key,
+    String? fieldName,
+    String? constantValue,
+    required ApiFieldType fieldType,
   }) {
     if (fieldName != null) {
-      if (required) {
+      if (required!) {
         queryParam.addRequired(
             key: key, fieldName: fieldName, fieldType: fieldType);
       } else {
@@ -126,10 +126,10 @@ class HttpContentBuilder implements Builder {
 
   @override
   String build() {
-    var initText = init.build() ?? '';
-    var bodyText = body.build() ?? '';
-    var headerText = header.build() ?? '';
-    var queryParamText = queryParam.build() ?? '';
+    var initText = init.build();
+    var bodyText = body.build();
+    var headerText = header.build();
+    var queryParamText = queryParam.build();
     return """
     $initText
     $bodyText

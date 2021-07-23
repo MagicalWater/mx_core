@@ -4,11 +4,14 @@ import 'param_content_builder.dart';
 
 /// Body 的構建類
 class BodyBuilder extends ParamContentBuilder<BodyContent> {
-  HttpBodyType bodyType;
+  late HttpBodyType bodyType;
 
   @override
-  BodyContent getContent(
-      {String key, String fieldName, ApiFieldType fieldType}) {
+  BodyContent getContent({
+    String? key,
+    required String fieldName,
+    required ApiFieldType fieldType,
+  }) {
     return BodyContent.keyValue(key, fieldName, fieldType);
   }
 
@@ -78,7 +81,7 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
           """;
           break;
         case ApiFieldType.listFileInfo:
-        // body 目前不支持添加陣列檔案
+          // body 目前不支持添加陣列檔案
 //          text += """
 //          $field.forEach((e) => content.addBody(${keyText}filename: \"\${e.filename}\", filepath: \"\${e.filepath}\",));
 //          """;
@@ -102,10 +105,11 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
 }
 
 class BodyContent {
-  String key;
+  String? key;
   String fieldName;
-  String filename;
-  String filepath;
+
+  // String filename;
+  // String filepath;
 
   ApiFieldType fieldType;
 

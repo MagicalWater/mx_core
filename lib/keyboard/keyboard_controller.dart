@@ -5,7 +5,7 @@ import 'package:mx_core/keyboard/keyboard_intercept.dart';
 class KeyboardController extends TextEditingController {
   KeyboardClient client;
 
-  KeyboardController({String text, this.client}) : super(text: text);
+  KeyboardController({String? text, required this.client}) : super(text: text);
 
   /// 在光標位置加入文字
   void addText(String insertText) {

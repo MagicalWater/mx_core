@@ -7,7 +7,7 @@ class _PopupLayout extends ModalRoute {
   final Widget child;
 
   _PopupLayout({
-    @required this.child,
+    required this.child,
   });
 
   /// 背景顏色
@@ -20,7 +20,7 @@ class _PopupLayout extends ModalRoute {
 
   /// 尚不明白這個是什麼
   @override
-  String get barrierLabel => null;
+  String? get barrierLabel => null;
 
   /// 當此 route(浮出視窗處於非活動狀態時, 是否需要保留在內存中)
   @override

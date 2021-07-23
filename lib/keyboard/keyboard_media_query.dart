@@ -6,7 +6,7 @@ import 'package:mx_core/keyboard/keyboard_intercept.dart';
 class KeyboardMediaQuery extends StatefulWidget {
   final Widget child;
 
-  KeyboardMediaQuery({@required this.child});
+  KeyboardMediaQuery({required this.child});
 
   @override
   KeyboardMediaQueryState createState() => KeyboardMediaQueryState();
@@ -61,7 +61,7 @@ class KeyboardMediaQueryState extends State<KeyboardMediaQuery> {
 
   /// 鍵盤狀態改變後呼叫 widget 進行刷新
   void update() {
-    WidgetsBinding.instance
+    WidgetsBinding.instance!
         .addPostFrameCallback((Duration _) => setState(() {}));
   }
 }

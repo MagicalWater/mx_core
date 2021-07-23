@@ -6,8 +6,8 @@ import 'http_value.dart';
 
 ///HttpContent產生器, 主要在於可以設置預設header/param
 class HttpContentGenerator with HttpContentMixin {
-  String defaultHost;
-  String defaultScheme;
+  String? defaultHost;
+  String? defaultScheme;
 
   @override
   void clear() {
@@ -18,15 +18,23 @@ class HttpContentGenerator with HttpContentMixin {
 
   HttpContent generate(
     String path, {
-    String host,
-    String scheme,
+    String? host,
+    String? scheme,
     HttpMethod method = HttpMethod.get,
-    int port,
-    ContentType contentType,
+    int? port,
+    ContentType? contentType,
   }) {
+    var usedScheme = scheme ?? defaultScheme;
+    var usedHost = host ?? defaultHost;
+    if (usedScheme == null) {
+      throw '錯誤: scheme 必須設定';
+    }
+    if (usedHost == null) {
+      throw '錯誤: host 必須設定';
+    }
     var content = HttpContent.comb(
-      scheme ?? defaultScheme,
-      host ?? defaultHost,
+      usedScheme,
+      usedHost,
       path,
       method,
       port: port ?? this.port,

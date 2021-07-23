@@ -60,7 +60,7 @@ class KeyboardIntercept {
   Map<KeyboardInputType, KeyboardConfig> _keyboardConfigMap = {};
 
   /// 當前正在顯示的 keyboard config
-  KeyboardConfig _currentKeyboardConfig;
+  KeyboardConfig? _currentKeyboardConfig;
 
   /// 鍵盤是否即將顯示
   /// 原本是用 [_currentKeyboardConfig] 判斷
@@ -77,17 +77,17 @@ class KeyboardIntercept {
 //  double get currentKeyboardHeight => 0;
 
   /// 當前正在顯示的 keyboard controller
-  KeyboardController _currentKeyboardController;
+  KeyboardController? _currentKeyboardController;
 
   /// 當前顯示的 overlay, 自定鍵盤都是以overlay的方式顯示
-  OverlayEntry _currentKeyboardOverlayEntry;
+  OverlayEntry? _currentKeyboardOverlayEntry;
 
   /// 當前顯示鍵盤的外層佈局 PageWidget 的 global key, 方便獲取 state 進行事件處理
   /// 目前用在鍵盤隱藏的動畫事件
-  static GlobalKey<KeyboardPageState> _currentPageGlobalKey;
+  static GlobalKey<KeyboardPageState>? _currentPageGlobalKey;
 
   /// 當前綁定自定義鍵盤的 context
-  BuildContext _currentContext;
+  BuildContext? _currentContext;
 
   /// 當前針對需要顯示鍵盤的消息傳遞
   /// 是否需要攔截
@@ -108,8 +108,8 @@ class KeyboardIntercept {
   /// 先攔截本地傳遞鍵盤消息的事件
   void _intercept() {
     print("啟動鍵盤攔截");
-    ServicesBinding.instance.defaultBinaryMessenger
-        .setMockMessageHandler('flutter/textinput', (ByteData data) async {
+    ServicesBinding.instance!.defaultBinaryMessenger
+        .setMockMessageHandler('flutter/textinput', (ByteData? data) async {
       print("接收到事件");
       // 將 data 轉為 methodCall 獲得事件名稱
       var methodCall = _codec.decodeMethodCall(data);
@@ -136,8 +136,8 @@ class KeyboardIntercept {
           var editingState = TextEditingValue.fromJSON(methodCall.arguments);
           // 若再經過參數解析後不為null, 並且 [_currentKeyboardController] 不為 null
           // 代表當前自定義鍵盤正在顯示, 因此直接設置值到 [_currentKeyboardController]
-          if (editingState != null && _currentKeyboardController != null) {
-            _currentKeyboardController.value = editingState;
+          if (_currentKeyboardController != null) {
+            _currentKeyboardController!.value = editingState;
             return _codec.encodeSuccessEnvelope(null);
           }
           break;
@@ -148,7 +148,7 @@ class KeyboardIntercept {
           // 先從 methodCall 取出鍵盤類型
           // methodCall 的參數都是 Map, 具體參數可參考 assets/jsons/keyboard/set_client.json
           var inputTypeArg = methodCall.arguments[1]['inputType'];
-          KeyboardConfig config = _findKeyboardConfig(inputTypeArg);
+          KeyboardConfig? config = _findKeyboardConfig(inputTypeArg);
           if (config != null) {
             print("找到設定檔, 清除當前鍵盤重新綁定");
             // 代表有找到鍵盤類型對應的設定檔
@@ -209,7 +209,7 @@ class KeyboardIntercept {
     // 因此不需要再顯示, 但需要通知當前的 [_currentKeyboardOverlayEntry] 重建
     // 才可以重新綁定 keyboardController
     if (_currentKeyboardOverlayEntry != null) {
-      _currentKeyboardOverlayEntry.markNeedsBuild();
+      _currentKeyboardOverlayEntry!.markNeedsBuild();
       return;
     }
 
@@ -223,7 +223,7 @@ class KeyboardIntercept {
     // 如果有找到外層的話
     try {
       var queryState =
-          _currentContext.findAncestorStateOfType<KeyboardMediaQueryState>();
+          _currentContext!.findAncestorStateOfType<KeyboardMediaQueryState>();
       if (queryState != null && queryState is KeyboardMediaQueryState) {
         queryState.update();
       }
@@ -244,18 +244,18 @@ class KeyboardIntercept {
 
       return KeyboardPage(
         key: tempKey,
-        child: _currentKeyboardConfig.builder(
+        child: _currentKeyboardConfig!.builder(
           context,
-          _currentKeyboardController,
+          _currentKeyboardController!,
         ),
-        height: _currentKeyboardConfig.height,
+        height: _currentKeyboardConfig!.height,
       );
     });
 
     print("使用 overlay 顯示 keyboard");
 
     // 顯示 overlay entry
-    Overlay.of(_currentContext).insert(_currentKeyboardOverlayEntry);
+    Overlay.of(_currentContext!)!.insert(_currentKeyboardOverlayEntry!);
 
     // 因為顯示自訂鍵盤, 因此需要處理 android 的返回按鈕事件
     // zIndex 則是消費的先後順序(具體規則看 lib 文件)
@@ -286,7 +286,7 @@ class KeyboardIntercept {
     void removeKeyboardEntry() {
       print("執行移除");
       if (_currentKeyboardOverlayEntry != null) {
-        _currentKeyboardOverlayEntry.remove();
+        _currentKeyboardOverlayEntry!.remove();
         _currentKeyboardOverlayEntry = null;
       }
       // 移除 [_currentPageGlobalKey]
@@ -304,7 +304,7 @@ class KeyboardIntercept {
       // 往 animationController 註冊 鍵盤狀態監聽
       // 當狀態為 completed / dismissed 時, 移除keyboard的overlay相關的物件
 
-      final pageState = _currentPageGlobalKey.currentState;
+      final pageState = _currentPageGlobalKey!.currentState!;
       pageState.animationController.addStatusListener((AnimationStatus status) {
         if (status == AnimationStatus.dismissed ||
             status == AnimationStatus.completed) {
@@ -327,7 +327,7 @@ class KeyboardIntercept {
       // 呼叫包裹在鍵盤元件外層的 Widget 通知刷新
       try {
         var queryState =
-            _currentContext.findAncestorStateOfType<KeyboardMediaQueryState>();
+            _currentContext!.findAncestorStateOfType<KeyboardMediaQueryState>();
         if (queryState != null && queryState is KeyboardMediaQueryState) {
           queryState.update();
         }
@@ -348,10 +348,10 @@ class KeyboardIntercept {
   void _customKeyboardControllerListener() {
     // 監聽 keyboard controller 文字的變更, 再發送文字變更通知使元件收到通知
     var callbackMethodCall = MethodCall("TextInputClient.updateEditingState", [
-      _currentKeyboardController.client.connectionId,
-      _currentKeyboardController.value.toJSON()
+      _currentKeyboardController!.client.connectionId,
+      _currentKeyboardController!.value.toJSON()
     ]);
-    ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+    ServicesBinding.instance!.defaultBinaryMessenger.handlePlatformMessage(
       "flutter/textinput",
       _codec.encodeMethodCall(callbackMethodCall),
       (data) {},
@@ -362,17 +362,17 @@ class KeyboardIntercept {
   void _clearCurrentKeyboard() {
     _currentKeyboardConfig = null;
     if (_currentKeyboardController != null) {
-      _currentKeyboardController
+      _currentKeyboardController!
           .removeListener(_customKeyboardControllerListener);
-      _currentKeyboardController.dispose();
+      _currentKeyboardController!.dispose();
       _currentKeyboardController = null;
     }
   }
 
   /// 從 [_keyboardConfigMap] 尋找對應keyboard的config
   /// 找不到則返回 null
-  KeyboardConfig _findKeyboardConfig(dynamic inputTypeArg) {
-    KeyboardConfig config;
+  KeyboardConfig? _findKeyboardConfig(dynamic inputTypeArg) {
+    KeyboardConfig? config;
     _keyboardConfigMap.forEach((inputType, keyboardConfig) {
       if (inputType.name == inputTypeArg['name']) {
         config = keyboardConfig;
@@ -383,9 +383,9 @@ class KeyboardIntercept {
 
   /// 傳送消息到本地
   /// 直接複製於 [_DefaultBinaryMessenger._sendPlatformMessage]
-  Future<ByteData> _sendPlatformMessage(String channel, ByteData message) {
+  Future<ByteData> _sendPlatformMessage(String channel, ByteData? message) {
     final Completer<ByteData> completer = Completer<ByteData>();
-    window.sendPlatformMessage(channel, message, (ByteData reply) {
+    window.sendPlatformMessage(channel, message, (ByteData? reply) {
       try {
         completer.complete(reply);
       } catch (exception, stack) {
@@ -405,8 +405,8 @@ class KeyboardIntercept {
   /// 最後再由 [_intercept] 此處調用對應的動作
   void sendPerformAction(TextInputAction action) {
     var callbackMethodCall = MethodCall("TextInputClient.performAction",
-        [_currentKeyboardController.client.connectionId, action.toString()]);
-    ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+        [_currentKeyboardController!.client.connectionId, action.toString()]);
+    ServicesBinding.instance!.defaultBinaryMessenger.handlePlatformMessage(
       "flutter/textinput",
       _codec.encodeMethodCall(callbackMethodCall),
       (data) {},
@@ -422,8 +422,11 @@ class KeyboardIntercept {
 class KeyboardInputType extends TextInputType {
   final String name;
 
-  const KeyboardInputType({this.name, bool signed, bool decimal})
-      : super.numberWithOptions(signed: signed, decimal: decimal);
+  const KeyboardInputType({
+    required this.name,
+    bool signed = false,
+    bool decimal = false,
+  }) : super.numberWithOptions(signed: signed, decimal: decimal);
 
   @override
   Map<String, dynamic> toJson() {
@@ -448,7 +451,7 @@ class KeyboardConfig {
   final double height;
   final KeyboardBuilder builder;
 
-  KeyboardConfig({this.builder, this.height});
+  KeyboardConfig({required this.builder, required this.height});
 }
 
 class KeyboardMessageMethod {

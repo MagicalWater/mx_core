@@ -4,7 +4,6 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:meta/meta.dart';
 import 'package:mx_core/util/file_util.dart';
 import 'package:path/path.dart';
 import 'package:rxdart/rxdart.dart';
@@ -34,21 +33,21 @@ class HttpUtil {
   }
 
   /// 設置代理
-  String _proxyIp;
-  int _proxyPort;
+  String? _proxyIp;
+  int? _proxyPort;
 
   /// 設置的證書信任
-  bool Function(X509Certificate cert, String host, int port)
+  bool Function(X509Certificate cert, String host, int port)?
       _badCertificateCallback;
 
   /// 第三方lib
   final Dio _dio = Dio();
 
   /// cookie 管理器
-  CookieManager _cookieManager;
+  late CookieManager _cookieManager;
 
   /// 取得 response 後, 將呼叫此方法將變數存入本地
-  Future<void> Function(ServerResponse response) recordResponseCallback;
+  Future<void> Function(ServerResponse response)? recordResponseCallback;
 
   /// 連線 timeout 時間
   int get connectTimeout => _dio.options.connectTimeout;
@@ -78,12 +77,12 @@ class HttpUtil {
     var nameNoExtension = basenameWithoutExtension(name);
     segments.add("$nameNoExtension.txt");
     var fullPath = joinAll(segments);
-    return FileUtil.write(name: fullPath, content: response.getString());
+    return FileUtil.write(name: fullPath, content: response.getString() ?? '');
   }
 
   /// 同步 httpClient 設定(代理/證書信任)
   void _syncHttpClientAdapter() {
-    if ((_proxyIp == null || _proxyIp.isNotEmpty) &&
+    if ((_proxyIp == null || _proxyIp!.isNotEmpty) &&
         _proxyPort == null &&
         _badCertificateCallback == null) {
       // 不需要設置代理, 也不需要設置證書信任
@@ -93,9 +92,9 @@ class HttpUtil {
       // 需要設置代理或者證書信任
       (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
-        if (_proxyIp != null && _proxyIp.isNotEmpty && _proxyPort != null) {
+        if (_proxyIp != null && _proxyIp!.isNotEmpty && _proxyPort != null) {
           client.findProxy = (uri) {
-            return "PROXY ${_proxyIp.trim()}:$_proxyPort";
+            return "PROXY ${_proxyIp!.trim()}:$_proxyPort";
           };
         }
         if (_badCertificateCallback != null) {
@@ -131,7 +130,7 @@ class HttpUtil {
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
-    ContentType contentType,
+    ContentType? contentType,
   }) {
     print("[GET請求]: $url, query: $queryParams");
     Future<Response<dynamic>> request = _dio.get(
@@ -150,7 +149,7 @@ class HttpUtil {
   Stream<ServerResponse> getUri(
     Uri uri, {
     Map<String, dynamic> headers = const {},
-    ContentType contentType,
+    ContentType? contentType,
   }) {
     print("[GET請求]: $uri");
     Future<Response<dynamic>> request = _dio.getUri(
@@ -173,7 +172,7 @@ class HttpUtil {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
     dynamic bodyData,
-    ContentType contentType,
+    ContentType? contentType,
   }) {
     print("[POST請求]: $url, body: $bodyData");
     Future<Response<dynamic>> request = _dio.post(
@@ -196,7 +195,7 @@ class HttpUtil {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
     dynamic bodyData,
-    ContentType contentType,
+    ContentType? contentType,
   }) {
     print("[PUT請求]: $url, body: $bodyData");
 
@@ -220,7 +219,7 @@ class HttpUtil {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
     dynamic bodyData,
-    ContentType contentType,
+    ContentType? contentType,
   }) {
     print("[DELETE請求]: $url, body: $bodyData");
     Future<Response<dynamic>> request = _dio.delete(
@@ -240,12 +239,12 @@ class HttpUtil {
 
   Stream<ServerResponse> download(
     String url, {
-    @required String savePath,
+    required String savePath,
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
     dynamic bodyData,
-    ContentType contentType,
-    ProgressCallback onReceiveProgress,
+    ContentType? contentType,
+    ProgressCallback? onReceiveProgress,
   }) {
     Future<Response<dynamic>> request = _dio.download(
       url,
@@ -266,9 +265,9 @@ class HttpUtil {
 
   /// 將 request 外層包裹 Observable, 並處理相關錯誤
   Stream<ServerResponse> _packageRequest({
-    Future<Response<dynamic>> request,
-    String url,
-    String savePath,
+    required Future<Response<dynamic>> request,
+    required String url,
+    String? savePath,
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
     dynamic bodyData,
@@ -291,10 +290,9 @@ class HttpUtil {
 
     // 檢查是否需要將 response 紀錄到本地
     if (recordResponseCallback != null) {
-      observable =
-          observable.doOnData((response) {
-            recordResponseCallback(response);
-          });
+      observable = observable.doOnData((response) {
+        recordResponseCallback!(response);
+      });
     }
     return observable;
   }
@@ -302,7 +300,7 @@ class HttpUtil {
   /// 使用 HttpContent 進行 request 呼叫
   Stream<ServerResponse> connect(
     HttpContent content, {
-    ProgressCallback onReceiveProgress,
+    ProgressCallback? onReceiveProgress,
   }) {
     switch (content.method) {
       case HttpMethod.get:
@@ -342,7 +340,7 @@ class HttpUtil {
         var bodyData = _convertBodyData(content.bodyData, content.bodyType);
         return download(
           content.url,
-          savePath: content.saveInPath,
+          savePath: content.saveInPath!,
           queryParams: content.queryParams,
           headers: content.headers,
           bodyData: bodyData,
@@ -360,7 +358,7 @@ class HttpUtil {
   }
 
   /// 將 HttpContent 的 body 做轉換
-  dynamic _convertBodyData(dynamic bodyData, HttpBodyType bodyType) {
+  dynamic _convertBodyData(dynamic bodyData, HttpBodyType? bodyType) {
     if (bodyType != null && bodyData != null) {
       switch (bodyType) {
         case HttpBodyType.formData:
@@ -446,11 +444,11 @@ class HttpUtil {
 
 class HttpError extends Error implements Exception {
   HttpError({
-    this.request,
-    this.response,
-    this.message,
+    required this.request,
+    required this.response,
+    // required this.message,
     this.type = HttpErrorType.other,
-    this.error,
+    required this.error,
     this.stackTrace,
   });
 
@@ -458,10 +456,10 @@ class HttpError extends Error implements Exception {
   RequestOptions request;
 
   /// 當無法到達 host 時, response.response 有可能為 null
-  ServerResponse response;
+  ServerResponse? response;
 
   /// Error 訊息
-  String message;
+  // String message;
 
   HttpErrorType type;
 
@@ -471,13 +469,13 @@ class HttpError extends Error implements Exception {
 
   @override
   String toString() =>
-      "錯誤: 請求異常 [${response?.response?.statusCode ?? type.toString()}]: ${request?.queryParameters}";
+      "錯誤: 請求異常 [${response?.response?.statusCode ?? type.toString()}]: ${request.queryParameters}";
 
   /// 將錯誤類型轉換為真正顯示的字串
 
   /// Error 堆疊
   @override
-  StackTrace stackTrace;
+  StackTrace? stackTrace;
 }
 
 /// 直接從 dio 轉為自己的錯誤訊息

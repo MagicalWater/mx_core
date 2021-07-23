@@ -3,11 +3,14 @@ import 'param_content_builder.dart';
 
 /// Header 的構建類
 class HeaderBuilder extends ParamContentBuilder<HeaderContent> {
-
   @override
-  HeaderContent getContent(
-      {String key, String fieldName, ApiFieldType fieldType}) {
-    return HeaderContent.keyValue(key, fieldName, fieldType);
+  HeaderContent getContent({
+    String? key,
+    required String fieldName,
+    required ApiFieldType fieldType,
+  }) {
+    // header的key必定要有key值
+    return HeaderContent.keyValue(key!, fieldName, fieldType);
   }
 
   @override
@@ -61,7 +64,7 @@ class HeaderBuilder extends ParamContentBuilder<HeaderContent> {
       case ApiFieldType.file:
       // header 不能添加檔案, 所以不處理, 也不會進到此處
       case ApiFieldType.listFileInfo:
-      // header 不能添加檔案, 所以不處理, 也不會進到此處
+        // header 不能添加檔案, 所以不處理, 也不會進到此處
         break;
     }
 
