@@ -2,16 +2,11 @@ import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 
 class CodeGenerator {
-  /// 最後需要套用到的 code 生成的 method 列表
-  // List<Method>? _codeMethodList;
-
   Class? _codeClass;
 
   Library? _codeLibrary;
 
-  // void setMethod(List<Method> value) {
-  //   this._codeMethodList = value;
-  // }
+  Class? get codeClass => _codeClass;
 
   void setClass(Class value) {
     _codeClass = value;

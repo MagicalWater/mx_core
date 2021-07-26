@@ -25,10 +25,10 @@ class ApiGenerator extends GeneratorForAnnotation<Api> {
   dynamic generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
     // 來源檔案的完整路徑
-    final sourceFullName = element.source.fullName;
+    final sourceFullName = element.source!.fullName;
 
     // 來源檔案檔名
-    final sourceShortName = element.source.shortName;
+    final sourceShortName = element.source!.shortName;
 
     // api 實作類解析
     apiClassParser.parse(element);

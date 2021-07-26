@@ -8,17 +8,18 @@ import 'parser.dart';
 
 /// 依照 client_mixin 所產出的方法進行調用的模板
 class ServicePatternClassParser extends ApiParser {
-  CodeGenerator clientMixinClassCoder;
+  late CodeGenerator clientMixinClassCoder;
 
   void setClientMixinClassCoder(CodeGenerator generator) {
     this.clientMixinClassCoder = generator;
   }
 
   @override
-  codeBuilder.Class generateApiClass(
-      {String interfaceName,
-      String className,
-      List<codeBuilder.Method> methods}) {
+  codeBuilder.Class generateApiClass({
+    required String interfaceName,
+    required String className,
+    required List<codeBuilder.Method> methods,
+  }) {
     // class 要放入一個變數
     // 變數類型是 api_class_parser 的 class 名稱
     return codeBuilder.Class((c) {
@@ -28,8 +29,8 @@ class ServicePatternClassParser extends ApiParser {
         ..methods.addAll(methods)
         ..fields = ListBuilder([
           codeBuilder.Field((b) {
-            return b
-              ..type = codeBuilder.refer(clientMixinClassCoder.codeClass.name)
+            b
+              ..type = codeBuilder.refer(clientMixinClassCoder.codeClass!.name)
               ..name = _getClientMixinInstanceName();
           }),
         ]);
@@ -39,8 +40,8 @@ class ServicePatternClassParser extends ApiParser {
   /// mixin 會默認生成一個參數
   /// 參數即是 api_class_parser 所生成的類
   String _getClientMixinInstanceName() {
-    return clientMixinClassCoder.codeClass.name.substring(0, 1).toLowerCase() +
-        clientMixinClassCoder.codeClass.name.substring(1);
+    return clientMixinClassCoder.codeClass!.name.substring(0, 1).toLowerCase() +
+        clientMixinClassCoder.codeClass!.name.substring(1);
   }
 
   @override
@@ -73,7 +74,7 @@ class ServicePatternClassParser extends ApiParser {
     // 加入一個可選參數 [ProgressCallback onReceiveProgress] 可用來監聽下載進度
     if (method == ApiMethodType.download) {
       optionalParams.add(codeBuilder.Parameter((p) {
-        return p
+        p
           ..type = codeBuilder.refer('ProgressCallback')
           ..name = 'onReceiveProgress'
           ..named = true;
@@ -109,14 +110,14 @@ class ServicePatternClassParser extends ApiParser {
             .map((f) => codeBuilder.CodeExpression(codeBuilder.Code(f)))
             .toList();
 
-        return p
+        p
           ..annotations.addAll(paramAnnotationCode)
-          ..type = codeBuilder.refer(e.type.displayName)
+          ..type = codeBuilder.refer(e.type.getDisplayString(withNullability: true))
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null
               ? null
-              : codeBuilder.Code(e.defaultValueCode);
+              : codeBuilder.Code(e.defaultValueCode!);
       });
     }).toList();
   }

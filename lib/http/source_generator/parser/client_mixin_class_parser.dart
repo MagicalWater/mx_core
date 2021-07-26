@@ -29,7 +29,7 @@ class ClientMixinClassParser extends ApiParser {
         ..fields = ListBuilder([
           codeBuilder.Field((b) {
             b
-              ..type = codeBuilder.refer(apiClassCoder.codeClass.name)
+              ..type = codeBuilder.refer(apiClassCoder.codeClass!.name)
               ..name = _getApiInstanceName();
           }),
         ])
@@ -40,8 +40,8 @@ class ClientMixinClassParser extends ApiParser {
   /// mixin 會默認生成一個參數
   /// 參數即是 api_class_parser 所生成的類
   String _getApiInstanceName() {
-    return apiClassCoder.codeClass.name.substring(0, 1).toLowerCase() +
-        apiClassCoder.codeClass.name.substring(1);
+    return apiClassCoder.codeClass!.name.substring(0, 1).toLowerCase() +
+        apiClassCoder.codeClass!.name.substring(1);
   }
 
   @override

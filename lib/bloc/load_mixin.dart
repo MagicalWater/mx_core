@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:mx_core/bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
-mixin LoadMixin  {
-
+mixin LoadMixin {
   BehaviorSubject<bool> get _lazyLoadSubject {
     return _loadSubject ??= BehaviorSubject();
   }
 
   /// LoadProvider loading 狀態串流
-  BehaviorSubject<bool> _loadSubject;
+  BehaviorSubject<bool>? _loadSubject;
 
   /// 當前一般元件的 loading 狀態
   bool get currentLoadState {

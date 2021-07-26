@@ -10,36 +10,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/http_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_content.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/http_content_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_content_generator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/http_query_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_query_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/server_response.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/server_response.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_class_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_class_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/header_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/header_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/http_content_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/http_content_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/init_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/init_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/param_content_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/param_content_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bloc/bloc_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/bloc_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bloc/load_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/load_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/annotation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/annotation.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/api_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/api_generator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/element_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/element_parser.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/client_mixin_class_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/client_mixin_class_parser.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/code_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/code_generator.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_client.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_client.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_intercept.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_intercept.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_media_query.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_media_query.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/keyboard/keyboard_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/keyboard_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/keyboard/number_keyboard.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/keyboard/number_keyboard.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/polling/polling_base.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/polling/polling_base.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/option.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/option.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/popup/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/popup/widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/service_pattern_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/service_pattern_parser.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/network_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/network_util.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,10 +157,6 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="768" y="265" key="AndroidProcessChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622450726088" />
-    <state x="-240" y="-1042" width="1891" height="1042" maximized="true" key="DiffContextDialog" timestamp="1618451229746">
-      <screen x="-240" y="-1055" width="1920" height="1055" />
-    </state>
-    <state x="-240" y="-1042" width="1891" height="1042" maximized="true" key="DiffContextDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618451229746" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1626077863974">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -211,15 +193,11 @@
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="341" y="126" key="SettingsEditor/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619406320778" />
-    <state x="-231" y="-1041" width="1887" height="1033" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1618370759591">
-      <screen x="-240" y="-1055" width="1920" height="1055" />
-    </state>
-    <state x="-231" y="-1041" width="1887" height="1033" maximized="true" key="com.intellij.history.integration.ui.views.FileHistoryDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1618370759591" />
-    <state x="493" y="256" width="984" height="490" key="find.popup" timestamp="1626920348478">
-      <screen x="0" y="25" width="1680" height="944" />
+    <state x="563" y="254" width="1125" height="540" key="find.popup" timestamp="1627286056952">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626920348478" />
-    <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1622618997268" />
+    <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1627286056952" />
     <state width="600" height="428" key="javadoc.popup" timestamp="1626919798649">
       <screen x="0" y="25" width="1680" height="944" />
     </state>

@@ -17,7 +17,7 @@ abstract class PageBloc
   /// 當 [historyShow] 是 [HistoryShow.stack] 時無效
   int get cachePageCount => subPages().length;
 
-  BlocProviderState providerState;
+  BlocProviderState? providerState;
 
   bool get mounted => providerState?.mounted ?? false;
 
@@ -50,12 +50,12 @@ abstract class PageBloc
   ///
   /// 可能會是 null
   @override
-  RouteData get currentSubPage => _historyPageSubject?.value?.last;
+  RouteData? get currentSubPage => _historyPageSubject?.value?.last;
 
   /// 當前最後顯示的子頁面的index
   ///
   /// 可能會是 null
-  int get currentSubPageIndex {
+  int? get currentSubPageIndex {
     if (currentSubPage != null) {
       return subPages().indexOf(currentSubPage.route);
     }
@@ -63,10 +63,10 @@ abstract class PageBloc
   }
 
   /// 歷史子頁面監聽串流
-  BehaviorSubject<List<RouteData>> _historyPageSubject;
+  BehaviorSubject<List<RouteData>>? _historyPageSubject;
 
   /// 此頁面的預設子頁面
-  RouteData defaultSubPage() => null;
+  RouteData? defaultSubPage() => null;
 
   /// 是否接受處理子頁面的跳轉
   @protected
@@ -109,9 +109,7 @@ abstract class PageBloc
   @override
   Future<void> dispose() async {
     // 取消子頁面監聽
-    if (route != null) {
-      routeMixinImpl?.unregisterSubPageListener(this);
-    }
+    routeMixinImpl.unregisterSubPageListener(this);
 
     // 先丟棄 subject 裡的所有數據在進行close
     _historyPageSubject?.drain();
@@ -133,45 +131,41 @@ abstract class PageBloc
 
   /// 註冊 [page] 的子頁面監聽
   /// [defaultSubPage] - 預設子頁面
-  void registerSubPageStream({RouteData defaultRoute}) {
+  void registerSubPageStream({RouteData? defaultRoute}) {
     if (_historyPageSubject != null) {
       print("已註冊, 禁止再次註冊監聽子頁面: $route, $hashCode");
       return;
     }
-    if (route != null && route.isNotEmpty) {
-      _historyPageSubject = BehaviorSubject();
+    _historyPageSubject = BehaviorSubject();
 
-      print('註冊頁面: $route, $hashCode');
-      routeMixinImpl.registerSubPageListener(
-        page: this,
-        isHandleRoute: _isHandleRoute,
-        dispatchSubPage: _dispatchSubPage,
-        popSubPage: _popSubPage,
-        forceModifyPageDetail: _forceModifyPageDetail,
-        notifyUpdate: _notifyUpdate,
+    print('註冊頁面: $route, $hashCode');
+    routeMixinImpl.registerSubPageListener(
+      page: this,
+      isHandleRoute: _isHandleRoute,
+      dispatchSubPage: _dispatchSubPage,
+      popSubPage: _popSubPage,
+      forceModifyPageDetail: _forceModifyPageDetail,
+      notifyUpdate: _notifyUpdate,
+    );
+
+    print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
+    if (option.nextRoute != null && option is RouteData) {
+      // 需要再往下進行跳轉頁面
+      var data = option as RouteData;
+
+      routeMixinImpl.pushPage(
+        data.targetSubRoute,
+        pageQuery: data.widgetQuery,
+        blocQuery: data.blocQuery,
       );
-
-      print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
-      if (option.nextRoute != null && option is RouteData) {
-        // 需要再往下進行跳轉頁面
-        var data = option as RouteData;
-
-        routeMixinImpl.pushPage(
-          data.targetSubRoute,
-          pageQuery: data.widgetQuery,
-          blocQuery: data.blocQuery,
-        );
-      } else if (defaultRoute != null) {
-        print('跳轉預設子頁面: ${defaultRoute.route}');
-        // 需要跳轉預設子頁面
-        routeMixinImpl.pushPage(
-          defaultRoute.route,
-          pageQuery: defaultRoute.widgetQuery,
-          blocQuery: defaultRoute.blocQuery,
-        );
-      }
-    } else {
-      print("註冊子頁面失敗 - pageRoute 不得為空");
+    } else if (defaultRoute != null) {
+      print('跳轉預設子頁面: ${defaultRoute.route}');
+      // 需要跳轉預設子頁面
+      routeMixinImpl.pushPage(
+        defaultRoute.route,
+        pageQuery: defaultRoute.widgetQuery,
+        blocQuery: defaultRoute.blocQuery,
+      );
     }
   }
 
@@ -182,7 +176,7 @@ abstract class PageBloc
   /// 子頁面跳轉分發
   bool _dispatchSubPage(
     RouteData data, {
-    bool Function(String route) popUntil,
+    bool Function(String route)? popUntil,
   }) {
     if (_isHandleRoute(data)) {
       // 在此確認是否處理此子頁面的跳轉
@@ -205,7 +199,7 @@ abstract class PageBloc
   /// 若分發了頁面, 但由於
   void _stackDispatchPage(
     RouteData data, {
-    bool Function(String route) popUntil,
+    bool Function(String route)? popUntil,
   }) {
     var currentHistory = subPageHistory;
 

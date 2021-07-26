@@ -11,9 +11,9 @@ typedef T BlocBuilder<T extends PageBloc>();
 
 class BlocProvider<T extends PageBloc> extends StatefulWidget {
   BlocProvider({
-    Key key,
-    @required this.childBuilder,
-    @required this.blocBuilder,
+    Key? key,
+    required this.childBuilder,
+    required this.blocBuilder,
   }) : super(key: key);
 
   final BlocBuilder<T> blocBuilder;
@@ -22,14 +22,14 @@ class BlocProvider<T extends PageBloc> extends StatefulWidget {
   @override
   BlocProviderState<T> createState() => BlocProviderState<T>();
 
-  static T of<T extends PageBloc>(BuildContext context) {
-    BlocProviderState<T> providerState = context.findAncestorStateOfType();
-    return providerState?._currentBloc;
+  static T? of<T extends PageBloc>(BuildContext context) {
+    var providerState = context.findAncestorStateOfType() as BlocProviderState<T>;
+    return providerState._currentBloc;
   }
 }
 
 class BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
-  T _currentBloc;
+  late T _currentBloc;
 
   @override
   void initState() {
@@ -40,11 +40,6 @@ class BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
     );
     _currentBloc.initState();
     super.initState();
-  }
-
-  @override
-  void didUpdateWidget(BlocProvider<PageBloc> oldWidget) {
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -60,8 +55,7 @@ class BlocProviderState<T extends PageBloc> extends State<BlocProvider<T>> {
   @override
   void dispose() {
     _currentBloc.providerState = null;
-    _currentBloc?.dispose();
-    _currentBloc = null;
+    _currentBloc.dispose();
     super.dispose();
   }
 

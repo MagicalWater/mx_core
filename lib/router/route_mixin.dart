@@ -18,7 +18,7 @@ abstract class PageBlocInterface {
   List<RouteData> get subPageHistory;
 
   /// 當前的子頁面
-  RouteData get currentSubPage;
+  RouteData? get currentSubPage;
 }
 
 /// 彈出等級

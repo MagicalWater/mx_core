@@ -12,12 +12,12 @@ class Api {
 /// path 可帶入變數, 宣告方式為
 class Get {
   final String path;
-  final Map<String, String> headers;
-  final Map<String, String> queryParams;
-  final HttpContentType contentType;
-  final String host;
-  final String scheme;
-  final int port;
+  final Map<String, String>? headers;
+  final Map<String, String>? queryParams;
+  final HttpContentType? contentType;
+  final String? host;
+  final String? scheme;
+  final int? port;
 
   const Get(
     this.path, {
@@ -33,14 +33,14 @@ class Get {
 /// 宣告 method 為 post 方法
 class Post {
   final String path;
-  final Map<String, String> headers;
-  final Map<String, String> queryParams;
+  final Map<String, String>? headers;
+  final Map<String, String>? queryParams;
   final dynamic body;
-  final HttpBodyType bodyType;
-  final HttpContentType contentType;
-  final String host;
-  final String scheme;
-  final int port;
+  final HttpBodyType? bodyType;
+  final HttpContentType? contentType;
+  final String? host;
+  final String? scheme;
+  final int? port;
 
   const Post(
     this.path, {
@@ -58,14 +58,14 @@ class Post {
 /// 宣告 method 為 delete 方法
 class Delete {
   final String path;
-  final Map<String, String> headers;
-  final Map<String, String> queryParams;
+  final Map<String, String>? headers;
+  final Map<String, String>? queryParams;
   final dynamic body;
-  final HttpBodyType bodyType;
-  final HttpContentType contentType;
-  final String host;
-  final String scheme;
-  final int port;
+  final HttpBodyType? bodyType;
+  final HttpContentType? contentType;
+  final String? host;
+  final String? scheme;
+  final int? port;
 
   const Delete(
     this.path, {
@@ -83,14 +83,14 @@ class Delete {
 /// 宣告 method 為 put 方法
 class Put {
   final String path;
-  final Map<String, String> headers;
-  final Map<String, String> queryParams;
+  final Map<String, String>? headers;
+  final Map<String, String>? queryParams;
   final dynamic body;
-  final HttpBodyType bodyType;
-  final HttpContentType contentType;
-  final String host;
-  final String scheme;
-  final int port;
+  final HttpBodyType? bodyType;
+  final HttpContentType? contentType;
+  final String? host;
+  final String? scheme;
+  final int? port;
 
   const Put(
     this.path, {
@@ -108,14 +108,14 @@ class Put {
 /// 宣告 method 為 download 方法
 class Download {
   final String path;
-  final Map<String, String> headers;
-  final Map<String, String> queryParams;
+  final Map<String, String>? headers;
+  final Map<String, String>? queryParams;
   final dynamic body;
-  final HttpBodyType bodyType;
-  final HttpContentType contentType;
-  final String host;
-  final String scheme;
-  final int port;
+  final HttpBodyType? bodyType;
+  final HttpContentType? contentType;
+  final String? host;
+  final String? scheme;
+  final int? port;
 
   const Download(
     this.path, {
@@ -153,7 +153,7 @@ class Param {
 
 /// 宣告 method 裡面的參數為 body
 class Body {
-  final String name;
+  final String? name;
 
   const Body([this.name]);
 }
@@ -164,8 +164,8 @@ class FileInfo {
   final String filename;
 
   const FileInfo({
-    this.filename,
-    this.filepath,
+    required this.filename,
+    required this.filepath,
   });
 }
 

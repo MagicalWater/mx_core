@@ -32,7 +32,7 @@ ApiMethodType toApiMethod(ConstantReader annotation) {
   } else if (annotation.instanceOf(TypeChecker.fromRuntime(Download))) {
     return ApiMethodType.download;
   }
-  return null;
+  throw '未知的 method: $annotation';
 }
 
 /// 傳入 Param 的 ConstantReader (annotation)
@@ -47,13 +47,13 @@ ApiParamType toApiParam(ConstantReader annotation) {
   } else if (annotation.instanceOf(TypeChecker.fromRuntime(Body))) {
     return ApiParamType.body;
   }
-  return null;
+  throw '未知的 param: $annotation';
 }
 
 /// 傳入 [ParamElement]
 /// 返回這個參數的 field type, 預設是 string
 ApiFieldType getFieldType(ParameterElement element) {
-  var name = element.type.name;
+  var name = element.type.getDisplayString(withNullability: true);
 //  print("打印類型名稱 ${element.type.runtimeType}, ${element.type}, $name");
   if (name == 'FileInfo') {
     return ApiFieldType.file;
@@ -94,5 +94,5 @@ ConstantReader getAnnotation(Element element, List<Type> findList) {
     // 假如有搜索到的話, 直接返回, 並且包成 ConstantReader方便讀取
     if (annotation != null) return ConstantReader(annotation);
   }
-  return null;
+  throw '找不到對應的 meta data';
 }
