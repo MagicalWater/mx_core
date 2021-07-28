@@ -67,17 +67,17 @@ class KChart extends StatefulWidget {
   final List<MALine> maLine;
 
   // 滑動邊緣調用, false代表滑動到最左邊, true則為最右邊
-  final Function(bool isRight) onLoadMore;
+  final Function(bool isRight)? onLoadMore;
 
   // 當數據未滿一頁時觸發
-  final Function() onDataLessOnePage;
+  final Function()? onDataLessOnePage;
 
   KChart(
     this.datas, {
     this.mainState = MainState.MA,
     this.volState = VolState.VOL,
     this.secondaryState = SecondaryState.MACD,
-    this.isLine,
+    this.isLine = false,
     this.longPressY = ChartLongPressY.closePrice,
     int fractionDigits = 2,
     this.mainStyle = const MainChartStyle.light(),
@@ -102,14 +102,14 @@ class KChart extends StatefulWidget {
 }
 
 class _KChartState extends State<KChart> with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
   double mScaleX = 1.0, mScrollX = 0.0, mSelectX = 0.0, mSelectY = 0.0;
-  StreamController<InfoWindowEntity> mInfoWindowStream;
+  late StreamController<InfoWindowEntity?> mInfoWindowStream;
   double mWidth = 0;
-  AnimationController _scrollXController;
+  late AnimationController _scrollXController;
 
-  int oldDataLen;
+  late int oldDataLen;
   bool isDataLenChanged = true;
   double maxScrollX = 0;
 
@@ -125,16 +125,17 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
     super.initState();
     resetWhenEmptyData(null);
     _syncTooltipShow();
-    mInfoWindowStream = StreamController<InfoWindowEntity>();
+    mInfoWindowStream = StreamController<InfoWindowEntity?>();
     _controller = AnimationController(
         duration: const Duration(milliseconds: 850), vsync: this);
     _animation = Tween(begin: 0.9, end: 0.1).animate(_controller)
       ..addListener(() => setState(() {}));
     _scrollXController = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 500),
-        lowerBound: double.negativeInfinity,
-        upperBound: double.infinity);
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+      lowerBound: double.negativeInfinity,
+      upperBound: double.infinity,
+    );
     _scrollListener();
   }
 
@@ -193,24 +194,24 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    mInfoWindowStream?.close();
-    _controller?.dispose();
-    _scrollXController?.dispose();
+    mInfoWindowStream.close();
+    _controller.dispose();
+    _scrollXController.dispose();
     super.dispose();
   }
 
   /// 當資料為空時進行重設
-  void resetWhenEmptyData(KChart oldWidget) {
+  void resetWhenEmptyData(KChart? oldWidget) {
     if (oldWidget == null) {
       // 為 initState 呼叫, 則資料必定改變, 因為是第一次初始化
-      oldDataLen = widget.datas?.length ?? 0;
+      oldDataLen = widget.datas.length;
       isDataLenChanged = true;
     } else {
       isDataLenChanged = oldDataLen != widget.datas.length;
       oldDataLen = widget.datas.length;
     }
 
-    if (widget.datas == null || widget.datas.isEmpty) {
+    if (widget.datas.isEmpty) {
       mScrollX = mSelectX = mSelectY = 0.0;
       mScaleX = 1.0;
     }
@@ -225,7 +226,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
       },
       onHorizontalDragUpdate: (details) {
         if (isScale || isLongPress) return;
-        mScrollX = (details.primaryDelta / mScaleX + mScrollX).clamp(
+        mScrollX = (details.primaryDelta! / mScaleX + mScrollX).clamp(
           0.0,
           maxScrollX,
         );
@@ -235,15 +236,16 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
         // isDrag = false;
         final Tolerance tolerance = Tolerance(
           velocity:
-              1.0 / (0.050 * WidgetsBinding.instance.window.devicePixelRatio),
+              1.0 / (0.050 * WidgetsBinding.instance!.window.devicePixelRatio),
           // logical pixels per second
           distance: 1.0 /
-              WidgetsBinding.instance.window.devicePixelRatio, // logical pixels
+              WidgetsBinding
+                  .instance!.window.devicePixelRatio, // logical pixels
         );
 
         ClampingScrollSimulation simulation = ClampingScrollSimulation(
           position: mScrollX,
-          velocity: details.primaryVelocity,
+          velocity: details.primaryVelocity!,
           tolerance: tolerance,
         );
         _scrollXController.animateWith(simulation);
@@ -280,7 +282,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
       },
       onLongPressEnd: (details) {
         isLongPress = false;
-        mInfoWindowStream?.sink?.add(null);
+        mInfoWindowStream.add(null);
         notifyChanged();
       },
       child: Stack(
@@ -299,7 +301,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
               volState: widget.volState,
               secondaryState: widget.secondaryState,
               isLine: widget.isLine,
-              sink: mInfoWindowStream?.sink,
+              sink: mInfoWindowStream.sink,
               opacity: _animation.value,
               controller: _controller,
               mainStyle: widget.mainStyle,
@@ -325,7 +327,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
   }
 
   void _stopAnimation() {
-    if (_scrollXController != null && _scrollXController.isAnimating) {
+    if (_scrollXController.isAnimating) {
       _scrollXController.stop();
       isDrag = false;
       notifyChanged();
@@ -334,50 +336,51 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
 
   void notifyChanged() => setState(() {});
 
-  List<String> infoNames;
-  List infos;
+  late List<String> infoNames;
 
   Widget _buildInfoDialog() {
-    return StreamBuilder<InfoWindowEntity>(
-        stream: mInfoWindowStream?.stream,
-        builder: (context, snapshot) {
-          if (!isLongPress ||
-              widget.isLine == true ||
-              !snapshot.hasData ||
-              snapshot.data.kLineEntity == null) return Container();
-          KLineEntity entity = snapshot.data.kLineEntity;
-          double upDown = entity.close - entity.open;
-          double upDownPercent = upDown / entity.open * 100;
-          infos = [
-            getDate(entity.dateTime),
-            NumberUtil.format(entity.open),
-            NumberUtil.format(entity.high),
-            NumberUtil.format(entity.low),
-            NumberUtil.format(entity.close),
-            "${upDown > 0 ? "+" : ""}${NumberUtil.format(upDown)}",
-            "${upDownPercent > 0 ? "+" : ''}${upDownPercent.toStringAsFixed(2)}%",
-            NumberUtil.volFormat(entity.vol)
-          ];
-          return Align(
-            alignment:
-                snapshot.data.isLeft ? Alignment.topLeft : Alignment.topRight,
-            child: Container(
-              margin: EdgeInsets.only(left: 10, right: 10, top: 25),
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-              decoration: BoxDecoration(
-                color: widget.mainStyle.tooltipBgColor,
-                border: Border.all(
-                    color: widget.mainStyle.tooltipBorderColor, width: 0.5),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(infoNames.length,
-                    (i) => _buildItem(infos[i].toString(), infoNames[i])),
-              ),
+    return StreamBuilder<InfoWindowEntity?>(
+      stream: mInfoWindowStream.stream,
+      builder: (context, snapshot) {
+        if (!isLongPress ||
+            widget.isLine == true ||
+            !snapshot.hasData ||
+            snapshot.data?.kLineEntity == null) return Container();
+
+        InfoWindowEntity infoEntity = snapshot.data!;
+        KLineEntity entity = infoEntity.kLineEntity;
+        double upDown = entity.close - entity.open;
+        double upDownPercent = upDown / entity.open * 100;
+        var infos = [
+          getDate(entity.dateTime),
+          NumberUtil.format(entity.open),
+          NumberUtil.format(entity.high),
+          NumberUtil.format(entity.low),
+          NumberUtil.format(entity.close),
+          "${upDown > 0 ? "+" : ""}${NumberUtil.format(upDown)}",
+          "${upDownPercent > 0 ? "+" : ''}${upDownPercent.toStringAsFixed(2)}%",
+          NumberUtil.volFormat(entity.vol)
+        ];
+        return Align(
+          alignment: infoEntity.isLeft ? Alignment.topLeft : Alignment.topRight,
+          child: Container(
+            margin: EdgeInsets.only(left: 10, right: 10, top: 25),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+            decoration: BoxDecoration(
+              color: widget.mainStyle.tooltipBgColor,
+              border: Border.all(
+                  color: widget.mainStyle.tooltipBorderColor, width: 0.5),
             ),
-          );
-        });
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(infoNames.length,
+                  (i) => _buildItem(infos[i].toString(), infoNames[i])),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildItem(String info, String infoName) {

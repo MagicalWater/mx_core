@@ -1,6 +1,6 @@
 mixin RSIEntity {
   /// RSI值
-  double rsi;
-  double rsiABSEma;
-  double rsiMaxEma;
+  late double rsi;
+  late double rsiABSEma;
+  late double rsiMaxEma;
 }

@@ -15,7 +15,7 @@ class BallParticle extends Particle {
   double restitution;
 
   /// 當觸及到邊界次數超過此值, 則粒子就該消失了
-  int boundLimit;
+  int? boundLimit;
 
   int _currentBoundTimes = 0;
 
@@ -130,7 +130,11 @@ class BallParticle extends Particle {
   @override
   bool isNeedDisappear() {
     // 當半徑小於2時, 需要隱藏
-    if (radius < radiusLowerBound || _currentBoundTimes >= boundLimit) {
+    var isBoundLimitOut = false;
+    if (boundLimit != null) {
+      isBoundLimitOut = _currentBoundTimes >= boundLimit!;
+    }
+    if (radius < radiusLowerBound || isBoundLimitOut) {
 //      print("粒子需要隱藏: $radius, $_currentBoundTimes");
       return true;
     }

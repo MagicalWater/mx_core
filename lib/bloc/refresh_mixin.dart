@@ -1,18 +1,16 @@
-import 'package:flutter/cupertino.dart';
-import 'package:mx_core/bloc/bloc.dart';
 import 'package:mx_core/ui/widget/refresh_view/refresh_view.dart';
 import 'package:rxdart/rxdart.dart';
 
 mixin RefreshMixin {
   /// 當前 [RefreshView] 是否正在刷新中
   bool get currentRefresh {
-    var state = _lazyRefreshStateSubject.value;
+    var state = _lazyRefreshStateSubject.value!;
     return state.isLoading && state.type == RefreshType.refresh;
   }
 
   /// 當前 [RefreshView] 是否正在加載更多中
   bool get currentLoadMore {
-    var state = _lazyRefreshStateSubject.value;
+    var state = _lazyRefreshStateSubject.value!;
     return state.isLoading && state.type == RefreshType.loadMore;
   }
 
@@ -22,7 +20,7 @@ mixin RefreshMixin {
   }
 
   /// 設置刷新元件 [RefreshView] 的狀態
-  BehaviorSubject<RefreshState> _refreshStateSubject;
+  BehaviorSubject<RefreshState>? _refreshStateSubject;
 
   BehaviorSubject<RefreshState> get _lazyRefreshStateSubject {
     return _refreshStateSubject ??= BehaviorSubject();
@@ -60,11 +58,11 @@ mixin RefreshMixin {
   /// * [resetLoadMore] - 是否重置上拉加載狀態
   /// * [noLoadMore] - 是否沒有上拉加載了, 此參數優先度在 [resetLoadMore] 之上
   void setRefresh({
-    bool success,
+    required bool success,
     bool empty = false,
     bool noMore = false,
     bool resetLoadMore = true,
-    bool noLoadMore,
+    required bool noLoadMore,
   }) {
     var state = RefreshState.refresh(
       success: success,
@@ -82,7 +80,7 @@ mixin RefreshMixin {
   /// * [noMore] - 是否沒有加載更多
   /// * [resetRefresh] - 是否重置下拉刷新狀態
   void setLoadMore({
-    bool success,
+    required bool success,
     bool empty = false,
     bool noMore = false,
     bool resetRefresh = false,

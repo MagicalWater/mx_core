@@ -25,7 +25,7 @@ class _SpaceCompute {
     freeSpace.clear();
 
     var totalSpace =
-    _Space(x: 0, y: 0, xSpan: xSegmentCount, ySpan: ySegmentCount);
+        _Space(x: 0, y: 0, xSpan: xSegmentCount, ySpan: ySegmentCount);
 
     print("設置總範圍: $totalSpace - $totalHeight, $rowHeight");
 
@@ -57,7 +57,7 @@ class _SpaceCompute {
         } else {
           space = fullSpace.last;
         }
-        item = AxisItem(
+        item = AxisItem._inAutoSpace(
           xSpan: space.xSpan,
           ySpan: item.ySpan,
         );
@@ -87,7 +87,7 @@ class _SpaceCompute {
       // 拋棄指定位置的資訊, 再跑一次
       for (int i = 0; i < freeSpace.length; i++) {
         var space = freeSpace[i];
-        item = AxisItem(
+        item = AxisItem._inAutoSpace(
           xSpan: item.xSpan,
           ySpan: item.ySpan,
         );

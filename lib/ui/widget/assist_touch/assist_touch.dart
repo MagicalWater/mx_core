@@ -63,7 +63,7 @@ class AssistTouch extends StatefulWidget {
   /// 面板元件構建類
   final ExpandProgressBuilder? boardBuilder;
 
-  AssistTouch._({
+  AssistTouch({
     required this.initOffset,
     required this.child,
     this.maskColor = Colors.transparent,
@@ -386,7 +386,7 @@ class _AssistTouchState extends State<AssistTouch>
 
   /// 點擊主按鈕之後, 需要做的展開/收縮動畫
   void syncExpandAnimation() {
-    double begin = actionAnimation?.value ?? 0;
+    double begin = actionAnimation.value;
     mainDragAnimation.removeListener(mainDragAnimationListener);
     actionAnimation.removeListener(actionExpandAnimationListener);
     actionAnimation.addListener(actionExpandAnimationListener);

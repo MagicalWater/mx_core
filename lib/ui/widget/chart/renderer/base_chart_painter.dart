@@ -1,16 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart'
-    show
-        Canvas,
-        Color,
-        CustomPainter,
-        Rect,
-        Size,
-        TextStyle,
-        ValueChanged,
-        VoidCallback,
-        required;
+    show Canvas, Color, CustomPainter, Rect, Size, TextStyle, ValueChanged;
 import 'package:mx_core/ui/widget/chart/utils/date_format_util.dart';
 import 'package:mx_core/ui/widget/chart/utils/number_util.dart';
 
@@ -26,21 +17,24 @@ abstract class BaseChartPainter extends CustomPainter {
   // double _maxScrollX = 0.0;
 
   /// 繪製後的滾動最大距離回調
-  ValueChanged<double> onCalculateMaxScrolled;
+  ValueChanged<double>? onCalculateMaxScrolled;
 
   List<KLineEntity> datas;
-  MainState mainState = MainState.MA;
-  VolState volState = VolState.VOL;
-  SecondaryState secondaryState = SecondaryState.MACD;
+  MainState mainState;
+  VolState volState;
+  SecondaryState secondaryState;
 
   double scaleX = 1.0, scrollX = 0.0, selectX, selectY;
-  ChartLongPressY longPressY;
+  ChartLongPressY? longPressY;
   bool isLongPress = false;
-  bool isLine = false;
+  bool isLine;
 
   //3块区域大小与位置
-  Rect mMainRect, mVolRect, mSecondaryRect;
-  double mDisplayHeight, mWidth;
+  late Rect mMainRect;
+
+  Rect? mVolRect, mSecondaryRect;
+
+  late double mDisplayHeight, mWidth;
 
   int mStartIndex = 0, mStopIndex = 0;
   double mMainMaxValue = -double.maxFinite, mMainMinValue = double.maxFinite;
@@ -59,20 +53,20 @@ abstract class BaseChartPainter extends CustomPainter {
   double mMarginRight = 0.0; //k线右边空出来的距离
 
   BaseChartPainter({
-    @required this.datas,
-    @required this.scaleX,
-    @required this.scrollX,
-    @required this.isLongPress,
-    @required this.selectX,
-    @required this.selectY,
+    required this.datas,
+    required this.scaleX,
+    required this.scrollX,
+    required this.isLongPress,
+    required this.selectX,
+    required this.selectY,
     this.longPressY,
-    this.mainState,
-    this.volState,
-    this.secondaryState,
-    this.isLine,
+    this.mainState = MainState.MA,
+    this.volState = VolState.VOL,
+    this.secondaryState = SecondaryState.MACD,
+    this.isLine = false,
     this.onCalculateMaxScrolled,
-  }) {
-    mItemCount = datas?.length ?? 0;
+  }): assert(isLongPress && longPressY != null) {
+    mItemCount = datas.length;
     mDataLen = mItemCount * mPointWidth;
     initFormats();
   }
@@ -80,8 +74,8 @@ abstract class BaseChartPainter extends CustomPainter {
   void initFormats() {
 //    [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn]
     if (mItemCount < 2) return;
-    int firstTime = datas.first?.dateTime?.second ?? 0;
-    int secondTime = datas[1]?.dateTime?.second ?? 0;
+    int firstTime = datas.first.dateTime.second;
+    int secondTime = datas[1].dateTime.second;
     int time = secondTime - firstTime;
     //月线
     if (time >= 24 * 60 * 60 * 28)
@@ -112,13 +106,13 @@ abstract class BaseChartPainter extends CustomPainter {
     canvas.scale(1, 1);
     drawBg(canvas, size);
     drawGrid(canvas);
-    if (datas != null && datas.isNotEmpty) {
+    if (datas.isNotEmpty) {
       drawChart(canvas, size);
       drawRightText(canvas);
       drawRealTimePrice(canvas, size);
       drawDate(canvas, size);
-      if (isLongPress == true) drawCrossLineText(canvas, size);
-      drawText(canvas, datas?.last, 5);
+      if (isLongPress) drawCrossLineText(canvas, size);
+      drawText(canvas, datas.last, 5);
       drawMaxAndMin(canvas);
     }
     canvas.restore();
@@ -183,8 +177,8 @@ abstract class BaseChartPainter extends CustomPainter {
     }
   }
 
-  calculateValue() {
-    if (datas == null || datas.isEmpty) return;
+  void calculateValue() {
+    if (datas.isEmpty) return;
     var minTransX = getMinTranslateX();
     if (minTransX > 0) {
       onCalculateMaxScrolled?.call(0);
@@ -318,12 +312,8 @@ abstract class BaseChartPainter extends CustomPainter {
   ///@param position 索引值
   double getX(int position) => position * mPointWidth + mPointWidth / 2;
 
-  Object getItem(int position) {
-    if (datas != null) {
-      return datas[position];
-    } else {
-      return null;
-    }
+  KLineEntity getItem(int position) {
+    return datas[position];
   }
 
   ///scrollX 转换为 TranslateX

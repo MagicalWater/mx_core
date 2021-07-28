@@ -315,7 +315,7 @@ class _PageSwitcherState extends State<PageSwitcher>
         (element) => element.route == e,
       );
       if (finded != null) {
-        ValueKey<int> key;
+        ValueKey<int>? key;
         if (finded.forceNew && finded.route == datas.last.route) {
           var showIndex = cacheKey[finded.route]?.value ?? 0;
           showIndex++;
@@ -323,7 +323,7 @@ class _PageSwitcherState extends State<PageSwitcher>
           key = ValueKey(showIndex);
           cacheKey[finded.route] = key;
         } else {
-          key = cacheKey[finded.route]!;
+          key = cacheKey[finded.route];
         }
         return (_) => routeMixinImpl.getPage(finded, key: key);
       } else {

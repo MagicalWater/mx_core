@@ -47,6 +47,8 @@ class Screen {
 
   /// 最新的螢幕相關尺寸
   static late MediaQueryData _mediaQueryData;
+  static bool _isInit = false;
+
   static double _screenW = 360.0;
 
   /// 螢幕寬
@@ -106,7 +108,8 @@ class Screen {
     _bindScreenData();
 
     MediaQueryData mediaQuery = MediaQueryData.fromWindow(ui.window);
-    if (_mediaQueryData != mediaQuery && mediaQuery.size != Size.zero) {
+    if (!_isInit ||
+        (_mediaQueryData != mediaQuery && mediaQuery.size != Size.zero)) {
       _screenW = mediaQuery.size.width;
       _screenH = mediaQuery.size.height;
       _screenD = mediaQuery.devicePixelRatio;
@@ -114,11 +117,17 @@ class Screen {
       _bottomBarH = mediaQuery.padding.bottom;
       _appBarH = kToolbarHeight;
 
-      var _beforeOrientation = _mediaQueryData.orientation;
-      _mediaQueryData = mediaQuery;
-      var _afterOrientation = _mediaQueryData.orientation;
+      if (_isInit) {
+        var _beforeOrientation = _mediaQueryData.orientation;
+        _mediaQueryData = mediaQuery;
+        var _afterOrientation = _mediaQueryData.orientation;
 
-      if (_beforeOrientation != _afterOrientation) {
+        if (_beforeOrientation != _afterOrientation) {
+          orientationListener?.call(_afterOrientation);
+        }
+      } else {
+        _mediaQueryData = mediaQuery;
+        var _afterOrientation = _mediaQueryData.orientation;
         orientationListener?.call(_afterOrientation);
       }
 
@@ -130,6 +139,8 @@ class Screen {
 AppBar $appBarHeight
 ═════════════════════════════════
       ''');
+
+      _isInit = true;
     }
   }
 

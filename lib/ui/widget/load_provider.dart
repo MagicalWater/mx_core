@@ -146,8 +146,8 @@ class _LoadProviderState extends State<LoadProvider>
             child: _defaultLoadingBuilder?.call(context, _currentStyle) ??
                 widget.builder?.call(context, _currentStyle) ??
                 Loading.circle(
-                  color: _currentStyle.color ?? Colors.blueAccent,
-                  size: _currentStyle.size ?? 50.scaleA,
+                  color: _currentStyle.color,
+                  size: _currentStyle.size,
                 ),
           );
         } else {
@@ -254,16 +254,16 @@ class _LoadProviderState extends State<LoadProvider>
     await Future.delayed(Duration.zero);
     await _attach(attach);
     _currentShow = true;
-    _loadStreamController?.add(_currentShow);
-    await _animatedSync?.toggle(true);
+    _loadStreamController.add(_currentShow);
+    await _animatedSync.toggle(true);
   }
 
   @override
   Future<void> hide() async {
     _currentShow = false;
     await Future.delayed(Duration.zero);
-    await _animatedSync?.toggle(false);
-    _loadStreamController?.add(_currentShow);
+    await _animatedSync.toggle(false);
+    _loadStreamController.add(_currentShow);
   }
 
   FutureOr<void> _attach(BuildContext? context) async {
@@ -280,17 +280,16 @@ class _LoadProviderState extends State<LoadProvider>
       selfBox = context.findRenderObject() as RenderBox?;
     }
 
-    RenderBox parentScrollBox = context
+    RenderBox? parentScrollBox = context
         .findAncestorStateOfType<ScrollableState>()
         ?.context
-        .findRenderObject()! as RenderBox;
+        .findRenderObject()! as RenderBox?;
 
     var selfPos = selfBox!.localToGlobal(Offset.zero);
-    var selfSize = selfBox!.size;
-    var parentSize = parentScrollBox?.size;
+    var selfSize = selfBox.size;
 //  print("檢測 兒子 size = $selfSize, pos = $selfPos");
 
-    if (parentSize != null) {
+    if (parentScrollBox != null) {
       var parentPos = parentScrollBox.localToGlobal(Offset.zero);
       var parentSize = parentScrollBox.size;
 

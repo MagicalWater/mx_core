@@ -1,7 +1,6 @@
 import 'dart:async' show StreamSink;
 
 import 'package:flutter/material.dart';
-import 'package:mx_core/util/num_util.dart';
 
 import '../entity/info_window_entity.dart';
 import '../entity/k_line_entity.dart';
@@ -14,45 +13,35 @@ import 'secondary_renderer.dart';
 import 'vol_renderer.dart';
 
 class ChartPainter extends BaseChartPainter {
-  BaseChartRenderer mMainRenderer, mVolRenderer, mSecondaryRenderer;
-  StreamSink<InfoWindowEntity> sink;
-  AnimationController controller;
+  BaseChartRenderer? mMainRenderer, mVolRenderer, mSecondaryRenderer;
+  StreamSink<InfoWindowEntity?>? sink;
+  AnimationController? controller;
   double opacity;
   MainChartStyle mainChartStyle;
   SubChartStyle subChartStyle;
   List<MALine> maLine;
 
-  // MainChartSetting mainSetting;
-  // VolChartSetting volSetting;
-  // SecondaryChartSetting secondarySetting;
-
   ChartPainter({
-    @required datas,
-    @required scaleX,
-    @required scrollX,
-    @required isLongPass,
-    @required selectX,
-    @required selectY,
-    ChartLongPressY longPressY,
+    required datas,
+    required scaleX,
+    required scrollX,
+    required isLongPass,
+    required selectX,
+    required selectY,
+    required this.maLine,
+    ChartLongPressY? longPressY,
     mainState,
     volState,
     secondaryState,
     this.sink,
-    bool isLine,
+    bool isLine = false,
     this.controller,
     this.opacity = 0.0,
-    MainChartStyle mainStyle,
-    SubChartStyle subStyle,
-    ValueChanged<double> onCalculateMaxScrolled,
-    this.maLine,
-    // MainChartSetting mainSetting,
-    // VolChartSetting volSetting,
-    // SecondaryChartSetting secondarySetting,
+    MainChartStyle? mainStyle,
+    SubChartStyle? subStyle,
+    ValueChanged<double>? onCalculateMaxScrolled,
   })  : this.mainChartStyle = mainStyle ?? MainChartStyle.light(),
         this.subChartStyle = subStyle ?? SubChartStyle.light(),
-        // this.mainSetting = mainSetting ?? MainChartSetting(),
-        // this.volSetting = volSetting ?? VolChartSetting(),
-        // this.secondarySetting = secondarySetting ?? SecondaryChartSetting(),
         super(
           datas: datas,
           scaleX: scaleX,
@@ -70,8 +59,7 @@ class ChartPainter extends BaseChartPainter {
 
   @override
   void initChartRenderer() {
-    // print('初始化: $mMainMinValue');
-    KLineEntity preEntity, nextEntity;
+    KLineEntity? preEntity, nextEntity;
     var preIndex = mStartIndex - 1;
     var nextIndex = mStopIndex + 1;
     if (preIndex >= 0 && preIndex < datas.length) {
@@ -96,7 +84,7 @@ class ChartPainter extends BaseChartPainter {
     );
     if (mVolRect != null) {
       mVolRenderer ??= VolRenderer(
-        mVolRect,
+        mVolRect!,
         mVolMaxValue,
         mVolMinValue,
         ChartStyle.childPadding,
@@ -106,7 +94,7 @@ class ChartPainter extends BaseChartPainter {
     }
     if (mSecondaryRect != null) {
       mSecondaryRenderer ??= SecondaryRenderer(
-        mSecondaryRect,
+        mSecondaryRect!,
         mSecondaryMaxValue,
         mSecondaryMinValue,
         ChartStyle.childPadding,
@@ -130,18 +118,16 @@ class ChartPainter extends BaseChartPainter {
 
   @override
   void drawBg(Canvas canvas, Size size) {
-    if (mMainRect != null) {
-      Rect mainRect = Rect.fromLTRB(
-          0, 0, mMainRect.width, mMainRect.height + ChartStyle.topPadding);
-      canvas.drawRect(mainRect, mBgPaint);
-    }
+    Rect mainRect = Rect.fromLTRB(
+        0, 0, mMainRect.width, mMainRect.height + ChartStyle.topPadding);
+    canvas.drawRect(mainRect, mBgPaint);
 
     if (mVolRect != null) {
       Rect volRect = Rect.fromLTRB(
         0,
-        mVolRect.top - ChartStyle.childPadding,
-        mVolRect.width,
-        mVolRect.bottom,
+        mVolRect!.top - ChartStyle.childPadding,
+        mVolRect!.width,
+        mVolRect!.bottom,
       );
       canvas.drawRect(volRect, mBgPaint);
     }
@@ -149,9 +135,9 @@ class ChartPainter extends BaseChartPainter {
     if (mSecondaryRect != null) {
       Rect secondaryRect = Rect.fromLTRB(
           0,
-          mSecondaryRect.top - ChartStyle.childPadding,
-          mSecondaryRect.width,
-          mSecondaryRect.bottom);
+          mSecondaryRect!.top - ChartStyle.childPadding,
+          mSecondaryRect!.width,
+          mSecondaryRect!.bottom);
       canvas.drawRect(secondaryRect, mBgPaint);
     }
     Rect dateRect = Rect.fromLTRB(
@@ -180,50 +166,38 @@ class ChartPainter extends BaseChartPainter {
 
   @override
   void drawChart(Canvas canvas, Size size) {
-    // canvas.save();
-    // print('位移: $mTranslateX');
-    // var mainTransRect = mMainRect
-    //     .translate((mTranslateX * scaleX).abs(), 0.0)
-    //     .scale(scaleX, 1.0);
-    // var volTransRect = mVolRect
-    //     .translate((mTranslateX * scaleX).abs(), 0.0)
-    //     .scale(scaleX, 1.0);
-    // var secondaryTransRect = mSecondaryRect
-    //     .translate((mTranslateX * scaleX).abs(), 0.0)
-    //     .scale(scaleX, 1.0);
-    // // print('切割: $mMainRect, 偏移: ${mTranslateX * scaleX}, 偏移後: $mainTransRect');
-    // canvas.translate(mTranslateX * scaleX, 0.0);
-    //
-    // // canvas的縮放錨點默認為左上角
-    // canvas.scale(scaleX, 1.0);
-    // print('縮放 = $scaleX');
-
     void drawMain() {
       canvas.save();
       // canvas.clipRect(mainTransRect);
       canvas.clipRect(mMainRect);
       canvas.translate(mTranslateX * scaleX, 0.0);
       canvas.scale(scaleX, 1.0);
-      for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
+      for (int i = mStartIndex; i <= mStopIndex; i++) {
         KLineEntity curPoint = datas[i];
-        if (curPoint == null) continue;
+        // if (curPoint == null) continue;
         KLineEntity lastPoint = i == 0 ? curPoint : datas[i - 1];
         double curX = getX(i);
         double lastX = i == 0 ? curX : getX(i - 1);
         mMainRenderer?.drawChart(
-            lastPoint, curPoint, lastX, curX, size, canvas);
+          lastPoint,
+          curPoint,
+          lastX,
+          curX,
+          size,
+          canvas,
+        );
       }
       canvas.restore();
     }
 
     void drawVol() {
       canvas.save();
-      canvas.clipRect(mVolRect);
+      canvas.clipRect(mVolRect!);
       canvas.translate(mTranslateX * scaleX, 0.0);
       canvas.scale(scaleX, 1.0);
-      for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
+      for (int i = mStartIndex; i <= mStopIndex; i++) {
         KLineEntity curPoint = datas[i];
-        if (curPoint == null) continue;
+        // if (curPoint == null) continue;
         KLineEntity lastPoint = i == 0 ? curPoint : datas[i - 1];
         double curX = getX(i);
         double lastX = i == 0 ? curX : getX(i - 1);
@@ -234,12 +208,12 @@ class ChartPainter extends BaseChartPainter {
 
     void drawSecondary() {
       canvas.save();
-      canvas.clipRect(mSecondaryRect);
+      canvas.clipRect(mSecondaryRect!);
       canvas.translate(mTranslateX * scaleX, 0.0);
       canvas.scale(scaleX, 1.0);
-      for (int i = mStartIndex; datas != null && i <= mStopIndex; i++) {
+      for (int i = mStartIndex; i <= mStopIndex; i++) {
         KLineEntity curPoint = datas[i];
-        if (curPoint == null) continue;
+        // if (curPoint == null) continue;
         KLineEntity lastPoint = i == 0 ? curPoint : datas[i - 1];
         double curX = getX(i);
         double lastX = i == 0 ? curX : getX(i - 1);
@@ -261,7 +235,7 @@ class ChartPainter extends BaseChartPainter {
       double x = getX(index);
       double y;
 
-      switch (longPressY) {
+      switch (longPressY!) {
         case ChartLongPressY.absolute:
           y = clampY(selectY);
           break;
@@ -328,7 +302,6 @@ class ChartPainter extends BaseChartPainter {
       double translateX = xToTranslateX(columnSpace * i);
       if (translateX >= startX && translateX <= stopX) {
         int index = indexOfTranslateX(translateX);
-        if (datas[index] == null) continue;
         TextPainter tp = getTextPainter(
           getDate(datas[index].dateTime),
           color: mainChartStyle.xAxisTextColor,
@@ -356,7 +329,7 @@ class ChartPainter extends BaseChartPainter {
     KLineEntity point = getItem(index);
 
     double y;
-    switch (longPressY) {
+    switch (longPressY!) {
       case ChartLongPressY.absolute:
         y = clampY(selectY);
         break;
@@ -508,7 +481,7 @@ class ChartPainter extends BaseChartPainter {
   ///画实时价格线
   @override
   void drawRealTimePrice(Canvas canvas, Size size) {
-    if (mMarginRight == 0 || datas?.isEmpty == true) return;
+    if (mMarginRight == 0 || datas.isEmpty) return;
     KLineEntity point = datas.last;
     TextPainter tp = getTextPainter(
       format(point.close),
@@ -540,7 +513,7 @@ class ChartPainter extends BaseChartPainter {
       if (isLine) {
         startAnimation();
         var colors = List.of(mainChartStyle.rightRealTimeFlashPointColor);
-        colors[0] = colors[0].withOpacity(opacity ?? 0.0);
+        colors[0] = colors[0].withOpacity(opacity);
         Gradient pointGradient = RadialGradient(colors: colors);
         pointPaint.shader = pointGradient
             .createShader(Rect.fromCircle(center: Offset(x, y), radius: 14.0));
@@ -668,13 +641,13 @@ class ChartPainter extends BaseChartPainter {
   }
 }
 
-extension _ScaleRect on Rect {
-  Rect scale(double sx, [double sy = 1]) {
-    return Rect.fromLTWH(
-      this.left,
-      this.top,
-      this.width.multiply(sx),
-      this.height.multiply(sy),
-    );
-  }
-}
+// extension _ScaleRect on Rect {
+//   Rect scale(double sx, [double sy = 1]) {
+//     return Rect.fromLTWH(
+//       this.left,
+//       this.top,
+//       this.width.multiply(sx),
+//       this.height.multiply(sy),
+//     );
+//   }
+// }

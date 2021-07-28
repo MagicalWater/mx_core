@@ -22,10 +22,10 @@ class AxisItem extends StatelessWidget {
   /// 是否指定位置
   bool get _specialPosition => x != null || y != null;
 
-  // final Widget child;
+  final Widget? child;
 
   AxisItem({
-    // required this.child,
+    this.child,
     this.color,
     this.x,
     this.y,
@@ -33,6 +33,15 @@ class AxisItem extends StatelessWidget {
     this.ySpan = 1,
     this.heightBase = false,
   });
+
+  AxisItem._inAutoSpace({
+    required this.xSpan,
+    required this.ySpan,
+  })  : child = null,
+        color = null,
+        heightBase = false,
+        x = null,
+        y = null;
 
   /// 比較兩個 item 的位置資訊是否一樣
   bool _isSame(AxisItem other) {
@@ -48,7 +57,7 @@ class AxisItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: color,
-      // child: child,
+      child: child,
     );
   }
 

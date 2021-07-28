@@ -62,14 +62,16 @@ class _LoadingPageState extends State<LoadingPage> {
 
   Widget buildLoading(LoadingType type) {
     switch (type) {
-      case LoadingType.spring:
-        return buildSpring();
-        break;
-      case LoadingType.roundSpring:
-        return buildRoundSpring();
-        break;
+      // case LoadingType.spring:
+      //   return buildSpring();
+      //   break;
+      // case LoadingType.roundSpring:
+      //   return buildRoundSpring();
+      //   break;
       case LoadingType.circle:
         return buildCircle();
+        break;
+      default:
         break;
     }
     return Container();

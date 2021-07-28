@@ -1,5 +1,5 @@
 mixin KDJEntity {
-  double k;
-  double d;
-  double j;
+  late double k;
+  late double d;
+  late double j;
 }

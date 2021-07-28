@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../chart_style.dart';
@@ -12,7 +10,8 @@ abstract class BaseChartRenderer<T> {
 
   // double get maxValue => _maxValue;
   double minValue;
-  double scaleY, scaleX;
+  double scaleX;
+  late double scaleY;
   double topPadding;
   Rect chartRect;
 
@@ -32,15 +31,13 @@ abstract class BaseChartRenderer<T> {
   final bool showLog;
 
   BaseChartRenderer({
-    @required this.chartRect,
-    @required this.maxValue,
-    @required this.minValue,
-    @required this.topPadding,
-    @required this.scaleX,
-    @required this.style,
+    required this.chartRect,
+    required this.maxValue,
+    required this.minValue,
+    required this.topPadding,
+    required this.scaleX,
+    required this.style,
     this.showLog = false,
-    double preValue,
-    double nextValue,
   }) {
     gridPaint.color = style.gridColor;
     translateMinMax();

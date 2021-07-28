@@ -40,30 +40,32 @@ abstract class PageBloc
 
   /// 子頁面命令監聽串流
   Stream<List<RouteData>> get subPageHistoryStream =>
-      _historyPageSubject?.stream;
+      _historyPageSubject.stream;
 
   /// 當前子頁面的 index 串流
   Stream<int> get subPageIndexStream =>
-      subPageHistoryStream?.map((data) => subPages().indexOf(data.last.route));
+      subPageHistoryStream.map((data) => subPages().indexOf(data.last.route));
 
   /// 當前最後顯示的子頁面
   ///
   /// 可能會是 null
   @override
-  RouteData? get currentSubPage => _historyPageSubject?.value?.last;
+  RouteData? get currentSubPage => _historyPageSubject.value?.last;
 
   /// 當前最後顯示的子頁面的index
   ///
   /// 可能會是 null
   int? get currentSubPageIndex {
     if (currentSubPage != null) {
-      return subPages().indexOf(currentSubPage.route);
+      return subPages().indexOf(currentSubPage!.route);
     }
     return null;
   }
 
   /// 歷史子頁面監聽串流
-  BehaviorSubject<List<RouteData>>? _historyPageSubject;
+  late BehaviorSubject<List<RouteData>> _historyPageSubject;
+
+  bool _isInit = false;
 
   /// 此頁面的預設子頁面
   RouteData? defaultSubPage() => null;
@@ -89,9 +91,9 @@ abstract class PageBloc
         nextIndex = 0;
         routeMixinImpl.pushPage(subPages()[nextIndex]);
       } else {
-        nextIndex = currentSubPageIndex + 1 >= totalLength
+        nextIndex = currentSubPageIndex! + 1 >= totalLength
             ? 0
-            : currentSubPageIndex + 1;
+            : currentSubPageIndex! + 1;
 
         // 檢查下個頁面是否與當前頁面為同一個
         if (nextIndex != currentSubPageIndex) {
@@ -112,9 +114,8 @@ abstract class PageBloc
     routeMixinImpl.unregisterSubPageListener(this);
 
     // 先丟棄 subject 裡的所有數據在進行close
-    _historyPageSubject?.drain();
-    _historyPageSubject?.close();
-    _historyPageSubject = null;
+    _historyPageSubject.drain();
+    _historyPageSubject.close();
 
     loadDispose();
     refreshDispose();
@@ -122,7 +123,7 @@ abstract class PageBloc
 
   /// 此 bloc 底下有哪些子頁面
   List<String> subPages() {
-    if (route != null && route.isNotEmpty) {
+    if (route.isNotEmpty) {
       return _getSubPages(route);
     } else {
       return [];
@@ -132,10 +133,12 @@ abstract class PageBloc
   /// 註冊 [page] 的子頁面監聽
   /// [defaultSubPage] - 預設子頁面
   void registerSubPageStream({RouteData? defaultRoute}) {
-    if (_historyPageSubject != null) {
+    if (_isInit) {
       print("已註冊, 禁止再次註冊監聽子頁面: $route, $hashCode");
       return;
     }
+
+    _isInit = true;
     _historyPageSubject = BehaviorSubject();
 
     print('註冊頁面: $route, $hashCode');
@@ -154,7 +157,7 @@ abstract class PageBloc
       var data = option as RouteData;
 
       routeMixinImpl.pushPage(
-        data.targetSubRoute,
+        data.targetSubRoute!,
         pageQuery: data.widgetQuery,
         blocQuery: data.blocQuery,
       );
@@ -231,7 +234,7 @@ abstract class PageBloc
   /// tab式分發頁面
   void _tabDispatchPage(
     RouteData data, {
-    bool Function(String route) popUntil,
+    bool Function(String route)? popUntil,
   }) {
     var currentHistory = subPageHistory;
 
@@ -279,13 +282,13 @@ abstract class PageBloc
 
     if (findHistoryIndex != -1) {
       // 曾經在歷史裡面, 調換位置
-      _historyPageSubject.value.removeAt(findHistoryIndex);
+      _historyPageSubject.value!.removeAt(findHistoryIndex);
     }
 
     var routeData = RouteData(route);
 
     if (_historyPageSubject.hasValue) {
-      var currentHistory = _historyPageSubject.value..add(routeData);
+      var currentHistory = _historyPageSubject.value!..add(routeData);
       if (currentHistory.length > cachePageCount) {
         currentHistory =
             currentHistory.sublist(currentHistory.length - cachePageCount);
@@ -296,10 +299,10 @@ abstract class PageBloc
     }
   }
 
-  String _popSubPage({bool Function(String route) popUntil}) {
+  String? _popSubPage({bool Function(String route)? popUntil}) {
     if (subPageHistory.length >= 2) {
+      var currentHistory = List<RouteData>.from(subPageHistory);
       if (popUntil != null) {
-        var currentHistory = _historyPageSubject.value;
         bool isKeep = false;
         while (!isKeep && currentHistory.length > 1) {
           isKeep = popUntil(currentHistory.last.route);
@@ -311,11 +314,11 @@ abstract class PageBloc
         _historyPageSubject.add(currentHistory);
         return currentHistory.last.route;
       } else {
-        _historyPageSubject.value.removeLast();
+        currentHistory.removeLast();
 //      print('剩餘子頁面: ${_historyPageSubject.value.map((e) => e.route)}');
-        _historyPageSubject.value.last.isPop = true;
-        _historyPageSubject.add(_historyPageSubject.value);
-        return _historyPageSubject.value.last.route;
+        currentHistory.last.isPop = true;
+        _historyPageSubject.add(currentHistory);
+        return currentHistory.last.route;
       }
     }
     return null;

@@ -199,7 +199,7 @@ abstract class _CombState extends State<AnimatedComb>
   bool isAnimatedInitComplete = false;
 
   /// 註冊動畫列表到 [AnimatedSyncTick] 後得到的 id
-  late int _syncAnimateId;
+  int? _syncAnimateId;
 
   /// 動畫 tick 監聽
   late StreamSubscription _tickStreamSubscription;
@@ -282,7 +282,7 @@ abstract class _CombState extends State<AnimatedComb>
     Widget childChain;
 
     var animValue =
-        _currentAnimatedTick._getAnimationData(_syncAnimateId).current;
+        _currentAnimatedTick._getAnimationData(_syncAnimateId!).current;
     animValue._alignment = widget.alignment;
 
     if (widget.builder != null) {

@@ -343,20 +343,20 @@ class _RefreshViewState extends State<RefreshView> {
   }
 
   /// 最終顯示的 header
-  Header get _showHeader {
+  Header? get _showHeader {
     if (widget._easyRefresh.header == null && _defaultHeaderBuilder != null) {
       return _defaultHeaderBuilder!(context);
     } else {
-      return widget._easyRefresh.header!;
+      return widget._easyRefresh.header;
     }
   }
 
   /// 最終顯示的 footer
-  Footer get _showFooter {
+  Footer? get _showFooter {
     if (widget._easyRefresh.header == null && _defaultFooterBuilder != null) {
       return _defaultFooterBuilder!(context);
     } else {
-      return widget._easyRefresh.footer!;
+      return widget._easyRefresh.footer;
     }
   }
 

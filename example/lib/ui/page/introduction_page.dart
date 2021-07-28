@@ -146,30 +146,24 @@ Widget buildIntroduction(String content) {
   return InfoPopup(
     child: FractionallySizedBox(
       widthFactor: 1,
-      child: AnimatedComb.quick(
-        scale: Comb.scale(begin: Size.zero, end: Size.square(1)),
-        type: AnimatedType.once,
-        duration: 2000,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xff2b9eda),
-                Color(0xff68c3fb),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            borderRadius: BorderRadius.circular(12),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xff2b9eda),
+              Color(0xff68c3fb),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          margin: EdgeInsets.all(12),
-          padding: EdgeInsets.all(12),
-          child: Text(
-            content,
-            style: TextStyle(color: Colors.white, fontSize: 14),
-          ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        curve: Curves.elasticOut,
+        margin: EdgeInsets.all(12),
+        padding: EdgeInsets.all(12),
+        child: Text(
+          content,
+          style: TextStyle(color: Colors.white, fontSize: 14),
+        ),
       ),
     ),
   );

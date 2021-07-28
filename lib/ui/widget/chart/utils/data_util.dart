@@ -4,7 +4,6 @@ import '../entity/k_line_entity.dart';
 
 class ChartDataCalculator {
   static calculate(List<KLineEntity> dataList) {
-    if (dataList == null) return;
     _calcMA(dataList);
     _calcBOLL(dataList);
     _calcVolumeMA(dataList);
@@ -216,11 +215,11 @@ class ChartDataCalculator {
         rsiABSEma = 0;
         rsiMaxEma = 0;
       } else {
-        double Rmax = max(0, closePrice - dataList[i - 1].close);
-        double RAbs = (closePrice - dataList[i - 1].close).abs();
+        double rmax = max(0, closePrice - dataList[i - 1].close);
+        double rAbs = (closePrice - dataList[i - 1].close).abs();
 
-        rsiMaxEma = (Rmax + (14 - 1) * rsiMaxEma) / 14;
-        rsiABSEma = (RAbs + (14 - 1) * rsiABSEma) / 14;
+        rsiMaxEma = (rmax + (14 - 1) * rsiMaxEma) / 14;
+        rsiABSEma = (rAbs + (14 - 1) * rsiABSEma) / 14;
         rsi = (rsiMaxEma / rsiABSEma) * 100;
       }
       if (i < 13) rsi = 0;
@@ -315,7 +314,6 @@ class ChartDataCalculator {
 
   //增量更新时计算最后一个数据
   static addLastData(List<KLineEntity> dataList, KLineEntity data) {
-    if (dataList == null || data == null) return;
     dataList.add(data);
     _calcMA(dataList, true);
     _calcBOLL(dataList, true);
@@ -328,7 +326,6 @@ class ChartDataCalculator {
 
   //更新最后一条数据
   static updateLastData(List<KLineEntity> dataList) {
-    if (dataList == null) return;
     _calcMA(dataList, true);
     _calcBOLL(dataList, true);
     _calcVolumeMA(dataList, true);

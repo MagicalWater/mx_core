@@ -8,7 +8,7 @@ export 'dart:async';
 mixin PageRouteMixin implements RouteMixinBase {
   /// 取得路由為 [page] 的頁面是否顯示中
   @override
-  bool isPageShowing(String page) => routeMixinImpl?.isPageShowing(page);
+  bool isPageShowing(String page) => routeMixinImpl.isPageShowing(page);
 
   /// 返回的同時再 push
   /// [route] - 將要 push 的頁面
@@ -18,12 +18,12 @@ mixin PageRouteMixin implements RouteMixinBase {
   @override
   Future<dynamic> popAndPushPage<T>(
     String route, {
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
-    popUntil,
-    Object result,
+    Map<String, dynamic>? pageQuery,
+    Map<String, dynamic>? blocQuery,
+    bool Function(String? route)? popUntil,
+    Object? result,
   }) =>
-      routeMixinImpl?.popAndPushPage(
+      routeMixinImpl.popAndPushPage(
         route,
         pageQuery: pageQuery,
         blocQuery: blocQuery,
@@ -33,10 +33,10 @@ mixin PageRouteMixin implements RouteMixinBase {
 
   @override
   bool popPage({
-    bool Function(String route) popUntil,
-    Object result,
+    bool Function(String? route)? popUntil,
+    Object? result,
   }) =>
-      routeMixinImpl?.popPage(
+      routeMixinImpl.popPage(
         popUntil: popUntil,
         result: result,
       );
@@ -49,14 +49,14 @@ mixin PageRouteMixin implements RouteMixinBase {
   @override
   Future<dynamic> pushPage<T>(
     String route, {
-    Map<String, dynamic> pageQuery,
-    Map<String, dynamic> blocQuery,
-    bool replaceCurrent,
-    bool Function(String route) removeUntil,
-    MixinRouteBuilder<T> builder,
-    Key key,
+    Map<String, dynamic>? pageQuery,
+    Map<String, dynamic>? blocQuery,
+    bool? replaceCurrent,
+    bool Function(String? route)? removeUntil,
+    MixinRouteBuilder<T>? builder,
+    Key? key,
   }) =>
-      routeMixinImpl?.pushPage(
+      routeMixinImpl.pushPage(
         route,
         pageQuery: pageQuery,
         blocQuery: blocQuery,
@@ -72,13 +72,14 @@ mixin PageRouteMixin implements RouteMixinBase {
     String route, {
     PopLevel level = PopLevel.exact,
   }) =>
-      routeMixinImpl?.canPopSubPage(route, level: level);
+      routeMixinImpl.canPopSubPage(route, level: level);
 
   /// 彈出子頁面
+  @override
   bool popSubPage(
     String route, {
     PopLevel level = PopLevel.exact,
-    bool Function(String route) popUntil,
+    bool Function(String route)? popUntil,
   }) =>
-      routeMixinImpl?.popSubPage(route, level: level);
+      routeMixinImpl.popSubPage(route, level: level);
 }

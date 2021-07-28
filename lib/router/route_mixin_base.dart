@@ -54,8 +54,8 @@ abstract class RouteMixinBase {
   /// 返回 page
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
   bool popPage({
-    bool Function(String? route) popUntil,
-    Object result,
+    bool Function(String? route)? popUntil,
+    Object? result,
   });
 
   /// 可以彈出子頁面嗎

@@ -402,11 +402,11 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
             continue;
           }
 
-          // 取得當前位置的滾動控制器
-          var currentController = itemScrollController[i]!;
-
           // 等待 scrollController attach 到 view 上
           if (!(await waitScrollControllerAttach(i))) return;
+
+          // 取得當前位置的滾動控制器
+          var currentController = itemScrollController[i]!;
 
           var millDuration =
               (currentController.position.maxScrollExtent / widget.velocity) *

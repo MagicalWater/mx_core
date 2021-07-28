@@ -173,12 +173,13 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
               style: getTextStyle(wrStyle.color)),
         ];
         break;
-      default:
-        break;
+      case SecondaryState.NONE:
+        return;
     }
     TextPainter tp = TextPainter(
-        text: TextSpan(children: children ?? []),
-        textDirection: TextDirection.ltr);
+      text: TextSpan(children: children),
+      textDirection: TextDirection.ltr,
+    );
     tp.layout();
     tp.paint(canvas, Offset(x, chartRect.top - topPadding));
   }

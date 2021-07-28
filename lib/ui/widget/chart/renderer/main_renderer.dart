@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart' show NumUtil;
 import 'package:mx_core/ui/widget/chart/entity/k_line_entity.dart';
@@ -10,13 +11,18 @@ import '../k_chart.dart';
 import 'base_chart_renderer.dart';
 
 class _MinMax {
-  double min;
-  double max;
+  final double min;
+  final double max;
 
-  bool isMinDefault;
-  bool isMaxDefault;
+  final bool isMinDefault;
+  final bool isMaxDefault;
 
-  _MinMax({this.min, this.max, this.isMinDefault, this.isMaxDefault});
+  _MinMax({
+    required this.min,
+    required this.max,
+    required this.isMinDefault,
+    required this.isMaxDefault,
+  });
 }
 
 class MainRenderer extends BaseChartRenderer<CandleEntity> {
@@ -34,8 +40,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   List<MALine> maLine;
 
-  KLineEntity preEntity;
-  KLineEntity nextEntity;
+  KLineEntity? preEntity;
+  KLineEntity? nextEntity;
 
   List<double> gridPosition = [];
 
@@ -62,19 +68,22 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   @override
   void translateMinMax() {
-    _MinMax _minMax(double minDefault, double maxDefault,
-        [double v1,
-        double v2,
-        double v3,
-        double v4,
-        double v5,
-        double v6,
-        double v7,
-        double v8,
-        double v9,
-        double v10]) {
-      var values = <double>[];
-      values
+    _MinMax _minMax(
+      double minDefault,
+      double maxDefault, [
+      double? v1,
+      double? v2,
+      double? v3,
+      double? v4,
+      double? v5,
+      double? v6,
+      double? v7,
+      double? v8,
+      double? v9,
+      double? v10,
+    ]) {
+      var nullValues = <double?>[];
+      nullValues
         ..add(v1)
         ..add(v2)
         ..add(v3)
@@ -85,7 +94,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         ..add(v8)
         ..add(v9)
         ..add(v10);
-      values.removeWhere((element) => element == null);
+      nullValues.removeWhere((element) => element == null);
+      var values = nullValues.map((e) => e!).toList();
       if (values.isEmpty) {
         return _MinMax(
           min: minDefault,
@@ -187,7 +197,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   @override
   void drawText(Canvas canvas, CandleEntity data, double x) {
     if (isLine == true) return;
-    TextSpan span;
+    TextSpan? span;
     if (state == MainState.MA) {
       span = TextSpan(
         children: [
@@ -246,8 +256,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     }
   }
 
-  Shader mLineFillShader;
-  Path mLinePath, mLineFillPath;
+  Shader? mLineFillShader;
+  Path? mLinePath, mLineFillPath;
   final double mLineStrokeWidth = 1.0;
   final Paint mLinePaint = Paint()
     ..isAntiAlias = true
@@ -257,13 +267,24 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     ..isAntiAlias = true;
 
   //画折线图
-  draLine(double lastPrice, double curPrice, Canvas canvas, double lastX,
-      double curX) {
+  void draLine(
+    double lastPrice,
+    double curPrice,
+    Canvas canvas,
+    double lastX,
+    double curX,
+  ) {
     mLinePath ??= Path();
     if (lastX == curX) lastX = 0; //起点位置填充
-    mLinePath.moveTo(lastX, getY(lastPrice));
-    mLinePath.cubicTo((lastX + curX) / 2, getY(lastPrice), (lastX + curX) / 2,
-        getY(curPrice), curX, getY(curPrice));
+    mLinePath!.moveTo(lastX, getY(lastPrice));
+    mLinePath!.cubicTo(
+      (lastX + curX) / 2,
+      getY(lastPrice),
+      (lastX + curX) / 2,
+      getY(curPrice),
+      curX,
+      getY(curPrice),
+    );
 
 //    //画阴影
     mLineFillShader ??= LinearGradient(
@@ -277,23 +298,23 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
     mLineFillPath ??= Path();
 
-    mLineFillPath.moveTo(lastX, chartRect.height + chartRect.top);
-    mLineFillPath.lineTo(lastX, getY(lastPrice));
-    mLineFillPath.cubicTo((lastX + curX) / 2, getY(lastPrice),
+    mLineFillPath!.moveTo(lastX, chartRect.height + chartRect.top);
+    mLineFillPath!.lineTo(lastX, getY(lastPrice));
+    mLineFillPath!.cubicTo((lastX + curX) / 2, getY(lastPrice),
         (lastX + curX) / 2, getY(curPrice), curX, getY(curPrice));
-    mLineFillPath.lineTo(curX, chartRect.height + chartRect.top);
-    mLineFillPath.close();
+    mLineFillPath!.lineTo(curX, chartRect.height + chartRect.top);
+    mLineFillPath!.close();
 
-    canvas.drawPath(mLineFillPath, mLineFillPaint);
-    mLineFillPath.reset();
+    canvas.drawPath(mLineFillPath!, mLineFillPaint);
+    mLineFillPath!.reset();
 
     canvas.drawPath(
-      mLinePath,
+      mLinePath!,
       mLinePaint
         ..strokeWidth = (mLineStrokeWidth / scaleX).clamp(0.3, 1.0)
         ..color = style.timelineColor,
     );
-    mLinePath.reset();
+    mLinePath!.reset();
   }
 
   void drawMaLine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
@@ -429,10 +450,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   /// 針對grid圖表切割線的吸附
   double getGridAdsorption(double y) {
-    var absorptionPoint = gridPosition.firstWhere(
-      (element) => (y - element).abs() < 4,
-      orElse: () => null,
-    );
+    var absorptionPoint =
+        gridPosition.firstWhereOrNull((element) => (y - element).abs() < 4);
 
     return absorptionPoint ?? y;
   }
