@@ -20,7 +20,7 @@ class TabBarPage extends StatefulWidget {
 class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
   TabBarBloc bloc;
 
-  var currentIndex = 0;
+  var currentIndex = 15;
   TabController tabController;
 
   List<String> tabs;
@@ -31,7 +31,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
     bloc = BlocProvider.of<TabBarBloc>(context);
     tabController = TabController(
       initialIndex: currentIndex,
-      length: 3,
+      length: 20,
       vsync: this,
     );
 

@@ -104,12 +104,13 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
     if (widget.scrollable) {
       tabScrollController = ScrollController();
     }
-    if (widget.controller != null) {
+    currentIndex = _tabController?.index ?? widget.currentIndex!;
+
+    if (widget.controller != null && currentIndex != 0) {
       needScrollCenter = true;
     } else {
       needScrollCenter = false;
     }
-    currentIndex = _tabController?.index ?? widget.currentIndex!;
     super.initState();
   }
 

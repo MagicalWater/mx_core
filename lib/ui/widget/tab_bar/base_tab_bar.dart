@@ -153,13 +153,26 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
           this.totalSize = totalSize;
           syncIndicator();
           WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-            if (needScrollCenter) {
+            if (needScrollCenter &&
+                (tabScrollController?.position.maxScrollExtent ?? 0) > 0) {
               // print('自動轉移: ${tabScrollController != null} => ${tabRectMap[currentIndex].left}');
-              tabScrollController?.animateTo(
-                tabRectMap[currentIndex]!.left,
-                duration: Duration(milliseconds: 300),
-                curve: Curves.fastLinearToSlowEaseIn,
-              );
+
+              // totalSize.width 是全部寬度
+              // 當 totalSize.width - 最大滑動寬度 = 顯示寬度
+
+              double showWidth = totalSize.width -
+                  tabScrollController!.position.maxScrollExtent;
+
+              var targetRect = tabRectMap[currentIndex]!;
+              bool isShowFull = targetRect.right <= showWidth;
+
+              if (!isShowFull) {
+                tabScrollController?.animateTo(
+                  targetRect.left,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.fastLinearToSlowEaseIn,
+                );
+              }
               needScrollCenter = false;
             }
             setState(() {});
@@ -231,9 +244,9 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
         var percent = indexOffset! - indexShow;
 
         var leftOffset =
-        nextRect.left.subtract(showRect.left).multiply(percent);
+            nextRect.left.subtract(showRect.left).multiply(percent);
         var rightOffset =
-        nextRect.right.subtract(showRect.right).multiply(percent);
+            nextRect.right.subtract(showRect.right).multiply(percent);
 
         indicatorStart = showRect.left.add(leftOffset).divide(totalSize.width);
         indicatorEnd = showRect.right.add(rightOffset).divide(totalSize.width);
@@ -247,7 +260,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
 
         var leftOffset = showRect.left.subtract(preRect.left).multiply(percent);
         var rightOffset =
-        showRect.right.subtract(preRect.right).multiply(percent);
+            showRect.right.subtract(preRect.right).multiply(percent);
 
         indicatorStart = preRect.left.add(leftOffset).divide(totalSize.width);
         indicatorEnd = preRect.right.add(rightOffset).divide(totalSize.width);
