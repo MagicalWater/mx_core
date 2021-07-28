@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/loading_bloc.dart';
 import 'package:mx_core_example/router/route.dart';
-import 'package:mx_core_example/ui/page/introduction_page.dart';
+
+import 'introduction_page.dart';
 
 /// 展示讀取動畫
 @ARoute(url: Pages.loading)
@@ -16,7 +17,8 @@ class LoadingPage extends StatefulWidget {
   _LoadingPageState createState() => _LoadingPageState();
 }
 
-class _LoadingPageState extends State<LoadingPage> {
+class _LoadingPageState extends State<LoadingPage>
+    with TickerProviderStateMixin {
   LoadingBloc bloc;
 
   var title = "讀取動畫";
@@ -34,6 +36,7 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
+    // return Container();
     return PageScaffold(
       haveAppBar: true,
       color: Colors.white,
@@ -62,17 +65,17 @@ class _LoadingPageState extends State<LoadingPage> {
 
   Widget buildLoading(LoadingType type) {
     switch (type) {
-      // case LoadingType.spring:
-      //   return buildSpring();
-      //   break;
-      // case LoadingType.roundSpring:
-      //   return buildRoundSpring();
-      //   break;
+      case LoadingType.spring:
+        return buildSpring();
+        break;
+      case LoadingType.roundSpring:
+        return buildRoundSpring();
+        break;
       case LoadingType.circle:
         return buildCircle();
         break;
-      default:
-        break;
+      // default:
+      //   break;
     }
     return Container();
   }

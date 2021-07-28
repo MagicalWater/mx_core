@@ -33,7 +33,7 @@ class _CoordinateDelegate extends FlowDelegate {
   final bool isDataDifference;
 
   /// 共佔用的高度
-  late double allHeight;
+  double? allHeight;
 
   /// 最後一個 child 是否佔滿剩下的空間
   bool lastFillWidth;

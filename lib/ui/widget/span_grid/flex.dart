@@ -95,7 +95,7 @@ class SpanFlex extends RenderFlex {
           clipBehavior: clipBehavior,
         );
 
-  Map<int, int> _oriFlex = {};
+  Map<int, int?> _oriFlex = {};
 
   @override
   void layout(Constraints constraints, {bool parentUsesSize = false}) {
@@ -146,13 +146,13 @@ class SpanFlex extends RenderFlex {
   }
 
   /// 取得所有的 flex 對應
-  Map<int, int> _getAllFlex() {
+  Map<int, int?> _getAllFlex() {
     RenderBox? child = firstChild;
     var index = 0;
-    var flexMap = <int, int>{};
+    var flexMap = <int, int?>{};
     while (child != null) {
       final childParentData = child.parentData as FlexParentData;
-      flexMap[index] = childParentData.flex!;
+      flexMap[index] = childParentData.flex;
       index++;
       child = childParentData.nextSibling;
     }

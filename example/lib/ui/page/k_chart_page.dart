@@ -25,7 +25,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
   MainState _mainState = MainState.MA;
   SecondaryState _secondaryState = SecondaryState.MACD;
   bool isLine = false;
-  List<DepthEntity> _bids, _asks;
+  List<DepthEntity> _bids = [], _asks = [];
 
   @override
   void initState() {
@@ -51,8 +51,6 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
 
   void initDepth(List<DepthEntity> bids, List<DepthEntity> asks) {
     if (bids == null || asks == null || bids.isEmpty || asks.isEmpty) return;
-    _bids = List();
-    _asks = List();
     double amount = 0.0;
     bids?.sort((left, right) => left.price.compareTo(right.price));
     //倒序循環 //累加買入委託量

@@ -357,7 +357,7 @@ class AnimatedSyncTick implements AnimatedCombController {
     double shiftPercent =
         animatedComb.shiftDuration.toDouble() / totalDuration.toDouble();
 
-   print("延遲百分比: $shiftPercent");
+   // print("延遲百分比: $shiftPercent");
 
     // 遍歷動畫列表, 轉為對應的 animation
     animatedComb.animateList.forEach((e) async {

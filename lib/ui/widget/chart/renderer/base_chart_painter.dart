@@ -65,7 +65,7 @@ abstract class BaseChartPainter extends CustomPainter {
     this.secondaryState = SecondaryState.MACD,
     this.isLine = false,
     this.onCalculateMaxScrolled,
-  }): assert(isLongPress && longPressY != null) {
+  }): assert(!isLongPress || (isLongPress && longPressY != null)) {
     mItemCount = datas.length;
     mDataLen = mItemCount * mPointWidth;
     initFormats();

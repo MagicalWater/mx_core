@@ -60,13 +60,17 @@ class ShiftAnimation extends CurvedAnimation {
 
     var shiftT = getShiftT(t);
 
+    var sup = getSuperValue(shiftT);
+
+    // print('t轉移($shift): $t => $shiftT, $sup');
+
 //    if (lastShow != newShow) {
 //      print("印出 t = ${t.toStringAsFixed(1)}, 偏移後: ${newT.toStringAsFixed(1)}");
 //      lastShow = newShow;
 //    }
 
 //    print("最後t = $newT");
-    return getSuperValue(shiftT);
+    return sup;
   }
 
   /// 取得 t 位移後的新值
@@ -196,7 +200,7 @@ class ShiftAnimation extends CurvedAnimation {
   double getSuperValue(double t) {
     final Curve? activeCurve = _useForwardCurve ? curve : reverseCurve;
 
-    final double t = parent.value;
+    // final double t = parent.value;
     if (activeCurve == null) return t;
     if (t == 0.0 || t == 1.0) {
       assert(() {
