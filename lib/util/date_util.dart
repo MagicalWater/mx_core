@@ -2,6 +2,38 @@ import 'dart:core';
 
 import 'package:intl/intl.dart';
 
+extension DateUtilEx on DateTime {
+  bool get isLeapYear => DateUtil.isLeapYear(this.year);
+
+  String getDateStr({
+    String format = "yyyy-MM-dd HH:mm:ss",
+    String? sameDayFormat,
+    String? differentDayFormat,
+    String Function(Duration diff)? builder,
+  }) =>
+      DateUtil.getDateStr(
+        this,
+        format: format,
+        sameDayFormat: sameDayFormat,
+        differentDayFormat: differentDayFormat,
+        builder: builder,
+      );
+
+  bool isYearEqual(DateTime other) => DateUtil.yearIsEqual(this, other);
+
+  bool isMonthEqual(DateTime other) => DateUtil.monthIsEqual(this, other);
+
+  bool isDayEqual(DateTime other) => DateUtil.dayIsEqual(this, other);
+
+  bool isHourEqual(DateTime other) => DateUtil.hourIsEqual(this, other);
+
+  bool isMinuteEqual(DateTime other) => DateUtil.minuteIsEqual(this, other);
+
+  /// 取得時間差距
+  int getDiff(DateTime other, DateType type) =>
+      DateUtil.getDiff(this, other, type);
+}
+
 class DateUtil {
   DateUtil._();
 
