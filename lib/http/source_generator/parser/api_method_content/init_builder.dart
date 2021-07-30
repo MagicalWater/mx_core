@@ -3,12 +3,12 @@ import 'builder.dart';
 
 /// Http 初始化構建類
 class InitBuilder implements Builder {
-  late String path;
-  late ApiMethodType method;
-  late String contentType;
-  late String scheme;
-  late String host;
-  late int port;
+  String? path;
+  ApiMethodType? method;
+  String? contentType;
+  String? scheme;
+  String? host;
+  int? port;
 
   void setting({
     String? path,
@@ -28,6 +28,10 @@ class InitBuilder implements Builder {
 
   @override
   String build() {
+    if (method == null) {
+      return '';
+    }
+
     var text =
         "var content = generator.generate('$path', method: ${getMethodText()}";
 
@@ -54,7 +58,7 @@ class InitBuilder implements Builder {
 
   String getMethodText() {
     var text = '';
-    switch (method) {
+    switch (method!) {
       case ApiMethodType.get:
         text = 'HttpMethod.get';
         break;

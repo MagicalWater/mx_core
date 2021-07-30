@@ -10,7 +10,6 @@ dependencies:
   cupertino_icons: "^0.1.2"
   flutter_localizations:
     sdk: flutter
-  annotation_route: "^0.0.2"
   bot_toast: "^3.0.0"
 dev_dependencies:
   flutter_test:

@@ -25,10 +25,14 @@ class CodeGenerator {
     if (_codeLibrary != null) {
       final emitter = DartEmitter();
       String classString = "${_codeLibrary!.accept(emitter)}";
+      print('tt ===== 1111111');
+      print(classString);
       return DartFormatter().format(classString);
     } else if (_codeClass != null) {
       final emitter = DartEmitter();
       String classString = "${_codeClass!.accept(emitter)}";
+      print('tt =====  2222222');
+      print(classString);
       return DartFormatter().format(classString);
     }
 

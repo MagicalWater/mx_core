@@ -2,9 +2,7 @@ import 'package:annotation_route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart';
-import 'package:mx_core_example/router/route.dart';
 
-@ARoute(url: Pages.routePushSubB)
 class RoutePushSubBPage extends StatefulWidget {
   final RouteOption option;
 

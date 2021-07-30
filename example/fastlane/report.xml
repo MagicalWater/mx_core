@@ -5,22 +5,22 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: merge_env" time="0.000924">
+      <testcase classname="fastlane.lanes" name="0: merge_env" time="0.00107">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: json_bean_convert_generate" time="0.006217">
+      <testcase classname="fastlane.lanes" name="1: json_bean_convert_generate" time="0.014871">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: assets_generate" time="0.006857">
+      <testcase classname="fastlane.lanes" name="2: assets_generate" time="0.005897">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: routes_generate" time="75.32118">
+      <testcase classname="fastlane.lanes" name="3: routes_generate" time="0.54828">
         
       </testcase>
     

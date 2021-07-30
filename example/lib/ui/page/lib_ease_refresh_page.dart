@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/lib_ease_refresh_bloc.dart';
-import 'package:mx_core_example/router/route.dart';
 
-@ARoute(url: Pages.libEaseRefresh)
 class LibEaseRefreshPage extends StatefulWidget {
   final RouteOption option;
 

@@ -2,11 +2,9 @@ import 'package:annotation_route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/timer_bloc.dart';
-import 'package:mx_core_example/router/route.dart';
 import 'package:mx_core_example/ui/page/introduction_page.dart';
 
 /// 倒數計時元件
-@ARoute(url: Pages.timer)
 class TimerPage extends StatefulWidget {
   final RouteOption option;
 

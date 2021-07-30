@@ -10,8 +10,212 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/router.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/aa.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/router/router.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/http/source_generator/aa.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/date_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/date_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.android.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.android.env_new" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.android.env_new" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.ios.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.ios.env_new" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.ios.env_new" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/Fastfile" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/Fastfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/json_bean_convert_generate.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/json_bean_convert_generate.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/pull_script.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/pull_script.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/routes_generate.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/routes_generate.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/set_app_info_ios.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/set_app_info_ios.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/actions/yaml_parse.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/actions/yaml_parse.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/devices_ios.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/devices_ios.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/template/template_page_bloc_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/template/template_page_bloc_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/template/template_page_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/template/template_page_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/template/template_route_dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/files/template/template_route_widget_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/template/template_route_widget_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/infos/account_info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/infos/account_info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/fastlane/version" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env_new" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.android.env_new" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env_new" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.ios.env_new" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.merge.env" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/.merge.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/Fastfile" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/Fastfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/json_bean_convert_generate.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/json_bean_convert_generate.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/pull_script.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/pull_script.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/routes_generate.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/routes_generate.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/set_app_info_ios.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/set_app_info_ios.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/yaml_parse.rb" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/actions/yaml_parse.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/devices_ios.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/devices_ios.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_page_bloc_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_page_bloc_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_page_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_page_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_route_dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_route_widget_dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_route_widget_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/infos/account_info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/infos/account_info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/report.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/report.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/version" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/Flutter.podspec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/animated_core_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/animated_core_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/arrow_container_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/arrow_container_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/arrow_popup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/arrow_popup_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/assist_touch_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/assist_touch_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/bullet_shape_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/bullet_shape_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/coordinate_layout_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/coordinate_layout_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/introduction_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/introduction_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/k_chart_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/k_chart_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/lib_ease_refresh_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/lib_ease_refresh_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/line_indicator_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/line_indicator_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/load_provider_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/load_provider_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/loading_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/loading_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/marquee_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/marquee_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/normal_popup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/normal_popup_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/particle_animation_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/particle_animation_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/refresh_view_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/refresh_view_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_entry_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_entry_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub1_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub1_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_a_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_a_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub2_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub2_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub3_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second/route_push_sub3_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_second_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_third_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/route_push_third_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/span_grid_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/span_grid_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/stateful_button_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/stateful_button_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/tab_bar_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/tab_bar_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/test_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/test_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/timer_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/timer_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/wave_progress_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/bloc/page/wave_progress_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route.internal.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/fastlane/files/template/template_router_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/animated_core_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/animated_core_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/arrow_container_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/arrow_container_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/arrow_popup_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/arrow_popup_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/assist_touch_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/assist_touch_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/bullet_shape_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/bullet_shape_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/coordinate_layout_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/coordinate_layout_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/lib_ease_refresh_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/lib_ease_refresh_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/line_indicator_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/line_indicator_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/load_provider_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/load_provider_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/loading_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/loading_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/marquee_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/marquee_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/normal_popup_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/normal_popup_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/particle_animation_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/particle_animation_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/refresh_view_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/refresh_view_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_entry_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_entry_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub1_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub1_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_a_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_a_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_b_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_b_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub3_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_sub3_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_third_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_third_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/span_grid_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/span_grid_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/stateful_button_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/stateful_button_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/tab_bar_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/tab_bar_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/test_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/test_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/timer_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/timer_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/wave_progress_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/wave_progress_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/api_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/api_generator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/body_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/body_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/init_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_method_content/init_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/code_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/code_generator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/parser.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/color_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/color_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/uri_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/uri_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/Flutter.podspec" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/animated_core_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/animated_core_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/arrow_container_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/arrow_container_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/arrow_popup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/arrow_popup_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/assist_touch_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/assist_touch_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/bullet_shape_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/bullet_shape_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/coordinate_layout_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/coordinate_layout_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/introduction_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/introduction_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/k_chart_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/k_chart_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/lib_ease_refresh_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/lib_ease_refresh_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/line_indicator_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/line_indicator_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/load_provider_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/load_provider_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/loading_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/loading_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/marquee_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/marquee_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/normal_popup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/normal_popup_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/particle_animation_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/particle_animation_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/refresh_view_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/refresh_view_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_entry_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_entry_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub1_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub1_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_a_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_a_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2/route_push_sub_b_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub2_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub3_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second/route_push_sub3_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_second_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/route_push_third_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/route_push_third_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/span_grid_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/span_grid_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/stateful_button_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/stateful_button_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/tab_bar_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/tab_bar_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/test_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/test_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/timer_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/timer_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/bloc/page/wave_progress_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/bloc/page/wave_progress_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/router/route.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/router/route.internal.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/fastlane/files/template/template_router_dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/animated_core_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/animated_core_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/arrow_container_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/arrow_container_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/arrow_popup_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/arrow_popup_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/assist_touch_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/assist_touch_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/bullet_shape_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/bullet_shape_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/coordinate_layout_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/coordinate_layout_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/lib_ease_refresh_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/lib_ease_refresh_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/line_indicator_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/line_indicator_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/load_provider_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/load_provider_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/loading_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/loading_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/marquee_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/marquee_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/normal_popup_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/normal_popup_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/particle_animation_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/particle_animation_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/refresh_view_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/refresh_view_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_entry_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_entry_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub1_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub1_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_a_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_a_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_b_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2/route_push_sub_b_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub2_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub3_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_sub3_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_third_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_third_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/span_grid_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/span_grid_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/stateful_button_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/stateful_button_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/tab_bar_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/tab_bar_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/test_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/test_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/timer_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/timer_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/wave_progress_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/wave_progress_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/api_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/api_generator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/init_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/init_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/code_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/code_generator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/parser.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/color_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/color_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/uri_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/uri_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +246,7 @@
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget/chart/setting" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/fastlane/files/template" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -50,19 +254,19 @@
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib/ui/widget/chart/setting" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget" />
-      <recent name="$PROJECT_DIR$/example/assets/jsons" />
-      <recent name="$PROJECT_DIR$/assets/jsons/chart_example" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/chart" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/storage/store" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/page_switcher" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/align_grid/space" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/span_layout" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example/fastlane/files/template" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/chart/setting" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget" />
+      <recent name="$PROJECT_DIR$/example/assets/jsons" />
+      <recent name="$PROJECT_DIR$/assets/jsons/chart_example" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.ios_debug">
@@ -139,10 +343,22 @@
     </ignored-roots>
   </component>
   <component name="WindowStateProjectService">
+    <state x="507" y="303" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1627617180573">
+      <screen x="0" y="25" width="1680" height="944" />
+    </state>
+    <state x="507" y="303" key="#com.intellij.fileTypes.FileTypeChooser/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627617180573" />
+    <state x="578" y="248" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1627616943088">
+      <screen x="0" y="25" width="1680" height="944" />
+    </state>
+    <state x="578" y="248" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627616943088" />
     <state x="768" y="265" key="AndroidProcessChooserDialog" timestamp="1622450726088">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="768" y="265" key="AndroidProcessChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1622450726088" />
+    <state x="398" y="69" key="CommitChangelistDialog2" timestamp="1627546685966">
+      <screen x="0" y="25" width="1680" height="944" />
+    </state>
+    <state x="398" y="69" key="CommitChangelistDialog2/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627546685966" />
     <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1626077863974">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -179,18 +395,22 @@
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="341" y="126" key="SettingsEditor/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1619406320778" />
-    <state x="493" y="256" width="984" height="490" key="find.popup" timestamp="1627457770179">
+    <state x="445" y="111" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1627549994131">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state x="493" y="256" width="984" height="490" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627457770179" />
+    <state x="445" y="111" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627549994131" />
+    <state x="493" y="256" width="1049" height="550" key="find.popup" timestamp="1627617462691">
+      <screen x="0" y="25" width="1680" height="944" />
+    </state>
+    <state x="493" y="256" width="1049" height="550" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627617462691" />
     <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1627286056952" />
     <state width="600" height="428" key="javadoc.popup" timestamp="1626919798649">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1627463883679">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1627615971219">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627463883679" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627615971219" />
     <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1624588711409" />
     <state width="600" height="428" key="javadoc.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626919798649" />
     <state x="505" y="231" width="671" height="672" key="search.everywhere.popup" timestamp="1627023547392">

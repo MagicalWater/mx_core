@@ -22,12 +22,16 @@ abstract class ApiParser {
       apiClassName = getMainNameByInterface(interfaceName!);
       apiClassName = '${apiClassName!}${getClassSuffixName()}';
 
-      // 將 method 放入 class
-      codeGenerator.setClass(generateApiClass(
+      var apiMethod = generateApiMethods(classElement);
+
+      var apiClass = generateApiClass(
         interfaceName: interfaceName!,
         className: apiClassName!,
-        methods: generateApiMethods(classElement),
-      ));
+        methods: apiMethod,
+      );
+
+      // 將 method 放入 class
+      codeGenerator.setClass(apiClass);
 
       // 將 class 放入 library
       codeGenerator.setLibrary(

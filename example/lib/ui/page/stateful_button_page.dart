@@ -3,11 +3,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/stateful_button_bloc.dart';
-import 'package:mx_core_example/router/route.dart';
 
 import 'introduction_page.dart';
 
-@ARoute(url: Pages.statefulButton)
 class StatefulButtonPage extends StatefulWidget {
   final RouteOption option;
 

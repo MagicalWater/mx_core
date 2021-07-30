@@ -44,6 +44,7 @@ module Fastlane
           end
 
           detectName = file['name_no_ex'] + ".dart"
+          targetClassName = file['name_upper_no_ex']
           targetFileName = file['name_lower_line_no_ex'] + ".dart"
           # puts "檔案名稱命名為: #{file}"
           # 排除 已經存在於 bean 的檔案
@@ -64,7 +65,7 @@ module Fastlane
           if !isExclude
             # 代表檔案需要加入
             FileUtils.mkdir_p("lib/bean/#{detectDir}")
-            command = "flutter packages pub run mx_json -f #{file['path']} -o lib/bean/#{detectDir}/#{targetFileName}"
+            command = "json_dart_generator -f #{file['path']} -o lib/bean/#{detectDir}/#{targetFileName} -s Bean -n #{targetClassName}"
             puts "生成 bean 命令: #{command}"
             system command
           end

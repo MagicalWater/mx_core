@@ -5,9 +5,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/tab_bar_bloc.dart';
-import 'package:mx_core_example/router/route.dart';
 
-@ARoute(url: Pages.tabBar)
 class TabBarPage extends StatefulWidget {
   final RouteOption option;
 

@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/k_chart_bloc.dart';
-import 'package:mx_core_example/router/route.dart';
 
-@ARoute(url: Pages.kChart)
 class KChartPage extends StatefulWidget {
   final RouteOption option;
 

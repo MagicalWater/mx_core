@@ -1,15 +1,12 @@
 import 'dart:math';
 
-import 'package:annotation_route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mx_core/mx_core.dart';
 
-import '../../router/route.dart';
 import 'introduction_page.dart';
 
 /// 展示輔助按鈕
-@ARoute(url: Pages.assistTouch)
 class AssistTouchPage extends StatefulWidget {
   final RouteOption option;
 

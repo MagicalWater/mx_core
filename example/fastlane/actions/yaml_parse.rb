@@ -20,13 +20,7 @@ module Fastlane
       # 加入一般專案最少需求的lib
       def self.add_general_project_lib()
         add_lib(false, lib_hash('flutter_localizations'))
-        add_lib(false, lib_hash('json_annotation'))
-        add_lib(false, lib_hash('annotation_route'))
-        add_lib(false, lib_hash('xson_annotation'))
-        add_lib(false, lib_hash('type_translator'))
         add_lib(false, lib_hash('mx_core'))
-        add_lib(true, lib_hash('mx_json'))
-        add_lib(true, lib_hash('json_serializable'))
         add_lib(true, lib_hash('build_runner'))
         add_default_images()
       end

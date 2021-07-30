@@ -67,7 +67,7 @@ lane :auto_generate do
   assets_generate
 
   # 自動偵測並生成 Routes 裡的 page 以及 widget
-  routes_generate(enforce_command: true)
+  routes_generate(enforce_command: false)
 end
 
 desc '封裝好快速執行 build_runner build的指令'
@@ -112,6 +112,8 @@ platform :ios do
       method = "development"
     end
 
+    sleep 5
+
     # 先創建 app id
     produce(
       company_name: appName,
@@ -123,6 +125,8 @@ platform :ios do
         push_notification: "on",
       }
     )
+
+    sleep 5
 
     # 註冊測試裝置
     register_devices(
@@ -139,6 +143,8 @@ platform :ios do
     FileUtils.rm_rf(devCerPath)
     FileUtils.rm_rf(appstoreCerPath)
 
+    sleep 5
+
     # 進行證書匹配
     match(
       storage_mode: "git",
@@ -153,6 +159,8 @@ platform :ios do
       force_for_new_devices: true
     )
 
+    sleep 10
+
     match(
       storage_mode: "git",
       git_url: "https://github.com/8ucx/Base-APP-Certificate.git",
@@ -165,9 +173,13 @@ platform :ios do
       output_path: "./export/ios/appstore"
     )
 
+    sleep 5
+
     # 取得 team id
     info = get_account_info
     teamId = info[1]
+
+    sleep 5
 
     # 自動同步bundle 以及 開發帳號
     # 關閉自動簽名
@@ -189,11 +201,12 @@ platform :ios do
     appstoreProfile = appstoreProfileList.select{ |i| i[/_#{bundleId}\.mobileprovision$/] }.first
 
     # 使用 match 的方式不能使用自動簽名
-
+    sleep 5
     if method == "development"
       sign_manually(mode: "Debug|Release|Profile", path: devProfile, development: true)
     else
       sign_manually(mode: "Debug", path: devProfile, development: true)
+      sleep 5
       sign_manually(mode: "Release|Profile", path: appstoreProfile, development: false)
     end
 
@@ -484,7 +497,13 @@ platform :ios do
   desc '取得帳號的 team id, 以及公司名稱'
   private_lane :get_account_info do
     fastlane_require 'spaceship'
+
+    puts "等待"
+    sleep 20
     clientTunes = Spaceship::Tunes.login(userName, userPass)
+
+    puts "換"
+    sleep 20
     client = Spaceship::Portal.login(userName, userPass)
 
     infos = []

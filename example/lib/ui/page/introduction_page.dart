@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/app_bloc.dart';
 import 'package:mx_core_example/bloc/page/introduction_bloc.dart';
-
-import '../../router/route.dart';
+import 'package:mx_core_example/router/router.dart';
 
 List<String> autoPushPage = [
 //  Pages.test,
@@ -16,7 +15,6 @@ class YY {
 }
 
 /// 功能介紹頁面
-@ARoute(url: Pages.introduction)
 class IntroductionPage extends StatefulWidget {
   final RouteOption option;
 
@@ -56,7 +54,6 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
   @override
   void initState() {
-
     SecureStorage.readAll();
 
     bloc = BlocProvider.of<IntroductionBloc>(context);
@@ -174,4 +171,15 @@ class PageInfo {
   String page;
 
   PageInfo(this.page, this.desc);
+}
+
+@Api()
+abstract class TestApi {
+  @Post('get/lol/pp')
+  HttpContent login({
+    @Param('start') String start,
+    @Param('end') String end,
+    @Param('effect') String effect,
+    @Body('bd') String bd,
+  });
 }

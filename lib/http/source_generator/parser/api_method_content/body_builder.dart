@@ -4,7 +4,7 @@ import 'param_content_builder.dart';
 
 /// Body 的構建類
 class BodyBuilder extends ParamContentBuilder<BodyContent> {
-  late HttpBodyType bodyType;
+  HttpBodyType? bodyType;
 
   @override
   BodyContent getContent({

@@ -27,9 +27,6 @@ module Fastlane
 
         # 假如有新的 widget 或 page, 則跑 自動生成 code 命令, 或者 enforce_command 強制指令開啟時
         if !newCreatedPage.empty? || params[:enforce_command]
-          UI.message "有新的 page 或 widget 產生 或 強制輸入指令: page - #{newCreatedPage.size}, enforce - #{params[:enforce_command]}, 自動添加命令"
-          UI.message "flutter packages pub run build_runner build --delete-conflicting-outputs"
-          system "flutter packages pub run build_runner build --delete-conflicting-outputs"
           UI.important "完成, 新 page - #{newCreatedPage.size}"
           newCreatedPage.each { |p|
             UI.message "page: #{p}"
@@ -108,7 +105,7 @@ module Fastlane
       def self.insert_route(route_mixin_file)
         content = File.read(route_mixin_file, :encoding => 'UTF-8')
 
-        # 搜索 import 區域, 並插入缺少 import 的 page
+        # 搜索 import 區域, 並插入缺少 import 的 bloc
         content = content.gsub(/(import .+;(\s)+)+/) { |c|
           addText = ""
           $globalSortPages.each { |page|
@@ -120,6 +117,26 @@ module Fastlane
                 addText = addText + "import 'package:#{FileHandleAction.project_name()}/bloc/page/#{findName}';\n"
               else
                 addText = addText + "import 'package:#{FileHandleAction.project_name()}/bloc/page/#{placePath}/#{findName}';\n"
+              end
+              # puts "不包含 import: #{findName}"
+            end
+          }
+          c = c + addText
+          c
+        }
+
+        # 搜索 import 區域, 並插入缺少 import 的 page
+        content = content.gsub(/(import .+;(\s)+)+/) { |c|
+          addText = ""
+          $globalSortPages.each { |page|
+            convertName = FileHandleAction.convert_name(page)
+            findName = "#{convertName['lower_line']}_page.dart"
+            placePath = get_page_place_path(page)
+            if !(c.include?(findName))
+              if placePath.to_s.empty?
+                addText = addText + "import 'package:#{FileHandleAction.project_name()}/ui/page/#{findName}';\n"
+              else
+                addText = addText + "import 'package:#{FileHandleAction.project_name()}/ui/page/#{placePath}/#{findName}';\n"
               end
               # puts "不包含 import: #{findName}"
             end
@@ -160,7 +177,7 @@ module Fastlane
               convertName = FileHandleAction.convert_name(page)
               addText = addText + %{      case Pages.#{page}:
         return BlocProvider(
-          childBuilder: getChild,
+          childBuilder: (context) => #{convertName['upper_camel']}Page(widgetOption),
           blocBuilder: () => #{convertName['upper_camel']}Bloc(blocOption),
           key: key,
         );
@@ -186,9 +203,9 @@ module Fastlane
         # 只生成不存在的
 
         # 檢查是否有 route.dart
-        self.get_no_exist_file('lib/router', ["route"], '.dart').each { |hash|
-          tempText = FileHandleAction.get_template("fastlane/files/template/template_route_dart", hash)
-          File.write("lib/router/route.dart", tempText)
+        self.get_no_exist_file('lib/router', ["router"], '.dart').each { |hash|
+          tempText = FileHandleAction.get_template("fastlane/files/template/template_router_dart", hash)
+          File.write("lib/router/router.dart", tempText)
         }
 
         # 檢查是否有 route_widget.dart

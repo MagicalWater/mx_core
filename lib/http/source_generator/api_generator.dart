@@ -40,12 +40,14 @@ class ApiGenerator extends GeneratorForAnnotation<Api> {
     clientMixinParser.parse(element);
 
     // 將 client mixin 解析結果送入 service pattern 往下解析
-    servicePatternParser.setClientMixinClassCoder(clientMixinParser.codeGenerator);
+    servicePatternParser
+        .setClientMixinClassCoder(clientMixinParser.codeGenerator);
 
     // service 開始解析生成
     servicePatternParser.parse(element);
 
     var apiText = apiClassParser.getFormatText();
+
     var clientText = clientMixinParser.getFormatText();
     var serviceText = servicePatternParser.getFormatText();
 

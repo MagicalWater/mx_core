@@ -1,19 +1,15 @@
 import 'dart:math';
 
-import 'package:annotation_route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
-import '../../router/route.dart';
 import 'introduction_page.dart';
 
 /// 展示座標佈局元件
-@ARoute(url: Pages.coordinateLayout)
 class CoordinateLayoutPage extends StatefulWidget {
-
   final RouteOption option;
 
-  CoordinateLayoutPage(this.option): super();
+  CoordinateLayoutPage(this.option) : super();
 
   @override
   _CoordinateLayoutPageState createState() => _CoordinateLayoutPageState();

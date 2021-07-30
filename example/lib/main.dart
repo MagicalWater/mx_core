@@ -5,7 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:mx_core/mx_core.dart';
 
 import 'bloc/app_bloc.dart';
-import 'router/route.dart';
+import 'router/route_widget.dart';
+import 'router/routes.dart';
 
 void main() {
   var aa = '/routePushSecond/routePushSub1';
@@ -93,95 +94,6 @@ class App extends StatelessWidget {
           home: AppBloc().getPage(
             Pages.introduction,
             entryPoint: true,
-          ),
-//        home: BB(),
-        ),
-      ),
-    );
-  }
-}
-
-class BB extends StatefulWidget {
-  @override
-  _BBState createState() => _BBState();
-}
-
-class _BBState extends State<BB> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-
-  @override
-  void initState() {
-    controller = AnimationController(
-      duration: Duration(seconds: 1),
-      lowerBound: 0,
-      upperBound: 300,
-      vsync: this,
-    )..addListener(() {
-        setState(() {});
-      });
-    Future.delayed(Duration(seconds: 2)).then((_) {
-      controller.forward();
-    });
-    super.initState();
-  }
-
-  void reset() {
-    controller.reset();
-  }
-
-  void forward() {
-    controller.forward();
-  }
-
-  void reversed() {
-    controller.reverse();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(12),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  controller.value.toStringAsFixed(1),
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-              Container(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  RaisedButton(child: Text('Reset'), onPressed: reset),
-                  RaisedButton(child: Text('Forward'), onPressed: forward),
-                  RaisedButton(child: Text('Reversed'), onPressed: reversed),
-                ],
-              ),
-              Container(height: 12),
-              Stack(
-                children: <Widget>[
-                  Container(
-                    height: 340,
-                    width: 2,
-                    color: Colors.black,
-                  ),
-                  Container(
-                    width: 40,
-                    height: 40,
-                    transform:
-                        Matrix4.translationValues(10, controller.value, 0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.blueAccent,
-                    ),
-                  )
-                ],
-              )
-            ],
           ),
         ),
       ),

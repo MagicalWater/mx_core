@@ -188,6 +188,8 @@ module Fastlane
         end
 
         # 覆蓋 Gemfile 與 Gemfile.lock
+        FileUtils.rm_rf("./Gemfile")
+        FileUtils.rm_rf("./Gemfile.lock")
         FileUtils.cp "./#{tempDir}/Gemfile", "./Gemfile"
         FileUtils.cp "./#{tempDir}/Gemfile.lock", "./Gemfile.lock"
         FileUtils.rm_rf("./#{tempDir}/Gemfile")

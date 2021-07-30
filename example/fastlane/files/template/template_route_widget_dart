@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:mx_core/mx_core.dart';
 
-import 'route.dart';
+import 'routes.dart';
 
 /// 儲存所有 route 對應的 page widget
 class RouteWidget implements RouteWidgetBase {
@@ -22,7 +22,6 @@ class RouteWidget implements RouteWidgetBase {
   Widget getPage(RouteData data, {Key key}) {
     final widgetOption = data.copyWith(RouteDataType.widget);
     final blocOption = data.copyWith(RouteDataType.bloc);
-    Widget getChild(BuildContext context) => AppRoute.getPage(widgetOption);
     switch (data.route) {
       default:
         print("找無對應的 page, ${data.route}");

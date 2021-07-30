@@ -2,11 +2,9 @@ import 'package:annotation_route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/load_provider_bloc.dart';
-import 'package:mx_core_example/router/route.dart';
 import 'package:mx_core_example/ui/page/introduction_page.dart';
 
 /// 展示load提供元件
-@ARoute(url: Pages.loadProvider)
 class LoadProviderPage extends StatefulWidget {
   final RouteOption option;
 

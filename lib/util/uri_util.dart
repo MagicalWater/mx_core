@@ -1,24 +1,20 @@
-class UriUtil {
-
-  UriUtil._();
-
-  /// 新加入一個query進入原本的uri
-  /// 若key已存在, 則會進行替代
-  static Uri addParams(Uri uri, String key, dynamic value) {
+extension QueryUri on Uri {
+  /// 添加query
+  Uri addQuery(String key, dynamic value) {
     Map<String, dynamic> oriQuery;
     if (value is List) {
-      oriQuery = Map.from(uri.queryParametersAll);
+      oriQuery = Map.from(this.queryParametersAll);
       oriQuery[key] = value;
     } else {
-      oriQuery = Map.from(uri.queryParameters);
+      oriQuery = Map.from(this.queryParameters);
       oriQuery[key] = value;
     }
 
     return Uri(
-      scheme: uri.scheme,
-      host: uri.host,
-      path: uri.path,
-      port: uri.port,
+      scheme: this.scheme,
+      host: this.host,
+      path: this.path,
+      port: this.port,
       queryParameters: oriQuery,
     );
   }
