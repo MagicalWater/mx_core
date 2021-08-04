@@ -423,10 +423,24 @@ class MainChartStyle {
 class _ChartColors {
   _ChartColors._();
 
+  // static const dark01 = const Color(0xff171b26);
+  // static const dark02 = const Color(0xff232632);
+  // static const tealish01 = const Color(0xff26a39d);
+  // static const pastelRed01 = const Color(0xffeb524f);
+  // static const clearBlue01 = const Color(0xff229fff);
+  // static const darkGreenBlue = const Color(0xff1c5e5e);
+  // static const brownishPurple = const Color(0xff82363a);
+  // static const pastelPink = const Color(0xffe5c9cc);
+  // static const tealish02 = const Color(0xff26a79c);
+  // static const lightGreyBlue01 = const Color(0xffb1c7c4);
+  // static const darkishGreen = const Color(0xff1b612f);
+  // static const rustyRed01 = const Color(0xffbf1c1c);
+  // static const clearBlue02 = const Color(0xff2e8efb);
+
   //背景颜色
-  static const Color bgColor = Color(0xff0D141E);
+  static const Color bgColor = Color(0xff171b26);
   static const Color kLineColor = Color(0xff4C86CD);
-  static const Color gridColor = Color(0xff4c5c74);
+  static const Color gridColor = Color(0xff2c303e);
   static const List<Color> kLineShadowColor = [
     Color(0x554C86CD),
     Color(0x00000000)
@@ -435,8 +449,8 @@ class _ChartColors {
   static const Color ma10Color = Color(0xff6CB0A6);
   static const Color ma20Color = Color(0xff1b94ff);
   static const Color ma30Color = Color(0xff9979C6);
-  static const Color upColor = Color(0xff19aa1e);
-  static const Color dnColor = Color(0xffC15466);
+  static const Color upColor = Color(0xff26a39d);
+  static const Color dnColor = Color(0xffeb524f);
   static const Color candleBorderColor = Color(0xff656565);
 
   static const Color volColor = Color(0xff4729AE);
@@ -502,10 +516,10 @@ class _ChartReverseColors {
   static const Color volColor = Color(0xffb8d651);
 
   static const Color macdColor = Color(0xffb8d651);
-  static const Color macdSellUpColor = Color(0xff26a69a);
-  static const Color macdSellDnColor = Color(0xffb2dfdb);
+  static const Color macdSellUpColor = Color(0xff26a79c);
+  static const Color macdSellDnColor = Color(0xffb1c7c4);
   static const Color macdBuyUpColor = Color(0xffef5350);
-  static const Color macdBuyDnColor = Color(0xfffccdd2);
+  static const Color macdBuyDnColor = Color(0xffe5c9cc);
   static const Color difColor = Color(0xff1b94ff);
   static const Color deaColor = Color(0xfffa8f40);
 

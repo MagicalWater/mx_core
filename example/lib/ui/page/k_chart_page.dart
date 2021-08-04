@@ -94,6 +94,8 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
             // MALine.ma20,
             // MALine.ma30,
           ],
+          mainStyle: MainChartStyle.dark(),
+          subStyle: SubChartStyle.dark(),
           onLoadMore: (isRight) {
             print('加載更多: $isRight');
           },
