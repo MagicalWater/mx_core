@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:annotation_route/route.dart';
+import 'package:mx_core_example/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/span_grid_bloc.dart';
