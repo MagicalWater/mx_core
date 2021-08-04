@@ -62,7 +62,7 @@ mixin RefreshMixin {
     bool empty = false,
     bool noMore = false,
     bool resetLoadMore = true,
-    required bool noLoadMore,
+    bool? noLoadMore,
   }) {
     var state = RefreshState.refresh(
       success: success,
