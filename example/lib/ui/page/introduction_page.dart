@@ -4,6 +4,8 @@ import 'package:mx_core_example/bloc/app_bloc.dart';
 import 'package:mx_core_example/bloc/page/introduction_bloc.dart';
 import 'package:mx_core_example/router/router.dart';
 
+// part 'introduction_page.api.dart';
+
 List<String> autoPushPage = [
 //  Pages.test,
 ];
@@ -173,13 +175,13 @@ class PageInfo {
   PageInfo(this.page, this.desc);
 }
 
-@Api()
-abstract class TestApi {
-  @Post('get/lol/pp')
-  HttpContent login({
-    @Param('start') String start,
-    @Param('end') String end,
-    @Param('effect') String effect,
-    @Body('bd') String bd,
-  });
-}
+// @Api()
+// abstract class TestApi {
+//   @Post('get/lol/pp')
+//   HttpContent login({
+//     @Param('start') String start,
+//     @Param('end') String end,
+//     @Param('effect') String effect,
+//     @Body('bd') String bd,
+//   });
+// }

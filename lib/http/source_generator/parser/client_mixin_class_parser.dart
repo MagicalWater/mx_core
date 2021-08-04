@@ -97,7 +97,7 @@ class ClientMixinClassParser extends ApiParser {
 
         p
           ..annotations.addAll(paramAnnotationCode)
-          ..type = codeBuilder.refer(e.type.getDisplayString(withNullability: true))
+          ..type = codeBuilder.refer('${e.type.getDisplayString(withNullability: false)}')
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null

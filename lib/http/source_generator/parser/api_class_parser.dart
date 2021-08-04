@@ -189,7 +189,7 @@ class ApiClassParser extends ApiParser {
         p
           ..annotations.addAll(paramAnnotationCode)
           ..type =
-              codeBuilder.refer(e.type.getDisplayString(withNullability: true))
+              codeBuilder.refer('${e.type.getDisplayString(withNullability: false)}')
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null
