@@ -95,7 +95,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
         (element) => element.route == e,
       );
       if (finded != null) {
-        ValueKey<int> key;
+        ValueKey<int>? key;
         if (finded.forceNew && finded.route == datas.last.route) {
           var showIndex = cacheKey[finded.route]?.value ?? 0;
           showIndex++;
@@ -104,7 +104,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
           cacheKey[finded.route] = key;
           showNew = true;
         } else {
-          key = cacheKey[finded.route]!;
+          key = cacheKey[finded.route];
         }
         return (_) => routeMixinImpl.getPage(finded, key: key);
       } else {
