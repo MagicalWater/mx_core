@@ -23,8 +23,8 @@ class BlocProvider<T extends PageBloc> extends StatefulWidget {
   BlocProviderState<T> createState() => BlocProviderState<T>();
 
   static T? of<T extends PageBloc>(BuildContext context) {
-    var providerState = context.findAncestorStateOfType() as BlocProviderState<T>;
-    return providerState._currentBloc;
+    var providerState = context.findAncestorStateOfType<BlocProviderState<T>>();
+    return providerState?._currentBloc;
   }
 }
 
