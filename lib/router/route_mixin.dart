@@ -212,6 +212,8 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
           if (findListener == null) {
             return false;
           }
+          // print(
+          //     '檢查: ${findListener.route} 底下含有歷史子頁面數量: ${findListener.history.map((e) => e.route)}');
           return findListener.history.length >= 2;
         }
         return false;
@@ -286,13 +288,17 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     subPageHandler._popSubPage = popSubPage;
     subPageHandler._forceModifyPageDetail = forceModifyPageDetail;
     subPageHandler._notifyUpdate = notifyUpdate;
+    // print('～～～: 註冊監聽(前) - ${_subPageListener.map((e) => e.page.route)}');
     _subPageListener.add(subPageHandler);
+    // print('～～～: 註冊監聽(後) - ${_subPageListener.map((e) => e.page.route)}');
   }
 
   /// 取消註冊子頁面監聽
   @override
   void unregisterSubPageListener(PageBlocInterface page) {
+    // print('～～～: 刪除監聽(前) - ${_subPageListener.map((e) => e.page.route)}');
     _subPageListener.removeWhere((e) => e.page == page);
+    // print('～～～: 刪除監聽(後) - ${_subPageListener.map((e) => e.page.route)}');
   }
 
   /// 取得當前頁面的監聽器
@@ -603,7 +609,12 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       return;
     }
     var pageData = _pageSubject.value!.removeLast();
-    _subPageListener.removeWhere((e) => e.page.route == pageData.route);
+    var index = _subPageListener
+        .lastIndexWhere((element) => element.page.route == pageData.route);
+    if (index != -1) {
+      _subPageListener.removeRange(index, _subPageListener.length);
+    }
+    // _subPageListener.removeWhere((e) => e.page.route == pageData.route);
   }
 
   void _removeLastSecondPage() {
@@ -612,6 +623,22 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     }
 
     var pageData = _pageSubject.value!.removeAt(pageHistory.length - 2);
+
+    // 尋找上上一個大頁面
+    var endIndex = _subPageListener.lastIndexWhere(
+        (element) => RouteCompute.isAncestorRoute(element.route));
+
+    if (endIndex != -1) {
+      var _sub = _subPageListener.sublist(0, endIndex);
+      var startIndex = _sub.lastIndexWhere(
+          (element) => RouteCompute.isAncestorRoute(element.route));
+
+      if (startIndex != -1 &&
+          _subPageListener[startIndex].route == pageData.route) {
+        _subPageListener.removeRange(startIndex, endIndex);
+      }
+    }
+
     _subPageListener.removeWhere((e) => e.page.route == pageData.route);
   }
 
