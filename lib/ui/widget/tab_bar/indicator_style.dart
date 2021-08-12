@@ -10,6 +10,8 @@ class TabIndicator {
   final Curve curve;
   final Color? color;
   final Color? bgColor;
+  final Decoration? placeDecoration;
+  final Color? placeColor;
 
   /// 指示器的位置 [上或下]
   final VerticalDirection position;
@@ -25,5 +27,7 @@ class TabIndicator {
     this.duration = const Duration(milliseconds: 300),
     this.curve = Curves.fastOutSlowIn,
     this.position = VerticalDirection.down,
+    this.placeDecoration,
+    this.placeColor,
   });
 }

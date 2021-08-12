@@ -43,12 +43,20 @@ class TextTabBuilder extends WidgetTabBuilder {
           ) {
             var textStyle = tabTextStyle?.call(index, selected) ??
                 _defaultTextStyle(index, selected);
+            return Text(
+              texts[index],
+              textAlign: textAlign,
+              style: textStyle,
+              maxLines: 1,
+              overflow: TextOverflow.clip,
+            );
             return AnimatedDefaultTextStyle(
-              child: Text(texts[index]),
+              child: Text(texts[index], maxLines: 1,),
               textAlign: textAlign,
               style: textStyle,
               duration: textAnimationDuration,
               curve: textAnimationCurve,
+              maxLines: 1,
             );
           },
           actionBuilder: (BuildContext context, int index) {

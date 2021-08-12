@@ -91,6 +91,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       child: PageScaffold(
         haveAppBar: true,
         title: "TabBar",
+        color: Colors.black87,
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,12 +102,12 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
                 // child: textTab(),
                 child: test(),
               ),
-              Expanded(
-                child: TabBarView(
-                  children: pages,
-                  controller: tabController,
-                ),
-              ),
+              // Expanded(
+              //   child: TabBarView(
+              //     children: pages,
+              //     controller: tabController,
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -123,14 +124,14 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         tabDecoration: (index, selected) {
           if (selected) {
             return BoxDecoration(
-              color: Colors.yellow,
-              border: Border.all(color: Colors.yellow),
+              color: Colors.transparent,
+              // border: Border.all(color: Colors.yellow),
               borderRadius: BorderRadius.circular(6.scaleA),
             );
           } else {
             return BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.white),
+              color: Colors.transparent,
+              // border: Border.all(color: Colors.white),
               borderRadius: BorderRadius.circular(6.scaleA),
             );
           }
@@ -138,17 +139,22 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         tabTextStyle: (index, selected) {
           if (selected) {
             return TextStyle(
-              color: Colors.black,
+              color: Colors.yellow,
               fontSize: 14.scaleA,
             );
           } else {
             return TextStyle(
-              color: Colors.black,
-              fontSize: selected ? 30.scaleA : 10.scaleA,
+              color: Colors.grey,
+              fontSize: 10.scaleA,
             );
           }
         },
         padding: EdgeInsets.symmetric(horizontal: 20.scaleA),
+      ),
+      indicator: TabIndicator(
+        color: Colors.yellow,
+        placeColor: Colors.grey,
+        height: 3
       ),
       tabWidth: TabWidth.shrinkWrap(),
       scrollable: true,

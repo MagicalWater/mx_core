@@ -11,9 +11,12 @@
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/route_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/tab_bar_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/tab_bar_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/indicator_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/indicator_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,28 +164,28 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1626077863974" />
-    <state width="934" height="263" key="GridCell.Tab.0.bottom" timestamp="1628059630119">
+    <state width="1638" height="453" key="GridCell.Tab.0.bottom" timestamp="1628735433209">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="263" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627459103553" />
+    <state width="1638" height="453" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1628735433209" />
     <state width="1860" height="278" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1622623186843" />
     <state width="934" height="263" key="GridCell.Tab.0.bottom/0.25.1680.944@0.25.1680.944" timestamp="1628059630119" />
-    <state width="934" height="263" key="GridCell.Tab.0.center" timestamp="1628059630119">
+    <state width="1638" height="453" key="GridCell.Tab.0.center" timestamp="1628735433208">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="263" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627459103552" />
+    <state width="1638" height="453" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1628735433208" />
     <state width="1860" height="278" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1622623186843" />
     <state width="934" height="263" key="GridCell.Tab.0.center/0.25.1680.944@0.25.1680.944" timestamp="1628059630119" />
-    <state width="934" height="263" key="GridCell.Tab.0.left" timestamp="1628059630118">
+    <state width="1638" height="453" key="GridCell.Tab.0.left" timestamp="1628735433208">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="263" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627459103552" />
+    <state width="1638" height="453" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1628735433208" />
     <state width="1860" height="278" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1622623186842" />
     <state width="934" height="263" key="GridCell.Tab.0.left/0.25.1680.944@0.25.1680.944" timestamp="1628059630118" />
-    <state width="934" height="263" key="GridCell.Tab.0.right" timestamp="1628059630119">
+    <state width="1638" height="453" key="GridCell.Tab.0.right" timestamp="1628735433209">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="1638" height="263" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627459103553" />
+    <state width="1638" height="453" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1628735433209" />
     <state width="1860" height="278" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1622623186843" />
     <state width="934" height="263" key="GridCell.Tab.0.right/0.25.1680.944@0.25.1680.944" timestamp="1628059630119" />
     <state x="445" y="111" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1627549994131">
@@ -198,10 +201,10 @@
     <state width="600" height="428" key="javadoc.popup" timestamp="1626919798649">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1628567926485">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1628737101567">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1628567926485" />
+    <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1628737101567" />
     <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1628149424977" />
     <state width="600" height="428" key="javadoc.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626919798649" />
     <state x="505" y="231" width="671" height="672" key="search.everywhere.popup" timestamp="1627023547392">

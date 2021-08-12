@@ -176,6 +176,24 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
       if (indicatorBg == null && widget.indicator!.bgColor != null) {
         indicatorBg = BoxDecoration(color: widget.indicator!.bgColor);
       }
+
+      List<LinePlace> places = [];
+      var needPlace = widget.indicator!.placeColor != null ||
+          widget.indicator!.placeDecoration != null;
+      if (needPlace && tabRectMap.isNotEmpty) {
+        places = tabRectMap.values.map<LinePlace>((e) {
+          return LinePlace(
+            start: e.left / totalSize.width,
+            end: e.right / totalSize.width,
+            color: widget.indicator!.placeColor,
+            decoration: widget.indicator!.placeDecoration,
+            placeUp: false,
+          );
+        }).toList();
+      }
+
+      // print('站位: ${places.map((e) => '${e.start} ~ ${e.end}').toList()}');
+
       var lineIndicator = Container(
         decoration: indicatorBg,
         child: LineIndicator(
@@ -189,6 +207,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
           size: widget.indicator!.height,
           direction: Axis.horizontal,
           appearAnimation: false,
+          places: places,
           animation: _tabController == null,
         ),
       );
