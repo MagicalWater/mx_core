@@ -143,6 +143,7 @@ class HttpUtil {
       url: url,
       queryParams: queryParams,
       headers: headers,
+      method: HttpMethod.get,
     );
   }
 
@@ -164,6 +165,7 @@ class HttpUtil {
       url: '${uri.scheme}://${uri.host}${uri.path}',
       queryParams: uri.queryParametersAll,
       headers: headers,
+      method: HttpMethod.get,
     );
   }
 
@@ -187,6 +189,7 @@ class HttpUtil {
       queryParams: queryParams,
       headers: headers,
       bodyData: bodyData,
+      method: HttpMethod.post,
     );
   }
 
@@ -211,6 +214,7 @@ class HttpUtil {
       queryParams: queryParams,
       headers: headers,
       bodyData: bodyData,
+      method: HttpMethod.put,
     );
   }
 
@@ -234,6 +238,7 @@ class HttpUtil {
       queryParams: queryParams,
       headers: headers,
       bodyData: bodyData,
+      method: HttpMethod.delete,
     );
   }
 
@@ -260,6 +265,7 @@ class HttpUtil {
       queryParams: queryParams,
       headers: headers,
       savePath: savePath,
+      method: HttpMethod.download,
     );
   }
 
@@ -267,13 +273,20 @@ class HttpUtil {
   Stream<ServerResponse> _packageRequest({
     required Future<Response<dynamic>> request,
     required String url,
+    required HttpMethod method,
     String? savePath,
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
     dynamic bodyData,
   }) {
     var observable = Stream.fromFuture(request).handleError((error) {
-      throw _handleError(error, url, queryParams, headers, bodyData);
+      var packageError =
+          _handleError(error, url, queryParams, headers, bodyData, method);
+
+      recordResponseCallback?.call(packageError.response!);
+
+      // 重新拋出錯誤
+      throw packageError;
     }, test: (error) {
       // 只捕捉 DioError, 其餘不捕捉
       return error is DioError;
@@ -285,13 +298,14 @@ class HttpUtil {
         headers: headers,
         body: bodyData,
         saveInPath: savePath,
+        method: method,
       );
     });
 
     // 檢查是否需要將 response 紀錄到本地
     if (recordResponseCallback != null) {
       observable = observable.doOnData((response) {
-        recordResponseCallback!(response);
+        recordResponseCallback?.call(response);
       });
     }
     return observable;
@@ -401,6 +415,7 @@ class HttpUtil {
     Map<String, dynamic> queryParams,
     Map<String, dynamic> headers,
     dynamic body,
+    HttpMethod method,
   ) {
     print('====== 請求錯誤 ======');
     print('url: $url');
@@ -419,6 +434,8 @@ class HttpUtil {
         params: queryParams,
         headers: headers,
         body: body,
+        method: method,
+        error: error,
       ),
     );
   }
