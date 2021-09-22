@@ -32,7 +32,7 @@ void main() {
   // 設定預設 app bar
   PageScaffold.setDefaultAppBar((context, leading, title, actions) {
     Widget titleWidget = Text(
-      title,
+      title ?? '',
       style: TextStyle(
         color: Colors.white,
         fontSize: Screen.scaleA(16),

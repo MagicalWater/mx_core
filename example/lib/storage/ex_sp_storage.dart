@@ -13,7 +13,7 @@ class ExSpStorage {
 
   final String exDataKey = "exDataKey";
 
-  Future<String> getExData() {
+  Future<String?> getExData() {
     return PlainStorage.readString(key: exDataKey);
   }
 

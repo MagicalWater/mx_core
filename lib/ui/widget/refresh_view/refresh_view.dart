@@ -10,7 +10,7 @@ import '../load_provider.dart';
 
 part 'easy_refresh_style.dart';
 
-typedef RefreshBuilder = Widget Function(
+typedef RefreshBuilder = Widget? Function(
   BuildContext context,
   RefreshState state,
   PlaceStyle place,

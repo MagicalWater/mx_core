@@ -13,11 +13,11 @@ class RoutePushThirdPage extends StatefulWidget {
 }
 
 class _RoutePushThirdPageState extends State<RoutePushThirdPage> {
-  RoutePushThirdBloc bloc;
+  late RoutePushThirdBloc bloc;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushThirdBloc>(context);
+    bloc = BlocProvider.of<RoutePushThirdBloc>(context)!;
     super.initState();
   }
 

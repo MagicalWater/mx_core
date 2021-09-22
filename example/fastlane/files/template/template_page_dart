@@ -14,11 +14,11 @@ class ${upper_camel}Page extends StatefulWidget {
 }
 
 class _${upper_camel}PageState extends State<${upper_camel}Page> {
-  ${upper_camel}Bloc bloc;
+  late ${upper_camel}Bloc bloc;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<${upper_camel}Bloc>(context);
+    bloc = BlocProvider.of<${upper_camel}Bloc>(context)!;
     super.initState();
   }
 

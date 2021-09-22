@@ -14,11 +14,11 @@ class TestPage extends StatefulWidget {
 
 class _TestPageState extends State<TestPage>
     with SingleTickerProviderStateMixin {
-  TestBloc bloc;
+  late TestBloc bloc;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<TestBloc>(context);
+    bloc = BlocProvider.of<TestBloc>(context)!;
     super.initState();
   }
 

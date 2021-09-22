@@ -30,7 +30,8 @@ class ClientMixinClassParser extends ApiParser {
           codeBuilder.Field((b) {
             b
               ..type = codeBuilder.refer(apiClassCoder.codeClass!.name)
-              ..name = _getApiInstanceName();
+              ..name = _getApiInstanceName()
+              ..late = true;
           }),
         ])
         ..implements = ListBuilder([codeBuilder.refer(interfaceName)]);
@@ -97,7 +98,8 @@ class ClientMixinClassParser extends ApiParser {
 
         p
           ..annotations.addAll(paramAnnotationCode)
-          ..type = codeBuilder.refer('${e.type.getDisplayString(withNullability: false)}')
+          ..type = codeBuilder
+              .refer('${e.type.getDisplayString(withNullability: false)}?')
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null

@@ -53,7 +53,7 @@ ApiParamType toApiParam(ConstantReader annotation) {
 /// 傳入 [ParamElement]
 /// 返回這個參數的 field type, 預設是 string
 ApiFieldType getFieldType(ParameterElement element) {
-  var name = '${element.type.getDisplayString(withNullability: false)}';
+  var name = '${element.type.getDisplayString(withNullability: false)}?';
 //  print("打印類型名稱 ${element.type.runtimeType}, ${element.type}, $name");
   if (name == 'FileInfo') {
     return ApiFieldType.file;

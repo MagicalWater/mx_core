@@ -59,6 +59,7 @@ module Fastlane
 
         fileString = fileString.gsub(/\n  Images\._internal/) { |c|
           addText = ""
+          allVar = []
           imageFiles.each { |fileHash|
             segments = []
             Pathname.new(fileHash['path']).each_filename { |s|
@@ -76,17 +77,38 @@ module Fastlane
             else
               varNameNoExtension = "#{filePrefix}#{fileHash['name_upper_no_ex']}"
             end
+
+            # 如果檔案名稱有非法符號, 則去除
+            varNameNoExtension = varNameNoExtension.gsub(/(\(|\))/) {|c|
+              "_"
+            }
+
+            allVar.append(varNameNoExtension)
 
             addText = addText + %{
   static const #{varNameNoExtension} = "#{fileHash['path']}";}
 
           }
-          c = addText + c
+
+          allText = "\n  static const all = ["
+          allVar.each { |e|
+            allText = allText + %{
+    #{e},}
+          }
+
+          if allVar.length > 0
+            allText = allText + "\n  ];"
+          else
+            allText = allText + "];"
+          end
+
+          c = addText + allText + c
           c
         }
 
         fileString = fileString.gsub(/\n  (\w)+Images\._internal/) { |c|
           addText = ""
+          allVar = []
           imageFiles.each { |fileHash|
             segments = []
             Pathname.new(fileHash['path']).each_filename { |s|
@@ -105,11 +127,30 @@ module Fastlane
               varNameNoExtension = "#{filePrefix}#{fileHash['name_upper_no_ex']}"
             end
 
+            varNameNoExtension = varNameNoExtension.gsub(/(\(|\))/) {|c|
+              "_"
+            }
+
+            allVar.append(varNameNoExtension)
+
             addText = addText + %{
   static const #{varNameNoExtension} = "packages/#{projectName['ori']}/#{fileHash['path']}";}
 
           }
-          c = addText + c
+
+          allText = "\n  static const all = ["
+          allVar.each { |e|
+            allText = allText + %{
+    #{e},}
+          }
+
+          if allVar.length > 0
+            allText = allText + "\n  ];"
+          else
+            allText = allText + "];"
+          end
+
+          c = addText + allText + c
           c
         }
         FileUtils.mkdir_p("lib/res")

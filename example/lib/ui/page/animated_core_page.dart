@@ -15,7 +15,7 @@ class AnimatedCorePage extends StatefulWidget {
 
 class _AnimatedCorePageState extends State<AnimatedCorePage>
     with SingleTickerProviderStateMixin {
-  AnimatedCoreBloc bloc;
+  late AnimatedCoreBloc bloc;
 
   /// 動畫控制器
   /// 有著以下作用
@@ -41,7 +41,7 @@ class _AnimatedCorePageState extends State<AnimatedCorePage>
 
   @override
   void initState() {
-    bloc = BlocProvider.of<AnimatedCoreBloc>(context);
+    bloc = BlocProvider.of<AnimatedCoreBloc>(context)!;
     super.initState();
   }
 

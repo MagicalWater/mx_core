@@ -16,7 +16,7 @@ class ParticleAnimationPage extends StatefulWidget {
 }
 
 class _ParticleAnimationPageState extends State<ParticleAnimationPage> {
-  ParticleAnimationBloc bloc;
+  late ParticleAnimationBloc bloc;
 
   var title = "粒子碎裂動畫";
   var content = """
@@ -35,7 +35,7 @@ class _ParticleAnimationPageState extends State<ParticleAnimationPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<ParticleAnimationBloc>(context);
+    bloc = BlocProvider.of<ParticleAnimationBloc>(context)!;
     super.initState();
   }
 

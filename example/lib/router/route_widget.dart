@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
 import 'routes.dart';
@@ -109,7 +109,7 @@ class RouteWidget implements RouteWidgetBase {
   ];
 
   @override
-  Widget getPage(RouteData data, {Key key}) {
+  Widget getPage(RouteData data, {Key? key}) {
     final widgetOption = data.copyWith(RouteDataType.widget);
     final blocOption = data.copyWith(RouteDataType.bloc);
     switch (data.route) {
@@ -295,7 +295,12 @@ class RouteWidget implements RouteWidgetBase {
         );
       default:
         print("找無對應的 page, ${data.route}");
-        return null;
+        return Scaffold(
+          appBar: AppBar(),
+          body: Center(
+            child: Text('NOT FOUND'),
+          ),
+        );
     }
   }
 }

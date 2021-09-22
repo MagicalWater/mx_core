@@ -15,7 +15,7 @@ class RoutePushSecondPage extends StatefulWidget {
 }
 
 class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
-  RoutePushSecondBloc bloc;
+  late RoutePushSecondBloc bloc;
   AppBloc appBloc = AppBloc.getInstance();
 
   var title = "頁面跳轉機制第二大頁面";
@@ -26,7 +26,7 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSecondBloc>(context);
+    bloc = BlocProvider.of<RoutePushSecondBloc>(context)!;
     super.initState();
   }
 

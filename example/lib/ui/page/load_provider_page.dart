@@ -15,8 +15,8 @@ class LoadProviderPage extends StatefulWidget {
 }
 
 class _LoadProviderPageState extends State<LoadProviderPage> {
-  LoadProviderBloc bloc;
-  LoadController loadController;
+  late LoadProviderBloc bloc;
+  late LoadController loadController;
 
   var title = "Load提供元件";
   var content = """
@@ -27,7 +27,7 @@ class _LoadProviderPageState extends State<LoadProviderPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<LoadProviderBloc>(context);
+    bloc = BlocProvider.of<LoadProviderBloc>(context)!;
     super.initState();
   }
 
@@ -57,7 +57,7 @@ class _LoadProviderPageState extends State<LoadProviderPage> {
   }
 
   Widget buildLoadableContainer(int index) {
-    BuildContext currentContext;
+    late BuildContext currentContext;
     return MaterialLayer.single(
       layer: LayerProperties(
         margin: EdgeInsets.only(left: 20, top: 20, right: 20),

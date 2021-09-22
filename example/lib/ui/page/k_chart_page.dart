@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:mx_core_example/router/router.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mx_core/mx_core.dart';
@@ -16,8 +16,8 @@ class KChartPage extends StatefulWidget {
 }
 
 class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
-  KChartBloc bloc;
-  List<KLineEntity> datas;
+  late KChartBloc bloc;
+  late List<KLineEntity>? datas;
   bool showLoading = true;
   MainState _mainState = MainState.MA;
   SecondaryState _secondaryState = SecondaryState.MACD;
@@ -27,7 +27,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    bloc = BlocProvider.of<KChartBloc>(context);
+    bloc = BlocProvider.of<KChartBloc>(context)!;
     getData('1day');
     // rootBundle
     //     .loadString('assets/jsons/chart_example/depth.json')
@@ -46,10 +46,10 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
     // });
   }
 
-  void initDepth(List<DepthEntity> bids, List<DepthEntity> asks) {
+  void initDepth(List<DepthEntity>? bids, List<DepthEntity>? asks) {
     if (bids == null || asks == null || bids.isEmpty || asks.isEmpty) return;
     double amount = 0.0;
-    bids?.sort((left, right) => left.price.compareTo(right.price));
+    bids.sort((left, right) => left.price.compareTo(right.price));
     //倒序循環 //累加買入委託量
     bids.reversed.forEach((item) {
       amount += item.amount;
@@ -58,9 +58,9 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
     });
 
     amount = 0.0;
-    asks?.sort((left, right) => left.price.compareTo(right.price));
+    asks.sort((left, right) => left.price.compareTo(right.price));
     //循環 //累加買入委託量
-    asks?.forEach((item) {
+    asks.forEach((item) {
       amount += item.amount;
       item.amount = amount;
       _asks.add(item);
@@ -160,20 +160,20 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
         button("隱藏副視圖", onPressed: () => _secondaryState = SecondaryState.NONE),
         button("update", onPressed: () {
           //更新最後一條數據
-          datas.last.close += (Random().nextInt(100) - 50).toDouble();
-          datas.last.high = max(datas.last.high, datas.last.close);
-          datas.last.low = min(datas.last.low, datas.last.close);
-          ChartDataCalculator.updateLastData(datas);
+          datas!.last.close += (Random().nextInt(100) - 50).toDouble();
+          datas!.last.high = max(datas!.last.high, datas!.last.close);
+          datas!.last.low = min(datas!.last.low, datas!.last.close);
+          ChartDataCalculator.updateLastData(datas!);
         }),
         button("addData", onPressed: () {
           //拷貝一個對象，修改數據
-          var kLineEntity = KLineEntity.fromJson(datas.last.toJson());
+          var kLineEntity = KLineEntity.fromJson(datas!.last.toJson());
           kLineEntity.dateTime = kLineEntity.dateTime.add(Duration(days: 1));
           kLineEntity.open = kLineEntity.close;
           kLineEntity.close += (Random().nextInt(100) - 50).toDouble();
-          datas.last.high = max(datas.last.high, datas.last.close);
-          datas.last.low = min(datas.last.low, datas.last.close);
-          ChartDataCalculator.addLastData(datas, kLineEntity);
+          datas!.last.high = max(datas!.last.high, datas!.last.close);
+          datas!.last.low = min(datas!.last.low, datas!.last.close);
+          ChartDataCalculator.addLastData(datas!, kLineEntity);
         }),
         button("1month", onPressed: () async {
 //              showLoading = true;
@@ -189,7 +189,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
               .reversed
               .toList()
               .cast<KLineEntity>();
-          ChartDataCalculator.calculate(datas);
+          ChartDataCalculator.calculate(datas!);
         }),
         FlatButton(
             onPressed: () {
@@ -203,16 +203,19 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget button(String text, {VoidCallback onPressed}) {
-    return FlatButton(
-        onPressed: () {
-          if (onPressed != null) {
-            onPressed();
-            setState(() {});
-          }
-        },
-        child: Text("$text"),
-        color: Colors.blue);
+  Widget button(String text, {VoidCallback? onPressed}) {
+    return TextButton(
+      onPressed: () {
+        if (onPressed != null) {
+          onPressed();
+          setState(() {});
+        }
+      },
+      child: Text("$text"),
+      style: TextButton.styleFrom(
+        backgroundColor: Colors.blue,
+      ),
+    );
   }
 
   void getData(String period) async {
@@ -221,10 +224,8 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
         await rootBundle.loadString('assets/jsons/chart_example/kline.json');
     Map parseJson = json.decode(result);
     List list = parseJson['data'];
-    datas = list
-        .map((item) => KLineEntity.fromJson(item))
-        .toList();
-    ChartDataCalculator.calculate(datas);
+    datas = list.map((item) => KLineEntity.fromJson(item)).toList();
+    ChartDataCalculator.calculate(datas!);
     showLoading = false;
     setState(() {});
     return;

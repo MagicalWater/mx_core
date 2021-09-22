@@ -31,7 +31,8 @@ class ServicePatternClassParser extends ApiParser {
           codeBuilder.Field((b) {
             b
               ..type = codeBuilder.refer(clientMixinClassCoder.codeClass!.name)
-              ..name = _getClientMixinInstanceName();
+              ..name = _getClientMixinInstanceName()
+              ..late = true;
           }),
         ]);
     });
@@ -113,7 +114,7 @@ class ServicePatternClassParser extends ApiParser {
         p
           ..annotations.addAll(paramAnnotationCode)
           ..type = codeBuilder
-              .refer('${e.type.getDisplayString(withNullability: false)}')
+              .refer('${e.type.getDisplayString(withNullability: false)}?')
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null

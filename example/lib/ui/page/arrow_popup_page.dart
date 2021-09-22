@@ -14,7 +14,7 @@ class ArrowPopupPage extends StatefulWidget {
 }
 
 class _ArrowPopupPageState extends State<ArrowPopupPage> {
-  ArrowPopupBloc bloc;
+  late ArrowPopupBloc bloc;
 
   var title = "箭頭彈窗";
   var content = """
@@ -26,7 +26,7 @@ class _ArrowPopupPageState extends State<ArrowPopupPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<ArrowPopupBloc>(context);
+    bloc = BlocProvider.of<ArrowPopupBloc>(context)!;
 //    Future.delayed(Duration(seconds: 2)).then((_) {
 //      bloc.setLoadState(true);
 //    });
@@ -90,7 +90,7 @@ class _ArrowPopupPageState extends State<ArrowPopupPage> {
   Widget _buildArrowContainer(
     AxisDirection direction,
     PopupScale popupScale, {
-    PopupAction controller,
+    PopupAction? controller,
   }) {
     String showText;
     String showChildText;

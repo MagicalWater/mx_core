@@ -18,11 +18,11 @@ class _RoutePushSubBPageState extends State<RoutePushSubBPage>
   @override
   bool get wantKeepAlive => true;
 
-  RoutePushSubBBloc bloc;
+  late RoutePushSubBBloc bloc;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSubBBloc>(context);
+    bloc = BlocProvider.of<RoutePushSubBBloc>(context)!;
     super.initState();
   }
 

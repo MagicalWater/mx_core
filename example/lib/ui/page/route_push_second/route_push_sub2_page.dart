@@ -17,12 +17,12 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page> with AutomaticKee
   @override
   bool get wantKeepAlive => true;
 
-  RoutePushSub2Bloc bloc;
+  late RoutePushSub2Bloc bloc;
   int counter = 0;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSub2Bloc>(context);
+    bloc = BlocProvider.of<RoutePushSub2Bloc>(context)!;
     super.initState();
   }
 

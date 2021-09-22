@@ -15,7 +15,7 @@ class NormalPopupPage extends StatefulWidget {
 }
 
 class _NormalPopupPageState extends State<NormalPopupPage> {
-  NormalPopupBloc bloc;
+  late NormalPopupBloc bloc;
 
   var title = "一般彈窗";
   var content = """
@@ -30,7 +30,7 @@ class _NormalPopupPageState extends State<NormalPopupPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<NormalPopupBloc>(context);
+    bloc = BlocProvider.of<NormalPopupBloc>(context)!;
     super.initState();
   }
 

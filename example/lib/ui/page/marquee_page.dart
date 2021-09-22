@@ -139,7 +139,7 @@ class _MarqueePageState extends State<MarqueePage> {
     );
   }
 
-  List<String> marqueeList;
+  late List<String> marqueeList;
   int step = 0;
   int diff = 1;
   bool changeSide = false;

@@ -15,9 +15,9 @@ class TimerPage extends StatefulWidget {
 }
 
 class _TimerPageState extends State<TimerPage> {
-  TimerBloc bloc;
+  late  TimerBloc bloc;
 
-  TimerController _controller;
+  late TimerController _controller;
 
   var title = "倒數計時";
   var content = """
@@ -28,7 +28,7 @@ class _TimerPageState extends State<TimerPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<TimerBloc>(context);
+    bloc = BlocProvider.of<TimerBloc>(context)!;
     super.initState();
   }
 

@@ -13,8 +13,8 @@ class RefreshViewPage extends StatefulWidget {
 }
 
 class _RefreshViewPageState extends State<RefreshViewPage> {
-  RefreshViewBloc bloc;
-  ScrollController cc;
+  late RefreshViewBloc bloc;
+  late ScrollController cc;
 
   double hh = 100;
 
@@ -22,7 +22,7 @@ class _RefreshViewPageState extends State<RefreshViewPage> {
   void initState() {
     cc = ScrollController();
 
-    bloc = BlocProvider.of<RefreshViewBloc>(context);
+    bloc = BlocProvider.of<RefreshViewBloc>(context)!;
 //    bloc.loadingMore(true);
     bloc.refreshing();
     Future.delayed(Duration(seconds: 1)).then((_) {

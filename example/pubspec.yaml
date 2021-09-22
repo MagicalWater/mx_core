@@ -3,21 +3,19 @@ name: mx_core_example
 description: Demonstrates how to use the mx_core plugin.
 publish_to: none
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: "^0.1.2"
   flutter_localizations:
     sdk: flutter
-  bot_toast: "^3.0.0"
+  bot_toast: "^4.0.1"
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mx_core:
     path: "../"
-  json_serializable: "^3.2.2"
-  build_runner: "^1.6.8"
+  build_runner: "^2.1.2"
 flutter:
   uses-material-design: true
   assets:

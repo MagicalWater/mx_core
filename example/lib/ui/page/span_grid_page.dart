@@ -15,7 +15,7 @@ class SpanGridPage extends StatefulWidget {
 
 class _SpanGridPageState extends State<SpanGridPage>
     with TickerProviderStateMixin {
-  SpanGridBloc bloc;
+  late SpanGridBloc bloc;
 
   StreamController<List<String>> urlStreamController =
       StreamController.broadcast();
@@ -30,8 +30,8 @@ class _SpanGridPageState extends State<SpanGridPage>
 
   @override
   void initState() {
-    bloc = BlocProvider.of<SpanGridBloc>(context);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    bloc = BlocProvider.of<SpanGridBloc>(context)!;
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
 //      print("開始展示圖");
       urlStreamController.add(imageUrl);
     });
@@ -70,7 +70,7 @@ class _SpanGridPageState extends State<SpanGridPage>
                         segmentCount: 2,
                         horizontalSpace: 10,
                         verticalSpace: 10,
-                        children: snapshot.data
+                        children: snapshot.data!
                             .map((e) => GestureDetector(
                                   onTap: () {
                                     print('點事件11');

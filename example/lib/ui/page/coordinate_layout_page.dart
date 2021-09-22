@@ -55,7 +55,7 @@ class _CoordinateLayoutPageState extends State<CoordinateLayoutPage> {
                   horizontalSpace: 4,
                   verticalSpace: 4,
                   estimatedHeight: 1000,
-                  children: [
+                  children: <AxisItem>[
                     buildAxisItem(x: 0, y: 0, ySpan: 3),
                     buildAxisItem(x: 1, y: 0, xSpan: 3),
                     buildAxisItem(x: 3, y: 1, ySpan: 3),
@@ -71,7 +71,7 @@ class _CoordinateLayoutPageState extends State<CoordinateLayoutPage> {
     );
   }
 
-  Widget buildAxisItem({int x, int y, int xSpan = 1, int ySpan = 1}) {
+  AxisItem buildAxisItem({int? x, int? y, int xSpan = 1, int ySpan = 1}) {
     var item;
     item = AxisItem(
       x: x,

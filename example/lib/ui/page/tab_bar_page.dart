@@ -15,17 +15,17 @@ class TabBarPage extends StatefulWidget {
 }
 
 class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
-  TabBarBloc bloc;
+  late TabBarBloc bloc;
 
   var currentIndex = 15;
-  TabController tabController;
+  late TabController tabController;
 
-  List<String> tabs;
-  List<Widget> pages;
+  late List<String> tabs;
+  late List<Widget> pages;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<TabBarBloc>(context);
+    bloc = BlocProvider.of<TabBarBloc>(context)!;
     tabController = TabController(
       initialIndex: currentIndex,
       length: 20,

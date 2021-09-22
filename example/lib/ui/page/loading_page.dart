@@ -17,7 +17,7 @@ class LoadingPage extends StatefulWidget {
 
 class _LoadingPageState extends State<LoadingPage>
     with TickerProviderStateMixin {
-  LoadingBloc bloc;
+  late LoadingBloc bloc;
 
   var title = "讀取動畫";
   var content = """
@@ -28,7 +28,7 @@ class _LoadingPageState extends State<LoadingPage>
 
   @override
   void initState() {
-    bloc = BlocProvider.of<LoadingBloc>(context);
+    bloc = BlocProvider.of<LoadingBloc>(context)!;
     super.initState();
   }
 

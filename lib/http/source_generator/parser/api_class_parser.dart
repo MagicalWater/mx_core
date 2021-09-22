@@ -117,10 +117,18 @@ class ApiClassParser extends ApiParser {
 
     // 解析常數參數 (header/body/queryparam)
     (methodAnnotation.peek('headers')?.mapValue ?? {}).forEach((k, v) {
-      constantHeader[k!.toStringValue()!] = v!.toStringValue()!;
+      var keyString = k?.toStringValue();
+      var valueString = v?.toStringValue();
+      if (keyString != null && valueString != null) {
+        constantHeader[keyString] = valueString;
+      }
     });
     (methodAnnotation.peek('queryParams')?.mapValue ?? {}).forEach((k, v) {
-      constantQueryParam[k!.toStringValue()!] = v!.toStringValue()!;
+      var keyString = k?.toStringValue();
+      var valueString = v?.toStringValue();
+      if (keyString != null && valueString != null) {
+        constantQueryParam[keyString] = valueString;
+      }
     });
 
     var bodyPeek = methodAnnotation.peek('body');
@@ -129,7 +137,11 @@ class ApiClassParser extends ApiParser {
     } else if (bodyPeek?.isMap == true) {
       constantBody = Map<String, String>();
       (bodyPeek!.mapValue).forEach((k, v) {
-        constantBody[k!.toStringValue()] = v!.toStringValue();
+        var keyString = k?.toStringValue();
+        var valueString = v?.toStringValue();
+        if (keyString != null && valueString != null) {
+          constantBody[keyString] = valueString;
+        }
       });
     }
 
@@ -188,8 +200,8 @@ class ApiClassParser extends ApiParser {
 
         p
           ..annotations.addAll(paramAnnotationCode)
-          ..type =
-              codeBuilder.refer('${e.type.getDisplayString(withNullability: false)}')
+          ..type = codeBuilder
+              .refer('${e.type.getDisplayString(withNullability: false)}?')
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null

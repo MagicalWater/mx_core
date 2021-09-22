@@ -15,7 +15,7 @@ class ArrowContainerPage extends StatefulWidget {
 }
 
 class _ArrowContainerPageState extends State<ArrowContainerPage> {
-  ArrowContainerBloc bloc;
+  late ArrowContainerBloc bloc;
 
   var title = "箭頭容器";
   var content = """
@@ -25,7 +25,7 @@ class _ArrowContainerPageState extends State<ArrowContainerPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<ArrowContainerBloc>(context);
+    bloc = BlocProvider.of<ArrowContainerBloc>(context)!;
     super.initState();
   }
 

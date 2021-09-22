@@ -15,7 +15,7 @@ class WaveProgressPage extends StatefulWidget {
 }
 
 class _WaveProgressPageState extends State<WaveProgressPage> {
-  WaveProgressBloc bloc;
+  late WaveProgressBloc bloc;
 
   var title = "波浪進度條";
   var content = """
@@ -25,14 +25,14 @@ class _WaveProgressPageState extends State<WaveProgressPage> {
   """;
 
   /// 圓形的進度條控制器
-  ProgressController circleProgressController;
+  late ProgressController circleProgressController;
 
   /// 方詳的進度條控制器
-  ProgressController rectProgressController;
+  late ProgressController rectProgressController;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<WaveProgressBloc>(context);
+    bloc = BlocProvider.of<WaveProgressBloc>(context)!;
     super.initState();
   }
 

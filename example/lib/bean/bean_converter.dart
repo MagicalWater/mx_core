@@ -1,7 +1,14 @@
 import 'dart:convert';
 
+import 'package:mx_core_example/bean/ex_api/ex_api.dart';
+import 'package:mx_core_example/bean/chart_example/kmon/kmon.dart';
+import 'package:mx_core_example/bean/chart_example/kline/kline.dart';
+import 'package:mx_core_example/bean/chart_example/depth/depth.dart';
 
-
+export 'package:mx_core_example/bean/ex_api/ex_api.dart';
+export 'package:mx_core_example/bean/chart_example/kmon/kmon.dart';
+export 'package:mx_core_example/bean/chart_example/kline/kline.dart';
+export 'package:mx_core_example/bean/chart_example/depth/depth.dart';
 /// 使用腳本自動產生轉換Bean
 class BeanConverter {
 
@@ -12,9 +19,9 @@ class BeanConverter {
   /// - Function(dynamic)
   /// - 當 onError 返回 T 類型時, 將以此值回傳, 否則回傳 null
   /// - 若 onError 不處理或需要再拋出錯誤, 再 onError 裡面直接 throw 即可
-  static T convert<T>(
+  static T? convert<T>(
     String jsonString, {
-    Function onError,
+    Function? onError,
   }) {
     return _convert(
       jsonString,
@@ -22,9 +29,9 @@ class BeanConverter {
     );
   }
 
-  static T _convert<T>(
+  static T? _convert<T>(
     String jsonString, {
-    Function onError,
+    Function? onError,
   }) {
     var jsonConvert;
     try {
@@ -34,7 +41,7 @@ class BeanConverter {
       return handleError<T>(onError, error, stack);
     }
 
-    T bean;
+    T? bean;
 
     /// 首先反序列化
     try {
@@ -57,8 +64,8 @@ class BeanConverter {
   }
 
   /// 發生錯誤之後跳入此處進行處理
-  static T handleError<T>(
-      Function onError, dynamic error, StackTrace stackTrace) {
+  static T? handleError<T>(
+      Function? onError, dynamic error, StackTrace stackTrace) {
     if (onError == null) {
       print("BeanConverter 錯誤: $error");
       throw error;
@@ -83,4 +90,8 @@ class BeanConverter {
 }
 
 final _factories = <Type, Function>{
+    DepthBean: (jsonData) => DepthBean.fromJson(jsonData),
+    KlineBean: (jsonData) => KlineBean.fromJson(jsonData),
+    KmonBean: (jsonData) => KmonBean.fromJson(jsonData),
+    ExApiBean: (jsonData) => ExApiBean.fromJson(jsonData),
 };

@@ -10,12 +10,6 @@ List<String> autoPushPage = [
 //  Pages.test,
 ];
 
-class YY {
-  String aa;
-
-  YY({this.aa});
-}
-
 /// 功能介紹頁面
 class IntroductionPage extends StatefulWidget {
   final RouteOption option;
@@ -27,7 +21,7 @@ class IntroductionPage extends StatefulWidget {
 }
 
 class _IntroductionPageState extends State<IntroductionPage> {
-  IntroductionBloc bloc;
+  late IntroductionBloc bloc;
 
   List<PageInfo> textMap = [
     PageInfo(Pages.test, "測試頁面"),
@@ -58,9 +52,9 @@ class _IntroductionPageState extends State<IntroductionPage> {
   void initState() {
     SecureStorage.readAll();
 
-    bloc = BlocProvider.of<IntroductionBloc>(context);
+    bloc = BlocProvider.of<IntroductionBloc>(context)!;
     if (autoPushPage.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
         _handleIntroductionTap(autoPushPage[0]);
       });
     }

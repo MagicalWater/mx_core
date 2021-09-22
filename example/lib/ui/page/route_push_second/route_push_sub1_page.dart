@@ -13,13 +13,13 @@ class RoutePushSub1Page extends StatefulWidget {
 }
 
 class _RoutePushSub1PageState extends State<RoutePushSub1Page> with AutomaticKeepAliveClientMixin {
-  RoutePushSub1Bloc bloc;
+  late RoutePushSub1Bloc bloc;
 
   var index = 0;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSub1Bloc>(context);
+    bloc = BlocProvider.of<RoutePushSub1Bloc>(context)!;
     super.initState();
   }
 

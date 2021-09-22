@@ -16,7 +16,7 @@ class StatefulButtonPage extends StatefulWidget {
 }
 
 class _StatefulButtonPageState extends State<StatefulButtonPage> {
-  StatefulButtonBloc bloc;
+  late StatefulButtonBloc bloc;
 
   var title = "有狀態的按鈕";
   var content = """
@@ -25,7 +25,7 @@ class _StatefulButtonPageState extends State<StatefulButtonPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<StatefulButtonBloc>(context);
+    bloc = BlocProvider.of<StatefulButtonBloc>(context)!;
     super.initState();
   }
 

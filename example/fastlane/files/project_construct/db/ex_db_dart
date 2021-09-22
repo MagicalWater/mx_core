@@ -54,7 +54,7 @@ class ExDb {
 
   /// 查詢總筆數
   Future<int> getTotalCount() async {
-    return _dbUtil.getTotalCount(_dataTable);
+    return _dbUtil.getTotalCount(_dataTable).then((value) => value ?? 0);
   }
 
   /// 從id查詢對應資料, 若查詢到多筆, 只取第一筆

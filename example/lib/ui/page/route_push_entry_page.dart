@@ -15,7 +15,7 @@ class RoutePushEntryPage extends StatefulWidget {
 }
 
 class _RoutePushEntryPageState extends State<RoutePushEntryPage> {
-  RoutePushEntryBloc bloc;
+  late RoutePushEntryBloc bloc;
   AppBloc appBloc = AppBloc.getInstance();
 
   var title = "頁面跳轉機制入口頁";
@@ -33,7 +33,7 @@ class _RoutePushEntryPageState extends State<RoutePushEntryPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushEntryBloc>(context);
+    bloc = BlocProvider.of<RoutePushEntryBloc>(context)!;
     super.initState();
   }
 

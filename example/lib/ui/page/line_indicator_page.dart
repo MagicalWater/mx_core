@@ -12,11 +12,11 @@ class LineIndicatorPage extends StatefulWidget {
 }
 
 class _LineIndicatorPageState extends State<LineIndicatorPage> {
-  LineIndicatorBloc bloc;
+  late LineIndicatorBloc bloc;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<LineIndicatorBloc>(context);
+    bloc = BlocProvider.of<LineIndicatorBloc>(context)!;
     super.initState();
   }
 

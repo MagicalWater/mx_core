@@ -13,11 +13,11 @@ class BulletShapePage extends StatefulWidget {
 }
 
 class _BulletShapePageState extends State<BulletShapePage> {
-  BulletShapeBloc bloc;
+  late BulletShapeBloc bloc;
 
   @override
   void initState() {
-    bloc = BlocProvider.of<BulletShapeBloc>(context);
+    bloc = BlocProvider.of<BulletShapeBloc>(context)!;
     super.initState();
   }
 

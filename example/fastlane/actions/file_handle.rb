@@ -17,6 +17,13 @@ module Fastlane
           "_#{c[1].downcase}"
         }
 
+        # 將所有空格轉為底線
+        lowerLine = lowerLine.gsub(/ /) {|c|
+          "_"
+        }
+
+        # puts "底線: #{lowerLine}"
+
         # 小駝峰
         lowerCamel = lowerLine.gsub(/_[\w]/) {|c|
           c[1].upcase

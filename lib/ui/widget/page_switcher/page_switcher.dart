@@ -73,7 +73,7 @@ class PageSwitcher extends StatefulWidget {
   factory PageSwitcher({
     required List<String> routes,
     required Stream<List<RouteData>> stream,
-    required Widget emptyWidget,
+    Widget? emptyWidget,
     Duration duration = const Duration(milliseconds: 300),
     double? scaleIn = 1,
     double? opacityIn = 0,

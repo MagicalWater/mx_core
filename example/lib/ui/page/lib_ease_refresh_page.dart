@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:mx_core_example/router/router.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:mx_core/mx_core.dart';
@@ -15,15 +15,15 @@ class LibEaseRefreshPage extends StatefulWidget {
 }
 
 class _LibEaseRefreshPageState extends State<LibEaseRefreshPage> {
-  LibEaseRefreshBloc bloc;
+  late LibEaseRefreshBloc bloc;
 
-  LoadController loadController;
-  EasyRefreshController easyRefreshController;
+  late LoadController loadController;
+  late EasyRefreshController easyRefreshController;
 
   @override
   void initState() {
     easyRefreshController = EasyRefreshController();
-    bloc = BlocProvider.of<LibEaseRefreshBloc>(context);
+    bloc = BlocProvider.of<LibEaseRefreshBloc>(context)!;
     Future.delayed(Duration(seconds: 2)).then((_) {
       print("刷1");
       easyRefreshController.callRefresh();

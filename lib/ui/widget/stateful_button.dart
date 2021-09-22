@@ -16,7 +16,7 @@ class StatefulButton extends StatefulWidget {
   final Widget? child;
 
   /// 按鈕的 feed back
-  final TapFeedback tapStyle;
+  final TapFeedback? tapStyle;
 
   /// 按鈕裝飾
   final Decoration? decoration;
@@ -47,7 +47,7 @@ class StatefulButton extends StatefulWidget {
   StatefulButton({
     required this.width,
     required this.height,
-    required this.tapStyle,
+    this.tapStyle,
     this.child,
     this.decoration,
     this.initLoad = false,
