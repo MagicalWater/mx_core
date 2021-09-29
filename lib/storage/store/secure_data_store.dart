@@ -48,29 +48,29 @@ class SecureDataStore<T> extends DataStore<T> {
   @override
   Future<T?> read() async {
     if (T == int) {
-      _value = await SecureStorage.readInt(key: key) as T;
+      _value = await SecureStorage.readInt(key: key) as T?;
     } else if (T == double) {
-      _value = await SecureStorage.readDouble(key: key) as T;
+      _value = await SecureStorage.readDouble(key: key) as T?;
     } else if (T == bool) {
-      _value = await SecureStorage.readBool(key: key) as T;
+      _value = await SecureStorage.readBool(key: key) as T?;
     } else if (T == String) {
-      _value = await SecureStorage.readString(key: key) as T;
+      _value = await SecureStorage.readString(key: key) as T?;
     } else if (<int>[] is T) {
-      _value = await SecureStorage.readList<int>(key: key) as T;
+      _value = await SecureStorage.readList<int>(key: key) as T?;
     } else if (<double>[] is T) {
-      _value = await SecureStorage.readList<double>(key: key) as T;
+      _value = await SecureStorage.readList<double>(key: key) as T?;
     } else if (<bool>[] is T) {
-      _value = await SecureStorage.readList<bool>(key: key) as T;
+      _value = await SecureStorage.readList<bool>(key: key) as T?;
     } else if (<String>[] is T) {
-      _value = await SecureStorage.readList<String>(key: key) as T;
+      _value = await SecureStorage.readList<String>(key: key) as T?;
     } else if (Map<String, int>() is T) {
-      _value = await SecureStorage.readMap<String, int>(key: key) as T;
+      _value = await SecureStorage.readMap<String, int>(key: key) as T?;
     } else if (Map<String, double>() is T) {
-      _value = await SecureStorage.readMap<String, double>(key: key) as T;
+      _value = await SecureStorage.readMap<String, double>(key: key) as T?;
     } else if (Map<String, bool>() is T) {
-      _value = await SecureStorage.readMap<String, bool>(key: key) as T;
+      _value = await SecureStorage.readMap<String, bool>(key: key) as T?;
     } else if (Map<String, String>() is T) {
-      _value = await SecureStorage.readMap<String, String>(key: key) as T;
+      _value = await SecureStorage.readMap<String, String>(key: key) as T?;
     } else {
       throw '警告, SecureStorage 尚只支持 int, double, bool, String, List<基本型態>, Map<String, 基本型態> 的型態, 當前型態: $T';
     }
