@@ -567,7 +567,7 @@ class _RefreshViewState extends State<RefreshView> {
   Widget _getPlaceWidget() {
     return Container(
       child: StreamBuilder<RefreshState>(
-        initialData: _stateSubject.value,
+        initialData: _stateSubject.valueOrNull,
         stream: _stateSubject.stream,
         builder: (context, snapshot) {
 //          print("取得資料~~~");

@@ -91,7 +91,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   String? _entryPointRouteAlias;
 
   /// 大頁面跳轉歷史紀錄
-  List<RouteData> get pageHistory => _pageSubject.value ?? [];
+  List<RouteData> get pageHistory => _pageSubject.valueOrNull ?? [];
 
   /// 大頁面跳轉紀錄串流
   BehaviorSubject<List<RouteData>> _pageSubject = BehaviorSubject();
@@ -114,7 +114,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
   Stream<String> get pageDetailStream => _pageDetailSubject.stream;
 
   /// 當前顯示的詳細頁面(涵蓋子頁面)
-  String? get currentDetailPage => _pageDetailSubject.value;
+  String? get currentDetailPage => _pageDetailSubject.valueOrNull;
 
   /// 從當前大頁面重新尋找最終子頁面
   /// 並且讓其頁面進行刷新
@@ -457,13 +457,13 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
         }
         return isKeep;
       });
-      _pageSubject.add(_pageSubject.value!);
+      _pageSubject.add(_pageSubject.value);
       _researchCurrentDetailPage();
       return true;
     } else {
       // 返回單個頁面
       _removeLastPage();
-      _pageSubject.add(_pageSubject.value!);
+      _pageSubject.add(_pageSubject.value);
       _researchCurrentDetailPage();
       navigator.pop(result);
       return true;
@@ -541,7 +541,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       if (lastPage.route == name) {
         print('刪除最後: ${pageHistory.map((e) => e.route)}');
         _removeLastPage();
-        _pageSubject.add(_pageSubject.value!);
+        _pageSubject.add(_pageSubject.value);
         print('刪除後: ${pageHistory.map((e) => e.route)}');
         _researchCurrentDetailPage();
       }
@@ -566,8 +566,8 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     );
 
     if (removeUntil != null) {
-      _pageSubject.value!.add(routeData);
-      _pageSubject.add(_pageSubject.value!);
+      _pageSubject.value.add(routeData);
+      _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
       var result = await navigatorState.pushAndRemoveUntil(pageRoute(), (rt) {
         var name = rt.settings.name;
@@ -590,14 +590,14 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       return result;
     } else if (replaceCurrent) {
       _removeLastPage();
-      _pageSubject.value!.add(routeData);
-      _pageSubject.add(_pageSubject.value!);
+      _pageSubject.value.add(routeData);
+      _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
       return await navigatorState.pushReplacement(pageRoute());
     } else {
 //      print("添加到歷史: ${routeData.route}");
-      _pageSubject.value!.add(routeData);
-      _pageSubject.add(_pageSubject.value!);
+      _pageSubject.value.add(routeData);
+      _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
       return navigatorState.push(pageRoute());
     }
@@ -608,7 +608,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
     if (pageHistory.isEmpty) {
       return;
     }
-    var pageData = _pageSubject.value!.removeLast();
+    var pageData = _pageSubject.value.removeLast();
     var index = _subPageListener
         .lastIndexWhere((element) => element.page.route == pageData.route);
     if (index != -1) {
@@ -622,7 +622,7 @@ mixin RouteMixin implements RouteMixinBase, RoutePageBase {
       return;
     }
 
-    var pageData = _pageSubject.value!.removeAt(pageHistory.length - 2);
+    var pageData = _pageSubject.value.removeAt(pageHistory.length - 2);
 
     // 尋找上上一個大頁面
     var endIndex = _subPageListener.lastIndexWhere(

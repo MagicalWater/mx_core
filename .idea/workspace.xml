@@ -10,7 +10,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/refresh_view_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/refresh_view_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bloc/load_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/load_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/page_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/bloc/refresh_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/bloc/refresh_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/extension/list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/extension/list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/router/route_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/route_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/animated_comb/animated_sync_tick.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/util/web_socket_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/web_socket_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,44 +174,44 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1626077863974" />
-    <state width="880" height="209" key="GridCell.Tab.0.bottom" timestamp="1632281491546">
+    <state width="1638" height="229" key="GridCell.Tab.0.bottom" timestamp="1632973896586">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="880" height="209" key="GridCell.Tab.0.bottom/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1632281491546" />
-    <state width="934" height="263" key="GridCell.Tab.0.bottom/0.25.1680.944@0.25.1680.944" timestamp="1628059630119" />
-    <state width="880" height="209" key="GridCell.Tab.0.center" timestamp="1632281491545">
+    <state width="1638" height="229" key="GridCell.Tab.0.bottom/0.25.1680.944@0.25.1680.944" timestamp="1632973896586" />
+    <state width="1638" height="229" key="GridCell.Tab.0.center" timestamp="1632973896585">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="880" height="209" key="GridCell.Tab.0.center/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1632281491545" />
-    <state width="934" height="263" key="GridCell.Tab.0.center/0.25.1680.944@0.25.1680.944" timestamp="1628059630119" />
-    <state width="880" height="209" key="GridCell.Tab.0.left" timestamp="1632281491545">
+    <state width="1638" height="229" key="GridCell.Tab.0.center/0.25.1680.944@0.25.1680.944" timestamp="1632973896585" />
+    <state width="1638" height="229" key="GridCell.Tab.0.left" timestamp="1632973896585">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="880" height="209" key="GridCell.Tab.0.left/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1632281491545" />
-    <state width="934" height="263" key="GridCell.Tab.0.left/0.25.1680.944@0.25.1680.944" timestamp="1628059630118" />
-    <state width="880" height="209" key="GridCell.Tab.0.right" timestamp="1632281491546">
+    <state width="1638" height="229" key="GridCell.Tab.0.left/0.25.1680.944@0.25.1680.944" timestamp="1632973896585" />
+    <state width="1638" height="229" key="GridCell.Tab.0.right" timestamp="1632973896586">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="880" height="209" key="GridCell.Tab.0.right/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1632281491546" />
-    <state width="934" height="263" key="GridCell.Tab.0.right/0.25.1680.944@0.25.1680.944" timestamp="1628059630119" />
+    <state width="1638" height="229" key="GridCell.Tab.0.right/0.25.1680.944@0.25.1680.944" timestamp="1632973896586" />
     <state x="445" y="111" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1627549994131">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="445" y="111" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1627549994131" />
-    <state x="493" y="256" width="1049" height="550" key="find.popup" timestamp="1632297543037">
+    <state x="493" y="256" width="1049" height="608" key="find.popup" timestamp="1632983331870">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state x="493" y="256" width="1049" height="550" key="find.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1632297543037" />
     <state x="563" y="254" width="1125" height="540" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1627286056952" />
-    <state x="493" y="256" width="1049" height="608" key="find.popup/0.25.1680.944@0.25.1680.944" timestamp="1628148225268" />
+    <state x="493" y="256" width="1049" height="608" key="find.popup/0.25.1680.944@0.25.1680.944" timestamp="1632983331870" />
     <state width="600" height="428" key="javadoc.popup" timestamp="1626919798649">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
-    <state width="300" height="96" key="javadoc.popup.new" timestamp="1632297033255">
+    <state width="300" height="96" key="javadoc.popup.new" timestamp="1632984374300">
       <screen x="0" y="25" width="1680" height="944" />
     </state>
     <state width="300" height="96" key="javadoc.popup.new/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1632297033255" />
-    <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1630029580758" />
+    <state width="300" height="96" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1632984374300" />
     <state width="600" height="428" key="javadoc.popup/-240.-1055.1920.1055/0.25.1680.944@0.25.1680.944" timestamp="1626919798649" />
     <state x="505" y="231" width="671" height="672" key="search.everywhere.popup" timestamp="1627023547392">
       <screen x="0" y="25" width="1680" height="944" />

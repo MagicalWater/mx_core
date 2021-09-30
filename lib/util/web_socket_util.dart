@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 class WebSocketUtil {
@@ -50,7 +49,7 @@ class WebSocketUtil {
   Stream<dynamic> get errorStream => _errorSubject.stream;
 
   /// webSocket的狀態
-  SocketStatus get status => _statusSubject.value ?? SocketStatus.idle;
+  SocketStatus get status => _statusSubject.valueOrNull ?? SocketStatus.idle;
 
   /// 當前是否是連線狀態
   bool get isConnecting => status == SocketStatus.connect;
@@ -249,7 +248,6 @@ class WebSocketUtil {
     _pingSubscription = null;
     _pongSubscription = null;
     _retrySubscription = null;
-
   }
 }
 

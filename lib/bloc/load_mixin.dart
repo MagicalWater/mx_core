@@ -10,7 +10,7 @@ mixin LoadMixin {
 
   /// 當前一般元件的 loading 狀態
   bool get currentLoadState {
-    return _lazyLoadSubject.value ?? false;
+    return _lazyLoadSubject.valueOrNull ?? false;
   }
 
   /// LoadProvider subject 以及 stream

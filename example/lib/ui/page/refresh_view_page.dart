@@ -18,6 +18,8 @@ class _RefreshViewPageState extends State<RefreshViewPage> {
 
   double hh = 100;
 
+  bool isDisposed = false;
+
   @override
   void initState() {
     cc = ScrollController();
@@ -37,9 +39,19 @@ class _RefreshViewPageState extends State<RefreshViewPage> {
 
   void loopDetect() async {
     Future.delayed(Duration(seconds: 1)).then((_) {
-      print("打印: ${cc.position.maxScrollExtent}, ${cc.position.minScrollExtent}, ${cc.position.pixels}");
-      loopDetect();
+      if (!isDisposed) {
+        print('gogo');
+        print("打印: ${cc.position.maxScrollExtent}, ${cc.position
+            .minScrollExtent}, ${cc.position.pixels}");
+        loopDetect();
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    isDisposed = true;
+    super.dispose();
   }
 
   @override
@@ -77,8 +89,10 @@ class _RefreshViewPageState extends State<RefreshViewPage> {
             return null;
           },
           onLoadMore: () {
-//            print("觸發 load");
             Future.delayed(Duration(milliseconds: 100)).then((_) {
+              if (isDisposed) {
+                return;
+              }
               setState(() {
                 hh += 10;
               });

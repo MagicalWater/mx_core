@@ -3,6 +3,7 @@ import 'package:mx_core/bloc/bloc.dart';
 import 'package:mx_core/bloc/load_mixin.dart';
 import 'package:mx_core/bloc/page_route_mixin.dart';
 import 'package:mx_core/bloc/refresh_mixin.dart';
+import 'package:mx_core/extension/extension.dart';
 import 'package:mx_core/router/router.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -36,21 +37,32 @@ abstract class PageBloc
   });
 
   @override
-  List<RouteData> get subPageHistory => _historyPageSubject.value ?? [];
+  List<RouteData> get subPageHistory => _historyPageSubject.valueOrNull ?? [];
 
   /// 子頁面命令監聽串流
   Stream<List<RouteData>> get subPageHistoryStream =>
       _historyPageSubject.stream;
 
   /// 當前子頁面的 index 串流
-  Stream<int> get subPageIndexStream =>
-      subPageHistoryStream.map((data) => subPages().indexOf(data.last.route));
+  Stream<int?> get subPageIndexStream => subPageHistoryStream.map((data) {
+        var currentRoute = data.lastOrNull?.route;
+        if (currentRoute != null) {
+          var index = subPages().indexOf(currentRoute);
+          if (index == -1) {
+            return null;
+          } else {
+            return index;
+          }
+        } else {
+          return null;
+        }
+      });
 
   /// 當前最後顯示的子頁面
   ///
   /// 可能會是 null
   @override
-  RouteData? get currentSubPage => _historyPageSubject.value?.last;
+  RouteData? get currentSubPage => _historyPageSubject.valueOrNull?.lastOrNull;
 
   /// 當前最後顯示的子頁面的index
   ///
@@ -282,13 +294,13 @@ abstract class PageBloc
 
     if (findHistoryIndex != -1) {
       // 曾經在歷史裡面, 調換位置
-      _historyPageSubject.value!.removeAt(findHistoryIndex);
+      _historyPageSubject.value.removeAt(findHistoryIndex);
     }
 
     var routeData = RouteData(route);
 
     if (_historyPageSubject.hasValue) {
-      var currentHistory = _historyPageSubject.value!..add(routeData);
+      var currentHistory = _historyPageSubject.value..add(routeData);
       if (currentHistory.length > cachePageCount) {
         currentHistory =
             currentHistory.sublist(currentHistory.length - cachePageCount);

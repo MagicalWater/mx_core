@@ -428,7 +428,7 @@ class AnimatedSyncTick implements AnimatedCombController {
 
     var bindInterval = Interval(start, end, curve: curve);
 
-    var tween;
+    late Tween tween;
 
     ShiftAnimation intervalAnimation = ShiftAnimation(
       parent: _controller!,
@@ -521,8 +521,8 @@ class AnimatedSyncTick implements AnimatedCombController {
         animationData._sizeList.add(binder);
         break;
       case CombColor:
-        AnimationBinder<Color> binder = AnimationBinder(
-          animation: animation as Animation<Color>,
+        AnimationBinder<Color?> binder = AnimationBinder(
+          animation: animation as Animation<Color?>,
           interval: bindInterval,
           shift: intervalAnimation,
           endValue: endValue,
@@ -805,7 +805,7 @@ class AnimationData {
 
   ///  背景顏色動畫
   @protected
-  List<AnimationBinder<Color>> _colorList = [];
+  List<AnimationBinder<Color?>> _colorList = [];
 
   /// 當前動畫數值
   AnimValue current = AnimValue();

@@ -4,13 +4,13 @@ import 'package:rxdart/rxdart.dart';
 mixin RefreshMixin {
   /// 當前 [RefreshView] 是否正在刷新中
   bool get currentRefresh {
-    var state = _lazyRefreshStateSubject.value!;
+    var state = _lazyRefreshStateSubject.value;
     return state.isLoading && state.type == RefreshType.refresh;
   }
 
   /// 當前 [RefreshView] 是否正在加載更多中
   bool get currentLoadMore {
-    var state = _lazyRefreshStateSubject.value!;
+    var state = _lazyRefreshStateSubject.value;
     return state.isLoading && state.type == RefreshType.loadMore;
   }
 
@@ -23,7 +23,8 @@ mixin RefreshMixin {
   BehaviorSubject<RefreshState>? _refreshStateSubject;
 
   BehaviorSubject<RefreshState> get _lazyRefreshStateSubject {
-    return _refreshStateSubject ??= BehaviorSubject();
+    return _refreshStateSubject ??= BehaviorSubject()
+      ..add(RefreshState.refresh(success: true));
   }
 
   /// 將刷新狀態設置為讀取中
