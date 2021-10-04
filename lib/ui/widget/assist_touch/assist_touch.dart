@@ -7,7 +7,6 @@ import 'package:vector_math/vector_math.dart' as vector;
 import '../material_layer.dart';
 
 part 'circle_range.dart';
-
 part 'side_detect.dart';
 
 typedef ExpandProgressBuilder = Widget? Function(

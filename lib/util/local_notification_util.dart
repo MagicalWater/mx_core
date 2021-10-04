@@ -1,5 +1,4 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:meta/meta.dart';
 
 /// 本地推送工具
 class LocalNotificationUtil {

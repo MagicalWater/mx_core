@@ -623,7 +623,7 @@ class _StackSwitcherState extends State<StackSwitcher>
         Tween<Offset>(begin: pageOutOffset, end: Offset.zero)
             .chain(CurveTween(curve: widget.curve))
             .animate(_controller)
-              ..addListener(restoreAnimationUpdateOffset);
+          ..addListener(restoreAnimationUpdateOffset);
 
     if (_controller.isAnimating) {
       _controller.reset();

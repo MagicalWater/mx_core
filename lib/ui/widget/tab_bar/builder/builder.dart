@@ -27,7 +27,9 @@ abstract class TabBuilder implements _BaseBuilder {
 
 abstract class SwipeTabBuilder implements _BaseBuilder {
   TabStyleBuilder<Decoration> get swipeDecoration;
+
   EdgeInsetsGeometry? get padding;
+
   EdgeInsetsGeometry? get margin;
 
   Widget buildTabBackground({

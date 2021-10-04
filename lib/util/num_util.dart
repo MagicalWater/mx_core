@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:decimal/decimal.dart';
 
-
 /// 來源 https://github.com/Sky24n
 /// 原作者 Sky24n
 /// 修改者 Water

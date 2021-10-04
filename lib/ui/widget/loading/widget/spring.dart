@@ -59,7 +59,8 @@ class Spring extends StatelessWidget {
             child: Container(
               width: size,
               height: size,
-              decoration: (decoration ?? BoxDecoration(color: color ?? Colors.blueAccent))
+              decoration: (decoration ??
+                      BoxDecoration(color: color ?? Colors.blueAccent))
                   .copyWith(shape: BoxShape.circle),
             ),
           ),
@@ -143,5 +144,4 @@ class Spring extends StatelessWidget {
 
     return [scaleX, scaleY];
   }
-
 }

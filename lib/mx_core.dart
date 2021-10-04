@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 
 import 'router/router.dart';
 import 'util/screen_util.dart';

@@ -27,7 +27,6 @@ class LocateColumn extends Flex {
           textBaseline: textBaseline,
         );
 
-
   @override
   RenderFlex createRenderObject(BuildContext context) {
     return _LocateColumnState(
@@ -42,7 +41,8 @@ class LocateColumn extends Flex {
   }
 
   @override
-  void updateRenderObject(BuildContext context, _LocateColumnState renderObject) {
+  void updateRenderObject(
+      BuildContext context, _LocateColumnState renderObject) {
     renderObject._onLocateChanged = onLocateChanged;
     super.updateRenderObject(context, renderObject);
   }

@@ -1,9 +1,7 @@
-import 'package:meta/meta.dart';
 
 import '../storage.dart';
 
 part 'plain_data_store.dart';
-
 part 'secure_data_store.dart';
 
 abstract class DataStore<T> {

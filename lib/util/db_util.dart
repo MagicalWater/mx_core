@@ -1,6 +1,5 @@
 import 'dart:ui' show VoidCallback;
 
-import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

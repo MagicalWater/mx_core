@@ -4,9 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 part 'axis.dart';
-
 part 'delegate.dart';
-
 part 'space.dart';
 
 /// 座標式佈局

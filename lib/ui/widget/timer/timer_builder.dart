@@ -52,7 +52,8 @@ class TimerBuilder extends StatefulWidget {
   _TimerBuilderState createState() => _TimerBuilderState();
 }
 
-class _TimerBuilderState extends State<TimerBuilder> implements TimerController {
+class _TimerBuilderState extends State<TimerBuilder>
+    implements TimerController {
   late TimerCore _timerCore;
 
   late StreamSubscription _timerEventSubscription;

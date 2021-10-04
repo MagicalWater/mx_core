@@ -91,36 +91,36 @@ class _RoundSpringState extends State<RoundSpring>
           animatedList: _getScaleEnd(Axis.horizontal)
             ..add(_getTranslateEnd(AxisDirection.up)),
         ),
-          Comb.parallel(
-            curve: Curves.easeInSine,
-            animatedList: _getScaleStart(Axis.vertical)
-              ..add(_getTranslateStart(AxisDirection.right)),
-          ),
-          Comb.parallel(
-            curve: Curves.easeOutSine,
-            animatedList: _getScaleEnd(Axis.vertical)
-              ..add(_getTranslateEnd(AxisDirection.right)),
-          ),
-          Comb.parallel(
-            curve: Curves.easeInSine,
-            animatedList: _getScaleStart(Axis.horizontal)
-              ..add(_getTranslateStart(AxisDirection.down)),
-          ),
-          Comb.parallel(
-            curve: Curves.easeOutSine,
-            animatedList: _getScaleEnd(Axis.horizontal)
-              ..add(_getTranslateEnd(AxisDirection.down)),
-          ),
-          Comb.parallel(
-            curve: Curves.easeInSine,
-            animatedList: _getScaleStart(Axis.vertical)
-              ..add(_getTranslateStart(AxisDirection.left)),
-          ),
-          Comb.parallel(
-            curve: Curves.easeOutSine,
-            animatedList: _getScaleEnd(Axis.vertical)
-              ..add(_getTranslateEnd(AxisDirection.left)),
-          ),
+        Comb.parallel(
+          curve: Curves.easeInSine,
+          animatedList: _getScaleStart(Axis.vertical)
+            ..add(_getTranslateStart(AxisDirection.right)),
+        ),
+        Comb.parallel(
+          curve: Curves.easeOutSine,
+          animatedList: _getScaleEnd(Axis.vertical)
+            ..add(_getTranslateEnd(AxisDirection.right)),
+        ),
+        Comb.parallel(
+          curve: Curves.easeInSine,
+          animatedList: _getScaleStart(Axis.horizontal)
+            ..add(_getTranslateStart(AxisDirection.down)),
+        ),
+        Comb.parallel(
+          curve: Curves.easeOutSine,
+          animatedList: _getScaleEnd(Axis.horizontal)
+            ..add(_getTranslateEnd(AxisDirection.down)),
+        ),
+        Comb.parallel(
+          curve: Curves.easeInSine,
+          animatedList: _getScaleStart(Axis.vertical)
+            ..add(_getTranslateStart(AxisDirection.left)),
+        ),
+        Comb.parallel(
+          curve: Curves.easeOutSine,
+          animatedList: _getScaleEnd(Axis.vertical)
+            ..add(_getTranslateEnd(AxisDirection.left)),
+        ),
       ],
     );
   }

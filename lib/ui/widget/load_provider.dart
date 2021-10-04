@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
-import 'package:mx_core/ui/widget/chart/utils/date_format_util.dart';
 
 /// 根節點的 loadController
 LoadController? _rootLoadController;

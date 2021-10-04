@@ -3,19 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 part 'color_value.dart';
-
 part 'delay_value.dart';
-
 part 'opacity_value.dart';
-
 part 'parallel_value.dart';
-
 part 'rotate_value.dart';
-
 part 'scale_value.dart';
-
 part 'size_value.dart';
-
 part 'translate_value.dart';
 
 /// 動畫抽象類, 可使用底下的相關靜態方法生成對應的動畫資料

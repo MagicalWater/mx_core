@@ -96,7 +96,8 @@ class _NavigatorProviderState extends State<_NavigatorProvider> {
       if (element.widget is Navigator) {
         if (_navigatorState == null ||
             _navigatorState != (element as StatefulElement).state) {
-          _navigatorState = (element as StatefulElement).state as NavigatorState;
+          _navigatorState =
+              (element as StatefulElement).state as NavigatorState;
         }
       } else {
         element.visitChildElements(visitor);

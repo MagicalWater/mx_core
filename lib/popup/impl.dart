@@ -13,11 +13,8 @@ import 'arrow_style.dart';
 import 'option.dart';
 
 part 'controller.dart';
-
 part 'layout.dart';
-
 part 'rule.dart';
-
 part 'widget.dart';
 
 typedef Widget PopupWidgetBuilder(

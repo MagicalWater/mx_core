@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:meta/meta.dart';
 import 'package:mx_core/http/http_content.dart';
 import 'package:mx_core/http/http_util.dart';
 import 'package:path_provider/path_provider.dart';

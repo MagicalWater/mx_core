@@ -51,7 +51,10 @@ class TextTabBuilder extends WidgetTabBuilder {
               overflow: TextOverflow.clip,
             );
             return AnimatedDefaultTextStyle(
-              child: Text(texts[index], maxLines: 1,),
+              child: Text(
+                texts[index],
+                maxLines: 1,
+              ),
               textAlign: textAlign,
               style: textStyle,
               duration: textAnimationDuration,

@@ -6,11 +6,8 @@ import 'package:mx_core/mx_core.dart';
 import 'result.dart';
 
 part 'axis_space.dart';
-
 part 'horizontal.dart';
-
 part 'remain.dart';
-
 part 'vertical.dart';
 
 /// 空間計算

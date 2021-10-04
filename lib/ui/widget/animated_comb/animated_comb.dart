@@ -10,9 +10,7 @@ import 'animated_value/comb.dart';
 export 'animated_value/comb.dart';
 
 part 'animated_comb_controller.dart';
-
 part 'animated_sync_tick.dart';
-
 part 'shift_animation.dart';
 
 typedef CombWidgetBuilder = Widget Function(

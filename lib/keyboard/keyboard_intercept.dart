@@ -106,100 +106,111 @@ class KeyboardIntercept {
   }
 
   /// 先攔截本地傳遞鍵盤消息的事件
+  ///
+  /// 2021/10/04
+  /// 由於 flutter 2.5 之後將 setMessageHandler 方法移至 flutter_test 裡
+  /// 按照原作者的解法是自建兩個類(假設為A,B)分別繼承 [WidgetsFlutterBinding] 以及 [BinaryMessenger]
+  /// B類完全複製於flutter_test的[TestDefaultBinaryMessenger]
+  /// A類複寫變數 [WidgetsFlutterBinding.defaultBinaryMessenger], 將之返回B類
+  /// 個人擔心使用flutter_test的binary_messenger在運作上可能會產生一些意料之外的錯誤
+  /// 因此暫時不跟進使用, 自定鍵盤暫時棄用
+  @Deprecated('已棄用')
   void _intercept() {
-    print("啟動鍵盤攔截");
-    ServicesBinding.instance!.defaultBinaryMessenger
-        .setMockMessageHandler('flutter/textinput', (ByteData? data) async {
-      print("接收到事件");
-      // 將 data 轉為 methodCall 獲得事件名稱
-      var methodCall = _codec.decodeMethodCall(data);
-      switch (methodCall.method) {
-        case KeyboardMessageMethod._show:
-          print("KeyboardIntercept 呼叫 show");
-          // 若 [_currentKeyboardConfig] 不為 null, 代表有找到 config 並且要開啟自訂鍵盤
-          if (_currentKeyboardConfig != null && isCustomKeyboardShow) {
-            print("show 事件攔截");
-            _showKeyboard();
-            return _codec.encodeSuccessEnvelope(null);
-          }
-          break;
-        case KeyboardMessageMethod._hide:
-          print("KeyboardIntercept 呼叫 hide");
-          // 若 [_currentKeyboardConfig] 不為 null, 代表有找到 config, 因此需要關閉自定義鍵盤
-//          if (_currentKeyboardConfig != null) {
-//            hideKeyboard();
-//            return _codec.encodeSuccessEnvelope(null);
-//          }
-          break;
-        case KeyboardMessageMethod._setEditingState:
-          print("KeyboardIntercept 呼叫 setEditingState");
-          var editingState = TextEditingValue.fromJSON(methodCall.arguments);
-          // 若再經過參數解析後不為null, 並且 [_currentKeyboardController] 不為 null
-          // 代表當前自定義鍵盤正在顯示, 因此直接設置值到 [_currentKeyboardController]
-          if (_currentKeyboardController != null) {
-            _currentKeyboardController!.value = editingState;
-            return _codec.encodeSuccessEnvelope(null);
-          }
-          break;
-        case KeyboardMessageMethod._setClient:
-          print("KeyboardIntercept 呼叫 setClient");
-
-          // 準備顯示鍵盤
-          // 先從 methodCall 取出鍵盤類型
-          // methodCall 的參數都是 Map, 具體參數可參考 assets/jsons/keyboard/set_client.json
-          var inputTypeArg = methodCall.arguments[1]['inputType'];
-          KeyboardConfig? config = _findKeyboardConfig(inputTypeArg);
-          if (config != null) {
-            print("找到設定檔, 清除當前鍵盤重新綁定");
-            // 代表有找到鍵盤類型對應的設定檔
-            // 先清除當前的 [_currentKeyboardConfig] 以及 [_currentKeyboardController]
-            // 要重新綁定設定檔以及控制器
-            _clearCurrentKeyboard();
-            _bindNewKeyboard(
-                config, KeyboardClient.fromArgs(methodCall.arguments));
-
-            isCustomKeyboardShow = true;
-
-            // 因為要開啟自訂的鍵盤, 因此要主動發訊息給 native 層, 讓 native 層關閉鍵盤
-            await _sendPlatformMessage("flutter/textinput",
-                _codec.encodeMethodCall(MethodCall('TextInput.hide')));
-
-            // 最後直接返回攔截此次事件
-            return _codec.encodeSuccessEnvelope(null);
-          } else {
-            print("沒找到, 清除當前鍵盤");
-
-            isCustomKeyboardShow = false;
-
-            // 沒有找到鍵盤類型對應的設定檔案
-            // 因此隱藏當前的鍵盤, 並且清除
-            // 不處理此次事件
-            hideKeyboard();
-          }
-          break;
-        case KeyboardMessageMethod._clearClient:
-          print("KeyboardIntercept 呼叫 clearClient");
-
-          isCustomKeyboardShow = false;
-
-          // 依照流程來看, 此處會先呼叫, 接著在呼叫 hide
-          // 但 hide 裡面為什麼只調用 [hideKeyboard()],
-          // 而沒有 [_clearCurrentKeyboard()]
-          // 並且照理來說這邊調用完了之後
-          // hide 應該就不動作了
-          // TODO: 不清楚上述原因
-          hideKeyboard();
-          break;
-        default:
-          // 當 method 並非是我們要攔截的時候, 則我們在往下送到native
-          print("KeyboardIntercept 呼叫未知: ${methodCall.method}");
-          break;
-      }
-
-      // 當執行到此, 代表我們不自行處理, 因此不攔截, 依照原本消息傳遞到native層
-      // 當 method 並非是我們要攔截的時候, 則我們在往下送到native
-      return await _sendPlatformMessage("flutter/textinput", data);
-    });
+    throw '自訂虛擬鍵盤已棄用';
+//     print("啟動鍵盤攔截");
+//
+//     ServicesBinding.instance!.defaultBinaryMessenger
+//         .setMockMessageHandler('flutter/textinput', (ByteData? data) async {
+//       print("接收到事件");
+//       // 將 data 轉為 methodCall 獲得事件名稱
+//       var methodCall = _codec.decodeMethodCall(data);
+//       switch (methodCall.method) {
+//         case KeyboardMessageMethod._show:
+//           print("KeyboardIntercept 呼叫 show");
+//           // 若 [_currentKeyboardConfig] 不為 null, 代表有找到 config 並且要開啟自訂鍵盤
+//           if (_currentKeyboardConfig != null && isCustomKeyboardShow) {
+//             print("show 事件攔截");
+//             _showKeyboard();
+//             return _codec.encodeSuccessEnvelope(null);
+//           }
+//           break;
+//         case KeyboardMessageMethod._hide:
+//           print("KeyboardIntercept 呼叫 hide");
+//           // 若 [_currentKeyboardConfig] 不為 null, 代表有找到 config, 因此需要關閉自定義鍵盤
+// //          if (_currentKeyboardConfig != null) {
+// //            hideKeyboard();
+// //            return _codec.encodeSuccessEnvelope(null);
+// //          }
+//           break;
+//         case KeyboardMessageMethod._setEditingState:
+//           print("KeyboardIntercept 呼叫 setEditingState");
+//           var editingState = TextEditingValue.fromJSON(methodCall.arguments);
+//           // 若再經過參數解析後不為null, 並且 [_currentKeyboardController] 不為 null
+//           // 代表當前自定義鍵盤正在顯示, 因此直接設置值到 [_currentKeyboardController]
+//           if (_currentKeyboardController != null) {
+//             _currentKeyboardController!.value = editingState;
+//             return _codec.encodeSuccessEnvelope(null);
+//           }
+//           break;
+//         case KeyboardMessageMethod._setClient:
+//           print("KeyboardIntercept 呼叫 setClient");
+//
+//           // 準備顯示鍵盤
+//           // 先從 methodCall 取出鍵盤類型
+//           // methodCall 的參數都是 Map, 具體參數可參考 assets/jsons/keyboard/set_client.json
+//           var inputTypeArg = methodCall.arguments[1]['inputType'];
+//           KeyboardConfig? config = _findKeyboardConfig(inputTypeArg);
+//           if (config != null) {
+//             print("找到設定檔, 清除當前鍵盤重新綁定");
+//             // 代表有找到鍵盤類型對應的設定檔
+//             // 先清除當前的 [_currentKeyboardConfig] 以及 [_currentKeyboardController]
+//             // 要重新綁定設定檔以及控制器
+//             _clearCurrentKeyboard();
+//             _bindNewKeyboard(
+//                 config, KeyboardClient.fromArgs(methodCall.arguments));
+//
+//             isCustomKeyboardShow = true;
+//
+//             // 因為要開啟自訂的鍵盤, 因此要主動發訊息給 native 層, 讓 native 層關閉鍵盤
+//             await _sendPlatformMessage("flutter/textinput",
+//                 _codec.encodeMethodCall(MethodCall('TextInput.hide')));
+//
+//             // 最後直接返回攔截此次事件
+//             return _codec.encodeSuccessEnvelope(null);
+//           } else {
+//             print("沒找到, 清除當前鍵盤");
+//
+//             isCustomKeyboardShow = false;
+//
+//             // 沒有找到鍵盤類型對應的設定檔案
+//             // 因此隱藏當前的鍵盤, 並且清除
+//             // 不處理此次事件
+//             hideKeyboard();
+//           }
+//           break;
+//         case KeyboardMessageMethod._clearClient:
+//           print("KeyboardIntercept 呼叫 clearClient");
+//
+//           isCustomKeyboardShow = false;
+//
+//           // 依照流程來看, 此處會先呼叫, 接著在呼叫 hide
+//           // 但 hide 裡面為什麼只調用 [hideKeyboard()],
+//           // 而沒有 [_clearCurrentKeyboard()]
+//           // 並且照理來說這邊調用完了之後
+//           // hide 應該就不動作了
+//           // TODO: 不清楚上述原因
+//           hideKeyboard();
+//           break;
+//         default:
+//           // 當 method 並非是我們要攔截的時候, 則我們在往下送到native
+//           print("KeyboardIntercept 呼叫未知: ${methodCall.method}");
+//           break;
+//       }
+//
+//       // 當執行到此, 代表我們不自行處理, 因此不攔截, 依照原本消息傳遞到native層
+//       // 當 method 並非是我們要攔截的時候, 則我們在往下送到native
+//       return await _sendPlatformMessage("flutter/textinput", data);
+//     });
   }
 
   /// 顯示自定義鍵盤

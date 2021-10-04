@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'widget/widget.dart';
 
-
 /// 動畫集合
 class Loading {
-
   /// 拉伸位移
   static Spring spring({
     int springMultiple = 1,
