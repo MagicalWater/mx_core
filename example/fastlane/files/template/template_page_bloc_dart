@@ -1,8 +1,0 @@
-import 'package:mx_core/mx_core.dart';
-import 'package:${project}/router/router.dart';
-
-class ${upper_camel}Bloc extends PageBloc {
-
-  ${upper_camel}Bloc(RouteOption option) : super(Pages.${ori}, option);
-
-}
