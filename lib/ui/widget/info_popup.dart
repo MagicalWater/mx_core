@@ -97,9 +97,11 @@ class _InfoPopupState extends State<InfoPopup> {
       onTapBack: (controller) => controller.remove(),
       onTapSpace: (controller) => controller.remove(),
       hitRule: HitRule.intercept,
-    )..registerRemoveEventCallback(() {
-        _popupController = null;
-      });
+    )..registerRemoveEventCallback(
+        onStart: () {
+          _popupController = null;
+        },
+      );
   }
 
   @override

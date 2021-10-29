@@ -151,9 +151,11 @@ class _ArrowPopupButtonState extends State<ArrowPopupButton> {
         popupController = controller;
         // 若 FeedbackType 的類型為 toggle
         // 則需要註冊監聽關閉事件, 這樣此處才可以進行控制
-        (controller as OverlayController).registerRemoveEventCallback(() {
-          toggleController.toggle();
-        });
+        (controller as OverlayController).registerRemoveEventCallback(
+          onStart: () {
+            toggleController.toggle();
+          },
+        );
         return widget.popupBuilder(controller);
       },
     );

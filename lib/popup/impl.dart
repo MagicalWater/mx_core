@@ -13,8 +13,11 @@ import 'arrow_style.dart';
 import 'option.dart';
 
 part 'controller.dart';
+
 part 'layout.dart';
+
 part 'rule.dart';
+
 part 'widget.dart';
 
 typedef Widget PopupWidgetBuilder(
@@ -46,12 +49,12 @@ class Popup {
   /// [animated] - 顯示動畫, 空陣列將使用預設動畫 [Comb.scale], 若不需要動畫則帶入 null
   /// [onTapSpace] - 點擊空白處
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
-  static PopupController showRoute({
+  static PopupController<NavigatorState> showRoute({
     required PopupWidgetBuilder builder,
     PopupOption? option,
     List<Comb>? animated = const [],
-    void Function(PopupController controller)? onTapSpace,
-    void Function(PopupController controller)? onTapBack,
+    void Function(PopupController<NavigatorState> controller)? onTapSpace,
+    void Function(PopupController<NavigatorState> controller)? onTapBack,
   }) {
     if (animated?.isEmpty == true) {
       animated = [
@@ -138,7 +141,7 @@ class Popup {
   /// [animated] - 顯示動畫, 空陣列將使用預設動畫 [Comb.scale], 若不需要動畫則帶入 null
   /// [onTapSpace] - 點擊空白處回調, 只有在 [hitRule] 等於 [HitRule.intercept] 時有效
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
-  static PopupController showOverlay({
+  static PopupController<OverlayEntry?> showOverlay({
     required PopupWidgetBuilder builder,
     PopupOption? option,
     HitRule hitRule = HitRule.intercept,
@@ -363,9 +366,11 @@ class Popup {
       },
     );
 
-    popupController.registerRemoveEventCallback(() {
-      childSizeStreamController.close();
-    });
+    popupController.registerRemoveEventCallback(
+      onStart: () {
+        childSizeStreamController.close();
+      },
+    );
 
     return popupController;
   }
