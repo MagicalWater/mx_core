@@ -133,8 +133,9 @@ class _NormalPopupPageState extends State<NormalPopupPage> {
             controller.remove();
           },
           onTapBack: (controller) {
-            print('點擊返回');
+            print('點擊返回11');
             controller.remove();
+            print('點擊返回22');
           },
         );
       },

@@ -20,8 +20,8 @@ part 'rule.dart';
 
 part 'widget.dart';
 
-typedef Widget PopupWidgetBuilder(
-  PopupController controller,
+typedef Widget PopupWidgetBuilder<T>(
+  PopupController<T> controller,
 );
 
 List<PopupController> _allShowPopup = [];
@@ -50,7 +50,7 @@ class Popup {
   /// [onTapSpace] - 點擊空白處
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
   static PopupController<NavigatorState> showRoute({
-    required PopupWidgetBuilder builder,
+    required PopupWidgetBuilder<NavigatorState> builder,
     PopupOption? option,
     List<Comb>? animated = const [],
     void Function(PopupController<NavigatorState> controller)? onTapSpace,
@@ -142,12 +142,12 @@ class Popup {
   /// [onTapSpace] - 點擊空白處回調, 只有在 [hitRule] 等於 [HitRule.intercept] 時有效
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
   static PopupController<OverlayEntry?> showOverlay({
-    required PopupWidgetBuilder builder,
+    required PopupWidgetBuilder<OverlayEntry?> builder,
     PopupOption? option,
     HitRule hitRule = HitRule.intercept,
     List<Comb>? animated = const [],
-    void Function(PopupController controller)? onTapSpace,
-    void Function(PopupController controller)? onTapBack,
+    void Function(PopupController<OverlayEntry?> controller)? onTapSpace,
+    void Function(PopupController<OverlayEntry?> controller)? onTapBack,
   }) {
     if (animated?.isEmpty == true) {
       animated = [
@@ -233,12 +233,12 @@ class Popup {
     return controller;
   }
 
-  static PopupController? showArrow({
+  static PopupController<OverlayEntry?>? showArrow({
     required BuildContext context,
-    required PopupWidgetBuilder builder,
+    required PopupWidgetBuilder<OverlayEntry?> builder,
     ArrowPopupStyle style = const ArrowPopupStyle(),
     Color? maskColor,
-    void Function(PopupController controller)? onTapSpace,
+    void Function(PopupController<OverlayEntry?> controller)? onTapSpace,
   }) {
     // 先取得要 attach 到的 widget context
     var attachRect = _getRect(context);

@@ -182,7 +182,7 @@ class OverlayController extends PopupController<OverlayEntry?> {
     if (_removeHandler != null) {
       _removeHandler?.call(_entry);
     } else {
-      navigatorIns.pop();
+      _entry?.remove();
     }
   }
 }
