@@ -22,7 +22,7 @@ class _RoutePushSub3PageState extends State<RoutePushSub3Page> with AutomaticKee
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSub3Bloc>(context)!;
+    bloc = PageRouteBuilder.of<RoutePushSub3Bloc>(context)!;
     super.initState();
   }
 

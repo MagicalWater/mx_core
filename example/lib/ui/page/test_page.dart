@@ -18,7 +18,7 @@ class _TestPageState extends State<TestPage>
 
   @override
   void initState() {
-    bloc = BlocProvider.of<TestBloc>(context)!;
+    bloc = PageRouteBuilder.of<TestBloc>(context)!;
     super.initState();
   }
 

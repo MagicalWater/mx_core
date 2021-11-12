@@ -16,6 +16,8 @@ dev_dependencies:
   mx_core:
     path: "../"
   build_runner: "^2.1.2"
+  flutter_bloc: ^7.3.3
+  equatable: ^2.0.3
 flutter:
   uses-material-design: true
   assets:

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
+import 'package:mx_core/router/app_router.dart';
 
 /// 頁面切換元件
 /// 直接將 PageBloc 的 subPageStream 以及 routes 傳入即可
@@ -106,10 +107,10 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
         } else {
           key = cacheKey[finded.route];
         }
-        return (_) => routeMixinImpl.getPage(finded, key: key);
+        return (_) => appRouter.getPage(finded, key: key);
       } else {
         var key = cacheKey[e];
-        return (_) => routeMixinImpl.getPage(e, key: key);
+        return (_) => appRouter.getPage(e, key: key);
       }
     }).toList();
 
@@ -158,7 +159,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
           return;
         }
         userIgnore = index;
-        routeMixinImpl.forceModifyPageDetail(widget.routes[index]);
+        appRouter.forceModifyPageDetail(widget.routes[index]);
       },
     );
   }

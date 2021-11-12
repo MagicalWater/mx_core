@@ -1,14 +1,15 @@
+import 'package:mx_core/router/app_router_base.dart';
 
 import 'router/router.dart';
 import 'util/screen_util.dart';
 
-export 'bloc/bloc.dart';
 export 'extension/extension.dart';
 export 'http/http.dart';
 export 'keyboard/keyboard.dart';
 export 'polling/polling.dart';
 export 'popup/popup.dart';
 export 'request/request.dart';
+export 'route_page/route_page.dart';
 export 'router/router.dart';
 export 'storage/storage.dart';
 export 'ui/widget/widget.dart';
@@ -32,11 +33,19 @@ class ProjectCore {
 
     // 檢查是否需要加入 route 設定
     if (routeSetting != null) {
-      settingRoute(
-        routeMixin: routeSetting.mixinImpl,
+      _settingRoute(
         routeWidget: routeSetting.widgetImpl,
       );
     }
+  }
+
+  /// 設置route
+  /// [routeWidget] - 上層專案 使用  RouteMixin 的實現類別
+  /// 通常為 RouteWidget.getInstance()
+  static void _settingRoute({
+    required RouteWidgetBase routeWidget,
+  }) {
+    routeWidgetImpl = routeWidget;
   }
 }
 
@@ -55,18 +64,12 @@ class DesignSize {
   });
 }
 
-/// 上層呼叫此方法設置route
-/// [RouteMixin] - 上層專案 使用 routeMixinBase 的實現類別
-/// 通常為 ApplicationBloc.getInstance()
-///
-/// [RouteWidgetBase] - 上層專案 使用  RouteMixin 的實現類別
+/// [RouteWidgetBase] - 上層專案, 構建 route 與 widget 對應的類別
 /// 通常為 RouteWidget.getInstance()
 class RouteSetting {
-  RouteMixin mixinImpl;
   RouteWidgetBase widgetImpl;
 
   RouteSetting({
-    required this.mixinImpl,
     required this.widgetImpl,
   });
 }

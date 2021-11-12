@@ -17,7 +17,7 @@ class _RoutePushThirdPageState extends State<RoutePushThirdPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushThirdBloc>(context)!;
+    bloc = PageRouteBuilder.of<RoutePushThirdBloc>(context)!;
     super.initState();
   }
 

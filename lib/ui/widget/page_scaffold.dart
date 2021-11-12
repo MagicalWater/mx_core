@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/util/screen_util.dart';
 
-import 'load_provider.dart';
-
 /// 漸變顏色角度
 AlignmentGeometry _defaultLinearBgBegin = Alignment.topCenter;
 AlignmentGeometry _defaultLinearBgEnd = Alignment.bottomCenter;
@@ -45,9 +43,6 @@ class PageScaffold extends StatelessWidget {
   /// loading 狀態顯示的 loading 元件顏色
   final Color? loadColor;
 
-  /// loading 狀態串流, 以此控制loading狀態
-  final Stream<bool>? loadStream;
-
   /// 是否有 menu
   final bool showMenu;
 
@@ -84,7 +79,6 @@ class PageScaffold extends StatelessWidget {
     this.child,
     this.showMenu = true,
     this.showAppBar = true,
-    this.loadStream,
     this.loadSize,
     this.loadColor,
     this.color,
@@ -241,17 +235,6 @@ class PageScaffold extends StatelessWidget {
       body: child,
       bottomNavigationBar: bottomNavigationBar,
     );
-
-    if (loadStream != null) {
-      bodyWidget = LoadProvider(
-        child: bodyWidget,
-        loadStream: loadStream!,
-        style: LoadStyle(
-          color: loadColor ?? Colors.blueAccent,
-          size: loadSize ?? 50,
-        ),
-      );
-    }
 
     List<Widget> showWidgets = [];
     if (backgroundWidget != null) {

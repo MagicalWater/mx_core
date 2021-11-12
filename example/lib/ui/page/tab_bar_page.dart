@@ -25,7 +25,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<TabBarBloc>(context)!;
+    bloc = PageRouteBuilder.of<TabBarBloc>(context)!;
     tabController = TabController(
       initialIndex: currentIndex,
       length: 20,

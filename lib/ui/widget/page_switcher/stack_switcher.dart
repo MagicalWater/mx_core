@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mx_core/mx_core.dart';
+import 'package:mx_core/router/app_router.dart';
 
 /// 頁面切換元件
 /// 直接將 PageBloc 的 subPageStream 以及 routes 傳入即可
@@ -411,7 +412,7 @@ class _StackSwitcherState extends State<StackSwitcher>
         var key = GlobalKey();
         cacheKey.add(key);
       }
-      return (_) => routeMixinImpl.getPage(e);
+      return (_) => appRouter.getPage(e);
     }).toList();
   }
 

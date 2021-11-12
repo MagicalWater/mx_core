@@ -2,7 +2,7 @@ import 'package:mx_core_example/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/timer_bloc.dart';
-import 'package:mx_core_example/ui/page/introduction_page.dart';
+import 'package:mx_core_example/ui/page/introduction/view/introduction_page.dart';
 
 /// 倒數計時元件
 class TimerPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _TimerPageState extends State<TimerPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<TimerBloc>(context)!;
+    bloc = PageRouteBuilder.of<TimerBloc>(context)!;
     super.initState();
   }
 

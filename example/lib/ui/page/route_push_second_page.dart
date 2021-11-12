@@ -3,7 +3,7 @@ import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/app_bloc.dart';
 import 'package:mx_core_example/bloc/page/route_push_second_bloc.dart';
 import 'package:mx_core_example/router/routes.dart';
-import 'package:mx_core_example/ui/page/introduction_page.dart';
+import 'package:mx_core_example/ui/page/introduction/view/introduction_page.dart';
 
 class RoutePushSecondPage extends StatefulWidget {
   final RouteOption option;
@@ -26,7 +26,7 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSecondBloc>(context)!;
+    bloc = PageRouteBuilder.of<RoutePushSecondBloc>(context)!;
     super.initState();
   }
 

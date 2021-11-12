@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/stateful_button_bloc.dart';
 
-import 'introduction_page.dart';
+import 'introduction/view/introduction_page.dart';
 
 class StatefulButtonPage extends StatefulWidget {
   final RouteOption option;
@@ -25,7 +25,7 @@ class _StatefulButtonPageState extends State<StatefulButtonPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<StatefulButtonBloc>(context)!;
+    bloc = PageRouteBuilder.of<StatefulButtonBloc>(context)!;
     super.initState();
   }
 

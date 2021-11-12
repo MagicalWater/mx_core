@@ -3,10 +3,14 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+// ignore: implementation_imports
 import 'package:flutter_easyrefresh/src/behavior/scroll_behavior.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../load_provider.dart';
+import '../load_provider/load_provider.dart';
+import 'refresh_controller.dart';
+
+export 'refresh_controller.dart';
 
 part 'easy_refresh_style.dart';
 
@@ -46,8 +50,8 @@ class RefreshView extends StatefulWidget {
   /// 初始化列表的狀態
   final RefreshState initState;
 
-  /// 列表狀態流
-  final Stream<RefreshState>? stateStream;
+  /// 列表狀態控制
+  final RefreshController? refreshController;
 
   /// 加載更多回調, null 為沒有加載更多
   final VoidCallback? onLoad;
@@ -70,8 +74,8 @@ class RefreshView extends StatefulWidget {
     required EasyRefreshStyle easyRefreshStyle,
     this.onRefresh,
     this.onLoad,
-    this.initState = const RefreshState._init(),
-    this.stateStream,
+    this.initState = RefreshState.none,
+    this.refreshController,
     this.placeStyle,
     this.placeBuilder,
     this.loadStyle,
@@ -83,14 +87,14 @@ class RefreshView extends StatefulWidget {
   /// 內部包含了 SliverView 的基本屬性
   factory RefreshView({
     key,
-    RefreshState initState = const RefreshState._init(),
-    Stream<RefreshState>? stateStream,
+    RefreshState initState = RefreshState.none,
     PlaceStyle? placeStyle,
     RefreshBuilder? placeBuilder,
     VoidCallback? onRefresh,
     VoidCallback? onLoadMore,
     bool taskIndependence = false,
     ScrollController? scrollController,
+    RefreshController? refreshController,
     Header? header,
     Footer? footer,
     Widget? emptyWidget,
@@ -123,7 +127,7 @@ class RefreshView extends StatefulWidget {
       onRefresh: onRefresh,
       onLoad: onLoadMore,
       initState: initState,
-      stateStream: stateStream,
+      refreshController: refreshController,
       placeStyle: placeStyle,
       placeBuilder: placeBuilder,
       loadStyle: loadStyle,
@@ -134,8 +138,7 @@ class RefreshView extends StatefulWidget {
   /// 直接使用CustomScrollView可用的slivers
   factory RefreshView.custom({
     key,
-    RefreshState initState = const RefreshState._init(),
-    Stream<RefreshState>? stateStream,
+    RefreshState initState = RefreshState.none,
     PlaceStyle? placeStyle,
     RefreshBuilder? placeBuilder,
     VoidCallback? onRefresh,
@@ -150,6 +153,7 @@ class RefreshView extends StatefulWidget {
     Axis scrollDirection = Axis.vertical,
     bool reverse = false,
     ScrollController? scrollController,
+    RefreshController? refreshController,
     bool? primary,
     bool shrinkWrap = false,
     Key? center,
@@ -192,7 +196,7 @@ class RefreshView extends StatefulWidget {
       onRefresh: onRefresh,
       onLoad: onLoadMore,
       initState: initState,
-      stateStream: stateStream,
+      refreshController: refreshController,
       placeStyle: placeStyle,
       placeBuilder: placeBuilder,
       loadStyle: loadStyle,
@@ -204,8 +208,7 @@ class RefreshView extends StatefulWidget {
   /// 用法灵活,但需将physics、header和footer放入列表中
   factory RefreshView.builder({
     key,
-    RefreshState initState = const RefreshState._init(),
-    Stream<RefreshState>? stateStream,
+    RefreshState initState = RefreshState.none,
     PlaceStyle? placeStyle,
     bool firstRefresh = false,
     Widget? firstRefreshWidget,
@@ -215,6 +218,7 @@ class RefreshView extends StatefulWidget {
     VoidCallback? onLoadMore,
     bool taskIndependence = false,
     ScrollController? scrollController,
+    RefreshController? refreshController,
     Header? header,
     Footer? footer,
     bool topBouncing = true,
@@ -240,7 +244,7 @@ class RefreshView extends StatefulWidget {
       onRefresh: onRefresh,
       onLoad: onLoadMore,
       initState: initState,
-      stateStream: stateStream,
+      refreshController: refreshController,
       placeStyle: placeStyle,
       placeBuilder: placeBuilder,
       loadStyle: loadStyle,
@@ -316,22 +320,12 @@ class _RefreshViewState extends State<RefreshView> {
   /// 啟動延遲接受命令的訂閱
   StreamSubscription? _disableSubscription;
 
-  Stream<bool> get debounceLoadStream {
-    return _stateSubject.stream.map((e) {
-//        print("接收到資料: ${e.isLoading}");
-//      var isLoading = false;
-      return e.centerLoad;
-//      switch (e.type) {
-//        case RefreshType.refresh:
-//          isLoading = e.isLoading;
-//          break;
-//        case RefreshType.loadMore:
-//          isLoading = e.isLoading && !e.bounce;
-//          break;
-//      }
-//      return isLoading;
-    }).distinct();
-  }
+  StreamSubscription? _debounceLoadSubscription;
+
+  Stream<bool> get debounceLoadStream =>
+      _stateSubject.map((e) => e.centerLoad).distinct();
+
+  LoadController _loadController = LoadController();
 
   void _activeDebounce() {
     _isDebounceActive = true;
@@ -363,9 +357,18 @@ class _RefreshViewState extends State<RefreshView> {
   @override
   void initState() {
     _stateSubject.add(widget.initState);
+
+    _debounceLoadSubscription = debounceLoadStream.listen((event) {
+      if (event) {
+        _loadController.show();
+      } else {
+        _loadController.hide();
+      }
+    });
+
     _updateEasyRefresh();
 
-    var dataHandleStream = widget.stateStream?.doOnData((e) {
+    var dataHandleStream = widget.refreshController?.stream.doOnData((e) {
       _handleRefreshState(e);
     });
 
@@ -487,7 +490,8 @@ class _RefreshViewState extends State<RefreshView> {
     stackList.add(_easyRefreshNotification ?? _easyRefresh);
     stackList.add(placeView);
     return LoadProvider(
-      loadStream: debounceLoadStream,
+      initValue: _stateSubject.value.centerLoad,
+      controller: _loadController,
       style: LoadStyle(
         color: widget.loadStyle?.color ?? Colors.blueAccent,
         size: widget.loadStyle?.size ?? 50,
@@ -654,6 +658,8 @@ class _RefreshViewState extends State<RefreshView> {
     _stateSubject.close();
     _easyRefreshController.dispose();
     _disableSubscription?.cancel();
+    _debounceLoadSubscription?.cancel();
+    _loadController.dispose();
     super.dispose();
   }
 }
@@ -676,6 +682,8 @@ class PlaceStyle {
 
 /// 元件狀態
 class RefreshState {
+  final bool isInit;
+
   final RefreshType type;
 
   /// 是否為空內容元件
@@ -705,27 +713,31 @@ class RefreshState {
   /// 用於刷新之後設置加載更多的 noMore
   final bool? noLoadMore;
 
-  const RefreshState._init()
-      : this.empty = false,
+  const RefreshState._()
+      : this.isInit = true,
+        this.empty = false,
         this.success = true,
         this.noMore = false,
         this.isLoading = false,
         this.bounce = true,
-        this.centerLoad = true,
+        this.centerLoad = false,
         this.type = RefreshType.refresh,
         this.resetRefresh = false,
         this.resetLoadMore = false,
         this.noLoadMore = null;
 
+  static const RefreshState none = RefreshState._();
+
   /// 設置讀取狀態
   /// * [type] - 讀取的類型, 刷新或加載更多
   /// * [bounce] - 是否顯示對應的下拉刷新或者上拉加載, 若 false 則只有中間的 loading
   /// * [centerLoad] - 中央的 loading 顯示, 預設加載更多不會顯示
-  RefreshState.loading({
+  const RefreshState.loading({
     this.type = RefreshType.refresh,
     this.bounce = true,
     this.centerLoad = false,
-  })  : this.empty = false,
+  })  : this.isInit = false,
+        this.empty = false,
         this.success = true,
         this.noMore = false,
         this.isLoading = true,
@@ -734,25 +746,27 @@ class RefreshState {
         this.noLoadMore = null;
 
   /// 設置刷新的結果
-  RefreshState.refresh({
+  const RefreshState.refreshEnd({
     required this.success,
     this.empty = false,
     this.noMore = false,
     this.resetLoadMore = true,
     this.noLoadMore,
-  })  : this.isLoading = false,
+  })  : this.isInit = false,
+        this.isLoading = false,
         this.bounce = true,
         this.type = RefreshType.refresh,
         this.resetRefresh = false,
         this.centerLoad = false;
 
   /// 設置加載更多的結果
-  RefreshState.loadMore({
+  const RefreshState.loadMoreEnd({
     required this.success,
     this.empty = false,
     this.noMore = false,
     this.resetRefresh = false,
-  })  : this.isLoading = false,
+  })  : this.isInit = false,
+        this.isLoading = false,
         this.bounce = true,
         this.type = RefreshType.loadMore,
         this.resetLoadMore = false,

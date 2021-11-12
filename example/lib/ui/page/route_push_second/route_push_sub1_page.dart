@@ -19,7 +19,7 @@ class _RoutePushSub1PageState extends State<RoutePushSub1Page> with AutomaticKee
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSub1Bloc>(context)!;
+    bloc = PageRouteBuilder.of<RoutePushSub1Bloc>(context)!;
     super.initState();
   }
 

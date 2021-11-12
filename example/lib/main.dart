@@ -4,7 +4,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mx_core/mx_core.dart';
 
-import 'bloc/app_bloc.dart';
 import 'router/route_widget.dart';
 import 'router/routes.dart';
 
@@ -24,7 +23,6 @@ void main() {
 
     // 專案擁有的 route
     routeSetting: RouteSetting(
-      mixinImpl: AppBloc(),
       widgetImpl: RouteWidget.getInstance(),
     ),
   );
@@ -48,17 +46,17 @@ void main() {
         title: titleWidget,
         iconTheme: IconThemeData(
           color: Colors.black,
-          size: Screen.scaleA(20),
+          size: 20.scaleA,
         ),
         actions: actions,
       ),
     );
   });
 
-  AppBloc().pageDetailStream.listen((e) {
+  appRouter.pageDetailStream.listen((e) {
     print('''
-歷史 - ${AppBloc().pageHistory.map((el) => el.route).toList()}
-當前 - ${AppBloc().currentDetailPage}
+歷史 - ${appRouter.pageHistory.map((el) => el.route).toList()}
+當前 - ${appRouter.currentDetailPage}
     ''');
   });
 
@@ -68,8 +66,7 @@ void main() {
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return LoadProvider(
-      root: true,
+    return LoadProvider.root(
       child: MxCoreInit(
         child: MaterialApp(
           builder: BotToastInit(),
@@ -91,7 +88,7 @@ class App extends StatelessWidget {
             //   },
             // ),
           ),
-          home: AppBloc().getPage(
+          home: appRouter.getPage(
             Pages.introduction,
             entryPoint: true,
           ),

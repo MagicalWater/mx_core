@@ -36,10 +36,7 @@ class RouteData extends RouteOption {
   @override
   final String? targetSubRoute;
 
-  final Map<String, dynamic>? blocQuery;
-  final Map<String, dynamic>? widgetQuery;
-
-  RouteDataType? type;
+  final Map<String, dynamic>? query;
 
   /// 是否為回退 route
   bool isPop;
@@ -47,35 +44,21 @@ class RouteData extends RouteOption {
   /// 是否強制建立新元件
   bool forceNew;
 
-  @override
-  Map<String, dynamic>? get query =>
-      (type ?? RouteDataType.widget) == RouteDataType.widget
-          ? widgetQuery
-          : blocQuery;
-
   RouteData(
     this.route, {
     this.targetSubRoute,
-    this.widgetQuery,
-    this.blocQuery,
+    this.query,
   })  : this.isPop = false,
         this.forceNew = false;
 
-  RouteData copyWith(RouteDataType type) {
+  RouteData copyWith() {
     var data = RouteData(
       route,
       targetSubRoute: targetSubRoute,
-      widgetQuery: widgetQuery,
-      blocQuery: blocQuery,
+      query: query,
     )
-      ..type = type
       ..isPop = isPop
       ..forceNew = forceNew;
     return data;
   }
-}
-
-enum RouteDataType {
-  bloc,
-  widget,
 }

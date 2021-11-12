@@ -30,7 +30,7 @@ class _SpanGridPageState extends State<SpanGridPage>
 
   @override
   void initState() {
-    bloc = BlocProvider.of<SpanGridBloc>(context)!;
+    bloc = PageRouteBuilder.of<SpanGridBloc>(context)!;
     WidgetsBinding.instance!.addPostFrameCallback((_) {
 //      print("開始展示圖");
       urlStreamController.add(imageUrl);

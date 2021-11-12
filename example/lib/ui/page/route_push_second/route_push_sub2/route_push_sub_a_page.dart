@@ -22,7 +22,7 @@ class _RoutePushSubAPageState extends State<RoutePushSubAPage>  with AutomaticKe
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSubABloc>(context)!;
+    bloc = PageRouteBuilder.of<RoutePushSubABloc>(context)!;
     super.initState();
   }
 

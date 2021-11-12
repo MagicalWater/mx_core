@@ -3,7 +3,7 @@ import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/route_push_entry_bloc.dart';
 import 'package:mx_core_example/bloc/app_bloc.dart';
 import 'package:mx_core_example/router/routes.dart';
-import 'package:mx_core_example/ui/page/introduction_page.dart';
+import 'package:mx_core_example/ui/page/introduction/view/introduction_page.dart';
 
 class RoutePushEntryPage extends StatefulWidget {
   final RouteOption option;
@@ -33,7 +33,7 @@ class _RoutePushEntryPageState extends State<RoutePushEntryPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushEntryBloc>(context)!;
+    bloc = PageRouteBuilder.of<RoutePushEntryBloc>(context)!;
     super.initState();
   }
 

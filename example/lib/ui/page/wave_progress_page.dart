@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/bloc/page/wave_progress_bloc.dart';
 
-import 'introduction_page.dart';
+import 'introduction/view/introduction_page.dart';
 
 class WaveProgressPage extends StatefulWidget {
   final RouteOption option;
@@ -32,7 +32,7 @@ class _WaveProgressPageState extends State<WaveProgressPage> {
 
   @override
   void initState() {
-    bloc = BlocProvider.of<WaveProgressBloc>(context)!;
+    bloc = PageRouteBuilder.of<WaveProgressBloc>(context)!;
     super.initState();
   }
 

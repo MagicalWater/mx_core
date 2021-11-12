@@ -22,7 +22,7 @@ class _RoutePushSubBPageState extends State<RoutePushSubBPage>
 
   @override
   void initState() {
-    bloc = BlocProvider.of<RoutePushSubBBloc>(context)!;
+    bloc = PageRouteBuilder.of<RoutePushSubBBloc>(context)!;
     super.initState();
   }
 
