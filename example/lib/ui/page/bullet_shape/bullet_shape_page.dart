@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
+import 'package:mx_core_example/ui/widget/base_app_bar.dart';
 
 class BulletShapePage extends StatefulWidget {
   final RouteOption option;
@@ -12,16 +13,10 @@ class BulletShapePage extends StatefulWidget {
 
 class _BulletShapePageState extends State<BulletShapePage> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return PageScaffold(
-      haveAppBar: true,
-      title: '子彈渲染',
-      child: SafeArea(
+    return Scaffold(
+      appBar: baseAppBar('子彈渲染'),
+      body: SafeArea(
         child: Container(
           width: 200,
           height: 200,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
-PreferredSizeWidget baseAppBar(String title) {
+PreferredSizeWidget baseAppBar(String? title) {
   Widget titleWidget = Text(
     title ?? '',
     style: TextStyle(

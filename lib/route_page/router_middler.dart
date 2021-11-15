@@ -6,22 +6,36 @@ import 'package:rxdart/rxdart.dart';
 
 part 'page_router.dart';
 
-class RouterMiddler extends StatefulWidget {
+typedef T _RouterBuilder<T extends PageRouter>();
+
+extension RouteContext on BuildContext {
+  T? pageRoute<T extends PageRouter>() {
+    return RouterMiddler.of(this);
+  }
+}
+
+class RouterMiddler<T extends PageRouter> extends StatefulWidget {
   RouterMiddler({
     Key? key,
     required this.childBuilder,
     required this.routeBuilder,
   }) : super(key: key);
 
-  final PageRouter Function() routeBuilder;
+  final _RouterBuilder<T> routeBuilder;
   final WidgetBuilder childBuilder;
 
   @override
-  RouterMiddlerState createState() => RouterMiddlerState();
+  RouterMiddlerState<T> createState() => RouterMiddlerState<T>();
+
+  static T? of<T extends PageRouter>(BuildContext context) {
+    var providerState =
+        context.findAncestorStateOfType<RouterMiddlerState<T>>();
+    return providerState?._route;
+  }
 }
 
-class RouterMiddlerState extends State<RouterMiddler> {
-  late PageRouter _route;
+class RouterMiddlerState<T extends PageRouter> extends State<RouterMiddler<T>> {
+  late T _route;
 
   @override
   void initState() {

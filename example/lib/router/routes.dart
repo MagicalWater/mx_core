@@ -68,9 +68,6 @@ class Pages {
   /// 波浪進度條
   static const waveProgress = "/waveProgress";
 
-  /// 測試頁
-  static const test = "/test";
-
   /// 刷新元件 refreshView
   static const refreshView = "/refreshView";
 

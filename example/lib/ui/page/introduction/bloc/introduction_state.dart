@@ -10,7 +10,6 @@ abstract class IntroductionState {
 class IntroductionInitial extends IntroductionState {
   IntroductionInitial()
       : super([
-          PageInfo(Pages.test, "測試頁面"),
           PageInfo(Pages.kChart, "行情圖表"),
           PageInfo(Pages.bulletShape, "彈頭渲染"),
           PageInfo(Pages.lineIndicator, "線條指示器"),

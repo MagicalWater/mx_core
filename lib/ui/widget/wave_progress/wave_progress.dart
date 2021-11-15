@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -6,11 +5,19 @@ import 'package:flutter/material.dart';
 part 'wave_painter.dart';
 
 /// 進度控制
-abstract class ProgressController {
-  double get currentProgress;
+class ProgressController {
+  _WaveProgressState? _bind;
+
+  double get currentProgress => _bind?._currentProgress ?? 0;
 
   /// 設置進度
-  void setProgress(double progress, [double? total]);
+  void setProgress(double progress, [double? total]) {
+    _bind?.setProgress(progress, total);
+  }
+
+  void dispose() {
+    _bind = null;
+  }
 }
 
 /// 進度元件構建
@@ -46,11 +53,7 @@ class WaveProgress extends StatefulWidget {
   /// 外框參數
   final WaveStyle style;
 
-  /// 進度 stream, 也可使用 stream 方式更改進度
-  final Stream<double>? progressStream;
-
-  /// 取得控制器
-  final Function(ProgressController)? onCreated;
+  final ProgressController? controller;
 
   WaveProgress({
     this.builder,
@@ -59,11 +62,10 @@ class WaveProgress extends StatefulWidget {
     this.waveColor = Colors.blueAccent,
     this.secondWaveColor,
     this.velocity = 100,
-    this.progressStream,
+    this.controller,
     this.shape = BoxShape.circle,
     this.style = const WaveStyle(),
     this.amplitudeMultiple = 1,
-    this.onCreated,
   });
 
   @override
@@ -71,12 +73,7 @@ class WaveProgress extends StatefulWidget {
 }
 
 class _WaveProgressState extends State<WaveProgress>
-    with TickerProviderStateMixin
-    implements ProgressController {
-  /// 當前進度
-  @override
-  double get currentProgress => _currentProgress;
-
+    with TickerProviderStateMixin {
   /// 近處的波浪
   late AnimationController _waveAnimationController1;
 
@@ -103,8 +100,6 @@ class _WaveProgressState extends State<WaveProgress>
   /// 當前進度轉換為比例
   double get _progressPercent => min(_tempAnimatedProgress / _totalProgress, 1);
 
-  StreamSubscription? _progressStreamSubscription;
-
   @override
   void initState() {
     _waveAmplitude = 0;
@@ -112,9 +107,7 @@ class _WaveProgressState extends State<WaveProgress>
     _totalProgress = widget.maxProgress;
     _currentProgress = widget.initProgress;
 
-    _progressStreamSubscription = widget.progressStream?.listen((progress) {
-      setProgress(progress);
-    });
+    widget.controller?._bind = this;
 
     // 將速率換換成波浪移動一個 pi 的時間
     // 這邊的換算乘以 20 只是單純適配個人認為最剛好的速率
@@ -207,8 +200,6 @@ class _WaveProgressState extends State<WaveProgress>
     _waveAnimationController1.repeat();
     _waveAnimationController2.repeat();
 
-    widget.onCreated?.call(this);
-
     super.initState();
   }
 
@@ -260,15 +251,12 @@ class _WaveProgressState extends State<WaveProgress>
 
   @override
   void dispose() {
-    _progressStreamSubscription?.cancel();
-    _progressStreamSubscription = null;
     _waveAnimationController1.dispose();
     _waveAnimationController2.dispose();
     super.dispose();
   }
 
   /// 設置進度
-  @override
   void setProgress(double progress, [double? total]) {
     if (total != null && total > 0) {
       _totalProgress = total;

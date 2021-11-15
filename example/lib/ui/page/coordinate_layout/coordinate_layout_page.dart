@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
+import 'package:mx_core_example/ui/widget/base_app_bar.dart';
 import 'package:mx_core_example/ui/widget/top_desc.dart';
 
 /// 展示座標佈局元件
@@ -37,10 +38,9 @@ class _CoordinateLayoutPageState extends State<CoordinateLayoutPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
-      haveAppBar: true,
-      title: title,
-      child: SafeArea(
+    return Scaffold(
+      appBar: baseAppBar(title),
+      body: SafeArea(
         child: Container(
           color: Colors.black,
           padding: EdgeInsets.all(4),

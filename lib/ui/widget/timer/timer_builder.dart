@@ -13,8 +13,6 @@ typedef Widget TimerWidgetBuilder(
   Duration time,
 );
 
-typedef void OnTimerWidgetCreated(TimerController controller);
-
 /// 倒數計時元件
 class TimerBuilder extends StatefulWidget {
   final TimerWidgetBuilder builder;
@@ -24,9 +22,6 @@ class TimerBuilder extends StatefulWidget {
 
   /// 觸發tick間隔, 當 [timerCore] 有值時失效
   final Duration? tickInterval;
-
-  /// 回傳倒數計時控制器
-  final OnTimerWidgetCreated? onCreated;
 
   /// 由外部傳入 timer 倒數計時核心
   /// 此參數傳入時將忽略 [time] 以及 [tickInterval] 參數
@@ -44,7 +39,6 @@ class TimerBuilder extends StatefulWidget {
     this.tickInterval,
     this.timerCore,
     this.autoStart = false,
-    this.onCreated,
     required this.builder,
   }) : assert((time != null && tickInterval != null) || timerCore != null);
 
@@ -52,13 +46,11 @@ class TimerBuilder extends StatefulWidget {
   _TimerBuilderState createState() => _TimerBuilderState();
 }
 
-class _TimerBuilderState extends State<TimerBuilder>
-    implements TimerController {
+class _TimerBuilderState extends State<TimerBuilder> {
   late TimerCore _timerCore;
 
   late StreamSubscription _timerEventSubscription;
 
-  @override
   bool get isActive => _timerCore.status != TimerStatus.active;
 
   /// 是否由外部自行傳入的 timerCore
@@ -75,7 +67,6 @@ class _TimerBuilderState extends State<TimerBuilder>
     _timerEventSubscription = _timerCore.timerStream.listen((data) {
       setState(() {});
     });
-    widget.onCreated?.call(this);
     if (widget.autoStart) {
       start();
     }
@@ -83,17 +74,14 @@ class _TimerBuilderState extends State<TimerBuilder>
   }
 
   /// 控制器呼叫開始倒數計時
-  @override
   void start() {
     _timerCore.start();
   }
 
-  @override
   void pause() {
     _timerCore.pause();
   }
 
-  @override
   void end() {
     _timerCore.end();
   }
@@ -118,16 +106,4 @@ class _TimerBuilderState extends State<TimerBuilder>
     }
     super.dispose();
   }
-}
-
-/// 倒數計時控制器
-abstract class TimerController {
-  void start();
-
-  void pause();
-
-  void end();
-
-  /// 是否正在倒數中
-  bool get isActive;
 }

@@ -67,7 +67,7 @@ class LoadProvider extends StatefulWidget {
     this.tapThrough = false,
     this.builder,
   })  : this.method = _LoadMethod.controller,
-        this.value = false;
+        this.value = initValue ?? false;
 
   LoadProvider.root({
     required this.child,
@@ -128,6 +128,18 @@ class _LoadProviderState extends State<LoadProvider>
     Screen.init();
 
     loadStream = _loadStreamController.stream.asBroadcastStream();
+
+    switch (widget.method) {
+      case _LoadMethod.controller:
+        _currentShow = widget.value;
+        break;
+      case _LoadMethod.root:
+        _currentShow = false;
+        break;
+      case _LoadMethod.value:
+        _currentShow = widget.value;
+        break;
+    }
 
     _currentStyle = widget.style ?? LoadStyle();
 
