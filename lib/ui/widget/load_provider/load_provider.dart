@@ -59,33 +59,39 @@ class LoadProvider extends StatefulWidget {
 
   final bool value;
 
-  LoadProvider({
+  const LoadProvider({
+    Key? key,
     required this.child,
     this.style,
     bool? initValue,
     this.controller,
     this.tapThrough = false,
     this.builder,
-  })  : this.method = _LoadMethod.controller,
-        this.value = initValue ?? false;
+  })  : method = _LoadMethod.controller,
+        value = initValue ?? false,
+        super(key: key);
 
-  LoadProvider.root({
+  const LoadProvider.root({
+    Key? key,
     required this.child,
     this.style,
     this.tapThrough = false,
     this.builder,
-  })  : this.method = _LoadMethod.root,
-        this.controller = null,
-        this.value = false;
+  })  : method = _LoadMethod.root,
+        controller = null,
+        value = false,
+        super(key: key);
 
-  LoadProvider.value({
+  const LoadProvider.value({
+    Key? key,
     required this.child,
     required this.value,
     this.style,
     this.tapThrough = false,
     this.builder,
-  })  : this.method = _LoadMethod.value,
-        this.controller = null;
+  })  : method = _LoadMethod.value,
+        controller = null,
+        super(key: key);
 
   /// 設置根節點的 load 顯示與否
   static Future<void> setRoot(
@@ -114,7 +120,7 @@ class _LoadProviderState extends State<LoadProvider>
   late LoadStyle _currentStyle;
   late bool _currentShow;
 
-  StreamController<bool> _loadStreamController = StreamController();
+  final StreamController<bool> _loadStreamController = StreamController();
 
   late Stream<bool> loadStream;
 
@@ -151,6 +157,7 @@ class _LoadProviderState extends State<LoadProvider>
 
     switch (widget.method) {
       case _LoadMethod.controller:
+        widget.controller?._bind = this;
         break;
       case _LoadMethod.root:
         _rootLoadController = LoadController().._bind = this;
@@ -191,7 +198,7 @@ class _LoadProviderState extends State<LoadProvider>
           sync: _animatedSync,
           scale: Comb.scale(
             begin: Size.zero,
-            end: Size.square(1),
+            end: const Size.square(1),
           ),
         );
 

@@ -4,7 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
-typedef StatefulButtonTapCallback(StatefulButtonController controller);
+typedef StatefulButtonTapCallback = Function(
+    StatefulButtonController controller);
 
 /// 有狀態的按鈕
 /// 現可針對 load 狀態做顯示
@@ -44,7 +45,8 @@ class StatefulButton extends StatefulWidget {
 
   final Duration changeInterval;
 
-  StatefulButton({
+  const StatefulButton({
+    Key? key,
     required this.width,
     required this.height,
     this.tapStyle,
@@ -58,7 +60,7 @@ class StatefulButton extends StatefulWidget {
     this.changeInterval = const Duration(seconds: 1),
     this.onCreated,
     this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   _StatefulButtonState createState() => _StatefulButtonState();
@@ -177,8 +179,8 @@ class _StatefulButtonState extends State<StatefulButton>
                       color: _loadStyle.color,
                     ),
               duration: _animDuration,
-              switchInCurve: Interval(0.7, 1.0),
-              switchOutCurve: Interval(0.7, 1.0),
+              switchInCurve: const Interval(0.7, 1.0),
+              switchOutCurve: const Interval(0.7, 1.0),
             ),
             onTap: () {
               widget.onTap?.call(this);

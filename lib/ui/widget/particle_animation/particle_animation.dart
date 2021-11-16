@@ -20,12 +20,13 @@ class ParticleAnimation extends StatefulWidget {
   final bool auto;
 
   /// 粒子動畫結束後回調
-  final onEnd;
+  final VoidCallback? onEnd;
 
   /// 分割的粒子類型
   final ParticleType particleType;
 
-  ParticleAnimation({
+  const ParticleAnimation({
+    Key? key,
     required this.width,
     required this.height,
     required this.particles,
@@ -33,7 +34,7 @@ class ParticleAnimation extends StatefulWidget {
     this.auto = false,
     this.onEnd,
     this.particleType = ParticleType.ball,
-  });
+  }) : super(key: key);
 
   @override
   _ParticleAnimationState createState() => _ParticleAnimationState();
@@ -48,7 +49,7 @@ class _ParticleAnimationState extends State<ParticleAnimation>
     // 一個永遠不會停下來的 animation
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(days: 365),
+      duration: const Duration(days: 365),
     )..addListener(() {
         // 重新進行渲染
         reRender();
@@ -90,7 +91,10 @@ class _ParticleAnimationState extends State<ParticleAnimation>
           type: AnimatedType.tap,
           child: widgetChain,
           scale: Comb.scale(
-              end: Size.square(0.8), curve: Curves.bounceOut, duration: 200),
+            end: const Size.square(0.8),
+            curve: Curves.bounceOut,
+            duration: 200,
+          ),
           onTap: () {
             // 直接操作粒子
             startAnimation();
@@ -114,22 +118,20 @@ class _ParticleAnimationState extends State<ParticleAnimation>
   /// 依照經過的時間更新每個粒子的位置, 以及其他屬性
   /// 最後重新進行渲染
   void reRender() {
-    widget.particles.forEach((e) => updateParticle(e));
+    for (var e in widget.particles) {
+      updateParticle(e);
+    }
 
     // 遍歷所有的粒子, 檢查是否有需要隱藏的
     widget.particles.removeWhere((e) => e.isNeedDisappear());
 
     if (widget.particles.isEmpty) {
       // 若所有粒子都消失了, 則停止動畫
-      if (widget.onEnd != null) {
-        widget.onEnd();
-      }
+      widget.onEnd?.call();
       disposeAnimation();
     } else if (!widget.particles.any((e) => e.needUpdate)) {
       // 若所有粒子都停止了, 則停止動畫
-      if (widget.onEnd != null) {
-        widget.onEnd();
-      }
+      widget.onEnd?.call();
       disposeAnimation();
     }
     setState(() {});

@@ -9,13 +9,13 @@ abstract class PopupController<T> {
   bool _isRemoved = false;
 
   /// 彈窗動畫控制器
-  List<AnimatedCombController> _controllerList = [];
+  final List<AnimatedCombController> _controllerList = [];
 
   /// 刪除事件的回調
-  List<VoidCallback> _removeEventOnStartCallbackList = [];
+  final List<VoidCallback> _removeEventOnStartCallbackList = [];
 
   /// 刪除事件的回調
-  List<VoidCallback> _removeEventOnEndCallbackList = [];
+  final List<VoidCallback> _removeEventOnEndCallbackList = [];
 
   /// 刪除彈窗的處理方法
   void Function(T ins)? _removeHandler;
@@ -25,7 +25,9 @@ abstract class PopupController<T> {
   /// 註冊動畫控制器
   void registerController(AnimatedCombController controller) {
     if (_isRemoved) {
-      _controllerList.forEach((e) => e.toggle());
+      for (var e in _controllerList) {
+        e.toggle();
+      }
       _controllerList.clear();
     } else {
       _controllerList.add(controller);
@@ -69,17 +71,17 @@ abstract class PopupController<T> {
 
   /// 彈窗開始動畫離屏
   void _sendRemoveEventOnStart() {
-    _removeEventOnStartCallbackList.forEach((e) {
+    for (var e in _removeEventOnStartCallbackList) {
       e();
-    });
+    }
     _removeEventOnStartCallbackList.clear();
   }
 
   /// 彈窗移除完畢
   void _sendRemoveEventOnEnd() {
-    _removeEventOnEndCallbackList.forEach((e) {
+    for (var e in _removeEventOnEndCallbackList) {
       e();
-    });
+    }
     _removeEventOnEndCallbackList.clear();
   }
 

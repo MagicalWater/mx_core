@@ -24,7 +24,7 @@ class RefreshController {
 
   BehaviorSubject<RefreshState> get _lazyRefreshStateSubject {
     return _refreshStateSubject ??= BehaviorSubject()
-      ..add(RefreshState.refreshEnd(success: true));
+      ..add(const RefreshState.refreshEnd(success: true));
   }
 
   /// 將刷新狀態設置為讀取中

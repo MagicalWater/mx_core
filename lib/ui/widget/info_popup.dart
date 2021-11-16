@@ -12,17 +12,18 @@ class InfoPopup extends StatefulWidget {
   final Widget child;
   final InfoPopupAction? controller;
 
-  InfoPopup({
+  const InfoPopup({
+    Key? key,
     required this.child,
     this.controller,
-  });
+  }) : super(key: key);
 
   @override
   _InfoPopupState createState() => _InfoPopupState();
 }
 
 class _InfoPopupState extends State<InfoPopup> {
-  int _detectTapCount = 3;
+  final int _detectTapCount = 3;
   double _currentTap = 0;
   PopupController? _popupController;
 
@@ -58,7 +59,7 @@ class _InfoPopupState extends State<InfoPopup> {
 
   void _saveTapDown() {
     timer?.cancel();
-    timer = Timer(Duration(milliseconds: 100), () {
+    timer = Timer(const Duration(milliseconds: 100), () {
       _currentTap = 0;
     });
   }
@@ -74,7 +75,7 @@ class _InfoPopupState extends State<InfoPopup> {
       _currentTap = 0;
       _showInfo();
     } else {
-      timer = Timer(Duration(milliseconds: 300), () {
+      timer = Timer(const Duration(milliseconds: 300), () {
         _currentTap = 0;
       });
     }
@@ -88,7 +89,7 @@ class _InfoPopupState extends State<InfoPopup> {
       builder: (controller) {
         return GestureDetector(
           onTap: () => controller.remove(),
-          child: _DeviceInfo(),
+          child: const _DeviceInfo(),
         );
       },
       option: PopupOption(
@@ -115,7 +116,7 @@ class _InfoPopupState extends State<InfoPopup> {
 }
 
 class _DeviceInfo extends StatefulWidget {
-  _DeviceInfo();
+  const _DeviceInfo();
 
   @override
   __DeviceInfoState createState() => __DeviceInfoState();
@@ -136,7 +137,7 @@ class __DeviceInfoState extends State<_DeviceInfo> {
           builder: (context, snapshot) {
             var packageInfo = snapshot.data;
             return Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Platform.isAndroid
                   ? FutureBuilder<AndroidDeviceInfo>(
                       future: infoPlugin.androidInfo,
@@ -149,8 +150,7 @@ class __DeviceInfoState extends State<_DeviceInfo> {
                             ),
                           );
                         }
-                        return Container(
-                          child: Text('''
+                        return Text('''
 ═══════ 裝置資訊 ═══════
 
 模組 ${androidInfo.model}
@@ -166,8 +166,7 @@ class __DeviceInfoState extends State<_DeviceInfo> {
 包名 ${packageInfo.packageName}
 版本 ${packageInfo.version}+${packageInfo.buildNumber}
 模式 ${kReleaseMode ? '正式' : '測試'}
-                        '''),
-                        );
+                        ''');
                       },
                     )
                   : FutureBuilder<IosDeviceInfo>(
@@ -179,8 +178,7 @@ class __DeviceInfoState extends State<_DeviceInfo> {
                             child: Loading.circle(color: Colors.blueAccent),
                           );
                         }
-                        return Container(
-                          child: Text('''
+                        return Text('''
 ═══════ 裝置資訊 ═══════
 
 模組 ${iosInfo.model}
@@ -192,8 +190,7 @@ class __DeviceInfoState extends State<_DeviceInfo> {
 包名 ${packageInfo.packageName}
 版本 ${packageInfo.version}+${packageInfo.buildNumber}
 模式 ${kReleaseMode ? '正式' : '測試'}
-                        '''),
-                        );
+                        ''');
                       },
                     ),
             );

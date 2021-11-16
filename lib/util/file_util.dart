@@ -107,8 +107,8 @@ class FileUtil {
     }
     try {
       fileLenList = (await directory.list(recursive: true).toList())
-          .where((f) => f is File)
-          .map((f) => (f as File).length());
+          .whereType<File>()
+          .map((f) => f.length());
     } catch (e) {
       // print("取得快取size出錯: $e");
       fileLenList = [Future.value(0)];

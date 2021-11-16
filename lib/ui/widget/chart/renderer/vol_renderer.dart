@@ -42,13 +42,13 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
               ? style.upColor
               : style.downColor);
 
-    if (lastPoint.MA5Volume != 0) {
-      drawLine(lastPoint.MA5Volume, curPoint.MA5Volume, canvas, lastX, curX,
+    if (lastPoint.ma5Volume != 0) {
+      drawLine(lastPoint.ma5Volume, curPoint.ma5Volume, canvas, lastX, curX,
           maStyle.ma5Color);
     }
 
-    if (lastPoint.MA10Volume != 0) {
-      drawLine(lastPoint.MA10Volume, curPoint.MA10Volume, canvas, lastX, curX,
+    if (lastPoint.ma10Volume != 0) {
+      drawLine(lastPoint.ma10Volume, curPoint.ma10Volume, canvas, lastX, curX,
           maStyle.ma10Color);
     }
   }
@@ -67,10 +67,10 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
             text: "VOL:${NumberUtil.volFormat(data.vol)}    ",
             style: getTextStyle(style.volTextColor)),
         TextSpan(
-            text: "MA5:${NumberUtil.volFormat(data.MA5Volume)}    ",
+            text: "MA5:${NumberUtil.volFormat(data.ma5Volume)}    ",
             style: getTextStyle(maStyle.ma5Color)),
         TextSpan(
-            text: "MA10:${NumberUtil.volFormat(data.MA10Volume)}    ",
+            text: "MA10:${NumberUtil.volFormat(data.ma10Volume)}    ",
             style: getTextStyle(maStyle.ma10Color)),
       ],
     );
@@ -88,7 +88,7 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
   @override
   void drawRightText(canvas, textStyle, int gridRows) {
     TextSpan span =
-        TextSpan(text: "${NumberUtil.volFormat(maxValue)}", style: textStyle);
+        TextSpan(text: NumberUtil.volFormat(maxValue), style: textStyle);
     TextPainter tp = TextPainter(text: span, textDirection: TextDirection.ltr);
     tp.layout();
     tp.paint(

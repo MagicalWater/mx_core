@@ -10,7 +10,7 @@ class ActionWidth {
         fixed = null;
 
   const ActionWidth.shrinkWrap()
-      : this.shrinkWrap = true,
+      : shrinkWrap = true,
         flex = null,
         fixed = null;
 

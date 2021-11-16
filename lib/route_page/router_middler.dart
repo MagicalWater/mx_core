@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 
 part 'page_router.dart';
 
-typedef T _RouterBuilder<T extends PageRouter>();
+typedef _RouterBuilder<T extends PageRouter> = T Function();
 
 extension RouteContext on BuildContext {
   T? pageRoute<T extends PageRouter>() {
@@ -15,7 +15,7 @@ extension RouteContext on BuildContext {
 }
 
 class RouterMiddler<T extends PageRouter> extends StatefulWidget {
-  RouterMiddler({
+  const RouterMiddler({
     Key? key,
     required this.childBuilder,
     required this.routeBuilder,

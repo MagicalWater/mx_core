@@ -57,14 +57,14 @@ class HttpUtil {
 
   /// 設定代理
   void setProxy(String ip, int port) {
-    this._proxyIp = ip;
-    this._proxyPort = port;
+    _proxyIp = ip;
+    _proxyPort = port;
     _syncHttpClientAdapter();
   }
 
   /// 設置證書無效的處理
   void setBadCertificateCallback(
-      bool callback(X509Certificate cert, String host, int port)) {
+      bool Function(X509Certificate cert, String host, int port) callback) {
     _badCertificateCallback = callback;
     _syncHttpClientAdapter();
   }

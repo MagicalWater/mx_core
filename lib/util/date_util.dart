@@ -3,7 +3,7 @@ import 'dart:core';
 import 'package:intl/intl.dart';
 
 extension DateUtilEx on DateTime {
-  bool get isLeapYear => DateUtil.isLeapYear(this.year);
+  bool get isLeapYear => DateUtil.isLeapYear(year);
 
   String getDateStr({
     String format = "yyyy-MM-dd HH:mm:ss",

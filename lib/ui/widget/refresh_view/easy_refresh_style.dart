@@ -96,19 +96,19 @@ class EasyRefreshStyle {
     this.bottomBouncing = true,
     this.behavior = const EmptyOverScrollScrollBehavior(),
     required this.child,
-  })  : this.scrollDirection = Axis.vertical,
-        this.reverse = false,
-        this.builder = null,
-        this.primary = null,
-        this.shrinkWrap = false,
-        this.center = null,
-        this.anchor = 0.0,
-        this.cacheExtent = null,
-        this.slivers = null,
-        this.semanticChildCount = null,
-        this.dragStartBehavior = DragStartBehavior.start,
-        this.listKey = null,
-        this.constructorType = _EasyRefreshConstructorType.none;
+  })  : scrollDirection = Axis.vertical,
+        reverse = false,
+        builder = null,
+        primary = null,
+        shrinkWrap = false,
+        center = null,
+        anchor = 0.0,
+        cacheExtent = null,
+        slivers = null,
+        semanticChildCount = null,
+        dragStartBehavior = DragStartBehavior.start,
+        listKey = null,
+        constructorType = _EasyRefreshConstructorType.none;
 
   /// custom构造器(推荐)
   /// 直接使用CustomScrollView可用的slivers
@@ -140,9 +140,9 @@ class EasyRefreshStyle {
     this.bottomBouncing = true,
     this.behavior = const EmptyOverScrollScrollBehavior(),
     required this.slivers,
-  })  : this.builder = null,
-        this.child = null,
-        this.constructorType = _EasyRefreshConstructorType.custom;
+  })  : builder = null,
+        child = null,
+        constructorType = _EasyRefreshConstructorType.custom;
 
   /// 自定义构造器
   /// 用法灵活,但需将physics、header和footer放入列表中
@@ -161,22 +161,22 @@ class EasyRefreshStyle {
     this.bottomBouncing = true,
     this.behavior = const EmptyOverScrollScrollBehavior(),
     required this.builder,
-  })  : this.scrollDirection = Axis.vertical,
-        this.reverse = false,
-        this.child = null,
-        this.primary = null,
-        this.shrinkWrap = false,
-        this.center = null,
-        this.anchor = 0.0,
-        this.cacheExtent = null,
-        this.slivers = null,
-        this.semanticChildCount = null,
-        this.dragStartBehavior = DragStartBehavior.start,
-        this.headerIndex = 0,
-        this.firstRefreshWidget = null,
-        this.emptyWidget = null,
-        this.listKey = null,
-        this.constructorType = _EasyRefreshConstructorType.builder;
+  })  : scrollDirection = Axis.vertical,
+        reverse = false,
+        child = null,
+        primary = null,
+        shrinkWrap = false,
+        center = null,
+        anchor = 0.0,
+        cacheExtent = null,
+        slivers = null,
+        semanticChildCount = null,
+        dragStartBehavior = DragStartBehavior.start,
+        headerIndex = 0,
+        firstRefreshWidget = null,
+        emptyWidget = null,
+        listKey = null,
+        constructorType = _EasyRefreshConstructorType.builder;
 
   /// 轉換為 [EasyRefresh] 元件
   /// * [controller] - 控制器

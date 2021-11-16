@@ -24,10 +24,10 @@ class ChartDataCalculator {
     if (isLast && dataList.length > 30) {
       i = dataList.length - 1;
       var data = dataList[dataList.length - 2];
-      ma5 = data.MA5Price * 5;
-      ma10 = data.MA10Price * 10;
-      ma20 = data.MA20Price * 20;
-      ma30 = data.MA30Price * 30;
+      ma5 = data.ma5Price * 5;
+      ma10 = data.ma10Price * 10;
+      ma20 = data.ma20Price * 20;
+      ma30 = data.ma30Price * 30;
 //      ma60 = data.MA60Price * 60;
     }
     for (; i < dataList.length; i++) {
@@ -40,36 +40,36 @@ class ChartDataCalculator {
 //      ma60 += closePrice;
 
       if (i == 4) {
-        entity.MA5Price = ma5 / 5;
+        entity.ma5Price = ma5 / 5;
       } else if (i >= 5) {
         ma5 -= dataList[i - 5].close;
-        entity.MA5Price = ma5 / 5;
+        entity.ma5Price = ma5 / 5;
       } else {
-        entity.MA5Price = 0;
+        entity.ma5Price = 0;
       }
       if (i == 9) {
-        entity.MA10Price = ma10 / 10;
+        entity.ma10Price = ma10 / 10;
       } else if (i >= 10) {
         ma10 -= dataList[i - 10].close;
-        entity.MA10Price = ma10 / 10;
+        entity.ma10Price = ma10 / 10;
       } else {
-        entity.MA10Price = 0;
+        entity.ma10Price = 0;
       }
       if (i == 19) {
-        entity.MA20Price = ma20 / 20;
+        entity.ma20Price = ma20 / 20;
       } else if (i >= 20) {
         ma20 -= dataList[i - 20].close;
-        entity.MA20Price = ma20 / 20;
+        entity.ma20Price = ma20 / 20;
       } else {
-        entity.MA20Price = 0;
+        entity.ma20Price = 0;
       }
       if (i == 29) {
-        entity.MA30Price = ma30 / 30;
+        entity.ma30Price = ma30 / 30;
       } else if (i >= 30) {
         ma30 -= dataList[i - 30].close;
-        entity.MA30Price = ma30 / 30;
+        entity.ma30Price = ma30 / 30;
       } else {
-        entity.MA30Price = 0;
+        entity.ma30Price = 0;
       }
 //      if (i == 59) {
 //        entity.MA60Price = ma60 / 60;
@@ -98,13 +98,13 @@ class ChartDataCalculator {
         double md = 0;
         for (int j = i - n + 1; j <= i; j++) {
           double c = dataList[j].close;
-          double m = entity.MA20Price;
+          double m = entity.ma20Price;
           double value = c - m;
           md += value * value;
         }
         md = md / (n - 1);
         md = sqrt(md);
-        entity.mb = entity.MA20Price;
+        entity.mb = entity.ma20Price;
         entity.up = entity.mb + 2.0 * md;
         entity.dn = entity.mb - 2.0 * md;
       }
@@ -163,8 +163,8 @@ class ChartDataCalculator {
     if (isLast && dataList.length > 10) {
       i = dataList.length - 1;
       var data = dataList[dataList.length - 2];
-      volumeMa5 = data.MA5Volume * 5;
-      volumeMa10 = data.MA10Volume * 10;
+      volumeMa5 = data.ma5Volume * 5;
+      volumeMa10 = data.ma10Volume * 10;
     }
 
     for (; i < dataList.length; i++) {
@@ -174,21 +174,21 @@ class ChartDataCalculator {
       volumeMa10 += entry.vol;
 
       if (i == 4) {
-        entry.MA5Volume = (volumeMa5 / 5);
+        entry.ma5Volume = (volumeMa5 / 5);
       } else if (i > 4) {
         volumeMa5 -= dataList[i - 5].vol;
-        entry.MA5Volume = volumeMa5 / 5;
+        entry.ma5Volume = volumeMa5 / 5;
       } else {
-        entry.MA5Volume = 0;
+        entry.ma5Volume = 0;
       }
 
       if (i == 9) {
-        entry.MA10Volume = volumeMa10 / 10;
+        entry.ma10Volume = volumeMa10 / 10;
       } else if (i > 9) {
         volumeMa10 -= dataList[i - 10].vol;
-        entry.MA10Volume = volumeMa10 / 10;
+        entry.ma10Volume = volumeMa10 / 10;
       } else {
-        entry.MA10Volume = 0;
+        entry.ma10Volume = 0;
       }
     }
   }

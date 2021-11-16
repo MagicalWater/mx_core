@@ -186,10 +186,10 @@ class SplitBox extends RenderBox
   Size _getPlaceSize(List<SpaceResult> spaces) {
     double maxWidth = 0;
     double maxHeight = 0;
-    spaces.forEach((e) {
+    for (var e in spaces) {
       maxWidth = max(maxWidth, e.offset.dx + e.size.width);
       maxHeight = max(maxHeight, e.offset.dy + e.size.height);
-    });
+    }
     return Size(maxWidth, maxHeight);
   }
 
@@ -240,29 +240,29 @@ class SplitBox extends RenderBox
         // 若沒有任何的 childInfo
         // 即是子元件全都為 fill 屬性
         if (adjustmentInfo.isNotEmpty) {
-          adjustmentInfo.forEach((e) {
+          for (var e in adjustmentInfo) {
             maxSize ??= e.size;
             switch (direction) {
               case Axis.horizontal:
                 maxSize = Size(
-                  max(maxSize!.width, e.size.width),
+                  max(maxSize.width, e.size.width),
                   _childConstraint.maxHeight,
                 );
                 break;
               case Axis.vertical:
                 maxSize = Size(
                   _childConstraint.maxWidth,
-                  max(maxSize!.height, e.size.height),
+                  max(maxSize.height, e.size.height),
                 );
                 break;
             }
-          });
+          }
           adjustmentInfo = _getAllChildInfo(
             childConstraint: BoxConstraints(
               minWidth: _childConstraint.minWidth,
               maxWidth: maxSize!.width,
               minHeight: _childConstraint.minHeight,
-              maxHeight: maxSize!.height,
+              maxHeight: maxSize.height,
             ).toAlignExpanded(true),
             ignoreFill: false,
             fullSpan: false,

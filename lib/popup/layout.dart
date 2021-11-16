@@ -12,7 +12,7 @@ class _PopupLayout extends ModalRoute {
 
   /// 背景顏色
   @override
-  Color get barrierColor => Color(0x00ffffff);
+  Color get barrierColor => const Color(0x00ffffff);
 
   /// 尚不明白這個是什麼
   @override

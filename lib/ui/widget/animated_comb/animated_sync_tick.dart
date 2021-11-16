@@ -9,18 +9,18 @@ class AnimatedSyncTick implements AnimatedCombController {
   AnimationController? _controller;
 
   /// 觸發動畫 tick 的串流
-  StreamController<void> _tickController = StreamController.broadcast();
+  var _tickController = StreamController.broadcast();
 
   /// 觸發動畫 tick Stream
   Stream<void> get tickStream => _tickController.stream;
 
   /// 動畫群組列表
-  Map<int, _AnimatedComb> _animatedMap = {};
+  final Map<int, _AnimatedComb> _animatedMap = {};
 
   /// 儲存動畫群組列表解析後的 data
   Map<int, AnimationData> _animatedParseMap = {};
 
-  List<AnimationStatusListener> _outsideStatusListener = [];
+  final List<AnimationStatusListener> _outsideStatusListener = [];
 
   /// 動畫開關初始值
   /// 當 [type] 為 [AnimatedBehavior.toggle] 時有效
@@ -65,9 +65,9 @@ class AnimatedSyncTick implements AnimatedCombController {
     this.initAnimated = true,
     this.autoStart = true,
     required AnimatedType type,
-  })  : this._controller = null,
-        this._isNeedRegisterTicker = true,
-        this._type = type {
+  })  : _controller = null,
+        _isNeedRegisterTicker = true,
+        _type = type {
     _syncCurrentMethod();
   }
 
@@ -80,14 +80,14 @@ class AnimatedSyncTick implements AnimatedCombController {
     this.initToggle = false,
     this.initAnimated = true,
     this.autoStart = true,
-  })  : this._isNeedRegisterTicker = false,
-        this._type = type,
-        this._controller = AnimationController(
+  })  : _isNeedRegisterTicker = false,
+        _type = type,
+        _controller = AnimationController(
           duration: Duration.zero,
           vsync: vsync,
         ) {
     _syncCurrentMethod();
-    this._controller!
+    _controller!
       ..addListener(_controllerListener)
       ..addStatusListener(_statusListener);
   }
@@ -113,9 +113,9 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// 控制器的 ticker 監聽
   void _controllerListener() {
     var currentTick = _controller!.value;
-    _animatedParseMap.values.forEach((e) {
+    for (var e in _animatedParseMap.values) {
       e.syncTickValue(currentTick);
-    });
+    }
     _tickController.add('');
   }
 
@@ -146,22 +146,22 @@ class AnimatedSyncTick implements AnimatedCombController {
   void _registerTicker(
     TickerProvider vsync,
   ) {
-    if (_isNeedRegisterTicker && this._controller != null) {
+    if (_isNeedRegisterTicker && _controller != null) {
       // 代表已經註冊過了, 不可再註冊, 拋出錯誤
       // 同時也代表外部將 AnimatedCombController 丟給多個元件
       // 這是錯誤的
       throw FlutterError("AnimatedCombController.identity 生成的動畫控制器不可同時給多個元件使用");
     }
-    this._controller = AnimationController(
+    _controller = AnimationController(
       duration: Duration.zero,
       vsync: vsync,
     )
       ..addListener(_controllerListener)
       ..addStatusListener(_statusListener);
 
-    _outsideStatusListener.forEach((element) {
-      this._controller!.addStatusListener(element);
-    });
+    for (var element in _outsideStatusListener) {
+      _controller!.addStatusListener(element);
+    }
   }
 
   /// 取得 [AnimationData]
@@ -323,9 +323,9 @@ class AnimatedSyncTick implements AnimatedCombController {
 
     _animatedMap.forEach((id, animateComb) {
       int duration = 0;
-      animateComb.animateList.forEach((e) {
+      for (var e in animateComb.animateList) {
         duration += ((e.delayed ?? 0) + e.totalDuration(animateComb.duration));
-      });
+      }
 
       maxDuration = max(duration, maxDuration);
     });
@@ -360,7 +360,7 @@ class AnimatedSyncTick implements AnimatedCombController {
     // print("延遲百分比: $shiftPercent");
 
     // 遍歷動畫列表, 轉為對應的 animation
-    animatedComb.animateList.forEach((e) async {
+    for (var e in animatedComb.animateList) {
       // Interval 是個 Curve, 且可設置 開始/結束 時間
       // 可藉此達到 delay 的效果
       // 開始/結束 時間是依照比例, 因此需要再除以 total 時間
@@ -369,15 +369,15 @@ class AnimatedSyncTick implements AnimatedCombController {
       end = start + duration;
 //      print("打印: total = $total, start = $start, end = $end");
       if (e is CombParallel) {
-        e.animatedList.forEach((ce) async {
+        for (var ce in e.animatedList) {
           var duration = ce.duration ?? e.duration ?? animatedComb.duration;
           var delay = ce.delayed ?? 0;
           var tempStart = delay + start;
           var tempEnd = tempStart + duration;
           var tempCurve = ce.curve ?? e.curve ?? animatedComb.curve;
 
-          if (!(ce is CombDelay)) {
-            await _addCombToAnimationData(
+          if (ce is! CombDelay) {
+            _addCombToAnimationData(
               animationData: animationData,
               value: ce,
               start: tempStart / totalDuration.toDouble(),
@@ -386,8 +386,8 @@ class AnimatedSyncTick implements AnimatedCombController {
               shiftPercent: shiftPercent,
             );
           }
-        });
-      } else if (!(e is CombDelay)) {
+        }
+      } else if (e is! CombDelay) {
         var tempCurve = e.curve ?? animatedComb.curve;
 //        var shiftPercent = 0.0;
 //        if (shiftRemainder > start) {
@@ -396,7 +396,7 @@ class AnimatedSyncTick implements AnimatedCombController {
 //          shiftPercent = (specialShiftRemainder / duration).clamp(0.0, 1.0);
 //          print("位移百分比22: $shiftPercent");
 //        }
-        await _addCombToAnimationData(
+        _addCombToAnimationData(
           animationData: animationData,
           value: e,
           start: start / totalDuration.toDouble(),
@@ -405,7 +405,7 @@ class AnimatedSyncTick implements AnimatedCombController {
           shiftPercent: shiftPercent,
         );
       }
-    });
+    }
 
     return animationData;
   }
@@ -415,14 +415,14 @@ class AnimatedSyncTick implements AnimatedCombController {
   /// [value] - 動畫屬性
   /// [start], [end] - 動畫開始/結束時間(為佔整體時間的比例, 並非是真正意義上的時間)
   /// [delayPercent] - 動畫延遲百分比
-  Future<void> _addCombToAnimationData({
+  void _addCombToAnimationData({
     required AnimationData animationData,
     required Comb value,
     required double start,
     required double end,
     required Curve curve,
     required double shiftPercent,
-  }) async {
+  }) {
     var beginValue = value.begin;
     var endValue = value.end;
 
@@ -650,9 +650,9 @@ class AnimatedSyncTick implements AnimatedCombController {
 
   /// 釋放動畫串流
   void dispose() {
-    _outsideStatusListener.forEach((element) {
+    for (var element in _outsideStatusListener) {
       _controller?.removeStatusListener(element);
-    });
+    }
     _outsideStatusListener.clear();
     _controller?.removeListener(_controllerListener);
     _controller?.removeStatusListener(_statusListener);
@@ -777,41 +777,41 @@ class AnimValue {
 class AnimationData {
   /// 縮放動畫列表, 用 Size 的方式實現x, y的分別控制
   @protected
-  List<AnimationBinder<Size>> _scaleList = [];
+  final List<AnimationBinder<Size>> _scaleList = [];
 
   /// 旋轉動畫列表
   @protected
-  List<AnimationBinder<double>> _rotateZList = [];
+  final List<AnimationBinder<double>> _rotateZList = [];
 
   /// 垂直翻轉動畫
   @protected
-  List<AnimationBinder<double>> _rotateXList = [];
+  final List<AnimationBinder<double>> _rotateXList = [];
 
   /// 水平翻轉動畫
   @protected
-  List<AnimationBinder<double>> _rotateYList = [];
+  final List<AnimationBinder<double>> _rotateYList = [];
 
   /// 偏移動畫列表
   @protected
-  List<AnimationBinder<Offset>> _offsetList = [];
+  final List<AnimationBinder<Offset>> _offsetList = [];
 
   /// 透明值動畫
   @protected
-  List<AnimationBinder<double>> _opacityList = [];
+  final List<AnimationBinder<double>> _opacityList = [];
 
   ///  寬動畫
   @protected
-  List<AnimationBinder<Size>> _sizeList = [];
+  final List<AnimationBinder<Size>> _sizeList = [];
 
   ///  背景顏色動畫
   @protected
-  List<AnimationBinder<Color?>> _colorList = [];
+  final List<AnimationBinder<Color?>> _colorList = [];
 
   /// 當前動畫數值
   AnimValue current = AnimValue();
 
   /// 當前動畫最後數值
-  AnimValue _last = AnimValue();
+  final AnimValue _last = AnimValue();
 
   /// 同步 [AnimationController] 的 value
   void syncTickValue(double t) {

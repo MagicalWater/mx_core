@@ -12,12 +12,12 @@ class BulletPaint extends StatelessWidget {
   /// 半圓形方向
   final AxisDirection direction;
 
-  BulletPaint({
+  const BulletPaint({Key? key,
     this.startPos = const BulletPosition(),
     this.endPos = const BulletPosition(isStartPoint: false),
     this.direction = AxisDirection.down,
     this.color = Colors.blueAccent,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

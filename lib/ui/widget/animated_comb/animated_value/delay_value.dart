@@ -17,6 +17,7 @@ class CombDelay extends Comb<void> {
   @override
   Curve? curve;
 
+  @override
   int totalDuration(int defaultDuration) => duration ?? defaultDuration;
 
   CombDelay._({

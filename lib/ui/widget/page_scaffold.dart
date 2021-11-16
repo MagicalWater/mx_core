@@ -75,7 +75,7 @@ class PageScaffold extends StatelessWidget {
   /// 背景是否蓋住 app bar
   final bool backgroundCoverAppbar;
 
-  PageScaffold._({
+  const PageScaffold._({
     this.child,
     this.showMenu = true,
     this.showAppBar = true,

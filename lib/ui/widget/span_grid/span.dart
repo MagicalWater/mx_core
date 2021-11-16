@@ -12,11 +12,11 @@ class Span extends ParentDataWidget<AlignGridParentData> {
   /// 佔用寬度/高度
   final int span;
 
-  Span({
+  Span({Key? key,
     required Widget child,
     this.fill = false,
     this.span = 1,
-  }) : super(child: _Expanded(child: child));
+  }) : super(key: key, child: _Expanded(child: child));
 
   @override
   void applyParentData(RenderObject renderObject) {
@@ -30,7 +30,7 @@ class Span extends ParentDataWidget<AlignGridParentData> {
 }
 
 class _Expanded extends SingleChildRenderObjectWidget {
-  _Expanded({required Widget child}) : super(child: child);
+  const _Expanded({required Widget child}) : super(child: child);
 
   @override
   RenderObject createRenderObject(BuildContext context) {

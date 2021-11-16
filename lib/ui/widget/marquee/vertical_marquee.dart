@@ -42,7 +42,7 @@ class Marquee extends StatefulWidget {
 
   final Function(int index)? onTap;
 
-  Marquee({
+  const Marquee({
     Key? key,
     required this.children,
     required this.height,
@@ -248,7 +248,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
     }
 
     while (detectController() != null && !detectController()!.hasClients) {
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
     }
     if (detectController() == null) {
       return false;
@@ -259,10 +259,10 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
   @override
   Widget build(BuildContext context) {
     return Align(
-      child: Container(
+      child: SizedBox(
         height: widget.height,
         child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           controller: mainScrollController,
           child: Align(
             alignment: Alignment.centerLeft,
@@ -274,7 +274,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
                 if (widget.fadeSide) {
                   return ShaderMask(
                     shaderCallback: (Rect bounds) {
-                      return LinearGradient(
+                      return const LinearGradient(
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: <Color>[
@@ -289,18 +289,18 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
                     },
                     blendMode: BlendMode.dstIn,
                     child: SingleChildScrollView(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       controller: controller,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: e,
                       ),
                     ),
                   );
                 } else {
                   return SingleChildScrollView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     controller: controller,
                     child: e,
@@ -363,7 +363,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
           showWidget[0] = sideWidget;
           sideUpdate1 = false;
           if (!updateShow()) return;
-          await Future.delayed(Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 1));
         }
 
         if (!(await waitScrollControllerAttach())) return;
@@ -515,7 +515,9 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
 
     mainScrollController.dispose();
 
-    itemScrollController.forEach((e) => e?.dispose());
+    for (var e in itemScrollController) {
+      e?.dispose();
+    }
     itemScrollController = itemScrollController.map((e) => null).toList();
 
     super.dispose();

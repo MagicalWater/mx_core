@@ -21,7 +21,7 @@ class ProgressController {
 }
 
 /// 進度元件構建
-typedef ProgressWidgetBuilder(
+typedef ProgressWidgetBuilder = Function(
     BuildContext context, double progress, double total);
 
 /// 波浪進度條
@@ -55,7 +55,7 @@ class WaveProgress extends StatefulWidget {
 
   final ProgressController? controller;
 
-  WaveProgress({
+  const WaveProgress({Key? key,
     this.builder,
     this.initProgress = 30,
     this.maxProgress = 100,
@@ -66,7 +66,7 @@ class WaveProgress extends StatefulWidget {
     this.shape = BoxShape.circle,
     this.style = const WaveStyle(),
     this.amplitudeMultiple = 1,
-  });
+  }) : super(key: key);
 
   @override
   _WaveProgressState createState() => _WaveProgressState();
@@ -224,7 +224,7 @@ class _WaveProgressState extends State<WaveProgress>
               alignment: Alignment.center,
               child: Text(
                 "${((_tempAnimatedProgress / _totalProgress) * 100).toInt()}%",
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 16,
                 ),

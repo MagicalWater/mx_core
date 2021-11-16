@@ -44,7 +44,7 @@ class ArrowContainer extends SingleChildRenderObjectWidget {
   /// 元件 Size callback
   final void Function(Size size)? onSized;
 
-  ArrowContainer({
+  const ArrowContainer({Key? key,
     required Widget child,
     this.shiftLeafPercent = 0,
     this.shiftRootPercent = 0,
@@ -59,7 +59,7 @@ class ArrowContainer extends SingleChildRenderObjectWidget {
     this.gradient,
     this.strokeGradient,
     this.onSized,
-  }) : super(child: child);
+  }) : super(key: key, child: child);
 
   @override
   RenderObject createRenderObject(BuildContext context) => _ArrowShiftBox(

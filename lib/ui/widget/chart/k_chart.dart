@@ -13,9 +13,9 @@ import 'utils/number_util.dart';
 export 'chart_style.dart';
 export 'setting/setting.dart';
 
-enum MainState { MA, BOLL, NONE }
-enum VolState { VOL, NONE }
-enum SecondaryState { MACD, KDJ, RSI, WR, NONE }
+enum MainState { ma, boll, none }
+enum VolState { vol, none }
+enum SecondaryState { macd, kdj, rsi, wr, none }
 
 enum MALine {
   ma5,
@@ -74,9 +74,10 @@ class KChart extends StatefulWidget {
 
   KChart(
     this.datas, {
-    this.mainState = MainState.MA,
-    this.volState = VolState.VOL,
-    this.secondaryState = SecondaryState.MACD,
+    Key? key,
+    this.mainState = MainState.ma,
+    this.volState = VolState.vol,
+    this.secondaryState = SecondaryState.macd,
     this.isLine = false,
     this.longPressY = ChartLongPressY.closePrice,
     int fractionDigits = 2,
@@ -93,7 +94,7 @@ class KChart extends StatefulWidget {
     this.tooltipPrefix = const TooltipPrefix(),
     this.onLoadMore,
     this.onDataLessOnePage,
-  }) {
+  }) : super(key: key) {
     NumberUtil.fractionDigits = fractionDigits;
   }
 
@@ -288,7 +289,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
       child: Stack(
         children: <Widget>[
           CustomPaint(
-            size: Size(double.infinity, double.infinity),
+            size: const Size(double.infinity, double.infinity),
             painter: ChartPainter(
               datas: widget.datas,
               scaleX: mScaleX,
@@ -308,7 +309,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
               subStyle: widget.subStyle,
               maLine: widget.maLine,
               onCalculateMaxScrolled: (maxScroll) {
-                this.maxScrollX = maxScroll;
+                maxScrollX = maxScroll;
 
                 // 假設 maxScrollX 為 0, 且資料量或者scale與舊有不同時觸發加載更多
                 if (widget.onDataLessOnePage != null &&
@@ -364,8 +365,8 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
         return Align(
           alignment: infoEntity.isLeft ? Alignment.topLeft : Alignment.topRight,
           child: Container(
-            margin: EdgeInsets.only(left: 10, right: 10, top: 25),
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 7),
+            margin: const EdgeInsets.only(left: 10, right: 10, top: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
             decoration: BoxDecoration(
               color: widget.mainStyle.tooltipBgColor,
               border: Border.all(
@@ -385,12 +386,14 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
 
   Widget _buildItem(String info, String infoName) {
     Color color = widget.mainStyle.tooltipNoUpDownTextColor;
-    if (info.startsWith("+"))
+    if (info.startsWith("+")) {
       color = widget.mainStyle.upColor;
-    else if (info.startsWith("-")) color = widget.mainStyle.downColor;
+    } else if (info.startsWith("-")) {
+      color = widget.mainStyle.downColor;
+    }
 
     return Container(
-      constraints: BoxConstraints(
+      constraints: const BoxConstraints(
         minWidth: 95,
         maxWidth: 300,
         maxHeight: 14.0,
@@ -403,7 +406,7 @@ class _KChartState extends State<KChart> with TickerProviderStateMixin {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
-              "$infoName",
+              infoName,
               style: TextStyle(
                 color: widget.mainStyle.tooltipPrefixTextColor,
                 fontSize: ChartStyle.defaultTextSize,

@@ -18,6 +18,8 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     on<KChartToggleLineEvent>(_onToggleLine);
     on<KChartUpdateLastEvent>(_onUpdateLast);
     on<KChartAddDataEvent>(_onAddData);
+    on<KChartMainStateEvent>(_onChangedMainState);
+    on<KChartSecondaryStateEvent>(_onChangedSubState);
   }
 
   final ChartRepository repository;
@@ -28,6 +30,7 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     Emitter<KChartState> emit,
   ) async {
     var datas = await repository.getData();
+    print('資料筆數: ${datas.length}');
     emit(state.copyWith(datas: datas));
   }
 
@@ -36,9 +39,10 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     KChartToggleLineEvent event,
     Emitter<KChartState> emit,
   ) {
-    emit(state.copyWith(isLine: !state.isLine));
+    emit(state.copyWith(isLine: event.isLine));
   }
 
+  /// 更新最後一筆
   void _onUpdateLast(
     KChartUpdateLastEvent event,
     Emitter<KChartState> emit,
@@ -49,6 +53,22 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     data.low = min(data.low, data.close);
     ChartDataCalculator.updateLastData(state.datas);
     emit(state.copyWith(datas: state.datas));
+  }
+
+  /// 切換主視圖
+  void _onChangedMainState(
+    KChartMainStateEvent event,
+    Emitter<KChartState> emit,
+  ) {
+    emit(state.copyWith(mainState: event.state));
+  }
+
+  /// 切換副視圖
+  void _onChangedSubState(
+    KChartSecondaryStateEvent event,
+    Emitter<KChartState> emit,
+  ) {
+    emit(state.copyWith(secondaryState: event.state));
   }
 
   void _onAddData(

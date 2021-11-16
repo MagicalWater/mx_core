@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -27,22 +26,19 @@ class BombAnimation extends StatefulWidget {
   /// 當是粒子爆炸動畫時, 需要切割成多少粒子
   final int splitWidth, splitHeight;
 
-  /// 粒子動畫結束後回調
-  final onEnd;
-
   /// 分割的粒子類型
   final ParticleType particleType;
 
-  BombAnimation({
+  const BombAnimation({
+    Key? key,
     required this.width,
     required this.height,
     required this.child,
     // this.activeRect,
     required this.splitWidth,
     required this.splitHeight,
-    this.onEnd,
     this.particleType = ParticleType.ball,
-  });
+  }) : super(key: key);
 
   @override
   _BombAnimationState createState() => _BombAnimationState();
@@ -61,7 +57,7 @@ class _BombAnimationState extends State<BombAnimation> {
   @override
   Widget build(BuildContext context) {
     if (isBoomOut) {
-      return Container(
+      return SizedBox(
         width: widget.width,
         height: widget.height,
       );
@@ -70,14 +66,14 @@ class _BombAnimationState extends State<BombAnimation> {
         type: AnimatedType.tap,
         child: RepaintBoundary(
           key: boundaryKey,
-          child: Container(
+          child: SizedBox(
             width: widget.width,
             height: widget.height,
             child: widget.child,
           ),
         ),
         scale: Comb.scale(
-          end: Size.square(0.8),
+          end: const Size.square(0.8),
           curve: Curves.bounceOut,
           duration: 200,
         ),
@@ -98,7 +94,7 @@ class _BombAnimationState extends State<BombAnimation> {
     ByteData byteData =
         (await image.toByteData(format: ui.ImageByteFormat.png))!;
     var pngBytes = byteData.buffer.asUint8List();
-    var bs64 = base64Encode(pngBytes);
+    // var bs64 = base64Encode(pngBytes);
     // 將圖片轉換成 顯示的球球
     img.Image decodeImage = img.decodeImage(pngBytes)!;
     var particles = splitImageToParticle(decodeImage);

@@ -8,13 +8,13 @@ import 'keyboard_intercept.dart';
 /// 數字鍵盤
 class NumberKeyboard extends StatelessWidget {
   static KeyboardInputType inputType =
-      KeyboardInputType(name: 'NumberKeyboard');
+      const KeyboardInputType(name: 'NumberKeyboard');
 
   /// 有快捷欄的鍵盤高度
-  static double _keyboardNoShortcutHeight = 250;
+  static const double _keyboardNoShortcutHeight = 250;
 
   /// 沒有快捷欄的鍵盤高度
-  static double _keyboardShortcutHeight = 300;
+  static const double _keyboardShortcutHeight = 300;
 
   /// 鍵盤高度
   static double keyboardHeight = _keyboardNoShortcutHeight;
@@ -26,11 +26,12 @@ class NumberKeyboard extends StatelessWidget {
 
   final String confirmTitle;
 
-  NumberKeyboard({
+  const NumberKeyboard({
+    Key? key,
     required this.keyboardController,
     required this.confirmTitle,
     this.shortcuts,
-  });
+  }) : super(key: key);
 
   /// 將此 keyboard 註冊到 keyboard intercept
   static void register({
@@ -68,7 +69,7 @@ class NumberKeyboard extends StatelessWidget {
             return Expanded(
               flex: 1,
               child: Container(
-                color: Color(0xffefefef),
+                color: const Color(0xffefefef),
                 padding: EdgeInsets.symmetric(vertical: Screen.scaleA(4)),
                 child: Row(
                   children: List.generate(
@@ -157,7 +158,7 @@ class NumberKeyboard extends StatelessWidget {
           child: MaterialLayer.single(
             layer: LayerProperties(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: AlignmentDirectional.topCenter,
                   end: AlignmentDirectional.bottomCenter,
                   colors: [
@@ -166,7 +167,7 @@ class NumberKeyboard extends StatelessWidget {
                   ],
                 ),
                 border: Border.all(
-                  color: Color(0xffd9d9d9),
+                  color: const Color(0xffd9d9d9),
                   width: Screen.scaleA(1),
                 ),
               ),
@@ -199,7 +200,7 @@ class NumberKeyboard extends StatelessWidget {
           child: MaterialLayer.single(
             layer: LayerProperties(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: AlignmentDirectional.topCenter,
                   end: AlignmentDirectional.bottomCenter,
                   colors: [
@@ -208,7 +209,7 @@ class NumberKeyboard extends StatelessWidget {
                   ],
                 ),
                 border: Border.all(
-                  color: Color(0xffd9d9d9),
+                  color: const Color(0xffd9d9d9),
                   width: Screen.scaleA(1),
                 ),
               ),
@@ -243,7 +244,7 @@ class NumberKeyboard extends StatelessWidget {
           child: MaterialLayer.single(
             layer: LayerProperties(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: AlignmentDirectional.topCenter,
                   end: AlignmentDirectional.bottomCenter,
                   colors: [
@@ -254,7 +255,7 @@ class NumberKeyboard extends StatelessWidget {
                 borderRadius: BorderRadius.all(
                   Radius.circular(Screen.scaleA(4)),
                 ),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Color(0x89f96f78),
                     blurRadius: 1,

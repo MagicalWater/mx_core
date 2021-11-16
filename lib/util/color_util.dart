@@ -16,7 +16,7 @@ class ColorUtil {
         /// 有透明
         return Color(int.parse(hex, radix: 16) + 0x00000000);
       default:
-        throw new FormatException("顏色代碼格式錯誤: $hex");
+        throw FormatException("顏色代碼格式錯誤: $hex");
     }
   }
 }

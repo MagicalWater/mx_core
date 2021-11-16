@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core/router/app_router.dart';
 
-/// 頁面切換元件
+/// 頁面切換元件, 核心為 [PageView], 因此是左滑右滑的形式
 /// 直接將 PageBloc 的 subPageStream 以及 routes 傳入即可
 class ScrollSwitcher extends StatefulWidget {
   final List<String> routes;
@@ -25,7 +25,7 @@ class ScrollSwitcher extends StatefulWidget {
 
   final ScrollPhysics? physics;
 
-  ScrollSwitcher._({
+  const ScrollSwitcher._({
     required this.routes,
     required this.stream,
     required this.duration,
@@ -150,10 +150,10 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
       controller: _pageController,
       physics: widget.physics,
       onPageChanged: (index) {
+        // 檢查是否為外部的跳轉需求
         if (toIndex != null) {
-//          print('吃掉');
+          // 若是外部的需求, 則此次的頁面跳轉通知不處理
           if (toIndex == index) {
-//            print('解放');
             toIndex = null;
           }
           return;

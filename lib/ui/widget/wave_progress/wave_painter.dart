@@ -40,14 +40,12 @@ class _WaveProgressPainter extends CustomPainter {
       ..strokeWidth = 1
       ..style = PaintingStyle.fill;
 
-    if (secondWaveColor == null) {
-      secondWaveColor = Color.fromARGB(
+    secondWaveColor ??= Color.fromARGB(
         waveColor.alpha,
         (waveColor.red + 255) ~/ 2,
         (waveColor.green + 255) ~/ 2,
         (waveColor.blue + 255) ~/ 2,
       );
-    }
     _paint2.color = secondWaveColor;
   }
 

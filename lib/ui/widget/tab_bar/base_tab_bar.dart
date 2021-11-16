@@ -16,14 +16,14 @@ abstract class AbstractTabWidget extends StatefulWidget {
   final int tabCount;
   final int actionCount;
 
-  AbstractTabWidget({
+  const AbstractTabWidget({Key? key,
     required this.scrollable,
     required this.tabCount,
     required this.actionCount,
     this.currentIndex,
     this.actionWidth,
     this.tabWidth,
-  });
+  }) : super(key: key);
 }
 
 mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
@@ -169,7 +169,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
               if (!isShowFull) {
                 tabScrollController?.animateTo(
                   targetRect.left,
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.fastLinearToSlowEaseIn,
                 );
               }
@@ -297,7 +297,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       var tabWidth = widget.tabWidth;
       if (tabWidth?.fixed != null) {
 //        print('固定寬度');
-        return Container(
+        return SizedBox(
           key: location ? childKeyList[index] : null,
           width: tabWidth!.fixed,
           child: tabWidget,

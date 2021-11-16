@@ -10,10 +10,10 @@ class ParticlePainter extends CustomPainter {
   double? width, height;
 
   /// 粒子物件畫筆
-  Paint _particlePaint = Paint();
+  final Paint _particlePaint = Paint();
 
   /// 背景畫筆
-  Paint _bgPaint = Paint();
+  final Paint _bgPaint = Paint();
 
   ParticlePainter({
     required this.particle,

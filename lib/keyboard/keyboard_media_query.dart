@@ -6,7 +6,7 @@ import 'package:mx_core/keyboard/keyboard_intercept.dart';
 class KeyboardMediaQuery extends StatefulWidget {
   final Widget child;
 
-  KeyboardMediaQuery({required this.child});
+  const KeyboardMediaQuery({Key? key, required this.child}) : super(key: key);
 
   @override
   KeyboardMediaQueryState createState() => KeyboardMediaQueryState();
@@ -31,7 +31,7 @@ class KeyboardMediaQueryState extends State<KeyboardMediaQuery> {
     // 只有在外層是 ScrollView 時有作用
     // 其餘無法以動畫切換
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       switchInCurve: Curves.easeOut,
       switchOutCurve: Curves.easeOut,
       child: WillPopScope(

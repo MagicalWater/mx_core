@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'builder.dart';
 
-typedef Widget TabWidgetBuilder(
+typedef TabWidgetBuilder = Widget Function(
   BuildContext context,
   int index,
   bool selected,
   bool foreground,
 );
 
-typedef T TabStyleBuilder<T>(
+typedef TabStyleBuilder<T> = T Function(
   int index,
   bool selected,
 );
@@ -45,6 +45,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   }) : assert(tabCount > 0 &&
             ((actionCount > 0 && actionBuilder != null) || actionCount == 0));
 
+  @override
   TabStyleBuilder<Decoration> get swipeDecoration =>
       tabDecoration ?? _defaultDecoration;
 
@@ -56,7 +57,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
     );
   }
 
-  TabStyleBuilder<Decoration> _defaultDecoration = (index, selected) {
+  BoxDecoration _defaultDecoration(index, selected) {
     if (selected) {
       return BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -70,7 +71,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
         border: Border.all(color: Colors.blueAccent),
       );
     }
-  };
+  }
 
   @override
   Widget buildActionBackground(

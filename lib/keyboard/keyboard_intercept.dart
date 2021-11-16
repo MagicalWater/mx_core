@@ -54,10 +54,10 @@ class KeyboardIntercept {
   KeyboardIntercept._internal();
 
   /// 解碼攔截消息傳遞的 byteData
-  JSONMethodCodec _codec = JSONMethodCodec();
+  final JSONMethodCodec _codec = const JSONMethodCodec();
 
   /// 以 inputType 為 key, 儲存對應的自訂鍵盤訊息
-  Map<KeyboardInputType, KeyboardConfig> _keyboardConfigMap = {};
+  final Map<KeyboardInputType, KeyboardConfig> _keyboardConfigMap = {};
 
   /// 當前正在顯示的 keyboard config
   KeyboardConfig? _currentKeyboardConfig;

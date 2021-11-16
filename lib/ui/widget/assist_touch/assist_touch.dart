@@ -7,6 +7,7 @@ import 'package:vector_math/vector_math.dart' as vector;
 import '../material_layer.dart';
 
 part 'circle_range.dart';
+
 part 'side_detect.dart';
 
 typedef ExpandProgressBuilder = Widget? Function(
@@ -62,7 +63,8 @@ class AssistTouch extends StatefulWidget {
   /// 面板元件構建類
   final ExpandProgressBuilder? boardBuilder;
 
-  AssistTouch({
+  const AssistTouch({
+    Key? key,
     required this.initOffset,
     required this.child,
     this.maskColor = Colors.transparent,
@@ -78,7 +80,8 @@ class AssistTouch extends StatefulWidget {
     this.draggable = true,
     this.actions = const [],
     this.boardBuilder,
-  }) : this.actionSize = actionSize ?? size;
+  })  : actionSize = actionSize ?? size,
+        super(key: key);
 
   @override
   _AssistTouchState createState() => _AssistTouchState();
@@ -370,7 +373,7 @@ class _AssistTouchState extends State<AssistTouch>
     if (from == to) {
       setState(() {
 //        print("刷新主 $to");
-        this.mainOffset = to;
+        mainOffset = to;
       });
     } else {
 //      print("重置, 目標 $to");
@@ -475,7 +478,10 @@ class _AssistTouchState extends State<AssistTouch>
       vsync: this,
     );
 
-    mainTween = Tween<Offset>(begin: Offset(0, 0), end: Offset(0, 0));
+    mainTween = Tween<Offset>(
+      begin: const Offset(0, 0),
+      end: const Offset(0, 0),
+    );
     mainDragAnimation = mainTween.animate(
         CurvedAnimation(parent: animationController, curve: Curves.bounceOut));
 

@@ -24,7 +24,8 @@ class AxisItem extends StatelessWidget {
 
   final Widget? child;
 
-  AxisItem({
+  const AxisItem({
+    Key? key,
     this.child,
     this.color,
     this.x,
@@ -32,9 +33,9 @@ class AxisItem extends StatelessWidget {
     this.xSpan = 1,
     this.ySpan = 1,
     this.heightBase = false,
-  });
+  }) : super(key: key);
 
-  AxisItem._inAutoSpace({
+  const AxisItem._inAutoSpace({
     required this.xSpan,
     required this.ySpan,
   })  : child = null,
@@ -45,12 +46,12 @@ class AxisItem extends StatelessWidget {
 
   /// 比較兩個 item 的位置資訊是否一樣
   bool _isSame(AxisItem other) {
-    return this.x == other.x &&
-        this.y == other.y &&
-        this.xSpan == other.xSpan &&
-        this.ySpan == other.ySpan &&
-        this.color == other.color &&
-        this.heightBase == other.heightBase;
+    return x == other.x &&
+        y == other.y &&
+        xSpan == other.xSpan &&
+        ySpan == other.ySpan &&
+        color == other.color &&
+        heightBase == other.heightBase;
   }
 
   @override

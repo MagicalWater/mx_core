@@ -29,6 +29,7 @@ class SwipeTabBar extends AbstractTabWidget {
   final bool autoScrollCenter;
 
   SwipeTabBar({
+    Key? key,
     required this.tabBuilder,
     int? currentIndex,
     bool scrollable = false,
@@ -45,6 +46,7 @@ class SwipeTabBar extends AbstractTabWidget {
     this.onActionTap,
   })  : assert(currentIndex != null || controller != null),
         super(
+          key: key,
           scrollable: scrollable,
           actionWidth: actionWidth,
           currentIndex: currentIndex,
@@ -92,9 +94,9 @@ class SwipeTabBar extends AbstractTabWidget {
 }
 
 class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
-  var _defaultGap = (context, index) => Container();
-  var _defaultHeader = Container();
-  var _defaultFooter = Container();
+  Widget _defaultGap(context, index) => Container();
+  final _defaultHeader = Container();
+  final _defaultFooter = Container();
 
   TabController? _tabController;
 
@@ -235,7 +237,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
           Stack(
             children: <Widget>[
               // 構建背景顯示
-              Container(
+              SizedBox(
                 height: tabHeight + topHeight + bottomHeight,
                 child: Container(
                   height: tabHeight,
@@ -278,7 +280,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
                     currentIndex,
                     true,
                   ),
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   padding: widget.tabBuilder.margin,
                   curve: Curves.fastOutSlowIn,
                   animation: _tabController == null,
@@ -297,7 +299,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
               ),
 
               if (tabRectMap.isNotEmpty)
-                Container(
+                SizedBox(
                   height: tabHeight + topHeight + bottomHeight,
                   child: Container(
                     height: tabHeight,
@@ -369,7 +371,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
       Scrollable.ensureVisible(
         childKeyList[index].currentContext!,
         alignment: 0.5,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
       );
     }
   }

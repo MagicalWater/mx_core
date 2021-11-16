@@ -24,8 +24,8 @@ class KeyboardPageState extends State<KeyboardPage>
   @override
   void initState() {
     animationController = AnimationController(
-      reverseDuration: Duration(milliseconds: 500),
-      duration: Duration(milliseconds: 500),
+      reverseDuration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     )..addListener(() {
 //        print("觸發動畫");
@@ -56,10 +56,10 @@ class KeyboardPageState extends State<KeyboardPage>
     print("動畫 dispose");
 
     /// 當動畫狀態為正在執行時, 呼叫動畫狀態為 dismissed
-    if (animationController.status == AnimationStatus.forward ||
-        animationController.status == AnimationStatus.reverse) {
-      animationController.notifyStatusListeners(AnimationStatus.dismissed);
-    }
+    // if (animationController.status == AnimationStatus.forward ||
+    //     animationController.status == AnimationStatus.reverse) {
+    //   animationController.notifyStatusListeners(AnimationStatus.dismissed);
+    // }
     animationController.dispose();
     super.dispose();
   }

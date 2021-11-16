@@ -26,7 +26,7 @@ class WebSocketUtil {
     this.retryInterval = const Duration(seconds: 5),
     this.onPing,
   }) {
-    this._statusSubject.add(SocketStatus.idle);
+    _statusSubject.add(SocketStatus.idle);
   }
 
   /// 當前連接的相關屬性, 給外部 get 看得
@@ -68,16 +68,16 @@ class WebSocketUtil {
   /// 當前發生錯誤的次數
   int _nowRetryCount = 0;
 
-  BehaviorSubject<SocketStatus> _statusSubject = BehaviorSubject();
+  final BehaviorSubject<SocketStatus> _statusSubject = BehaviorSubject();
 
   /// 監聽到資料時
-  BehaviorSubject<String> _dataSubject = BehaviorSubject();
+  final BehaviorSubject<String> _dataSubject = BehaviorSubject();
 
   /// 連接結束時
-  BehaviorSubject<bool> _doneSubject = BehaviorSubject();
+  final BehaviorSubject<bool> _doneSubject = BehaviorSubject();
 
   /// web socket 發生錯誤時
-  BehaviorSubject<dynamic> _errorSubject = BehaviorSubject();
+  final BehaviorSubject<dynamic> _errorSubject = BehaviorSubject();
 
   /// 當前連接的相關屬性
   String? _url;
@@ -165,7 +165,7 @@ class WebSocketUtil {
   }
 
   /// 斷開連接
-  Future<Null> disconnect({int? closeCode, String? closeReason}) async {
+  Future<void> disconnect({int? closeCode, String? closeReason}) async {
     print('關閉 socket');
     await _streamSubscription?.cancel();
     await _webSocket?.close(closeCode, closeReason);
@@ -276,6 +276,7 @@ class SocketStatus {
   static const int _tryConnect = 4;
 
   @override
+  // ignore: unnecessary_overrides
   int get hashCode => super.hashCode;
 
   @override

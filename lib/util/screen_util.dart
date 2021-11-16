@@ -40,7 +40,7 @@ class Screen {
   static MediaQueryData get mediaQueryData => _mediaQueryData;
 
   /// 此類進行 WidgetsBinding 的回調綁定
-  static _ScreenBinding _screenDataBinding = _ScreenBinding();
+  static final _ScreenBinding _screenDataBinding = _ScreenBinding();
 
   /// [_screenDataBinding] 是否已經綁定了
   static bool _isScreenDataBind = false;
@@ -67,10 +67,10 @@ class Screen {
   static double _appBarH = 0;
 
   /// 面積縮放字典
-  static Map<String, double> _areaScalingCoefficientMap = {};
+  static final Map<String, double> _areaScalingCoefficientMap = {};
 
   /// 字體縮放字典
-  static Map<String, double> _spScalingCoefficientMap = {};
+  static final Map<String, double> _spScalingCoefficientMap = {};
 
   /// 默認設計稿尺寸
   static double _designW = 360.0;
@@ -243,9 +243,9 @@ class _ScreenBinding with WidgetsBindingObserver {
 
 /// 快速擴展
 extension ScreenScale on num {
-  double get scaleA => Screen.scaleA(this.toDouble());
+  double get scaleA => Screen.scaleA(toDouble());
 
-  double get scaleW => Screen.scaleW(this.toDouble());
+  double get scaleW => Screen.scaleW(toDouble());
 
-  double get scaleSp => Screen.scaleSp(this.toDouble());
+  double get scaleSp => Screen.scaleSp(toDouble());
 }

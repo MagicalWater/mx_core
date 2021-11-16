@@ -1,7 +1,7 @@
-
 import '../storage.dart';
 
 part 'plain_data_store.dart';
+
 part 'secure_data_store.dart';
 
 abstract class DataStore<T> {
@@ -22,11 +22,11 @@ abstract class DataStore<T> {
             <double>[] is T ||
             <bool>[] is T ||
             <String>[] is T ||
-            Map<String, int>() is T ||
-            Map<String, double>() is T ||
-            Map<String, bool>() is T ||
-            Map<String, String>() is T),
-        this._defaultValue = defaultValue;
+            <String, int>{} is T ||
+            <String, double>{} is T ||
+            <String, bool>{} is T ||
+            <String, String>{} is T),
+        _defaultValue = defaultValue;
 
   Future<void> write(T value);
 

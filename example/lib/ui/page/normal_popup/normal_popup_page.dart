@@ -109,7 +109,7 @@ class _NormalPopupPageState extends State<NormalPopupPage> {
               ),
             ),
           ),
-          hitRule: HitRule.childIntercept,
+          hitRule: HitRule.intercept,
           option: PopupOption(
             maskColor: Colors.blueAccent.withAlpha(100),
             alignment: Alignment.center,

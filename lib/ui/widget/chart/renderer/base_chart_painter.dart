@@ -60,9 +60,9 @@ abstract class BaseChartPainter extends CustomPainter {
     required this.selectX,
     required this.selectY,
     this.longPressY,
-    this.mainState = MainState.MA,
-    this.volState = VolState.VOL,
-    this.secondaryState = SecondaryState.MACD,
+    this.mainState = MainState.ma,
+    this.volState = VolState.vol,
+    this.secondaryState = SecondaryState.macd,
     this.isLine = false,
     this.onCalculateMaxScrolled,
   }) : assert(!isLongPress || (isLongPress && longPressY != null)) {
@@ -78,14 +78,13 @@ abstract class BaseChartPainter extends CustomPainter {
     int secondTime = datas[1].dateTime.second;
     int time = secondTime - firstTime;
     //月线
-    if (time >= 24 * 60 * 60 * 28)
+    if (time >= 24 * 60 * 60 * 28) {
       mFormats = [yy, '-', mm];
-    //日线等
-    else if (time >= 24 * 60 * 60)
+    } else if (time >= 24 * 60 * 60) {
       mFormats = [yy, '-', mm, '-', dd];
-    //小时线等
-    else
+    } else {
       mFormats = [mm, '-', dd, ' ', HH, ':', nn];
+    }
   }
 
   @override
@@ -148,10 +147,10 @@ abstract class BaseChartPainter extends CustomPainter {
     double mainHeight = mDisplayHeight * 0.6;
     double volHeight = mDisplayHeight * 0.2;
     double secondaryHeight = mDisplayHeight * 0.2;
-    if (volState == VolState.NONE && secondaryState == SecondaryState.NONE) {
+    if (volState == VolState.none && secondaryState == SecondaryState.none) {
       mainHeight = mDisplayHeight;
-    } else if (volState == VolState.NONE ||
-        secondaryState == SecondaryState.NONE) {
+    } else if (volState == VolState.none ||
+        secondaryState == SecondaryState.none) {
       mainHeight = mDisplayHeight * 0.8;
     }
     mMainRect = Rect.fromLTRB(
@@ -160,7 +159,7 @@ abstract class BaseChartPainter extends CustomPainter {
       mWidth,
       ChartStyle.topPadding + mainHeight,
     );
-    if (volState != VolState.NONE) {
+    if (volState != VolState.none) {
       mVolRect = Rect.fromLTRB(
         0,
         mMainRect.bottom + ChartStyle.childPadding,
@@ -168,7 +167,7 @@ abstract class BaseChartPainter extends CustomPainter {
         mMainRect.bottom + volHeight,
       );
     }
-    if (secondaryState != SecondaryState.NONE) {
+    if (secondaryState != SecondaryState.none) {
       mSecondaryRect = Rect.fromLTRB(
           0,
           (mVolRect?.bottom ?? mMainRect.bottom) + ChartStyle.childPadding,
@@ -211,24 +210,24 @@ abstract class BaseChartPainter extends CustomPainter {
       mMainMinValue = min(mMainMinValue, item.close);
     } else {
       double maxPrice = item.high, minPrice = item.low;
-      if (mainState == MainState.MA) {
-        if (item.MA5Price != 0) {
-          maxPrice = max(maxPrice, item.MA5Price);
-          minPrice = min(minPrice, item.MA5Price);
+      if (mainState == MainState.ma) {
+        if (item.ma5Price != 0) {
+          maxPrice = max(maxPrice, item.ma5Price);
+          minPrice = min(minPrice, item.ma5Price);
         }
-        if (item.MA10Price != 0) {
-          maxPrice = max(maxPrice, item.MA10Price);
-          minPrice = min(minPrice, item.MA10Price);
+        if (item.ma10Price != 0) {
+          maxPrice = max(maxPrice, item.ma10Price);
+          minPrice = min(minPrice, item.ma10Price);
         }
-        if (item.MA20Price != 0) {
-          maxPrice = max(maxPrice, item.MA20Price);
-          minPrice = min(minPrice, item.MA20Price);
+        if (item.ma20Price != 0) {
+          maxPrice = max(maxPrice, item.ma20Price);
+          minPrice = min(minPrice, item.ma20Price);
         }
-        if (item.MA30Price != 0) {
-          maxPrice = max(maxPrice, item.MA30Price);
-          minPrice = min(minPrice, item.MA30Price);
+        if (item.ma30Price != 0) {
+          maxPrice = max(maxPrice, item.ma30Price);
+          minPrice = min(minPrice, item.ma30Price);
         }
-      } else if (mainState == MainState.BOLL) {
+      } else if (mainState == MainState.boll) {
         if (item.up != 0) {
           maxPrice = max(item.up, item.high);
         }
@@ -254,23 +253,23 @@ abstract class BaseChartPainter extends CustomPainter {
 
   void getVolMaxMinValue(KLineEntity item) {
     mVolMaxValue =
-        max(mVolMaxValue, max(item.vol, max(item.MA5Volume, item.MA10Volume)));
+        max(mVolMaxValue, max(item.vol, max(item.ma5Volume, item.ma10Volume)));
     mVolMinValue =
-        min(mVolMinValue, min(item.vol, min(item.MA5Volume, item.MA10Volume)));
+        min(mVolMinValue, min(item.vol, min(item.ma5Volume, item.ma10Volume)));
   }
 
   void getSecondaryMaxMinValue(KLineEntity item) {
-    if (secondaryState == SecondaryState.MACD) {
+    if (secondaryState == SecondaryState.macd) {
       mSecondaryMaxValue =
           max(mSecondaryMaxValue, max(item.macd, max(item.dif, item.dea)));
       mSecondaryMinValue =
           min(mSecondaryMinValue, min(item.macd, min(item.dif, item.dea)));
-    } else if (secondaryState == SecondaryState.KDJ) {
+    } else if (secondaryState == SecondaryState.kdj) {
       mSecondaryMaxValue =
           max(mSecondaryMaxValue, max(item.k, max(item.d, item.j)));
       mSecondaryMinValue =
           min(mSecondaryMinValue, min(item.k, min(item.d, item.j)));
-    } else if (secondaryState == SecondaryState.RSI) {
+    } else if (secondaryState == SecondaryState.rsi) {
       mSecondaryMaxValue = max(mSecondaryMaxValue, item.rsi);
       mSecondaryMinValue = min(mSecondaryMinValue, item.rsi);
     } else {

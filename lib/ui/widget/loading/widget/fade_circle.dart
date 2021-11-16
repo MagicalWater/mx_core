@@ -22,14 +22,15 @@ class FadeCircle extends StatefulWidget {
 
   final BoxDecoration? decoration;
 
-  FadeCircle({
+  const FadeCircle({
+    Key? key,
     this.size = 50,
     this.duration = 500,
     this.decoration,
     this.color,
     this.count = 10,
     this.headCount = 1,
-  });
+  }) : super(key: key);
 
   @override
   _FadeCircleState createState() => _FadeCircleState();
@@ -51,7 +52,7 @@ class _FadeCircleState extends State<FadeCircle>
   @override
   Widget build(BuildContext context) {
     return Align(
-      child: Container(
+      child: SizedBox(
         width: widget.size,
         height: widget.size,
         child: Stack(
@@ -84,7 +85,10 @@ class _FadeCircleState extends State<FadeCircle>
               .copyWith(shape: BoxShape.circle),
         ),
         duration: (widget.duration) ~/ widget.headCount,
-        scale: Comb.scale(begin: Size.square(0), end: Size.square(1)),
+        scale: Comb.scale(
+          begin: const Size.square(0),
+          end: const Size.square(1),
+        ),
       ),
     );
   }

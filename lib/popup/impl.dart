@@ -20,7 +20,7 @@ part 'rule.dart';
 
 part 'widget.dart';
 
-typedef Widget PopupWidgetBuilder<T>(
+typedef PopupWidgetBuilder<T> = Widget Function(
   PopupController<T> controller,
 );
 
@@ -37,9 +37,9 @@ class Popup {
   /// 彈出所有彈窗
   static Future<void> removeAll() async {
     var allRemove = <Future<void>>[];
-    _allShowPopup.forEach((element) {
+    for (var element in _allShowPopup) {
       allRemove.add(element.remove());
-    });
+    }
     _allShowPopup.clear();
     await Future.wait(allRemove);
   }
@@ -60,8 +60,8 @@ class Popup {
       animated = [
         Comb.parallel(animatedList: [
           Comb.scale(
-            begin: Size.square(0),
-            end: Size.square(1),
+            begin: const Size.square(0),
+            end: const Size.square(1),
             curve: Curves.easeOutSine,
           ),
           Comb.opacity(begin: 0, end: 1, duration: 200),
@@ -153,7 +153,7 @@ class Popup {
       animated = [
         Comb.parallel(
           animatedList: [
-            Comb.scale(begin: Size.square(0.8)),
+            Comb.scale(begin: const Size.square(0.8)),
             Comb.opacity(begin: 0),
           ],
         ),
@@ -171,13 +171,13 @@ class Popup {
       initToggle: true,
     );
 
-    var popupCallback = () {
+    void popupCallback() {
       if (onTapBack != null) {
         onTapBack(controller);
       } else {
         controller.remove();
       }
-    };
+    }
 
     var child = builder(controller);
 
@@ -396,7 +396,7 @@ class Popup {
     } else if (popupScale == PopupScale.horizontal) {
       return Comb.scaleX(begin: 0.8, y: 1);
     } else {
-      return Comb.scale(begin: Size.square(0.8));
+      return Comb.scale(begin: const Size.square(0.8));
     }
   }
 

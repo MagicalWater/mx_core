@@ -41,7 +41,7 @@ class TimerCore {
   TimerStatus _status = TimerStatus.standby;
 
   /// tick 事件回調
-  BehaviorSubject<TickData> _timerEventSubject = BehaviorSubject();
+  final BehaviorSubject<TickData> _timerEventSubject = BehaviorSubject();
 
   /// tick 事件串流
   Stream<TickData> get timerStream => _timerEventSubject.stream;
@@ -54,15 +54,15 @@ class TimerCore {
     required Duration totalTime,
     required Duration tickInterval,
   }) {
-    this._tickInterval = tickInterval;
-    this._totalTime = totalTime;
-    this._remainingTime = _totalTime;
+    _tickInterval = tickInterval;
+    _totalTime = totalTime;
+    _remainingTime = _totalTime;
 
-    if (this._remainingTime.inMilliseconds > this._totalTime.inMilliseconds) {
+    if (_remainingTime.inMilliseconds > _totalTime.inMilliseconds) {
       // 剩餘時間不得超過總時間
       print(
-          "剩餘時間(${this._remainingTime})不得超過總時間(${this._totalTime}), 強制將剩餘時間設定為總時間");
-      this._remainingTime = this._totalTime;
+          "剩餘時間($_remainingTime)不得超過總時間($_totalTime), 強制將剩餘時間設定為總時間");
+      _remainingTime = _totalTime;
     }
 
     _sendTickEvent();
@@ -80,21 +80,21 @@ class TimerCore {
       return;
     }
     if (totalTime != null) {
-      this._totalTime = totalTime;
+      _totalTime = totalTime;
     }
     if (remainingTime != null) {
-      this._remainingTime = remainingTime;
+      _remainingTime = remainingTime;
     }
 
-    if (this._remainingTime.inMilliseconds > this._totalTime.inMilliseconds) {
+    if (_remainingTime.inMilliseconds > _totalTime.inMilliseconds) {
       // 剩餘時間不得超過總時間
       print(
-          "此次修改剩餘時間(${this._remainingTime})將會超過總時間(${this._totalTime}), 強制將剩餘時間設定為總時間");
-      this._remainingTime = this._totalTime;
+          "此次修改剩餘時間($_remainingTime)將會超過總時間($_totalTime), 強制將剩餘時間設定為總時間");
+      _remainingTime = _totalTime;
     }
 
     if (tickInterval != null) {
-      this._tickInterval = tickInterval;
+      _tickInterval = tickInterval;
     }
   }
 
@@ -245,5 +245,6 @@ class TickData {
   }
 
   @override
+  // ignore: unnecessary_overrides
   int get hashCode => super.hashCode;
 }

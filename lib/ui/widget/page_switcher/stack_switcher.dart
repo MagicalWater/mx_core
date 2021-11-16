@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core/router/app_router.dart';
 
-/// 頁面切換元件
+/// 頁面切換元件, 與 [PageSwitcher] 差別在可手勢拖拉回退
 /// 直接將 PageBloc 的 subPageStream 以及 routes 傳入即可
 class StackSwitcher extends StatefulWidget {
   final VoidCallback onBackPage;
@@ -156,7 +156,7 @@ class _StackSwitcherState extends State<StackSwitcher>
     return null;
   }
 
-  GlobalKey _allBoundaryKey = GlobalKey();
+  final GlobalKey _allBoundaryKey = GlobalKey();
 
   List<WidgetBuilder>? _showChildren;
   late int showIndex;
@@ -444,7 +444,7 @@ class _StackSwitcherState extends State<StackSwitcher>
         _initPageOffset = details.globalPosition;
       }
     } else {
-      return null;
+      return;
     }
   }
 
@@ -763,7 +763,7 @@ class _StackSwitcherState extends State<StackSwitcher>
                     color: Colors.transparent,
                     boxShadow: [widget.animatedShadow!],
                   )
-                : BoxDecoration(color: Colors.transparent),
+                : const BoxDecoration(color: Colors.transparent),
             alignment: widget.alignment,
             transform: matrix,
             child: Opacity(
@@ -835,7 +835,7 @@ class _StackSwitcherState extends State<StackSwitcher>
         child: Container(
           decoration: config == StackSort.oldDown && boxShadow != null
               ? boxShadow
-              : BoxDecoration(color: Colors.transparent),
+              : const BoxDecoration(color: Colors.transparent),
           alignment: widget.alignment,
           transform: newMatrix,
           child: newWidget,
@@ -860,7 +860,7 @@ class _StackSwitcherState extends State<StackSwitcher>
       newWidget = Opacity(
         opacity: 1,
         child: Container(
-          decoration: BoxDecoration(color: Colors.transparent),
+          decoration: const BoxDecoration(color: Colors.transparent),
           alignment: widget.alignment,
           transform: Matrix4.identity(),
           child: newWidget,
@@ -897,7 +897,7 @@ class _ImagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawImage(image, Offset(0, 0), mainPaint);
+    canvas.drawImage(image, const Offset(0, 0), mainPaint);
   }
 
   @override

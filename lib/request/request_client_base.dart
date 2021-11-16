@@ -37,9 +37,9 @@ abstract class RequestClientBase {
   }
 
   void _initBuilders(List<RequestBuilderBase> targets) {
-    targets.forEach((target) {
+    for (var target in targets) {
       _initBuilder(target);
-    });
+    }
   }
 
   void _initBuilder(RequestBuilderBase target) {

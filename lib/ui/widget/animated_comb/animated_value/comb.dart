@@ -48,8 +48,10 @@ abstract class Comb<T> {
   int totalDuration(int defaultDuration) => duration ?? defaultDuration;
 
   @override
+  // ignore: unnecessary_overrides
   int get hashCode => super.hashCode;
 
+  @override
   bool operator ==(dynamic other) {
     if (other is Comb) {
       return begin == other.begin &&

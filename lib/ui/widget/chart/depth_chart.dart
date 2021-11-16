@@ -10,11 +10,12 @@ class DepthChart extends StatefulWidget {
   final List<DepthEntity> bids, asks;
   final DepthStyle style;
 
-  DepthChart({
+  const DepthChart({
+    Key? key,
     required this.bids,
     required this.asks,
     this.style = const DepthStyle.light(),
-  });
+  }) : super(key: key);
 
   @override
   _DepthChartState createState() => _DepthChartState();
@@ -44,7 +45,7 @@ class _DepthChartState extends State<DepthChart> {
         }
       },
       child: CustomPaint(
-        size: Size(double.infinity, double.infinity),
+        size: const Size(double.infinity, double.infinity),
         painter: DepthChartPainter(
           style: widget.style,
           buyData: widget.bids,
@@ -351,7 +352,7 @@ class DepthChartPainter extends CustomPainter {
 
   getTextPainter(String text) => TextPainter(
         text: TextSpan(
-          text: "$text",
+          text: text,
           style: TextStyle(color: style.textColor, fontSize: 10),
         ),
         textDirection: TextDirection.ltr,

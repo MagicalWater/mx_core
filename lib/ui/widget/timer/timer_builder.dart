@@ -7,7 +7,7 @@ import 'timer_core.dart';
 /// TimerWidget 計時器 的 tick 構建元件 回調
 /// [status] - 狀態
 /// [time] - 剩餘時間
-typedef Widget TimerWidgetBuilder(
+typedef TimerWidgetBuilder = Widget Function(
   BuildContext context,
   TimerStatus status,
   Duration time,
@@ -34,13 +34,15 @@ class TimerBuilder extends StatefulWidget {
   /// 是否自動開始倒數
   final bool autoStart;
 
-  TimerBuilder({
+  const TimerBuilder({
+    Key? key,
     this.time,
     this.tickInterval,
     this.timerCore,
     this.autoStart = false,
     required this.builder,
-  }) : assert((time != null && tickInterval != null) || timerCore != null);
+  })  : assert((time != null && tickInterval != null) || timerCore != null),
+        super(key: key);
 
   @override
   _TimerBuilderState createState() => _TimerBuilderState();

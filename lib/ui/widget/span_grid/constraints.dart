@@ -46,7 +46,7 @@ class AlignExpandedConstraints extends BoxConstraints {
   @override
   bool operator ==(dynamic other) {
     if (other is AlignExpandedConstraints) {
-      return super == (other) && this.enableExpanded == other.enableExpanded;
+      return super == (other) && enableExpanded == other.enableExpanded;
     }
     return false;
   }

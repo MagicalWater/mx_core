@@ -10,7 +10,7 @@ class TabWidth {
         fixed = null;
 
   const TabWidth.shrinkWrap()
-      : this.shrinkWrap = true,
+      : shrinkWrap = true,
         flex = null,
         fixed = null;
 

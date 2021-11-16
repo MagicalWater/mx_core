@@ -47,28 +47,33 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
     Canvas canvas,
   ) {
     switch (state) {
-      case SecondaryState.MACD:
+      case SecondaryState.macd:
         drawMACD(curPoint, canvas, curX, lastPoint, lastX);
         break;
-      case SecondaryState.KDJ:
-        if (lastPoint.k != 0)
+      case SecondaryState.kdj:
+        if (lastPoint.k != 0) {
           drawLine(
               lastPoint.k, curPoint.k, canvas, lastX, curX, kdjStyle.kColor);
-        if (lastPoint.d != 0)
+        }
+        if (lastPoint.d != 0) {
           drawLine(
               lastPoint.d, curPoint.d, canvas, lastX, curX, kdjStyle.dColor);
-        if (lastPoint.j != 0)
+        }
+        if (lastPoint.j != 0) {
           drawLine(
               lastPoint.j, curPoint.j, canvas, lastX, curX, kdjStyle.jColor);
+        }
         break;
-      case SecondaryState.RSI:
-        if (lastPoint.rsi != 0)
+      case SecondaryState.rsi:
+        if (lastPoint.rsi != 0) {
           drawLine(
               lastPoint.rsi, curPoint.rsi, canvas, lastX, curX, rsiStyle.color);
+        }
         break;
-      case SecondaryState.WR:
-        if (lastPoint.r != 0)
+      case SecondaryState.wr:
+        if (lastPoint.r != 0) {
           drawLine(lastPoint.r, curPoint.r, canvas, lastX, curX, wrStyle.color);
+        }
         break;
       default:
         break;
@@ -122,7 +127,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
   void drawText(Canvas canvas, MACDEntity data, double x) {
     List<TextSpan> children;
     switch (state) {
-      case SecondaryState.MACD:
+      case SecondaryState.macd:
         children = [
           TextSpan(
               text: "MACD(12,26,9)    ",
@@ -141,7 +146,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
                 style: getTextStyle(macdStyle.deaColor)),
         ];
         break;
-      case SecondaryState.KDJ:
+      case SecondaryState.kdj:
         children = [
           TextSpan(
               text: "KDJ(14,1,3)    ", style: getTextStyle(kdjStyle.textColor)),
@@ -159,21 +164,21 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
                 style: getTextStyle(kdjStyle.jColor)),
         ];
         break;
-      case SecondaryState.RSI:
+      case SecondaryState.rsi:
         children = [
           TextSpan(
               text: "RSI(14):${format(data.rsi)}    ",
               style: getTextStyle(rsiStyle.color)),
         ];
         break;
-      case SecondaryState.WR:
+      case SecondaryState.wr:
         children = [
           TextSpan(
               text: "WR(14):${format(data.r)}    ",
               style: getTextStyle(wrStyle.color)),
         ];
         break;
-      case SecondaryState.NONE:
+      case SecondaryState.none:
         return;
     }
     TextPainter tp = TextPainter(
@@ -187,11 +192,11 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
   @override
   void drawRightText(canvas, textStyle, int gridRows) {
     TextPainter maxTp = TextPainter(
-        text: TextSpan(text: "${format(maxValue)}", style: textStyle),
+        text: TextSpan(text: format(maxValue), style: textStyle),
         textDirection: TextDirection.ltr);
     maxTp.layout();
     TextPainter minTp = TextPainter(
-        text: TextSpan(text: "${format(minValue)}", style: textStyle),
+        text: TextSpan(text: format(minValue), style: textStyle),
         textDirection: TextDirection.ltr);
     minTp.layout();
 

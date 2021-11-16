@@ -12,7 +12,7 @@ class SecureDataStore<T> extends DataStore<T> {
 
   @override
   Future<void> write(T value) async {
-    this._value = value;
+    _value = value;
     if (value == null) {
       return delete(deleteLocal: true);
     }
@@ -63,13 +63,13 @@ class SecureDataStore<T> extends DataStore<T> {
       _value = await SecureStorage.readList<bool>(key: key) as T?;
     } else if (<String>[] is T) {
       _value = await SecureStorage.readList<String>(key: key) as T?;
-    } else if (Map<String, int>() is T) {
+    } else if (<String, int>{} is T) {
       _value = await SecureStorage.readMap<String, int>(key: key) as T?;
-    } else if (Map<String, double>() is T) {
+    } else if (<String, double>{} is T) {
       _value = await SecureStorage.readMap<String, double>(key: key) as T?;
-    } else if (Map<String, bool>() is T) {
+    } else if (<String, bool>{} is T) {
       _value = await SecureStorage.readMap<String, bool>(key: key) as T?;
-    } else if (Map<String, String>() is T) {
+    } else if (<String, String>{} is T) {
       _value = await SecureStorage.readMap<String, String>(key: key) as T?;
     } else {
       throw '警告, SecureStorage 尚只支持 int, double, bool, String, List<基本型態>, Map<String, 基本型態> 的型態, 當前型態: $T';

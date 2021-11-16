@@ -18,7 +18,7 @@ class MaterialLayer extends StatelessWidget {
   final BorderRadius? borderRadius;
   final Widget child;
 
-  MaterialLayer._({
+  const MaterialLayer._({
     required this.child,
     this.layers,
     this.borderRadius,
@@ -56,8 +56,9 @@ class MaterialLayer extends StatelessWidget {
     }
 
     // 把所有的layer轉化為container
-    layers
-        .forEach((e) => widgetChain = _convertLayerToContainer(e, widgetChain));
+    for (var e in layers) {
+      widgetChain = _convertLayerToContainer(e, widgetChain);
+    }
 
     return MaterialLayer._(
       child: widgetChain,
@@ -144,7 +145,7 @@ BorderRadius? _getBorderRadius(List<LayerProperties> layers, Widget child) {
       Radius bottomLeft = Radius.zero;
       Radius bottomRight = Radius.zero;
 
-      boxDecorationList.forEach((e) {
+      for (var e in boxDecorationList) {
         var borderRadius = e.borderRadius;
         if (borderRadius != null && borderRadius is BorderRadius) {
           var topLeftX = max(topLeft.x, borderRadius.topLeft.x);
@@ -161,7 +162,7 @@ BorderRadius? _getBorderRadius(List<LayerProperties> layers, Widget child) {
           bottomLeft = Radius.elliptical(bottomLeftX, bottomLeftY);
           bottomRight = Radius.elliptical(bottomRightX, bottomRightY);
         }
-      });
+      }
 
       borderRadius = BorderRadius.only(
         topLeft: topLeft,

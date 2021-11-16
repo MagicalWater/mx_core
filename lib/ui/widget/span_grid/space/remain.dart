@@ -96,7 +96,6 @@ class _RemainSpace {
         break;
       default:
         throw '未知的方向';
-        break;
     }
 
     return SpaceResult(

@@ -22,7 +22,7 @@ extension OrNullList<E> on Iterable<E> {
 
 extension IntersperseList<E> on List<E> {
   /// 在每個元素之間穿插
-  List<E> intersperse(E f(int i)) {
+  List<E> intersperse(E Function(int i) f) {
     return indexMap((e, i) {
       if (i == length - 1) {
         return [e];
@@ -32,7 +32,7 @@ extension IntersperseList<E> on List<E> {
     }).expand((element) => element).toList();
   }
 
-  List<T> indexMap<T>(T f(E e, int i)) {
+  List<T> indexMap<T>(T Function(E e, int i) f) {
     var index = 0;
     var mapsData = <T>[];
     for (var element in this) {

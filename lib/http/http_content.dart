@@ -31,10 +31,10 @@ class HttpContent with HttpContentMixin {
     ContentType? contentType,
   }) {
     var parsed = Uri.parse(url);
-    this.scheme = parsed.scheme;
-    this.host = parsed.host;
-    this.path = parsed.path;
-    this.port = parsed.port;
+    scheme = parsed.scheme;
+    host = parsed.host;
+    path = parsed.path;
+    port = parsed.port;
     parseQuery(parsed.queryParameters);
     setContentType(contentType);
   }
@@ -48,7 +48,7 @@ class HttpContent with HttpContentMixin {
     int? port,
     ContentType? contentType,
   }) {
-    this.setContentType(contentType);
+    setContentType(contentType);
     this.port = port;
   }
 

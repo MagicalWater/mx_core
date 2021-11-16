@@ -6,4 +6,7 @@ class RoutePushSecondRoute extends PageRouter {
       : super(Pages.routePushSecond, option) {
     print('sub page check = ${subPages()}');
   }
+
+  @override
+  RouteData? defaultSubPage() => RouteData(subPages().first);
 }

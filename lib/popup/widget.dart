@@ -1,7 +1,7 @@
 part of 'impl.dart';
 
 class _DetectWidget extends SingleChildRenderObjectWidget {
-  _DetectWidget({
+  const _DetectWidget({
     Key? key,
     Widget? child,
   }) : super(key: key, child: child);
@@ -28,7 +28,7 @@ class _DetectBox extends RenderShiftedBox {
 class _TapWidget extends SingleChildRenderObjectWidget {
   final HitRule hitRule;
 
-  _TapWidget({
+  const _TapWidget({
     Key? key,
     Widget? child,
     required this.hitRule,

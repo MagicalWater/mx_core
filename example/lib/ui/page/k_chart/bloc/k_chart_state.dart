@@ -13,8 +13,8 @@ class KChartState {
   KChartState({
     required this.isLoading,
     this.datas = const [],
-    this.mainState = MainState.MA,
-    this.secondaryState = SecondaryState.MACD,
+    this.mainState = MainState.ma,
+    this.secondaryState = SecondaryState.macd,
     this.isLine = false,
     this.bids = const [],
     this.asks = const [],
@@ -24,12 +24,14 @@ class KChartState {
     bool? isLoading,
     bool? isLine,
     List<KLineEntity>? datas,
+    MainState? mainState,
+    SecondaryState? secondaryState,
   }) {
     return KChartState(
       isLoading: isLoading ?? this.isLoading,
       datas: datas ?? this.datas,
-      mainState: mainState,
-      secondaryState: secondaryState,
+      mainState: mainState ?? this.mainState,
+      secondaryState: secondaryState ?? this.secondaryState,
       isLine: isLine ?? this.isLine,
       bids: bids,
       asks: asks,

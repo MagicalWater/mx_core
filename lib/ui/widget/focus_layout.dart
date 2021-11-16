@@ -15,17 +15,18 @@ class FocusLayout extends StatefulWidget {
   /// 控制是否專注在某個 view
   final FocusController? controller;
 
-  FocusLayout({
+  const FocusLayout({
+    Key? key,
     required this.children,
     this.controller,
-  });
+  }) : super(key: key);
 
   @override
   _FocusLayoutState createState() => _FocusLayoutState();
 }
 
 class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
-  PublishSubject<bool> _debounceSubject = PublishSubject();
+  final PublishSubject<bool> _debounceSubject = PublishSubject();
   late TimerCore countdownDebounce;
   late StreamSubscription _subscription;
 
@@ -34,6 +35,7 @@ class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
   @override
   bool get isFocus => _currentFocus;
 
+  @override
   set isFocus(bool _isFocus) {
     _currentFocus = _isFocus;
     _syncSystemUi();
@@ -42,8 +44,8 @@ class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
   @override
   void initState() {
     countdownDebounce = TimerCore(
-      totalTime: Duration(seconds: 1),
-      tickInterval: Duration(seconds: 3),
+      totalTime: const Duration(seconds: 1),
+      tickInterval: const Duration(seconds: 3),
     );
     _delaySet();
     widget.controller?._bind(this);
@@ -70,9 +72,11 @@ class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
     }).doOnData((data) {
       if (data) {
         print('配置全螢幕');
+        //TODO: 需要研究一下如何更改
         SystemChrome.setEnabledSystemUIOverlays([]);
       } else {
         print('配置局部螢幕');
+        //TODO: 需要研究一下如何更改
         SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
       }
     }).listen(null);
@@ -80,22 +84,20 @@ class _FocusLayoutState extends State<FocusLayout> implements FocusDelegate {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: StreamBuilder<bool>(
-        stream: _debounceSubject.stream,
-        builder: (context, snapshot) {
-          List<Widget> children;
-          print('當前: $_currentFocus');
-          if (_currentFocus) {
-            children = _convertChildren(focusHeight: Screen.height);
-          } else {
-            children = _convertChildren();
-          }
-          return Column(
-            children: children,
-          );
-        },
-      ),
+    return StreamBuilder<bool>(
+      stream: _debounceSubject.stream,
+      builder: (context, snapshot) {
+        List<Widget> children;
+        print('當前: $_currentFocus');
+        if (_currentFocus) {
+          children = _convertChildren(focusHeight: Screen.height);
+        } else {
+          children = _convertChildren();
+        }
+        return Column(
+          children: children,
+        );
+      },
     );
   }
 
@@ -132,7 +134,8 @@ class FocusChild extends StatelessWidget {
   final double? height;
   final Widget child;
 
-  FocusChild({Key? key, required this.child, this.height}) : super(key: key);
+  const FocusChild({Key? key, required this.child, this.height})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

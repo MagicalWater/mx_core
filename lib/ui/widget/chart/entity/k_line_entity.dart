@@ -2,25 +2,31 @@ import '../entity/k_entity.dart';
 
 class KLineEntity extends KEntity {
   @override
+  // ignore: overridden_fields
   late double open;
   @override
+  // ignore: overridden_fields
   late double high;
   @override
+  // ignore: overridden_fields
   late double low;
   @override
+  // ignore: overridden_fields
   late double close;
 
+  @override
+  // ignore: overridden_fields
   late double vol;
   late double amount;
   late int count;
   late DateTime dateTime;
 
   KLineEntity({
-    required this.open,
-    required this.high,
-    required this.low,
-    required this.close,
-    required this.vol,
+    required double open,
+    required double high,
+    required double low,
+    required double close,
+    required double vol,
     required this.amount,
     required this.count,
     required this.dateTime,
@@ -41,13 +47,13 @@ class KLineEntity extends KEntity {
   Map<String, dynamic> toJson() {
     var data = <String, dynamic>{};
     data['date'] = dateTime.millisecondsSinceEpoch;
-    data['open'] = this.open;
-    data['close'] = this.close;
-    data['high'] = this.high;
-    data['low'] = this.low;
-    data['vol'] = this.vol;
-    data['amount'] = this.amount;
-    data['count'] = this.count;
+    data['open'] = open;
+    data['close'] = close;
+    data['high'] = high;
+    data['low'] = low;
+    data['vol'] = vol;
+    data['amount'] = amount;
+    data['count'] = count;
     return data;
   }
 

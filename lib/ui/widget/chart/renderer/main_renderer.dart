@@ -32,7 +32,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   bool isLine;
 
   /// 繪製圖形的內容邊距
-  double _contentPadding = 0;
+  final double _contentPadding = 0;
 
   MAStyle get maStyle => style.maStyle;
 
@@ -120,21 +120,21 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
       // 當最大最小同一時需要預先調整
       switch (state) {
-        case MainState.MA:
+        case MainState.ma:
           minMax = _minMax(
             minValue,
             maxValue,
-            preEntity?.MA5Price,
-            preEntity?.MA10Price,
-            preEntity?.MA20Price,
-            preEntity?.MA30Price,
-            nextEntity?.MA5Price,
-            nextEntity?.MA10Price,
-            nextEntity?.MA20Price,
-            nextEntity?.MA30Price,
+            preEntity?.ma5Price,
+            preEntity?.ma10Price,
+            preEntity?.ma20Price,
+            preEntity?.ma30Price,
+            nextEntity?.ma5Price,
+            nextEntity?.ma10Price,
+            nextEntity?.ma20Price,
+            nextEntity?.ma30Price,
           );
           break;
-        case MainState.BOLL:
+        case MainState.boll:
           minMax = _minMax(
             minValue,
             maxValue,
@@ -146,7 +146,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
             nextEntity?.up,
           );
           break;
-        case MainState.NONE:
+        case MainState.none:
           minMax = _minMax(
             minValue,
             maxValue,
@@ -188,9 +188,9 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     var newDiff = chartRect.height / newScaleY; //高/新比例=新的差
     var value = (newDiff - diff) / 2; //新差-差/2=y轴需要扩大的值
     if (newDiff > diff) {
-      this.scaleY = newScaleY;
-      this.maxValue += value;
-      this.minValue -= value;
+      scaleY = newScaleY;
+      maxValue += value;
+      minValue -= value;
     }
   }
 
@@ -198,28 +198,28 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   void drawText(Canvas canvas, CandleEntity data, double x) {
     if (isLine == true) return;
     TextSpan? span;
-    if (state == MainState.MA) {
+    if (state == MainState.ma) {
       span = TextSpan(
         children: [
-          if (maLine.contains(MALine.ma5) && data.MA5Price != 0)
+          if (maLine.contains(MALine.ma5) && data.ma5Price != 0)
             TextSpan(
-                text: "MA5:${format(data.MA5Price)}    ",
+                text: "MA5:${format(data.ma5Price)}    ",
                 style: getTextStyle(maStyle.ma5Color)),
-          if (maLine.contains(MALine.ma10) && data.MA10Price != 0)
+          if (maLine.contains(MALine.ma10) && data.ma10Price != 0)
             TextSpan(
-                text: "MA10:${format(data.MA10Price)}    ",
+                text: "MA10:${format(data.ma10Price)}    ",
                 style: getTextStyle(maStyle.ma10Color)),
-          if (maLine.contains(MALine.ma20) && data.MA20Price != 0)
+          if (maLine.contains(MALine.ma20) && data.ma20Price != 0)
             TextSpan(
-                text: "MA20:${format(data.MA20Price)}    ",
+                text: "MA20:${format(data.ma20Price)}    ",
                 style: getTextStyle(maStyle.ma20Color)),
-          if (maLine.contains(MALine.ma30) && data.MA30Price != 0)
+          if (maLine.contains(MALine.ma30) && data.ma30Price != 0)
             TextSpan(
-                text: "MA30:${format(data.MA30Price)}    ",
+                text: "MA30:${format(data.ma30Price)}    ",
                 style: getTextStyle(maStyle.ma30Color)),
         ],
       );
-    } else if (state == MainState.BOLL) {
+    } else if (state == MainState.boll) {
       span = TextSpan(
         children: [
           if (data.mb != 0)
@@ -249,9 +249,9 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     if (isLine != true) drawCandle(curPoint, canvas, curX);
     if (isLine == true) {
       draLine(lastPoint.close, curPoint.close, canvas, lastX, curX);
-    } else if (state == MainState.MA) {
+    } else if (state == MainState.ma) {
       drawMaLine(lastPoint, curPoint, canvas, lastX, curX);
-    } else if (state == MainState.BOLL) {
+    } else if (state == MainState.boll) {
       drawBollLine(lastPoint, curPoint, canvas, lastX, curX);
     }
   }
@@ -294,7 +294,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       colors: style.timelineShadowColor,
     ).createShader(Rect.fromLTRB(
         chartRect.left, chartRect.top, chartRect.right, chartRect.bottom));
-    mLineFillPaint..shader = mLineFillShader;
+    mLineFillPaint.shader = mLineFillShader;
 
     mLineFillPath ??= Path();
 
@@ -319,20 +319,20 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   void drawMaLine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
       double lastX, double curX) {
-    if (maLine.contains(MALine.ma5) && lastPoint.MA5Price != 0) {
-      drawLine(lastPoint.MA5Price, curPoint.MA5Price, canvas, lastX, curX,
+    if (maLine.contains(MALine.ma5) && lastPoint.ma5Price != 0) {
+      drawLine(lastPoint.ma5Price, curPoint.ma5Price, canvas, lastX, curX,
           maStyle.ma5Color);
     }
-    if (maLine.contains(MALine.ma10) && lastPoint.MA10Price != 0) {
-      drawLine(lastPoint.MA10Price, curPoint.MA10Price, canvas, lastX, curX,
+    if (maLine.contains(MALine.ma10) && lastPoint.ma10Price != 0) {
+      drawLine(lastPoint.ma10Price, curPoint.ma10Price, canvas, lastX, curX,
           maStyle.ma10Color);
     }
-    if (maLine.contains(MALine.ma20) && lastPoint.MA20Price != 0) {
-      drawLine(lastPoint.MA20Price, curPoint.MA20Price, canvas, lastX, curX,
+    if (maLine.contains(MALine.ma20) && lastPoint.ma20Price != 0) {
+      drawLine(lastPoint.ma20Price, curPoint.ma20Price, canvas, lastX, curX,
           maStyle.ma20Color);
     }
-    if (maLine.contains(MALine.ma30) && lastPoint.MA30Price != 0) {
-      drawLine(lastPoint.MA30Price, curPoint.MA30Price, canvas, lastX, curX,
+    if (maLine.contains(MALine.ma30) && lastPoint.ma30Price != 0) {
+      drawLine(lastPoint.ma30Price, curPoint.ma30Price, canvas, lastX, curX,
           maStyle.ma30Color);
     }
   }
@@ -409,7 +409,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         position = (gridRows - i) * rowSpace;
       }
       var value = position / scaleY + minValue;
-      TextSpan span = TextSpan(text: "${format(value)}", style: textStyle);
+      TextSpan span = TextSpan(text: format(value), style: textStyle);
       TextPainter tp =
           TextPainter(text: span, textDirection: TextDirection.ltr);
       tp.layout();

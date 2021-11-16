@@ -40,8 +40,8 @@ class ChartPainter extends BaseChartPainter {
     MainChartStyle? mainStyle,
     SubChartStyle? subStyle,
     ValueChanged<double>? onCalculateMaxScrolled,
-  })  : this.mainChartStyle = mainStyle ?? MainChartStyle.light(),
-        this.subChartStyle = subStyle ?? SubChartStyle.light(),
+  })  : mainChartStyle = mainStyle ?? const MainChartStyle.light(),
+        subChartStyle = subStyle ?? const SubChartStyle.light(),
         super(
           datas: datas,
           scaleX: scaleX,
@@ -207,6 +207,9 @@ class ChartPainter extends BaseChartPainter {
     }
 
     void drawSecondary() {
+      if (mSecondaryRect == null) {
+        return;
+      }
       canvas.save();
       canvas.clipRect(mSecondaryRect!);
       canvas.translate(mTranslateX * scaleX, 0.0);
@@ -359,7 +362,7 @@ class ChartPainter extends BaseChartPainter {
     if (translateXtoX(getX(index)) < mWidth / 2) {
       isLeft = false;
       x = 1;
-      Path path = new Path();
+      Path path = Path();
       path.moveTo(x, y - r);
       path.lineTo(x, y + r);
       path.lineTo(textWidth + 2 * w1, y + r);
@@ -372,7 +375,7 @@ class ChartPainter extends BaseChartPainter {
     } else {
       isLeft = true;
       x = mWidth - textWidth - 1 - 2 * w1 - w2;
-      Path path = new Path();
+      Path path = Path();
       path.moveTo(x, y);
       path.lineTo(x + w2, y + r);
       path.lineTo(mWidth - 2, y + r);

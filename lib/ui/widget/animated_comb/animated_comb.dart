@@ -10,7 +10,9 @@ import 'animated_value/comb.dart';
 export 'animated_value/comb.dart';
 
 part 'animated_comb_controller.dart';
+
 part 'animated_sync_tick.dart';
+
 part 'shift_animation.dart';
 
 typedef CombWidgetBuilder = Widget Function(
@@ -84,7 +86,7 @@ class AnimatedComb extends StatefulWidget {
   /// 動畫類型
   final AnimatedType? type;
 
-  AnimatedComb._({
+  const AnimatedComb._({
     Key? key,
     this.child,
     this.builder,
@@ -185,6 +187,7 @@ class AnimatedComb extends StatefulWidget {
 
   @override
   _CombState createState() =>
+      // ignore: no_logic_in_create_state
       multipleAnimationController ? _MultipleCombState() : _SingleCombState();
 }
 

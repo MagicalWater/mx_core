@@ -85,7 +85,7 @@ class DBUtil {
     required Map<String, Object?> values,
   }) async {
     await _dbInitCheck();
-    return _db.insert("${table.tableName}", values);
+    return _db.insert(table.tableName, values);
   }
 
   /// 取得全部的資料
@@ -161,10 +161,10 @@ class DBUtil {
   /// 取得創建表的命令
   String _getCreateTableCommand(SQLiteTable table) {
     List<String> commandList = [];
-    if (table.tableName == null || table.tableName.isEmpty) {
+    if (table.tableName.isEmpty) {
       throw "DatabaseUtil 錯誤 - TableColumn 的 tableName 不得為空";
     }
-    if (table.dataMap == null || table.dataMap.isEmpty) {
+    if (table.dataMap.isEmpty) {
       throw "DatabaseUtil 錯誤 - TableColumn dataMap 為空, 表格至少需含有一個實體(entities): ${table.dataMap}";
     }
     table.dataMap.forEach((k, v) {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+
 // ignore: implementation_imports
 import 'package:flutter_easyrefresh/src/behavior/scroll_behavior.dart';
 import 'package:rxdart/rxdart.dart';
@@ -42,7 +43,7 @@ RefreshBuilder? _defaultPlaceBuilder;
 
 /// 可刷新元件, 內部封裝了第三方庫 [EasyRefresh]
 class RefreshView extends StatefulWidget {
-  late final EasyRefreshStyle _easyRefresh;
+  final EasyRefreshStyle _easyRefresh;
 
   /// 下拉刷新回調, null 為沒有下拉刷新
   final VoidCallback? onRefresh;
@@ -69,7 +70,7 @@ class RefreshView extends StatefulWidget {
   /// loading 延遲關閉時間
   final Duration? loadingDebounce;
 
-  RefreshView._({
+  const RefreshView._({
     Key? key,
     required EasyRefreshStyle easyRefreshStyle,
     this.onRefresh,
@@ -80,7 +81,7 @@ class RefreshView extends StatefulWidget {
     this.placeBuilder,
     this.loadStyle,
     this.loadingDebounce,
-  }) : this._easyRefresh = easyRefreshStyle;
+  }) : _easyRefresh = easyRefreshStyle;
 
   /// EasyRefresh 的默認構建
   /// 將child轉換為CustomScrollView可用的slivers
@@ -288,7 +289,7 @@ class _RefreshViewState extends State<RefreshView> {
   bool _isLoadingMore = false;
 
   /// [EasyRefresh] 元件的控制器, 藉此控制刷新/加載相關事項
-  EasyRefreshController _easyRefreshController = EasyRefreshController();
+  final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
   /// 內部的列表元件實際上是一個 [EasyRefresh]
   late EasyRefresh _easyRefresh;
@@ -312,7 +313,7 @@ class _RefreshViewState extends State<RefreshView> {
   bool _firstTrigger = false;
 
   /// 真正接收刷新狀態的控制器
-  BehaviorSubject<RefreshState> _stateSubject = BehaviorSubject();
+  final BehaviorSubject<RefreshState> _stateSubject = BehaviorSubject();
 
   /// 是否延遲接受狀態命令
   var _isDebounceActive = false;
@@ -325,12 +326,13 @@ class _RefreshViewState extends State<RefreshView> {
   Stream<bool> get debounceLoadStream =>
       _stateSubject.map((e) => e.centerLoad).distinct();
 
-  LoadController _loadController = LoadController();
+  final LoadController _loadController = LoadController();
 
   void _activeDebounce() {
     _isDebounceActive = true;
     _disableSubscription?.cancel();
-    _disableSubscription = TimerStream(null, Duration(seconds: 1)).listen((_) {
+    _disableSubscription =
+        TimerStream(null, const Duration(seconds: 1)).listen((_) {
       _disableSubscription = null;
       _isDebounceActive = false;
     });
@@ -379,7 +381,7 @@ class _RefreshViewState extends State<RefreshView> {
         if (e.isLoading || !_isDebounceActive) {
           return Stream.value(e);
         } else {
-          return TimerStream(e, Duration(seconds: 1));
+          return TimerStream(e, const Duration(seconds: 1));
         }
       });
     }
@@ -548,7 +550,7 @@ class _RefreshViewState extends State<RefreshView> {
             // 底部, 觸發加載更多
             if (metrics.maxScrollExtent == 0) {
 //                print("觸發加載更多");
-              var state = RefreshState.loading(
+              var state = const RefreshState.loading(
                 type: RefreshType.loadMore,
                 bounce: false,
               );
@@ -569,33 +571,31 @@ class _RefreshViewState extends State<RefreshView> {
 
   /// 取得 body 的佔位元件
   Widget _getPlaceWidget() {
-    return Container(
-      child: StreamBuilder<RefreshState>(
-        initialData: _stateSubject.valueOrNull,
-        stream: _stateSubject.stream,
-        builder: (context, snapshot) {
+    return StreamBuilder<RefreshState>(
+      initialData: _stateSubject.valueOrNull,
+      stream: _stateSubject.stream,
+      builder: (context, snapshot) {
 //          print("取得資料~~~");
-          Widget? child;
+        Widget? child;
 
-          RefreshBuilder? childBuilder =
-              widget.placeBuilder ?? _defaultPlaceBuilder;
+        RefreshBuilder? childBuilder =
+            widget.placeBuilder ?? _defaultPlaceBuilder;
 
-          if (childBuilder != null) {
-            // 代表有實現自定義 佔位 元件
-            child = childBuilder(
-              context,
-              snapshot.data!,
-              _placeStyle,
-            );
-          }
-
-          child ??= _getDefaultPlaceWidget(snapshot.data!);
-          return AbsorbPointer(
-            absorbing: _freezeTouch,
-            child: child,
+        if (childBuilder != null) {
+          // 代表有實現自定義 佔位 元件
+          child = childBuilder(
+            context,
+            snapshot.data!,
+            _placeStyle,
           );
-        },
-      ),
+        }
+
+        child ??= _getDefaultPlaceWidget(snapshot.data!);
+        return AbsorbPointer(
+          absorbing: _freezeTouch,
+          child: child,
+        );
+      },
     );
   }
 
@@ -649,7 +649,7 @@ class _RefreshViewState extends State<RefreshView> {
       default:
         break;
     }
-    return Container(width: 0, height: 0);
+    return const SizedBox(width: 0, height: 0);
   }
 
   @override
@@ -671,7 +671,7 @@ class PlaceStyle {
 
   final TextStyle? textStyle;
 
-  static PlaceStyle _default = PlaceStyle();
+  static const PlaceStyle _default = PlaceStyle();
 
   const PlaceStyle({
     this.error = "发生错误, 请重新刷新",
@@ -714,17 +714,17 @@ class RefreshState {
   final bool? noLoadMore;
 
   const RefreshState._()
-      : this.isInit = true,
-        this.empty = false,
-        this.success = true,
-        this.noMore = false,
-        this.isLoading = false,
-        this.bounce = true,
-        this.centerLoad = false,
-        this.type = RefreshType.refresh,
-        this.resetRefresh = false,
-        this.resetLoadMore = false,
-        this.noLoadMore = null;
+      : isInit = true,
+        empty = false,
+        success = true,
+        noMore = false,
+        isLoading = false,
+        bounce = true,
+        centerLoad = false,
+        type = RefreshType.refresh,
+        resetRefresh = false,
+        resetLoadMore = false,
+        noLoadMore = null;
 
   static const RefreshState none = RefreshState._();
 
@@ -736,14 +736,14 @@ class RefreshState {
     this.type = RefreshType.refresh,
     this.bounce = true,
     this.centerLoad = false,
-  })  : this.isInit = false,
-        this.empty = false,
-        this.success = true,
-        this.noMore = false,
-        this.isLoading = true,
-        this.resetRefresh = false,
-        this.resetLoadMore = false,
-        this.noLoadMore = null;
+  })  : isInit = false,
+        empty = false,
+        success = true,
+        noMore = false,
+        isLoading = true,
+        resetRefresh = false,
+        resetLoadMore = false,
+        noLoadMore = null;
 
   /// 設置刷新的結果
   const RefreshState.refreshEnd({
@@ -752,12 +752,12 @@ class RefreshState {
     this.noMore = false,
     this.resetLoadMore = true,
     this.noLoadMore,
-  })  : this.isInit = false,
-        this.isLoading = false,
-        this.bounce = true,
-        this.type = RefreshType.refresh,
-        this.resetRefresh = false,
-        this.centerLoad = false;
+  })  : isInit = false,
+        isLoading = false,
+        bounce = true,
+        type = RefreshType.refresh,
+        resetRefresh = false,
+        centerLoad = false;
 
   /// 設置加載更多的結果
   const RefreshState.loadMoreEnd({
@@ -765,13 +765,13 @@ class RefreshState {
     this.empty = false,
     this.noMore = false,
     this.resetRefresh = false,
-  })  : this.isInit = false,
-        this.isLoading = false,
-        this.bounce = true,
-        this.type = RefreshType.loadMore,
-        this.resetLoadMore = false,
-        this.noLoadMore = null,
-        this.centerLoad = false;
+  })  : isInit = false,
+        isLoading = false,
+        bounce = true,
+        type = RefreshType.loadMore,
+        resetLoadMore = false,
+        noLoadMore = null,
+        centerLoad = false;
 }
 
 /// 狀態類型

@@ -28,7 +28,7 @@ class ArrowPopupButton extends StatefulWidget {
 
   final Color? maskColor;
 
-  ArrowPopupButton._({
+  const ArrowPopupButton._({
     required this.child,
     required this.popupBuilder,
     this.feedback = const HitFeedback(),

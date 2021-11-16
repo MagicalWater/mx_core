@@ -23,14 +23,15 @@ class Spring extends StatelessWidget {
 
   bool get isHorizontal => direction == Axis.horizontal;
 
-  Spring({
+  const Spring({
+    Key? key,
     this.springMultiple = 1,
     this.size = 50,
     this.duration = 500,
     this.decoration,
     this.color,
     this.direction = Axis.horizontal,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class Spring extends StatelessWidget {
     }
 
     return Align(
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height,
         child: AnimatedComb(

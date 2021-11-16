@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 import 'source_generator/annotation.dart';
 
 class HttpContentMixin {
-  Map<String, dynamic> _queryParams = {};
+  final Map<String, dynamic> _queryParams = {};
   Map<String, dynamic> headers = {};
 
   Map<String, dynamic> get queryParams => _queryParams;
@@ -98,7 +98,7 @@ class HttpContentMixin {
 
   /// 直接設定param, 會替代掉原有的
   void setQueryParams(Map<String, dynamic>? iterable) {
-    this._queryParams.clear();
+    _queryParams.clear();
     iterable?.forEach((k, v) => addQueryParam(k, value: v));
   }
 
@@ -232,7 +232,7 @@ class HttpContentMixin {
   }
 
   void parseQuery(Map<String, String> query) {
-    final regex = "[\\w]+(?=\\[[0-x9]+\\])";
+    const regex = "[\\w]+(?=\\[[0-x9]+\\])";
     RegExp regExp = RegExp(regex);
     query.forEach((key, value) {
       String realKey = key;

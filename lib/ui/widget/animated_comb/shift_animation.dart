@@ -33,7 +33,7 @@ class ShiftAnimation extends CurvedAnimation {
     required AnimationMethod Function() methodGetter,
     this.shift = 0,
     Curve? reverseCurve,
-  })  : this._methodGetter = methodGetter,
+  })  : _methodGetter = methodGetter,
         super(
           parent: parent,
           curve: curve,

@@ -1,6 +1,6 @@
 part of 'plain_storage.dart';
 
-final _firstInstallKey = '_isAppFirstInstallKey';
+const String _firstInstallKey = '_isAppFirstInstallKey';
 
 /// 加密本地儲存類別
 /// 注意: 於ios存至key chain中, 因此app刪除後重新安裝仍會存在
@@ -8,7 +8,7 @@ final _firstInstallKey = '_isAppFirstInstallKey';
 class SecureStorage {
   SecureStorage._();
 
-  static final _storage = FlutterSecureStorage();
+  static const _storage = FlutterSecureStorage();
 
   /// 再重新安裝app時, 將所有的儲存資料重置
   /// 檢查方式 -

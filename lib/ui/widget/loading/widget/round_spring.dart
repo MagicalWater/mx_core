@@ -21,14 +21,15 @@ class RoundSpring extends StatefulWidget {
   /// 顏色
   final Color? color;
 
-  RoundSpring({
+  const RoundSpring({
+    Key? key,
     this.springMultiple = 1,
     this.ballCount = 1,
     this.size = 50,
     this.duration = 500,
     this.decoration,
     this.color,
-  });
+  }) : super(key: key);
 
   @override
   _RoundSpringState createState() => _RoundSpringState();
@@ -51,7 +52,7 @@ class _RoundSpringState extends State<RoundSpring>
   Widget build(BuildContext context) {
     var distance = widget.size * widget.springMultiple;
     return Align(
-      child: Container(
+      child: SizedBox(
         width: distance * 3,
         height: distance * 3,
         child: Stack(

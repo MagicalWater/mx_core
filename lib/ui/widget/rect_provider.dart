@@ -10,7 +10,7 @@ import 'package:flutter/widgets.dart';
 /// 1. RectProviderMixin => 取得自己的 rect
 /// 2. RectProvider => 取得子元件的 rect
 mixin RectProviderMixin<T extends StatefulWidget> on State<T> {
-  StreamController<Rect> _rectController = StreamController();
+  final StreamController<Rect> _rectController = StreamController();
 
   Stream<Rect> get widgetRectStream => _rectController.stream;
 
@@ -19,7 +19,7 @@ mixin RectProviderMixin<T extends StatefulWidget> on State<T> {
   Rect? get widgetRect => _widgetRect;
 
   /// 延遲多久取得 rect, 一般延遲越久越準確
-  Duration delayGetRect() => Duration(milliseconds: 300);
+  Duration delayGetRect() => const Duration(milliseconds: 300);
 
   @override
   void didUpdateWidget(T oldWidget) {
@@ -65,12 +65,12 @@ class RectProvider extends StatefulWidget {
 
   final Duration? delayGetRect;
 
-  RectProvider({
+  const RectProvider({Key? key,
     required this.child,
     this.onCreated,
     this.onRect,
     this.delayGetRect,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

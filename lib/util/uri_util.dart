@@ -3,18 +3,18 @@ extension QueryUri on Uri {
   Uri addQuery(String key, dynamic value) {
     Map<String, dynamic> oriQuery;
     if (value is List) {
-      oriQuery = Map.from(this.queryParametersAll);
+      oriQuery = Map.from(queryParametersAll);
       oriQuery[key] = value;
     } else {
-      oriQuery = Map.from(this.queryParameters);
+      oriQuery = Map.from(queryParameters);
       oriQuery[key] = value;
     }
 
     return Uri(
-      scheme: this.scheme,
-      host: this.host,
-      path: this.path,
-      port: this.port,
+      scheme: scheme,
+      host: host,
+      path: path,
+      port: port,
       queryParameters: oriQuery,
     );
   }

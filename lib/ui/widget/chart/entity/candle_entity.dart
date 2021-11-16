@@ -4,10 +4,10 @@ mixin CandleEntity {
   late double low;
   late double close;
 
-  late double MA5Price;
-  late double MA10Price;
-  late double MA20Price;
-  late double MA30Price;
+  late double ma5Price;
+  late double ma10Price;
+  late double ma20Price;
+  late double ma30Price;
 
 //  上轨线
   late double up;

@@ -85,7 +85,7 @@ class LineIndicator extends StatefulWidget {
   /// 線條佔位
   final List<LinePlace>? places;
 
-  LineIndicator({
+  const LineIndicator({Key? key,
     required this.start,
     required this.end,
     this.color,
@@ -100,7 +100,7 @@ class LineIndicator extends StatefulWidget {
     this.places,
     this.appearAnimation = true,
     this.animation = true,
-  }) : assert(color != null || decoration != null);
+  }) : assert(color != null || decoration != null), super(key: key);
 
   @override
   _LineIndicatorState createState() => _LineIndicatorState();
@@ -143,9 +143,9 @@ class _LineIndicatorState extends State<LineIndicator>
   }
 
   void releaseAllPlacePainter() {
-    placePainter.forEach((element) {
+    for (var element in placePainter) {
       element.painter.dispose();
-    });
+    }
     placePainter.clear();
   }
 
@@ -277,7 +277,7 @@ class _LineIndicatorState extends State<LineIndicator>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: widget.direction == Axis.vertical ? widget.size : null,
       height: widget.direction == Axis.horizontal ? widget.size : null,
       child: CustomPaint(
@@ -346,27 +346,27 @@ class _LinePainter extends CustomPainter {
     switch (direction) {
       case Axis.horizontal:
         lineSize ??= size.height;
-        bgPlace.forEach((element) {
+        for (var element in bgPlace) {
           _paintHorizontal(
               canvas, size, element.painter, element.start, element.end);
-        });
+        }
         _paintHorizontal(canvas, size, painter, start, end);
-        fgPlace.forEach((element) {
+        for (var element in fgPlace) {
           _paintHorizontal(
               canvas, size, element.painter, element.start, element.end);
-        });
+        }
         break;
       case Axis.vertical:
         lineSize ??= size.width;
-        bgPlace.forEach((element) {
+        for (var element in bgPlace) {
           _paintVertical(
               canvas, size, element.painter, element.start, element.end);
-        });
+        }
         _paintVertical(canvas, size, painter, start, end);
-        fgPlace.forEach((element) {
+        for (var element in fgPlace) {
           _paintVertical(
               canvas, size, element.painter, element.start, element.end);
-        });
+        }
         break;
     }
   }

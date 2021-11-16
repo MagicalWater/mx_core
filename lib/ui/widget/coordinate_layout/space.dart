@@ -5,8 +5,8 @@ class _SpaceCompute {
   late double totalWidth;
   late double totalHeight;
 
-  var xSegmentCount;
-  var ySegmentCount;
+  late int xSegmentCount;
+  late int ySegmentCount;
 
   late double rowHeight;
 
@@ -15,17 +15,25 @@ class _SpaceCompute {
 
   /// 設定 container 寬高
   void setTotal(
-      double width, double height, int xSegmentCount, double rowHeight) {
-    this.totalWidth = width;
-    this.totalHeight = height;
+    double width,
+    double height,
+    int xSegmentCount,
+    double rowHeight,
+  ) {
+    totalWidth = width;
+    totalHeight = height;
     this.xSegmentCount = xSegmentCount;
     this.rowHeight = rowHeight;
-    this.ySegmentCount = (totalHeight / rowHeight).floor();
+    ySegmentCount = (totalHeight / rowHeight).floor();
 
     freeSpace.clear();
 
-    var totalSpace =
-        _Space(x: 0, y: 0, xSpan: xSegmentCount, ySpan: ySegmentCount);
+    var totalSpace = _Space(
+      x: 0,
+      y: 0,
+      xSpan: xSegmentCount,
+      ySpan: ySegmentCount,
+    );
 
     print("設置總範圍: $totalSpace - $totalHeight, $rowHeight");
 
@@ -181,8 +189,8 @@ class _Space {
   _Space getSpaceForce(AxisItem item) {
     print("取得強制空間");
     return _Space(
-      x: this.x,
-      y: this.y,
+      x: x,
+      y: y,
       xSpan: min(xSpan, item.xSpan),
       ySpan: min(ySpan, item.ySpan),
       isForce: true,
@@ -240,29 +248,27 @@ class _Space {
 
   /// 比較兩個空間是否有重疊
   bool overlaps(_Space other) {
-    return this._toRect().overlaps(other._toRect());
+    return _toRect().overlaps(other._toRect());
   }
 
   /// 是否為一模一樣的空間
   bool sames(_Space other) {
-    return this.x == other.x &&
-        this.y == other.y &&
-        this.xSpan == other.xSpan &&
-        this.ySpan == other.ySpan;
+    return x == other.x &&
+        y == other.y &&
+        xSpan == other.xSpan &&
+        ySpan == other.ySpan;
   }
 
   /// 是否完全包含某個space
   bool contains(_Space other) {
-    var isXContain =
-        (this.x <= other.x) && (this.x + this.xSpan >= other.x + other.xSpan);
-    var isYContain =
-        (this.y <= other.y) && (this.y + this.ySpan >= other.y + other.ySpan);
+    var isXContain = (x <= other.x) && (x + xSpan >= other.x + other.xSpan);
+    var isYContain = (y <= other.y) && (y + ySpan >= other.y + other.ySpan);
     return isXContain && isYContain;
   }
 
   /// 取得兩個 [_Space] 的交集
   _Space intersect(_Space other) {
-    var rect = this._toRect().intersect(other._toRect());
+    var rect = _toRect().intersect(other._toRect());
     return _Space(
       x: rect.left.toInt(),
       y: rect.top.toInt(),
@@ -287,12 +293,10 @@ class _Space {
     // 剩餘的空間
     List<_Space> remainings = [];
 
-    var leftSpan = intersectSpace.x - this.x;
-    var topSpan = intersectSpace.y - this.y;
-    var rightSpan =
-        (this.x + this.xSpan) - (intersectSpace.x + intersectSpace.xSpan);
-    var bottomSpan =
-        (this.y + this.ySpan) - (intersectSpace.y + intersectSpace.ySpan);
+    var leftSpan = intersectSpace.x - x;
+    var topSpan = intersectSpace.y - y;
+    var rightSpan = (x + xSpan) - (intersectSpace.x + intersectSpace.xSpan);
+    var bottomSpan = (y + ySpan) - (intersectSpace.y + intersectSpace.ySpan);
 
     // 檢查起始點有沒有剩餘的寬度
     if (leftSpan > 0) {

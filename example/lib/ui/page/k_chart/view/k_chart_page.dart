@@ -18,7 +18,8 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => KChartBloc(ChartRepository()),
+      create: (BuildContext context) =>
+          KChartBloc(ChartRepository())..add(KChartInitEvent()),
       child: _view(),
     );
   }
@@ -38,7 +39,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
             isLine: state.isLine,
             mainState: state.mainState,
             secondaryState: state.secondaryState,
-            volState: VolState.VOL,
+            volState: VolState.vol,
             fractionDigits: 4,
             longPressY: ChartLongPressY.absolute,
             maLine: [
@@ -65,6 +66,8 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
       appBar: baseAppBar('行情圖表'),
       body: BlocBuilder<KChartBloc, KChartState>(
         builder: (context, state) {
+          var stateIsLine = state.isLine;
+          print('是線條嗎: ${stateIsLine}');
           return ListView(
             children: <Widget>[
               Stack(children: <Widget>[
@@ -128,49 +131,49 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
         button(
           "MA",
           onPressed: () {
-            bloc().add(KChartMainStateEvent(state: MainState.MA));
+            bloc().add(KChartMainStateEvent(state: MainState.ma));
           },
         ),
         button(
           "BOLL",
           onPressed: () {
-            bloc().add(KChartMainStateEvent(state: MainState.BOLL));
+            bloc().add(KChartMainStateEvent(state: MainState.boll));
           },
         ),
         button(
           "隱藏",
           onPressed: () {
-            bloc().add(KChartMainStateEvent(state: MainState.NONE));
+            bloc().add(KChartMainStateEvent(state: MainState.none));
           },
         ),
         button(
           "MACD",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.MACD));
+            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.macd));
           },
         ),
         button(
           "KDJ",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.KDJ));
+            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.kdj));
           },
         ),
         button(
           "RSI",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.RSI));
+            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.rsi));
           },
         ),
         button(
           "WR",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.WR));
+            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.wr));
           },
         ),
         button(
           "隱藏副視圖",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.NONE));
+            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.none));
           },
         ),
         button(

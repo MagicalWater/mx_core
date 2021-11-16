@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
+import 'package:mx_core_example/ui/widget/base_app_bar.dart';
 
 class SpanGridPage extends StatefulWidget {
   final RouteOption option;
@@ -37,6 +38,7 @@ class _SpanGridPageState extends State<SpanGridPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: baseAppBar('對齊式 Grid 佈局'),
       body: StreamBuilder<List<String>>(
         stream: urlStreamController.stream,
         builder: (context, snapshot) {

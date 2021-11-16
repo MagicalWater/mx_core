@@ -34,7 +34,7 @@ class CoordinateLayout extends StatefulWidget {
   /// 預估高度(當外層是個 scrollView / column 這種沒有限界高度的元件時, 請給一個大約預測高度, 可以超過元件總高度, 但別小於)
   final double? estimatedHeight;
 
-  CoordinateLayout({
+  CoordinateLayout({Key? key, 
     required this.segmentCount,
     required this.children,
     this.padding,
@@ -44,7 +44,7 @@ class CoordinateLayout extends StatefulWidget {
     this.verticalSpace = 0,
     this.lastFillWidth = false,
     this.estimatedHeight,
-  }) {
+  }) : super(key: key) {
     // 依照是否有指定位置來排序
     children.sort((item1, item2) {
       var isSpecialPos1 = item1._specialPosition;
@@ -165,8 +165,8 @@ class _CoordinateLayoutState extends State<CoordinateLayout> {
         newDelegate.rowHeight = currentDelegate!.rowHeight;
         currentDelegate = newDelegate;
       } else {
-        newDelegate._spaces = currentDelegate!._spaces;
-        newDelegate._spaceCompute = currentDelegate!._spaceCompute;
+        newDelegate.spaces = currentDelegate!.spaces;
+        newDelegate.spaceCompute = currentDelegate!.spaceCompute;
         newDelegate.rowHeight = currentDelegate!.rowHeight;
         newDelegate.columnWidth = currentDelegate!.columnWidth;
         newDelegate.allHeight = currentDelegate!.allHeight;

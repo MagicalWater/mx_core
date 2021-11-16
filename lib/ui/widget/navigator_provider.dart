@@ -30,7 +30,8 @@ NavigatorState? Function()? _navigatorInitCallback;
 ///   child: MaterialApp(),
 /// )
 class MxCoreInit extends _NavigatorProvider {
-  MxCoreInit({Key? key, required Widget child}) : super(key: key, child: child);
+  const MxCoreInit({Key? key, required Widget child})
+      : super(key: key, child: child);
 
   @override
   _NavigatorProviderState createState() => _MxCoreInitState();
@@ -47,7 +48,7 @@ class _MxCoreInitState extends _NavigatorProviderState {
     if (_needSearchNavigator) {
       try {
         _searchNavigatorState(context);
-      } catch (ex, stack) {
+      } catch (ex) {
         print('無法更新nav, 沿用舊的, 保留至下次更新: $ex');
       }
       _needSearchNavigator = false;
@@ -59,7 +60,7 @@ class _MxCoreInitState extends _NavigatorProviderState {
 class _NavigatorProvider extends StatefulWidget {
   final Widget child;
 
-  _NavigatorProvider({Key? key, required this.child}) : super(key: key);
+  const _NavigatorProvider({Key? key, required this.child}) : super(key: key);
 
   @override
   _NavigatorProviderState createState() => _NavigatorProviderState();

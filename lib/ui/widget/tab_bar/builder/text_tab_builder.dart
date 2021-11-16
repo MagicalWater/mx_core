@@ -3,16 +3,16 @@ import 'package:mx_core/mx_core.dart';
 
 import 'builder.dart';
 
-TabStyleBuilder<TextStyle> _defaultTextStyle = (index, selected) {
+TextStyle _defaultTextStyle(index, selected) {
   if (selected) {
-    return TextStyle(color: Colors.white, fontSize: 16);
+    return const TextStyle(color: Colors.white, fontSize: 16);
   } else {
     return TextStyle(color: Colors.grey[400], fontSize: 16);
   }
-};
+}
 
 TextStyle get _defaultActionTextStyle {
-  return TextStyle(color: Colors.black, fontSize: 16);
+  return const TextStyle(color: Colors.black, fontSize: 16);
 }
 
 class TextTabBuilder extends WidgetTabBuilder {
@@ -50,17 +50,17 @@ class TextTabBuilder extends WidgetTabBuilder {
               maxLines: 1,
               overflow: TextOverflow.clip,
             );
-            return AnimatedDefaultTextStyle(
-              child: Text(
-                texts[index],
-                maxLines: 1,
-              ),
-              textAlign: textAlign,
-              style: textStyle,
-              duration: textAnimationDuration,
-              curve: textAnimationCurve,
-              maxLines: 1,
-            );
+            // return AnimatedDefaultTextStyle(
+            //   child: Text(
+            //     texts[index],
+            //     maxLines: 1,
+            //   ),
+            //   textAlign: textAlign,
+            //   style: textStyle,
+            //   duration: textAnimationDuration,
+            //   curve: textAnimationCurve,
+            //   maxLines: 1,
+            // );
           },
           actionBuilder: (BuildContext context, int index) {
             var textStyle = actionTextStyle ?? _defaultActionTextStyle;

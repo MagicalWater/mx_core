@@ -21,7 +21,7 @@ class AxisTransition extends AnimatedWidget {
   /// 動畫偏移計算
   final Tween<Offset> _tween;
 
-  AxisTransition._(
+  const AxisTransition._(
     this._tween, {
     Key? key,
     required this.position,
@@ -122,15 +122,15 @@ TransDirection _getReverseDirection(TransDirection direction) {
 Tween<Offset> _getInTween(TransDirection direction) {
   switch (direction) {
     case TransDirection.up:
-      return Tween(begin: Offset(0, -1), end: Offset(0, 0));
+      return Tween(begin: const Offset(0, -1), end: const Offset(0, 0));
     case TransDirection.right:
-      return Tween(begin: Offset(1, 0), end: Offset(0, 0));
+      return Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
     case TransDirection.down:
-      return Tween(begin: Offset(0, 1), end: Offset(0, 0));
+      return Tween(begin: const Offset(0, 1), end: const Offset(0, 0));
     case TransDirection.left:
-      return Tween(begin: Offset(-1, 0), end: Offset(0, 0));
+      return Tween(begin: const Offset(-1, 0), end: const Offset(0, 0));
     case TransDirection.none:
-      return Tween(begin: Offset(0, 0), end: Offset(0, 0));
+      return Tween(begin: const Offset(0, 0), end: const Offset(0, 0));
     default:
       throw '未知的方向: $direction';
   }

@@ -40,12 +40,10 @@ class SpaceCompute {
         return _horizontalCompute(
           childInfo: childInfo,
         );
-        break;
       case Axis.vertical:
         return _verticalCompute(
           childInfo: childInfo,
         );
-        break;
     }
   }
 

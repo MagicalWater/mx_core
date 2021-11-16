@@ -53,7 +53,7 @@ class PageSwitcher extends StatefulWidget {
   /// 轉場動畫貯列排序
   final StackConfig stackConfig;
 
-  PageSwitcher._({
+  const PageSwitcher._({
     required this.routes,
     required this.stream,
     required this.duration,
@@ -128,7 +128,7 @@ class _PageSwitcherState extends State<PageSwitcher>
     with TickerProviderStateMixin {
   Map<String, ValueKey<int>> cacheKey = {};
 
-  GlobalKey _boundaryKey = GlobalKey();
+  final GlobalKey _boundaryKey = GlobalKey();
 
   List<WidgetBuilder>? _showChildren;
   late int showIndex;
@@ -404,7 +404,7 @@ class _PageSwitcherState extends State<PageSwitcher>
         child: Container(
           decoration: config == StackSort.oldDown && boxShadow != null
               ? boxShadow
-              : BoxDecoration(color: Colors.transparent),
+              : const BoxDecoration(color: Colors.transparent),
           alignment: widget.alignment,
           transform: newMatrix,
           child: newWidget,
@@ -429,7 +429,7 @@ class _PageSwitcherState extends State<PageSwitcher>
       newWidget = Opacity(
         opacity: 1,
         child: Container(
-          decoration: BoxDecoration(color: Colors.transparent),
+          decoration: const BoxDecoration(color: Colors.transparent),
           alignment: widget.alignment,
           transform: Matrix4.identity(),
           child: newWidget,
@@ -466,7 +466,7 @@ class _ImagePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    canvas.drawImage(image, Offset(0, 0), mainPaint);
+    canvas.drawImage(image, const Offset(0, 0), mainPaint);
   }
 
   @override

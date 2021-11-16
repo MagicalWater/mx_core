@@ -48,22 +48,22 @@ class CombParallel extends Comb {
   @override
   int totalDuration(int defaultDuration) {
     var duration = 0;
-    animatedList.forEach((e) {
+    for (var e in animatedList) {
       duration = max(
           duration,
           ((e.delayed ?? 0) +
               (e.duration ?? this.duration ?? defaultDuration)));
 //      print(
 //          "duration = ${duration}, 當前: ${((e.delayed ?? 0) + (e.duration ?? this.duration ?? defaultDuration))}");
-    });
+    }
     return duration;
   }
 
   @override
-  var begin;
+  dynamic begin;
 
   @override
-  var end;
+  dynamic end;
 
   @override
   int? delayed;
