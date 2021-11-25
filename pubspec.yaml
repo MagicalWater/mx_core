@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 6.0.0+1
+version: 6.0.1+1
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -74,8 +74,8 @@ flutter:
     pluginClass: MxCorePlugin
 
   # To add assets to your plugin package, add an assets section, like this:
-#  assets:
-#    - assets/images/
+  #  assets:
+  #    - assets/images/
   #
   # For details regarding assets in packages, see
   # https://flutter.io/assets-and-images/#from-packages

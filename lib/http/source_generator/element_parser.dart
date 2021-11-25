@@ -21,15 +21,15 @@ enum ApiFieldType { string, file, listString, listFileInfo }
 /// 傳入 Method 的 ConstantReader (annotation)
 /// 從將 meta 取得 Api 的 Method
 ApiMethodType toApiMethod(ConstantReader annotation) {
-  if (annotation.instanceOf(TypeChecker.fromRuntime(Get))) {
+  if (annotation.instanceOf(const TypeChecker.fromRuntime(Get))) {
     return ApiMethodType.get;
-  } else if (annotation.instanceOf(TypeChecker.fromRuntime(Post))) {
+  } else if (annotation.instanceOf(const TypeChecker.fromRuntime(Post))) {
     return ApiMethodType.post;
-  } else if (annotation.instanceOf(TypeChecker.fromRuntime(Delete))) {
+  } else if (annotation.instanceOf(const TypeChecker.fromRuntime(Delete))) {
     return ApiMethodType.delete;
-  } else if (annotation.instanceOf(TypeChecker.fromRuntime(Put))) {
+  } else if (annotation.instanceOf(const TypeChecker.fromRuntime(Put))) {
     return ApiMethodType.put;
-  } else if (annotation.instanceOf(TypeChecker.fromRuntime(Download))) {
+  } else if (annotation.instanceOf(const TypeChecker.fromRuntime(Download))) {
     return ApiMethodType.download;
   }
   throw '未知的 method: $annotation';
@@ -38,13 +38,13 @@ ApiMethodType toApiMethod(ConstantReader annotation) {
 /// 傳入 Param 的 ConstantReader (annotation)
 /// 從 meta 取得 Api 的參數類型分類
 ApiParamType toApiParam(ConstantReader annotation) {
-  if (annotation.instanceOf(TypeChecker.fromRuntime(Param))) {
+  if (annotation.instanceOf(const TypeChecker.fromRuntime(Param))) {
     return ApiParamType.queryParam;
-  } else if (annotation.instanceOf(TypeChecker.fromRuntime(Header))) {
+  } else if (annotation.instanceOf(const TypeChecker.fromRuntime(Header))) {
     return ApiParamType.header;
-  } else if (annotation.instanceOf(TypeChecker.fromRuntime(Path))) {
+  } else if (annotation.instanceOf(const TypeChecker.fromRuntime(Path))) {
     return ApiParamType.path;
-  } else if (annotation.instanceOf(TypeChecker.fromRuntime(Body))) {
+  } else if (annotation.instanceOf(const TypeChecker.fromRuntime(Body))) {
     return ApiParamType.body;
   }
   throw '未知的 param: $annotation';

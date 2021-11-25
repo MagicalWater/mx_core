@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:mx_core/util/file_util.dart';
 import 'package:path/path.dart';
-import 'package:rxdart/rxdart.dart';
 
 import 'http_content.dart';
 import 'http_value.dart';
@@ -126,7 +125,7 @@ class HttpUtil {
     _dio.interceptors.add(interceptor);
   }
 
-  Stream<ServerResponse> get(
+  Future<ServerResponse> get(
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
@@ -147,7 +146,7 @@ class HttpUtil {
     );
   }
 
-  Stream<ServerResponse> getUri(
+  Future<ServerResponse> getUri(
     Uri uri, {
     Map<String, dynamic> headers = const {},
     ContentType? contentType,
@@ -169,7 +168,7 @@ class HttpUtil {
     );
   }
 
-  Stream<ServerResponse> post(
+  Future<ServerResponse> post(
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
@@ -193,7 +192,7 @@ class HttpUtil {
     );
   }
 
-  Stream<ServerResponse> put(
+  Future<ServerResponse> put(
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
@@ -218,7 +217,7 @@ class HttpUtil {
     );
   }
 
-  Stream<ServerResponse> delete(
+  Future<ServerResponse> delete(
     String url, {
     Map<String, dynamic> queryParams = const {},
     Map<String, dynamic> headers = const {},
@@ -242,7 +241,7 @@ class HttpUtil {
     );
   }
 
-  Stream<ServerResponse> download(
+  Future<ServerResponse> download(
     String url, {
     required String savePath,
     Map<String, dynamic> queryParams = const {},
@@ -270,7 +269,7 @@ class HttpUtil {
   }
 
   /// 將 request 外層包裹 Observable, 並處理相關錯誤
-  Stream<ServerResponse> _packageRequest({
+  Future<ServerResponse> _packageRequest({
     required Future<Response<dynamic>> request,
     required String url,
     required HttpMethod method,
@@ -279,20 +278,27 @@ class HttpUtil {
     Map<String, dynamic> headers = const {},
     dynamic bodyData,
   }) {
-    var observable = Stream.fromFuture(request).handleError((error) {
-      var packageError =
-          _handleError(error, url, queryParams, headers, bodyData, method);
+    var requestFuture = request.onError(
+      (error, stackTrace) {
+        var packageError = _handleError(
+          error as DioError,
+          url,
+          queryParams,
+          headers,
+          bodyData,
+          method,
+        );
 
-      recordResponseCallback?.call(packageError.response!);
-
-      // 重新拋出錯誤
-      throw packageError;
-    }, test: (error) {
-      // 只捕捉 DioError, 其餘不捕捉
-      return error is DioError;
-    }).map((res) {
+        recordResponseCallback?.call(packageError.response!);
+        return Future.error(packageError);
+      },
+      test: (error) {
+        // 只捕捉 DioError, 其餘不捕捉
+        return error is DioError;
+      },
+    ).then((value) {
       return ServerResponse(
-        response: res,
+        response: value,
         url: url,
         params: queryParams,
         headers: headers,
@@ -304,15 +310,16 @@ class HttpUtil {
 
     // 檢查是否需要將 response 紀錄到本地
     if (recordResponseCallback != null) {
-      observable = observable.doOnData((response) {
+      requestFuture = requestFuture.then((response) {
         recordResponseCallback?.call(response);
+        return response;
       });
     }
-    return observable;
+    return requestFuture;
   }
 
   /// 使用 HttpContent 進行 request 呼叫
-  Stream<ServerResponse> connect(
+  Future<ServerResponse> connect(
     HttpContent content, {
     ProgressCallback? onReceiveProgress,
   }) {

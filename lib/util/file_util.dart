@@ -85,7 +85,7 @@ class FileUtil {
     final _ = await HttpUtil().connect(httpContent,
         onReceiveProgress: (count, total) {
 //      print("下載進度: $count / $total");
-    }).single;
+    });
     print("FileUtil - 下載完畢, 存入 $file");
     return file;
   }

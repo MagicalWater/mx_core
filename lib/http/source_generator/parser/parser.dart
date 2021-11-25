@@ -1,5 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:code_builder/code_builder.dart' as codeBuilder;
+import 'package:code_builder/code_builder.dart' as code_builder;
 import 'package:meta/meta.dart';
 
 import 'code_generator.dart';
@@ -35,7 +35,7 @@ abstract class ApiParser {
 
       // 將 class 放入 library
       codeGenerator.setLibrary(
-          codeBuilder.Library((b) => b..body.add(codeGenerator.codeClass!)));
+          code_builder.Library((b) => b..body.add(codeGenerator.codeClass!)));
     }
   }
 
@@ -59,12 +59,12 @@ abstract class ApiParser {
 
   /// 產出實作的 api methods
   @protected
-  List<codeBuilder.Method> generateApiMethods(ClassElement element);
+  List<code_builder.Method> generateApiMethods(ClassElement element);
 
   @protected
-  codeBuilder.Class generateApiClass({
+  code_builder.Class generateApiClass({
     required String interfaceName,
     required String className,
-    required List<codeBuilder.Method> methods,
+    required List<code_builder.Method> methods,
   });
 }

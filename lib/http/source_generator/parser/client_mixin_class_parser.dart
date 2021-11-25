@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:code_builder/code_builder.dart' as codeBuilder;
+import 'package:code_builder/code_builder.dart' as code_builder;
 
 import 'code_generator.dart';
 import 'parser.dart';
@@ -10,31 +10,31 @@ class ClientMixinClassParser extends ApiParser {
   late CodeGenerator apiClassCoder;
 
   void setApiClassCoder(CodeGenerator generator) {
-    this.apiClassCoder = generator;
+    apiClassCoder = generator;
   }
 
   @override
-  codeBuilder.Class generateApiClass({
+  code_builder.Class generateApiClass({
     required String interfaceName,
     required String className,
-    required List<codeBuilder.Method> methods,
+    required List<code_builder.Method> methods,
   }) {
     // class 要放入一個變數
     // 變數類型是 api_class_parser 的 class 名稱
-    return codeBuilder.Class((c) {
+    return code_builder.Class((c) {
       c
         ..abstract = true
         ..name = className
         ..methods.addAll(methods)
         ..fields = ListBuilder([
-          codeBuilder.Field((b) {
+          code_builder.Field((b) {
             b
-              ..type = codeBuilder.refer(apiClassCoder.codeClass!.name)
+              ..type = code_builder.refer(apiClassCoder.codeClass!.name)
               ..name = _getApiInstanceName()
               ..late = true;
           }),
         ])
-        ..implements = ListBuilder([codeBuilder.refer(interfaceName)]);
+        ..implements = ListBuilder([code_builder.refer(interfaceName)]);
     });
   }
 
@@ -46,12 +46,12 @@ class ClientMixinClassParser extends ApiParser {
   }
 
   @override
-  List<codeBuilder.Method> generateApiMethods(ClassElement element) {
+  List<code_builder.Method> generateApiMethods(ClassElement element) {
     return element.methods.map((e) => _generateApiMethods(e)).toList();
   }
 
   /// 產出實作api methods
-  codeBuilder.Method _generateApiMethods(MethodElement element) {
+  code_builder.Method _generateApiMethods(MethodElement element) {
     // 取得 method 裡面必選的參數
     var requiredParam = element.parameters
         .where((e) => e.isRequiredPositional || e.isRequiredNamed)
@@ -66,25 +66,25 @@ class ClientMixinClassParser extends ApiParser {
     // 將必要的參數轉為生成code的類
     var optionalParams = _convertToCodeBuilderParam(optionalParam);
 
-    return codeBuilder.Method((b) {
+    return code_builder.Method((b) {
       b
         ..name = element.name
         ..requiredParameters.addAll(requiredParams)
         ..optionalParameters.addAll(optionalParams)
         ..body = _getMethodContent(element.name, element.parameters)
         ..returns =
-            codeBuilder.refer('HttpContent', 'package:mx_core/mx_core.dart')
+            code_builder.refer('HttpContent', 'package:mx_core/mx_core.dart')
         ..annotations = ListBuilder([
-          codeBuilder.CodeExpression(codeBuilder.Code('override')),
+          const code_builder.CodeExpression(code_builder.Code('override')),
         ]);
     });
   }
 
   /// 將參數轉換為 codeBuilder 添加方法參數的型態
-  List<codeBuilder.Parameter> _convertToCodeBuilderParam(
+  List<code_builder.Parameter> _convertToCodeBuilderParam(
       List<ParameterElement> element) {
     return element.map((e) {
-      return codeBuilder.Parameter((p) {
+      return code_builder.Parameter((p) {
         List<String> paramAnnotation = [];
         if (e.metadata.any((m) => m.isRequired)) {
           // 如果此參數是必選, 則需要加入 required 的 annotation
@@ -92,19 +92,18 @@ class ClientMixinClassParser extends ApiParser {
         }
 
         // 將 annotation 轉換為 codeExpression
-        List<codeBuilder.CodeExpression> paramAnnotationCode = paramAnnotation
-            .map((f) => codeBuilder.CodeExpression(codeBuilder.Code(f)))
+        List<code_builder.CodeExpression> paramAnnotationCode = paramAnnotation
+            .map((f) => code_builder.CodeExpression(code_builder.Code(f)))
             .toList();
 
         p
           ..annotations.addAll(paramAnnotationCode)
-          ..type = codeBuilder
-              .refer('${e.type.getDisplayString(withNullability: false)}?')
+          ..type = code_builder.refer('${e.type.getDisplayString(withNullability: false)}?')
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null
               ? null
-              : codeBuilder.Code(e.defaultValueCode!);
+              : code_builder.Code(e.defaultValueCode!);
       });
     }).toList();
   }
@@ -115,21 +114,21 @@ class ClientMixinClassParser extends ApiParser {
   }
 
   /// 自動編寫 method 內容
-  codeBuilder.Code _getMethodContent(
+  code_builder.Code _getMethodContent(
     String methodName,
     List<ParameterElement> param,
   ) {
     var text = "return ${_getApiInstanceName()}.$methodName(";
 
-    param.forEach((p) {
+    for (var p in param) {
       if (p.isOptionalNamed) {
         text += "${p.name}: ${p.name},";
       } else {
         text += "${p.name},";
       }
-    });
+    }
 
     text += ");";
-    return codeBuilder.Code(text);
+    return code_builder.Code(text);
   }
 }

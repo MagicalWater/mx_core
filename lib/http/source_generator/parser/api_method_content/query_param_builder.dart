@@ -18,18 +18,18 @@ class QueryParamBuilder extends ParamContentBuilder<QueryParamContent> {
 
     // 遍歷所有需要賦予變數值的常數
     constant.forEach((k, v) {
-      text += 'var $k = \"$v\";';
+      text += 'var $k = "$v";';
     });
 
     // 遍歷必填設置 content
-    required.forEach((e) {
+    for (var e in required) {
       text += getContentText(e, true);
-    });
+    }
 
     // 遍歷可選設置 content
-    optional.forEach((e) {
+    for (var e in optional) {
       text += getContentText(e, false);
-    });
+    }
 
     return text;
   }
@@ -49,15 +49,12 @@ class QueryParamBuilder extends ParamContentBuilder<QueryParamContent> {
     switch (content.fieldType) {
       case ApiFieldType.string:
         text += """
-          content.addQueryParam(\"$key\", value: \"\$$field\");
+          content.addQueryParam("$key", value: "\$$field");
           """;
         break;
       case ApiFieldType.listString:
-//        text += """
-//          $field.forEach((e) => content.addQueryParam(\"$key\", value: e));
-//          """;
         text += """
-          content.addQueryParam(\"$key\", value: $field);
+          content.addQueryParam("$key", value: $field);
           """;
         break;
       case ApiFieldType.file:

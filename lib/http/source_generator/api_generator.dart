@@ -19,7 +19,7 @@ class ApiGenerator extends GeneratorForAnnotation<Api> {
   ServicePatternClassParser servicePatternParser = ServicePatternClassParser();
 
   /// 已經產生過的檔案, 不需要在 import
-  List<String> _importReady = [];
+  final List<String> _importReady = [];
 
   @override
   dynamic generateForAnnotatedElement(

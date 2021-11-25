@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:code_builder/code_builder.dart' as codeBuilder;
+import 'package:code_builder/code_builder.dart' as code_builder;
 
 import '../annotation.dart';
 import '../element_parser.dart';
@@ -16,30 +16,30 @@ class ApiClassParser extends ApiParser {
 
   /// 產出實作的 api methods
   @override
-  List<codeBuilder.Method> generateApiMethods(ClassElement element) {
+  List<code_builder.Method> generateApiMethods(ClassElement element) {
     // 取得 ClassElement 底下的所有 method, 開始進行分析以及建立 Method
     return element.methods.map((e) => _generateMethod(e)).toList();
   }
 
   @override
-  codeBuilder.Class generateApiClass({
+  code_builder.Class generateApiClass({
     required String interfaceName,
     required String className,
-    required List<codeBuilder.Method> methods,
+    required List<code_builder.Method> methods,
   }) {
-    return codeBuilder.Class((c) {
+    return code_builder.Class((c) {
       c
         ..abstract = true
         ..name = className
         ..methods.addAll(methods)
-        ..extend = codeBuilder.refer(
+        ..extend = code_builder.refer(
             "RequestBuilderBase", 'package:mx_core/mx_core.dart')
         ..implements = ListBuilder(
-            [codeBuilder.refer(interfaceName, 'package:mx_core/mx_core.dart')]);
+            [code_builder.refer(interfaceName, 'package:mx_core/mx_core.dart')]);
     });
   }
 
-  codeBuilder.Method _generateMethod(MethodElement element) {
+  code_builder.Method _generateMethod(MethodElement element) {
     // method 內容的構建器
     HttpContentBuilder contentBuilder = HttpContentBuilder();
 
@@ -135,7 +135,7 @@ class ApiClassParser extends ApiParser {
     if (bodyPeek?.isString == true) {
       constantBody = bodyPeek!.stringValue;
     } else if (bodyPeek?.isMap == true) {
-      constantBody = Map<String, String>();
+      constantBody = <String, String>{};
       (bodyPeek!.mapValue).forEach((k, v) {
         var keyString = k?.toStringValue();
         var valueString = v?.toStringValue();
@@ -168,25 +168,25 @@ class ApiClassParser extends ApiParser {
       isRequired: false,
     );
 
-    return codeBuilder.Method((b) {
+    return code_builder.Method((b) {
       b
         ..annotations = ListBuilder([
-          codeBuilder.CodeExpression(codeBuilder.Code('override')),
+          const code_builder.CodeExpression(code_builder.Code('override')),
         ])
         ..name = methodName
         ..requiredParameters.addAll(_convertToCodeBuilderParam(requiredParam))
         ..optionalParameters.addAll(_convertToCodeBuilderParam(optionalParam))
-        ..body = codeBuilder.Code(contentBuilder.build())
+        ..body = code_builder.Code(contentBuilder.build())
         ..returns =
-            codeBuilder.refer('HttpContent', 'package:mx_core/mx_core.dart');
+            code_builder.refer('HttpContent', 'package:mx_core/mx_core.dart');
     });
   }
 
   /// 將參數轉換為 codeBuilder 添加方法參數的型態
-  List<codeBuilder.Parameter> _convertToCodeBuilderParam(
+  List<code_builder.Parameter> _convertToCodeBuilderParam(
       List<ParameterElement> element) {
     return element.map((e) {
-      return codeBuilder.Parameter((p) {
+      return code_builder.Parameter((p) {
         List<String> paramAnnotation = [];
         if (e.metadata.any((m) => m.isRequired)) {
           // 如果此參數是必選, 則需要加入 required 的 annotation
@@ -194,19 +194,18 @@ class ApiClassParser extends ApiParser {
         }
 
         // 將 annotation 轉換為 codeExpression
-        List<codeBuilder.CodeExpression> paramAnnotationCode = paramAnnotation
-            .map((f) => codeBuilder.CodeExpression(codeBuilder.Code(f)))
+        List<code_builder.CodeExpression> paramAnnotationCode = paramAnnotation
+            .map((f) => code_builder.CodeExpression(code_builder.Code(f)))
             .toList();
 
         p
           ..annotations.addAll(paramAnnotationCode)
-          ..type = codeBuilder
-              .refer('${e.type.getDisplayString(withNullability: false)}?')
+          ..type = code_builder.refer('${e.type.getDisplayString(withNullability: false)}?')
           ..name = e.name
           ..named = e.isNamed
           ..defaultTo = e.defaultValueCode == null
               ? null
-              : codeBuilder.Code(e.defaultValueCode!);
+              : code_builder.Code(e.defaultValueCode!);
       });
     }).toList();
   }
@@ -262,7 +261,7 @@ class ApiClassParser extends ApiParser {
     required bool isRequired,
   }) {
     // 遍歷所有的參數, 依據參數的類型, 加入到對應的 Builder
-    params.forEach((e) {
+    for (var e in params) {
       // 取得參數的 meta data
       var paramAnnotation = getParamAnnotation(e);
 
@@ -315,6 +314,6 @@ class ApiClassParser extends ApiParser {
           );
           break;
       }
-    });
+    }
   }
 }

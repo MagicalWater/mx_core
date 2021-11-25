@@ -98,7 +98,7 @@ abstract class ExRequestClientMixin implements ExRequestInterface {
 abstract class ExRequestServicePattern {
   late ExRequestClientMixin exRequestClientMixin;
 
-  Stream<ServerResponse> exApi(String? titlePath, String? aId, String? bToken,
+  Future<ServerResponse> exApi(String? titlePath, String? aId, String? bToken,
       String? cBody, String? rawBody, FileInfo? dBodyFile,
       {String? opId,
       String? opToken,

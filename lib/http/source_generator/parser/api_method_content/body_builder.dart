@@ -16,7 +16,7 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
   }
 
   void setBodyType(HttpBodyType type) {
-    this.bodyType = type;
+    bodyType = type;
   }
 
   @override
@@ -30,18 +30,18 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
 
     // 遍歷所有需要賦予變數值的常數
     constant.forEach((k, v) {
-      text += 'var $k = \"$v\";';
+      text += 'var $k = "$v";';
     });
 
     // 遍歷必填設置 content
-    required.forEach((e) {
+    for (var e in required) {
       text += getContentText(e, true);
-    });
+    }
 
     // 遍歷可選設置 content
-    optional.forEach((e) {
+    for (var e in optional) {
       text += getContentText(e, false);
-    });
+    }
     return text;
   }
 
@@ -64,18 +64,15 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
       switch (content.fieldType) {
         case ApiFieldType.string:
           text += """
-          content.addBody(${keyText}value: \"\$$field\",);
+          content.addBody(${keyText}value: "\$$field",);
           """;
           break;
         case ApiFieldType.file:
           text += """
-          content.addBody(${keyText}filename: \"\${$field.filename}\", filepath: \"\${$field.filepath}\",);
+          content.addBody(${keyText}filename: "\${$field.filename}", filepath: "\${$field.filepath}",);
           """;
           break;
         case ApiFieldType.listString:
-//          text += """
-//          $field.forEach((e) => content.addBody(${keyText}value: e,));
-//          """;
           text += """
           content.addBody(${keyText}value: $field,);
           """;
@@ -92,7 +89,7 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
       }
     } else {
       text += """
-      content.setBody(raw: \"\$$field\");
+      content.setBody(raw: "\$$field");
       """;
     }
 
@@ -115,5 +112,5 @@ class BodyContent {
 
   BodyContent.keyValue(this.key, this.fieldName, this.fieldType);
 
-  BodyContent.raw(this.fieldName) : this.fieldType = ApiFieldType.string;
+  BodyContent.raw(this.fieldName) : fieldType = ApiFieldType.string;
 }
