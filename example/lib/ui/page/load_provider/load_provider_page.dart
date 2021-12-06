@@ -23,6 +23,8 @@ class _LoadProviderPageState extends State<LoadProviderPage> {
   2. 可1個LoadProvider對應多個顯示Load的元件
   """;
 
+  bool singleLoadValue = false;
+
   @override
   void initState() {
     super.initState();
@@ -48,16 +50,54 @@ class _LoadProviderPageState extends State<LoadProviderPage> {
         body: ListView(
           children: <Widget>[
             TopDesc(content: content),
-            buildLoadableContainer(0),
-            buildLoadableContainer(1),
-            buildLoadableContainer(2),
+            _withValue(),
+            _withContainer(0),
+            _withContainer(1),
+            _withContainer(2),
           ],
         ),
       ),
     );
   }
 
-  Widget buildLoadableContainer(int index) {
+  Widget _withValue() {
+    return LoadProvider.value(
+      value: singleLoadValue,
+      tapThrough: true,
+      style: LoadStyle(
+        maskColor: Colors.blueAccent.withAlpha(100),
+      ),
+      child: MaterialLayer.single(
+        layer: LayerProperties(
+          margin: EdgeInsets.only(left: 20, right: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(
+              colors: [Color(0xff8c6018), Color(0xff8c6018)],
+            ),
+          ),
+        ),
+        child: Builder(
+          builder: (context) {
+            return Container(
+              height: 100,
+              alignment: Alignment.center,
+              child: Text(
+                "點擊 ${singleLoadValue ? "隱藏" : "顯示"} 讀取元件",
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            );
+          },
+        ),
+        onTap: () {
+          singleLoadValue = !singleLoadValue;
+          setState(() {});
+        },
+      ),
+    );
+  }
+
+  Widget _withContainer(int index) {
     late BuildContext currentContext;
     return MaterialLayer.single(
       layer: LayerProperties(
@@ -84,7 +124,6 @@ class _LoadProviderPageState extends State<LoadProviderPage> {
       ),
       onTap: () {
         loadController.toggle(attach: currentContext);
-        setState(() {});
       },
     );
   }

@@ -171,6 +171,20 @@ class _LoadProviderState extends State<LoadProvider>
   }
 
   @override
+  void didUpdateWidget(covariant LoadProvider oldWidget) {
+    if (widget.method == _LoadMethod.value && _currentShow != widget.value) {
+      _currentShow = widget.value;
+      print('變更: $_currentShow');
+      if (_currentShow) {
+        show();
+      } else {
+        hide();
+      }
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget loadBuilder = StreamBuilder<bool>(
       initialData: _currentShow,

@@ -13,42 +13,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_content.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/http_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/aa.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/api_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/api_generator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/element_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/element_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_class_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/http/source_generator/parser/api_class_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/focus_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/focus_layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/file_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/file_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/network_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/util/network_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/request/ex/ex_request_builder.api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/request/ex/ex_request_builder.api.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/load_provider/load_provider_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/load_provider/load_provider_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/http_content.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_content.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/http_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/http_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/aa.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/api_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/api_generator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/element_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/element_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_class_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_class_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/body_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/header_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/header_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/api_method_content/query_param_builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/client_mixin_class_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/client_mixin_class_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/http/source_generator/parser/service_pattern_parser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http/source_generator/parser/service_pattern_parser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/focus_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/focus_layout.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/file_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/file_util.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/util/network_util.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/util/network_util.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/load_provider/load_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/load_provider/load_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +118,7 @@
       <item itemvalue="Flutter.ios_release" />
     </list>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
