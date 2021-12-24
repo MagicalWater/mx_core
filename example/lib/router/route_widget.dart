@@ -6,6 +6,7 @@ import 'package:mx_core_example/ui/page/arrow_popup/arrow_popup.dart';
 import 'package:mx_core_example/ui/page/assist_touch/assis_touch.dart';
 import 'package:mx_core_example/ui/page/bullet_shape/bullet_touch.dart';
 import 'package:mx_core_example/ui/page/coordinate_layout/coordinate_layout.dart';
+import 'package:mx_core_example/ui/page/force_center_layout/force_center_layout.dart';
 import 'package:mx_core_example/ui/page/introduction/introduction.dart';
 import 'package:mx_core_example/ui/page/k_chart/k_chart.dart';
 import 'package:mx_core_example/ui/page/lib_ease_refresh/lib_ease_refresh.dart';
@@ -73,6 +74,7 @@ class RouteWidget implements RouteWidgetBase {
     Pages.routePushSub3,
     Pages.routePushSubA,
     Pages.routePushSubB,
+    Pages.forceCenterLayout,
   ];
 
   @override
@@ -251,6 +253,12 @@ class RouteWidget implements RouteWidgetBase {
         return RouterMiddler(
           childBuilder: (context) => RoutePushSubBPage(option),
           routeBuilder: () => RoutePushSubBRoute(option),
+          key: key,
+        );
+      case Pages.forceCenterLayout:
+        return RouterMiddler(
+          childBuilder: (context) => ForceCenterLayoutPage(option),
+          routeBuilder: () => ForceCenterLayoutRoute(option),
           key: key,
         );
       default:

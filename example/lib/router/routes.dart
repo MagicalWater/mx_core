@@ -89,6 +89,9 @@ class Pages {
   /// k線圖表
   static const kChart = "/kChart";
 
+  /// 強制置中元件
+  static const forceCenterLayout = "/threePointLayout";
+
   Pages._();
 }
 

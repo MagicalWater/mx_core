@@ -1,0 +1,4 @@
+enum BothEnds {
+  leading,
+  trailing,
+}
