@@ -13,20 +13,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/force_center_layout/force_center_layout.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/force_center_layout/force_center_layout_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/force_center_layout/force_center_layout_route.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/force_center_layout/both_ends.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/force_center_layout/force_center_layout.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/force_center_layout/remaining_space_allocation.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/force_center_layout/space_used_priority.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/force_center_layout/force_center_layout.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/force_center_layout/force_center_layout_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/force_center_layout/force_center_layout_route.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/force_center_layout/both_ends.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/force_center_layout/force_center_layout.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/force_center_layout/remaining_space_allocation.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/force_center_layout/space_used_priority.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -35,18 +21,24 @@
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction/bloc/introduction_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction/bloc/introduction_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/force_center_layout/force_center_layout_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/force_center_layout/force_center_layout_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/force_center_layout/force_center_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/force_center_layout/force_center_layout.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction/bloc/introduction_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction/bloc/introduction_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/force_center_layout/force_center_layout_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/force_center_layout/force_center_layout_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/force_center_layout/force_center_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/force_center_layout/force_center_layout.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,12 +75,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="flutter.view.tool.window.visible" value="true" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/lib/ui/page/three_point_layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -144,7 +137,7 @@
       <item itemvalue="Flutter.ios_release" />
     </list>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -184,49 +177,5 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="653" y="217" key="#com.intellij.ide.util.MemberChooser" timestamp="1637045455952">
-      <screen x="0" y="25" width="1680" height="944" />
-    </state>
-    <state x="653" y="217" key="#com.intellij.ide.util.MemberChooser/0.25.1680.944@0.25.1680.944" timestamp="1637045455952" />
-    <state width="1638" height="234" key="GridCell.Tab.0.bottom" timestamp="1640327249627">
-      <screen x="0" y="25" width="1680" height="961" />
-    </state>
-    <state width="1638" height="229" key="GridCell.Tab.0.bottom/0.25.1680.944@0.25.1680.944" timestamp="1637046568416" />
-    <state width="1638" height="234" key="GridCell.Tab.0.bottom/0.25.1680.961@0.25.1680.961" timestamp="1640327249627" />
-    <state width="1638" height="234" key="GridCell.Tab.0.center" timestamp="1640327249627">
-      <screen x="0" y="25" width="1680" height="961" />
-    </state>
-    <state width="1638" height="229" key="GridCell.Tab.0.center/0.25.1680.944@0.25.1680.944" timestamp="1637046568415" />
-    <state width="1638" height="234" key="GridCell.Tab.0.center/0.25.1680.961@0.25.1680.961" timestamp="1640327249627" />
-    <state width="1638" height="234" key="GridCell.Tab.0.left" timestamp="1640327249626">
-      <screen x="0" y="25" width="1680" height="961" />
-    </state>
-    <state width="1638" height="229" key="GridCell.Tab.0.left/0.25.1680.944@0.25.1680.944" timestamp="1637046568415" />
-    <state width="1638" height="234" key="GridCell.Tab.0.left/0.25.1680.961@0.25.1680.961" timestamp="1640327249626" />
-    <state width="1638" height="234" key="GridCell.Tab.0.right" timestamp="1640327249627">
-      <screen x="0" y="25" width="1680" height="961" />
-    </state>
-    <state width="1638" height="229" key="GridCell.Tab.0.right/0.25.1680.944@0.25.1680.944" timestamp="1637046568416" />
-    <state width="1638" height="234" key="GridCell.Tab.0.right/0.25.1680.961@0.25.1680.961" timestamp="1640327249627" />
-    <state x="630" y="203" key="RollbackChangesDialog" timestamp="1637030761678">
-      <screen x="0" y="25" width="1680" height="944" />
-    </state>
-    <state x="630" y="203" key="RollbackChangesDialog/0.25.1680.944@0.25.1680.944" timestamp="1637030761678" />
-    <state x="532" y="256" width="838" height="499" key="find.popup" timestamp="1637808733794">
-      <screen x="0" y="25" width="1680" height="961" />
-    </state>
-    <state x="532" y="252" width="615" height="490" key="find.popup/0.25.1680.944@0.25.1680.944" timestamp="1637042706331" />
-    <state x="532" y="256" width="838" height="499" key="find.popup/0.25.1680.961@0.25.1680.961" timestamp="1637808733794" />
-    <state width="300" height="97" key="javadoc.popup.new" timestamp="1640335468247">
-      <screen x="0" y="25" width="1680" height="961" />
-    </state>
-    <state width="300" height="95" key="javadoc.popup.new/0.25.1680.944@0.25.1680.944" timestamp="1637045818952" />
-    <state width="300" height="97" key="javadoc.popup.new/0.25.1680.961@0.25.1680.961" timestamp="1640335468247" />
-    <state x="505" y="236" width="670" height="676" key="search.everywhere.popup" timestamp="1640308866700">
-      <screen x="0" y="25" width="1680" height="961" />
-    </state>
-    <state x="505" y="236" width="670" height="676" key="search.everywhere.popup/0.25.1680.961@0.25.1680.961" timestamp="1640308866700" />
   </component>
 </project>

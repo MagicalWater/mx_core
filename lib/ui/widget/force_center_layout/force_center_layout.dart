@@ -84,6 +84,7 @@ class ForceCenterLayout extends MultiChildRenderObjectWidget {
       ..bothEndsConstraint = bothEndsConstraint
       ..gapSpace = gapSpace
       ..mainShrinkWrap = mainShrinkWrap
+      ..crossShrinkWrap = crossShrinkWrap
       ..direction = direction
       ..crossAxisAlignment = crossAxisAlignment;
   }
@@ -140,6 +141,11 @@ class ForceCenterBox extends RenderBox
   }
 
   @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
+    return defaultHitTestChildren(result, position: position);
+  }
+
+  @override
   void performLayout() {
     // _horizontalPerformLayout 與 _verticalPerformLayout 兩個確認佈局的方法
     // 內容幾乎一模一樣, 只差在一個垂直為主, 一個水平為主
@@ -167,12 +173,14 @@ class ForceCenterBox extends RenderBox
     var bothEndsConstraint = (this.bothEndsConstraint ?? constraints).copyWith(
       minHeight: 0,
       maxHeight: (constraints.maxHeight / 2) - gapSpace,
+      minWidth: 0,
     );
 
     // 中間的約束
     var centerConstraint = (this.centerConstraint ?? constraints).copyWith(
       minHeight: 0,
       maxHeight: constraints.maxHeight - totalGapSpace,
+      minWidth: 0,
     );
 
     // 優先平鋪測量, 檢查高度是否足夠
@@ -254,9 +262,6 @@ class ForceCenterBox extends RenderBox
       leadingPositionY = 0;
       centerPositionY = bothEndHeight + gapSpace;
       trailingPositionY = maxHeight - bothEndHeight;
-      print('${centerHeight}');
-      print(
-          '位置: $centerPositionY, ${centerPositionY + gapSpace + centerHeight}, 最終: $trailingPositionY');
     } else {
       // 主方向擴展空間至最大
       maxHeight = constraints.maxHeight;
@@ -324,6 +329,7 @@ class ForceCenterBox extends RenderBox
       maxWidth: (constraints.maxWidth / 2) -
           gapSpace -
           (centerConstraint.minWidth / 2),
+      minHeight: 0,
     );
 
     centerConstraint = centerConstraint.copyWith(
@@ -331,6 +337,7 @@ class ForceCenterBox extends RenderBox
       maxWidth: constraints.maxWidth -
           totalGapSpace -
           (bothEndsConstraint.minWidth * 2),
+      minHeight: 0,
     );
 
     // 優先平鋪測量, 檢查寬度是否足夠
@@ -381,7 +388,7 @@ class ForceCenterBox extends RenderBox
           final newCenterConstraint = centerConstraint.copyWith(
             maxWidth: centerWidth,
           );
-          print('中間最大寬度更改為: $newCenterConstraint, $constraints');
+          // print('中間最大寬度更改為: $newCenterConstraint, $constraints');
           leadingChild.layout(newBothEndsConstraint, parentUsesSize: true);
           trailingChild.layout(newBothEndsConstraint, parentUsesSize: true);
           centerChild.layout(newCenterConstraint, parentUsesSize: true);

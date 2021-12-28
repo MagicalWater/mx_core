@@ -32,52 +32,122 @@ class _ForceCenterLayoutPageState extends State<ForceCenterLayoutPage> {
             height: 10.scaleA,
             color: Colors.grey,
           ),
-          ForceCenterLayout(
-            direction: Axis.horizontal,
-            leading: Container(
-              width: 50,
-              height: 200,
-              color: Colors.purpleAccent,
-            ),
-            center: Container(
-              color: Colors.blueAccent,
-              width: 100,
-              child: Text(
-                '文字,文字,文字,文字,文字',
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                maxLines: 10,
-              ),
-            ),
-            trailing: Container(
-              width: 100,
-              height: 100,
-              color: Colors.redAccent,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 10,
-                      color: Colors.purpleAccent,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: 20,
-                      height: 10,
-                      color: Colors.lightGreenAccent,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            gapSpace: 10,
-            // centerConstraint: BoxConstraints(maxHeight: 20),
-            spaceUsedPriority: SpaceUsedPriority.bothEndsFirst,
-            mainShrinkWrap: true,
-            crossShrinkWrap: false,
-            crossAxisAlignment: CrossAxisAlignment.end,
-          )
+          _contentLayout(context),
+          // ForceCenterLayout(
+          //   direction: Axis.horizontal,
+          //   leading: Container(
+          //     color: Colors.purpleAccent,
+          //     child: Material(
+          //       color: Colors.transparent,
+          //       type: MaterialType.transparency,
+          //       child: InkWell(
+          //         onTap: () {
+          //           print('點擊');
+          //         },
+          //         child: Container(
+          //           width: 50,
+          //           height: 200,
+          //           // color: ,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          //   center: Container(
+          //     color: Colors.blueAccent,
+          //     width: 100,
+          //     child: Text(
+          //       '文字,文字,文字,文字,文字',
+          //       style: TextStyle(fontSize: 15, color: Colors.white),
+          //       maxLines: 10,
+          //     ),
+          //   ),
+          //   trailing: Container(
+          //     width: 100,
+          //     height: 100,
+          //     color: Colors.redAccent,
+          //     child: Row(
+          //       children: [
+          //         Expanded(
+          //           child: Container(
+          //             height: 10,
+          //             color: Colors.purpleAccent,
+          //           ),
+          //         ),
+          //         Expanded(
+          //           child: Container(
+          //             width: 20,
+          //             height: 10,
+          //             color: Colors.lightGreenAccent,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          //   gapSpace: 10,
+          //   // centerConstraint: BoxConstraints(maxHeight: 20),
+          //   spaceUsedPriority: SpaceUsedPriority.bothEndsFirst,
+          //   mainShrinkWrap: true,
+          //   crossShrinkWrap: true,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          // )
         ],
+      ),
+    );
+  }
+
+  /// 決定appBar顯示樣式的佈局
+  Widget _contentLayout(BuildContext context) {
+    final barHeight = 50.0;
+    final decoration = (const BoxDecoration(color: Colors.blueAccent));
+
+    return SafeArea(
+      child: Container(
+        height: barHeight,
+        decoration: decoration,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: <Widget>[
+            SizedBox(
+              height: barHeight,
+              child: ForceCenterLayout(
+                leading: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 20,
+                      height: 40,
+                      color: Colors.yellow,
+                    ),
+                  ],
+                ),
+                center: Text(
+                  'context',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+                trailing: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      color: Colors.black87,
+                    ),
+                  ],
+                ),
+                spaceUsedPriority: SpaceUsedPriority.bothEndsFirst,
+                gapSpace: 10,
+                mainShrinkWrap: false,
+                crossShrinkWrap: false,
+                crossAxisAlignment: CrossAxisAlignment.center,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
