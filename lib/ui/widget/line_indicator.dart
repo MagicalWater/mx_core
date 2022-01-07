@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mx_core/util/num_util.dart';
+import 'package:mx_core/util/num_util/num_util.dart';
 
 class _PlacePainter {
   Decoration decoration;

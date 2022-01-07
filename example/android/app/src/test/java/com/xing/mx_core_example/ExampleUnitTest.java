@@ -1,4 +1,4 @@
-package com.xing.mx_core_example;
+package com.water.mx_core_example;
 
 import org.junit.Test;
 

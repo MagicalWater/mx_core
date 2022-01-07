@@ -1,4 +1,4 @@
-group 'com.xing.mx_core'
+group 'com.water.mx_core'
 version '1.0-SNAPSHOT'
 
 buildscript {

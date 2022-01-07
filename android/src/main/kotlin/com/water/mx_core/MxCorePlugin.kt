@@ -1,4 +1,4 @@
-package com.xing.mx_core
+package com.water.mx_core
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.engine.plugins.FlutterPlugin
