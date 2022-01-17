@@ -632,9 +632,6 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
     return Stack(
       children: widgetStacks!.indexMap((e, i) {
         final pageWidget = e(context);
-        if (!widget.swipePopEnabled) {
-          return pageWidget;
-        }
 
         // 是否為最上層元件
         final isLast = i == widgetStacks!.length - 1;
@@ -676,22 +673,27 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
 
         final matrix = Matrix4.identity();
 
-        if (enableTransform) {
-          if (pageOffset != null) {
-            matrix.translate(pageOffset.dx, pageOffset.dy);
+        bool isShadowActive;
+
+        if (pageOpacity != 0) {
+          if (enableTransform) {
+            if (pageOffset != null) {
+              matrix.translate(pageOffset.dx, pageOffset.dy);
+            }
+
+            if (pageScale != null) {
+              matrix.scale(pageScale, pageScale);
+            }
           }
 
-          if (pageScale != null) {
-            matrix.scale(pageScale, pageScale);
-          }
+          isShadowActive = enableSwipe &&
+              enableTransform &&
+              pageOffset != null &&
+              pageOffset != Offset.zero &&
+              widget.animatedShadow != null;
+        } else {
+          isShadowActive = false;
         }
-
-        // 是否顯示元件陰影(只有在頁面處於效果狀態時才顯示)
-        final isShadowActive = enableSwipe &&
-            enableTransform &&
-            pageOffset != null &&
-            pageOffset != Offset.zero &&
-            widget.animatedShadow != null;
 
         return GestureDetector(
           onHorizontalDragStart: enableSwipe

@@ -13,68 +13,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/widget_switcher/widget_switcher.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/widget_switcher/widget_switcher_route.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/route_switcher/route_stack_switcher.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/route_switcher/route_switcher.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/route_switcher/route_tab_switcher.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/controller/action.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/controller/controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/image_painter.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/stack_config.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/stack_sort.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/swipe_pop_data.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/switch_animation.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/switch_transaction_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/widget_switcher/widget_switcher.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/widget_switcher/widget_switcher_route.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/route_switcher/route_stack_switcher.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/route_switcher/route_switcher.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/route_switcher/route_tab_switcher.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/controller/action.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/controller/controller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/image_painter.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/stack_config.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/stack_sort.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/swipe_pop_data.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/switch_animation.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/switch_transaction_setting.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction/bloc/introduction_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction/bloc/introduction_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction/view/introduction_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction/view/introduction_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_second_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_second_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_second/route_push_second_route.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_sub2/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/route_push_sub2/route_push_sub2_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/app_router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/router/app_router.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/page_switcher.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/scroll_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/route_switcher/route_scroll_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/stack_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget_switcher/widget_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/page_switcher/switcher.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction/bloc/introduction_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction/bloc/introduction_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction/view/introduction_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction/view/introduction_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_second_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_second_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_second_route.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_second/route_push_second_route.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/route_push_sub2/route_push_sub2_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/route_push_sub2/route_push_sub2_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/router/app_router.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/router/app_router.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/page_switcher.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/scroll_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/route_switcher/route_scroll_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/stack_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/widget_switcher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/page_switcher/switcher.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/widget_switcher/widget_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/widget_switcher/widget_switcher.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/widget_switcher/widget_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/widget_switcher/widget_switcher.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/widget_switcher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget_switcher/widget_switcher.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -77,12 +77,13 @@ class _WidgetSwitcherPageState extends State<WidgetSwitcherPage> {
                 opacityIn: 1,
                 opacityOut: 1,
                 duration: Duration(seconds: 1),
+                swipePopEnabled: false,
                 builder: (BuildContext context, String tag) {
                   return Container(
                     width: double.infinity,
                     height: double.infinity,
-                    color: getColor(tag),
                     alignment: Alignment.center,
+                    color: Colors.transparent,
                     child: _StatfulText(
                       text: '頁面 $tag',
                     ),
