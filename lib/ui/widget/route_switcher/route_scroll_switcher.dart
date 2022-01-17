@@ -3,16 +3,15 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
-import 'package:mx_core/router/app_router.dart';
 
 /// 頁面切換元件, 核心為 [PageView], 因此是左滑右滑的形式
-/// 直接將 PageBloc 的 subPageStream 以及 routes 傳入即可
-class ScrollSwitcher extends StatefulWidget {
+/// 直接將 [PageRouter] 的 subPageStream 以及 routes 傳入即可
+class RouteScrollSwitcher extends StatefulWidget {
   final List<String> routes;
   final Stream<List<RouteData>> stream;
 
   /// 當尚未有 route 傳入時, 所顯示的空元件
-  /// 默認為 Container()
+  /// 默認為 SizeBox
   final Widget? emptyWidget;
 
   final Duration duration;
@@ -25,7 +24,7 @@ class ScrollSwitcher extends StatefulWidget {
 
   final ScrollPhysics? physics;
 
-  const ScrollSwitcher._({
+  const RouteScrollSwitcher._({
     required this.routes,
     required this.stream,
     required this.duration,
@@ -35,7 +34,7 @@ class ScrollSwitcher extends StatefulWidget {
     this.physics,
   });
 
-  factory ScrollSwitcher({
+  factory RouteScrollSwitcher({
     required List<String> routes,
     required Stream<List<RouteData>> stream,
     Duration duration = const Duration(milliseconds: 300),
@@ -44,7 +43,7 @@ class ScrollSwitcher extends StatefulWidget {
     bool animateEnabled = true,
     ScrollPhysics? physics,
   }) {
-    return ScrollSwitcher._(
+    return RouteScrollSwitcher._(
       routes: routes,
       stream: stream,
       duration: duration,
@@ -56,17 +55,17 @@ class ScrollSwitcher extends StatefulWidget {
   }
 
   @override
-  _ScrollSwitcherState createState() => _ScrollSwitcherState();
+  _RouteScrollSwitcherState createState() => _RouteScrollSwitcherState();
 }
 
-class _ScrollSwitcherState extends State<ScrollSwitcher> {
+class _RouteScrollSwitcherState extends State<RouteScrollSwitcher> {
   Map<String, ValueKey<int>> cacheKey = {};
 
   PageController? _pageController;
 
   List<WidgetBuilder>? _showChildren;
 
-  late StreamSubscription _subscription;
+  StreamSubscription? _subscription;
 
   int? toIndex;
 
@@ -143,7 +142,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
   @override
   Widget build(BuildContext context) {
     if (_showChildren == null) {
-      return Container();
+      return const SizedBox.shrink();
     }
     return PageView(
       children: _showChildren!.map((e) => e.call(context)).toList(),
@@ -166,7 +165,7 @@ class _ScrollSwitcherState extends State<ScrollSwitcher> {
 
   @override
   void dispose() {
-    _subscription.cancel();
+    _subscription?.cancel();
     _pageController?.dispose();
     super.dispose();
   }

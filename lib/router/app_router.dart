@@ -231,6 +231,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
     bool Function(String route)? popUntil,
   }) {
     if (!canPopSubPage(route, level: level)) {
+      print('appRouter: 當前不可回退頁面, 返回pop子頁面請求');
       return false;
     }
     switch (level) {
@@ -242,6 +243,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
         var findListener = _subPageListener.reversed
             .firstWhereOrNull((element) => element.route == route);
         if (findListener == null) {
+          print('appRouter: 找不到監聽器, 返回pop子頁面請求');
           return false;
         }
         var result = findListener.popSubPage(popUntil: popUntil);

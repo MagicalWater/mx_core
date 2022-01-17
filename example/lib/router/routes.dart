@@ -92,6 +92,9 @@ class Pages {
   /// 強制置中元件
   static const forceCenterLayout = "/threePointLayout";
 
+  /// 元件仿造頁面切換
+  static const widgetSwitcher = "/widgetSwitcher";
+
   Pages._();
 }
 

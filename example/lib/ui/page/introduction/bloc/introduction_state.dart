@@ -12,6 +12,7 @@ class IntroductionInitial extends IntroductionState {
       : super([
           PageInfo(Pages.kChart, "行情圖表"),
           PageInfo(Pages.forceCenterLayout, "強制置中元件"),
+          PageInfo(Pages.widgetSwitcher, "元件仿造頁面切換"),
           PageInfo(Pages.bulletShape, "彈頭渲染"),
           PageInfo(Pages.lineIndicator, "線條指示器"),
           PageInfo(Pages.tabBar, "Tab元件"),

@@ -46,8 +46,7 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page>
 //              setState(() {});
           }),
           Expanded(
-            child: PageSwitcher(
-              routes: route.subPages(),
+            child: RouteStackSwitcher(
               stream: route.subPageHistoryStream,
             ),
           ),

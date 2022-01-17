@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/ui/page/introduction/bloc/introduction_cubit.dart';
-import 'package:mx_core_example/ui/page/introduction/model/page_info.dart';
 
 class IntroductionList extends StatelessWidget {
   @override

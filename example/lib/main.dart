@@ -81,7 +81,7 @@ class App extends StatelessWidget {
           theme: ThemeData.from(
             colorScheme: const ColorScheme.light(),
           ).copyWith(
-            platform: TargetPlatform.iOS,
+            platform: TargetPlatform.android,
             // pageTransitionsTheme: const PageTransitionsTheme(
             //   builders: <TargetPlatform, PageTransitionsBuilder>{
             //     TargetPlatform.android: ZoomPageTransitionsBuilder(),

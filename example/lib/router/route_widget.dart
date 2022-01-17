@@ -30,6 +30,7 @@ import 'package:mx_core_example/ui/page/stateful_button/stateful_button.dart';
 import 'package:mx_core_example/ui/page/tab_bar/tab_bar.dart';
 import 'package:mx_core_example/ui/page/timer/timer.dart';
 import 'package:mx_core_example/ui/page/wave_progress/wave_progress.dart';
+import 'package:mx_core_example/ui/page/widget_switcher/widget_switcher.dart';
 
 import 'routes.dart';
 
@@ -75,6 +76,7 @@ class RouteWidget implements RouteWidgetBase {
     Pages.routePushSubA,
     Pages.routePushSubB,
     Pages.forceCenterLayout,
+    Pages.widgetSwitcher,
   ];
 
   @override
@@ -259,6 +261,12 @@ class RouteWidget implements RouteWidgetBase {
         return RouterMiddler(
           childBuilder: (context) => ForceCenterLayoutPage(option),
           routeBuilder: () => ForceCenterLayoutRoute(option),
+          key: key,
+        );
+      case Pages.widgetSwitcher:
+        return RouterMiddler(
+          childBuilder: (context) => WidgetSwitcherPage(option),
+          routeBuilder: () => WidgetSwitcherRoute(option),
           key: key,
         );
       default:
