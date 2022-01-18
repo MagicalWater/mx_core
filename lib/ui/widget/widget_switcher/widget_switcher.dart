@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
 
@@ -11,6 +12,7 @@ import 'controller/action.dart';
 import 'image_painter.dart';
 import 'stack_config.dart';
 import 'swipe_pop_data.dart';
+import 'tag_stacks.dart';
 
 export 'stack_config.dart';
 
@@ -64,8 +66,9 @@ class WidgetSwitcher<T> extends StatefulWidget {
   final double triggerSwipeDistance;
 
   /// 動畫差值器
-  /// 受限於無法從值反推回去t的關西, 暫時只能線性
-  final Curve curve = Curves.linear;
+  /// 若是啟用手勢回退功能, 則受限於無法從值反推回去t, 暫時只能線性
+  /// 其餘則可自由設定
+  final Curve curve;
 
   /// 動畫總開關
   final bool animateEnabled;
@@ -93,6 +96,7 @@ class WidgetSwitcher<T> extends StatefulWidget {
     this.popDirection = AxisDirection.right,
     this.animatedShadow,
     this.emptyWidget,
+    this.curve = Curves.linear,
     this.scaleIn,
     this.opacityIn,
     this.translateIn,
@@ -118,6 +122,7 @@ class WidgetSwitcher<T> extends StatefulWidget {
       blurRadius: 5,
       spreadRadius: 0,
     ),
+    Curve curve = Curves.linear,
     Widget? emptyWidget,
     double? scaleIn = 1,
     double? opacityIn = 0,
@@ -135,6 +140,11 @@ class WidgetSwitcher<T> extends StatefulWidget {
     if (translateOut == null && translateIn != null) {
       translateOut = translateIn;
     }
+    if (swipePopEnabled && curve != Curves.linear) {
+      print(
+          'WidgetSwitcher: 當啟用swipePopEnabled手勢回退時, curve必須為Curves.linear, 於此進行強制更改');
+      curve = Curves.linear;
+    }
     return WidgetSwitcher._(
       controller: controller,
       builder: builder,
@@ -147,6 +157,7 @@ class WidgetSwitcher<T> extends StatefulWidget {
       opacityOut: opacityOut,
       translateIn: translateIn,
       translateOut: translateOut,
+      curve: curve,
       onPopHandler: onPopHandler,
       popDirection: popDirection,
       swipePopEnabled: swipePopEnabled,
@@ -166,7 +177,7 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
     with TickerProviderStateMixin
     implements WidgetSwitchControllerAction<T> {
   @override
-  List<T> get history => tagStacks;
+  List<T> get history => tagDisplayStacks.map((e) => e.tag).toList();
 
   /// 綁定的controller
   late WidgetSwitchController _bindActionController;
@@ -181,10 +192,31 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
   late final SwitchAnimation switchAnimation;
 
   /// 元件tag堆疊, 與[widgetStacks]相呼應
-  final tagStacks = <T>[];
+  /// 當是null時, 代表是已經被移除的tag
+  final tagStacks = <T?>[];
+
+  /// 給外部獲取的顯示歷史堆疊
+  /// 將[tagStacks]中被移除的元件刪除後
+  /// 剩下即是真正用於顯示的歷史tag
+  List<TagStacks<T>> get tagDisplayStacks {
+    var displayIndex = 0;
+    return tagStacks
+        .indexMap((e, i) {
+          if (e != null) {
+            return TagStacks<T>(
+              historyIndex: i,
+              displayIndex: displayIndex++,
+              tag: e,
+            );
+          }
+          return null;
+        })
+        .whereType<TagStacks<T>>()
+        .toList();
+  }
 
   /// 元件堆疊, 與[tagStacks]相呼應
-  List<WidgetBuilder>? widgetStacks;
+  List<WidgetBuilder?>? widgetStacks;
 
   /// 所有元件的key, 用途有兩個
   /// 1. 將所有元件區分為不同的元件(防止系統混淆)
@@ -271,8 +303,11 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
 
   /// 執行切換元件動畫
   /// 1. 擷取當前的元件圖像當作佔位展示
-  /// 2. 展示完成後進行元件確切的切換
-  void _executeChangeAnimation(bool isPush) async {
+  /// 2. 擷取完成後呼叫[onCaptured]由外部執行元件標示更新的動作
+  Future<void> _executeChangeAnimation({
+    required bool isPush,
+    required VoidCallback onCaptured,
+  }) async {
     GlobalKey usedBoundaryKey;
 
     // 檢查當前是否正在回退
@@ -300,14 +335,10 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
       // 刪除佔位圖片
       _transitionImage = null;
 
-      // 如果需要, 更新動畫設定
-      _syncAnimationPush(isPush);
-
       // 清除滑動回退資訊
       swipePopData.clear();
 
-      // 同步元件列表
-      _syncWidgetStack();
+      onCaptured();
 
       setState(() {});
       return;
@@ -316,22 +347,26 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
     // 若為debug模式, 可能會出現widget尚未繪製的情形
     // 因此在此處使用下一針再進行佔位圖像動態回退
     if (!kReleaseMode && boundary.debugNeedsPaint) {
+      final completer = Completer();
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
         if (mounted) {
-          _executeChangeAnimation(isPush);
+          _executeChangeAnimation(
+            isPush: isPush,
+            onCaptured: onCaptured,
+          ).then((value) {
+            completer.complete(true);
+          });
+        } else {
+          completer.complete(true);
         }
       });
-      return;
+      return completer.future;
     }
 
     // 取得佔位截圖
     _transitionImage = await boundary.toImage(pixelRatio: 1);
 
-    // 如果需要, 更新動畫設定
-    _syncAnimationPush(isPush);
-
-    // 同步元件列表
-    _syncWidgetStack();
+    onCaptured();
 
     // 若是當前正在動畫展示中, 則停止
     if (switchAnimation.isAnimating) {
@@ -353,73 +388,144 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
     await switchAnimation.forward();
   }
 
-  /// 推送元件
+  /// 推送
   @override
-  void push(T tag) {
-    tagStacks.add(tag);
+  Future<void> push(T tag, {WidgetPopHandler<T>? removeUntil}) async {
+    print('執行推送');
+    // 檢查是否需要執行動畫push
     if (widget.animateEnabled && switchAnimation.haveTransition) {
-      // print('動畫展示: ${switchAnimation.translateIn}');
-      // print('動畫展示: ${switchAnimation.translateOut}');
       // 開始動畫展示
-      _executeChangeAnimation(true);
+      _executeChangeAnimation(
+        isPush: true,
+        onCaptured: () {
+          _syncAnimationPush(true);
+          _pushTagStacks(tag, removeUntil: removeUntil);
+          _syncWidgetStack();
+        },
+      );
     } else {
-      // print('沒有動畫');
-      // print('沒有動畫: ${switchAnimation.translateIn}');
-      // print('沒有動畫: ${switchAnimation.translateOut}');
+      // 沒有動畫
       _syncAnimationPush(true);
+      _pushTagStacks(tag, removeUntil: removeUntil);
       _syncWidgetStack();
       setState(() {});
     }
   }
 
-  /// 回彈元件
+  /// 回彈元件, 默認彈出一個
   @override
-  void pop({T? tag, int? count}) {
-    if (tagStacks.isEmpty) {
-      // 沒有任何元件可以談出
+  Future<void> pop({WidgetPopHandler<T>? popUntil}) async {
+    print('執行彈出');
+
+    if (widget.animateEnabled && switchAnimation.haveTransition) {
+      // print('執行彈出動畫');
+      _executeChangeAnimation(
+        isPush: false,
+        onCaptured: () {
+          _syncAnimationPush(false);
+          _popTagStacks(popUntil: popUntil);
+          _syncWidgetStack();
+        },
+      );
+    } else {
+      // print('執行直接彈出頁面');
+      _syncAnimationPush(false);
+      _popTagStacks(popUntil: popUntil);
+      _syncWidgetStack();
+      setState(() {});
+    }
+  }
+
+  /// 推送標示列表
+  void _pushTagStacks(T tag, {WidgetPopHandler<T>? removeUntil}) {
+    // 獲取目前真正用於顯示的tag堆疊
+    final historyTags = tagDisplayStacks;
+
+    // 檢查是否可以pop之前的歷史
+    if (removeUntil != null && historyTags.isNotEmpty) {
+      bool removeResult;
+      var index = historyTags.length - 1;
+      do {
+        final tagStack = historyTags[index];
+        removeResult = removeUntil(tagStack.tag, tagStack.displayIndex);
+        if (!removeResult) {
+          // 需要被移除, 因此於完整的歷史堆疊將之指定為null
+          tagStacks[tagStack.historyIndex] = null;
+        }
+        index--;
+      } while (!removeResult && index >= 0);
+    }
+
+    // 添加需要push的tag
+    tagStacks.add(tag);
+  }
+
+  /// 彈出標示列表
+  void _popTagStacks({WidgetPopHandler<T>? popUntil}) {
+    // 當前正在展示中的tag
+    final historyTags = tagDisplayStacks;
+
+    if (historyTags.isEmpty) {
+      // 沒有任何元件可以彈出
       print('WidgetSwitcher: 元件數量為空, 無法進行pop');
       return;
     }
 
     // 先彈出一個元件
+    historyTags.removeLast();
+
     tagStacks.removeLast();
 
-    // 因為已經先彈出一個元件了, 因此默認數量可以設置為0
-    count ??= 0;
-
-    if (tag != null) {
-      final endIndex = tagStacks.lastIndexOf(tag);
-      if (endIndex == -1) {
-        print('WidgetSwitcher: 無法於歷史元件中找到$tag標示的元件, 無法進行pop');
-        return;
-      }
-      final newTagStacks = tagStacks.sublist(0, endIndex + 1);
-      tagStacks.clear();
-      tagStacks.addAll(newTagStacks);
-    } else if (count > 0 && tagStacks.isNotEmpty) {
-      final length = tagStacks.length;
-
-      // 將長度-1才等於index
-      final end = (length - 1) - count;
-      if (end <= 0) {
-        // 全彈光
-        tagStacks.clear();
-      } else {
-        final newTagStacks = tagStacks.sublist(0, end);
-        tagStacks.clear();
-        tagStacks.addAll(newTagStacks);
-      }
+    if (popUntil != null) {
+      bool popResult;
+      var index = historyTags.length - 1;
+      do {
+        final tagStack = historyTags[index];
+        popResult = popUntil(tagStack.tag, tagStack.displayIndex);
+        if (!popResult) {
+          // 需要被移除, 因此於完整的歷史堆疊將之指定為null
+          tagStacks.removeLast();
+        }
+        index--;
+      } while (!popResult && index >= 0);
     }
 
-    if (widget.animateEnabled && switchAnimation.haveTransition) {
-      print('執行彈出動畫');
-      _executeChangeAnimation(false);
-    } else {
-      print('執行直接彈出頁面');
-      _syncAnimationPush(false);
-      _syncWidgetStack();
-      setState(() {});
+    // 清除已經為空的歷史
+    while (tagStacks.isNotEmpty && tagStacks.last == null) {
+      tagStacks.removeLast();
     }
+  }
+
+  /// 清除除了當前顯示的元件外的歷史
+  /// [remove] - 決定每個歷史元件是否清除, 若無帶入則默認全部清除
+  @override
+  void clearHistory({WidgetPopHandler<T>? removeHandler}) {
+    // 當前正在展示中的tag
+    final historyTags = tagDisplayStacks;
+
+    if (historyTags.isEmpty) {
+      // 沒有任何歷史可以清除
+      return;
+    }
+
+    // 最上層展示的元件不能被清除
+    historyTags.removeLast();
+
+    bool removeResult;
+    var index = historyTags.length - 1;
+    do {
+      final tagStack = historyTags[index];
+      removeResult = removeHandler?.call(
+            tagStack.tag,
+            tagStack.displayIndex,
+          ) ??
+          false;
+      if (!removeResult) {
+        // 需要被移除, 因此於完整的歷史堆疊將之指定為null
+        tagStacks[tagStack.historyIndex] = null;
+      }
+      index--;
+    } while (index >= 0);
   }
 
   /// 同步動畫的推送/彈出
@@ -459,6 +565,9 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
     widgetStacks = tagStacks.indexMap((e, i) {
       if (cacheKey.length <= i) {
         cacheKey.add(GlobalKey());
+      }
+      if (e == null) {
+        return null;
       }
       return (BuildContext context) => SizedBox(
             key: ValueKey(i),
@@ -577,7 +686,8 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
   Widget _applyEffectToTransitionImage(StackSort sortConfig) {
     // 檢查是否有偏移效果, 決定是否在佔位截圖加入陰影效果
     BoxDecoration? boxShadow;
-    if (widget.animatedShadow != null &&
+    if (sortConfig == StackSort.oldUp &&
+        widget.animatedShadow != null &&
         (switchAnimation.haveTranslateIn || switchAnimation.haveTranslateOut)) {
       boxShadow = BoxDecoration(
         color: Colors.transparent,
@@ -610,7 +720,7 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
 
     // 將偏移以及縮放效果以Container包起
     targetShowOldWidget = Container(
-      decoration: sortConfig == StackSort.oldUp ? boxShadow : null,
+      decoration: boxShadow,
       transform: oldMatrix,
       child: targetShowOldWidget,
     );
@@ -629,36 +739,48 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
 
   /// 將[widgetStacks]封裝成顯示元件
   Widget _widgetStackComponent() {
+    final displayTags = tagDisplayStacks;
+
+    // 倒數第二個展示元件的index
+    var last2Index = -1;
+    if (displayTags.length > 1) {
+      last2Index = displayTags[displayTags.length - 2].historyIndex;
+    }
+
     return Stack(
       children: widgetStacks!.indexMap((e, i) {
+        // 是否為已移除的元件
+        if (e == null) {
+          // 已被移除元件只要保持與其他的元件同類型即可
+          return GestureDetector(
+            child: const SizedBox.shrink(),
+          );
+        }
+
         final pageWidget = e(context);
 
         // 是否為最上層元件
         final isLast = i == widgetStacks!.length - 1;
 
-        // 是否激活滑動檢測功能
-        // 只有當為最上層元件, 且當時為非動畫效果時才可激活
-        final enableSwipe = isLast &&
-            widgetStacks!.length > 1 &&
-            !swipePopData.controller.isAnimating;
-
         // 是否可以進行元件偏移
-        // 只有最上層元件以及第二個上層元件才可以
+        // 只有最上層元件以及第二個顯示的元件才可以
         var enableTransform = false;
 
         // 元件效果顯示(偏移/淡出淡入/縮放)
         Offset? pageOffset;
         double? pageOpacity;
         double? pageScale;
+
         if (swipePopData.popPageSwipeRate != null &&
             swipePopData.popPageSwipeRate! > 0) {
-          // 目前頁面擁有回退百分比
+          // 目前頁面擁有回退百分比, 處於回退效果中
+
           if (isLast) {
             enableTransform = true;
             pageOffset = swipePopData.pageOutOffset;
             pageOpacity = swipePopData.pageOutOpacity;
             pageScale = swipePopData.pageOutScale;
-          } else if (i == widgetStacks!.length - 2) {
+          } else if (i == last2Index) {
             enableTransform = true;
             pageOffset = swipePopData.pageInOffset;
             pageOpacity = swipePopData.pageInOpacity;
@@ -671,9 +793,14 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
           pageOpacity = 0;
         }
 
+        // if (tagStacks[i] == '/routePushSecond/routePushSub2') {
+        //   print('紅色頁面顯示: ${pageOpacity != 0}');
+        // }
+
         final matrix = Matrix4.identity();
 
-        bool isShadowActive;
+        // 是否使用陰影包裹
+        bool isShadowActive = false;
 
         if (pageOpacity != 0) {
           if (enableTransform) {
@@ -684,16 +811,21 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
             if (pageScale != null) {
               matrix.scale(pageScale, pageScale);
             }
-          }
 
-          isShadowActive = enableSwipe &&
-              enableTransform &&
-              pageOffset != null &&
-              pageOffset != Offset.zero &&
-              widget.animatedShadow != null;
-        } else {
-          isShadowActive = false;
+            isShadowActive = pageOffset != null &&
+                pageOffset != Offset.zero &&
+                widget.animatedShadow != null;
+          }
         }
+
+        // 是否激活滑動檢測功能
+        // 只有當為最上層元件符合以下條件才可開啟
+        // 1. 展示的元件大於1
+        // 2. 非處於動畫效果中
+        final enableSwipe = isLast &&
+            displayTags.length > 1 &&
+            !swipePopData.controller.isAnimating &&
+            widget.swipePopEnabled;
 
         return GestureDetector(
           onHorizontalDragStart: enableSwipe

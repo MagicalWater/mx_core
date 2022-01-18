@@ -2,11 +2,11 @@ import 'route_compute.dart';
 
 /// 路由
 abstract class RouteOption {
-  String get route;
+  abstract final String route;
 
-  String? targetSubRoute;
+  abstract final String? targetSubRoute;
 
-  Map<String, dynamic>? get query;
+  abstract final Map<String, dynamic>? query;
 
   /// 取得 從 [_route] 需要跳轉到 [_targetRoute], 下個 route
   String? get nextRoute {
@@ -36,6 +36,7 @@ class RouteData extends RouteOption {
   @override
   final String? targetSubRoute;
 
+  @override
   final Map<String, dynamic>? query;
 
   /// 是否為回退 route
@@ -48,8 +49,8 @@ class RouteData extends RouteOption {
     this.route, {
     this.targetSubRoute,
     this.query,
-  })  : this.isPop = false,
-        this.forceNew = false;
+  })  : isPop = false,
+        forceNew = false;
 
   RouteData copyWith() {
     var data = RouteData(

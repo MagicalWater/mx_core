@@ -56,8 +56,8 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                     appRouter.pushPage(Pages.routePushSub3);
                   } else if (appRouter.isPageShowing(Pages.routePushSub3)) {
                     print('子頁面3顯示中');
-                    appRouter.popSubPage(route.route);
-                    // appRouter.pushPage(Pages.routePushSub1);
+                    // appRouter.popSubPage(route.route);
+                    appRouter.pushPage(Pages.routePushSub1);
                   } else {
                     print('沒有任何頁面顯示');
                   }
@@ -68,15 +68,15 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                 color: Colors.transparent,
               ),
               Expanded(
-                child: RouteTabSwitcher(
-                  routes: route.subPages(),
+                child: RouteStackSwitcher(
+                  // routes: route.subPages(),
                   stream: route.subPageHistoryStream,
                   emptyWidget: Container(),
 
                   // === 右滑回退 ===
-                  // translateIn: Offset(-Screen.width, 0),
-                  // translateOut: Offset(40, 0),
-                  // backDirection: AxisDirection.right,
+                  translateIn: Offset(Screen.width, 0),
+                  translateOut: Offset(40, 0),
+                  popDirection: AxisDirection.right,
                   // ===============
 
                   // === 左滑回退 ===
@@ -86,8 +86,8 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   // ===============
 
                   // === 下滑回退 ===
-                  translateIn: Offset(0, Screen.height),
-                  translateOut: Offset(0, -40),
+                  // translateIn: Offset(0, Screen.height),
+                  // translateOut: Offset(0, -40),
                   // popDirection: AxisDirection.down,
                   // ===============
 
@@ -101,15 +101,17 @@ class _RoutePushSecondPageState extends State<RoutePushSecondPage> {
                   scaleOut: 0.5,
 
                   animateEnabled: true,
-                  // swipePopEnabled: true,
+                  swipePopEnabled: true,
                   duration: Duration(milliseconds: 500),
                   opacityIn: 0,
                   opacityOut: 0.5,
-                  // onPopHandler: () {
-                  //   print('觸發自訂回退');
-                  //   appRouter.popSubPage(Pages.routePushSecond);
-                  //   print('觸發自訂回退1111');
-                  // },
+                  onPopHandler: () {
+                    print('觸發自訂回退');
+                    // Future.delayed(Duration(seconds: 2)).then((value) {
+                      appRouter.popSubPage(Pages.routePushSecond);
+                    // });
+                    print('觸發自訂回退1111');
+                  },
                 ),
               ),
             ],

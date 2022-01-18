@@ -556,6 +556,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
       _pageSubject.value.add(routeData);
       _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
+
       var result = await navigatorState.pushAndRemoveUntil(pageRoute(), (rt) {
         var name = rt.settings.name;
         if (name == '/') {

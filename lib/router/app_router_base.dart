@@ -16,7 +16,7 @@ abstract class RouteWidgetBase {
 
 /// 子頁面監聽 func
 /// 返回 [bool] 為代表是否處理此次的子頁面監聽跳轉
-typedef bool RouteHandler(RouteData routeData);
+typedef RouteHandler = bool Function(RouteData routeData);
 
 ///元件(包含頁面元件)跳轉相關, 使用方式參考 route_mixin
 abstract class AppRouterBase {

@@ -10,6 +10,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Test', (WidgetTester tester) async {
+    print('測試');
+    List<bool?> aa = [true, null, false];
+    final cc = aa.whereType<bool>().toList();
+    print(cc);
     // Build our app and trigger a frame.
 //    await tester.pumpWidget(MyApp());
 //

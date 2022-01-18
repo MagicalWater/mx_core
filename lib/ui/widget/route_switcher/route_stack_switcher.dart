@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
@@ -117,8 +118,8 @@ class RouteStackSwitcher extends StatefulWidget {
     }
 
     assert(
-    !swipePopEnabled || (swipePopEnabled && onPopHandler != null),
-    'RouteStackSwitcher: 當開啟滑動彈出頁面時, 必須帶入onPopHandler自訂動作',
+      !swipePopEnabled || (swipePopEnabled && onPopHandler != null),
+      'RouteStackSwitcher: 當開啟滑動彈出頁面時, 必須帶入onPopHandler自訂動作',
     );
 
     return RouteStackSwitcher._(
@@ -152,21 +153,76 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
   /// 路由訂閱監聽
   StreamSubscription<List<RouteData>>? routeSubscription;
 
+  /// 當前顯示的路由歷史
+  List<RouteData> routes = [];
+
   @override
   void initState() {
     routeSubscription = widget.stream.listen((event) {
-      print('監聽');
+      // 比對路由, 檢查跳轉方式
       if (event.isNotEmpty) {
         final lastRoute = event.last;
         final isPush = !lastRoute.isPop;
         if (isPush) {
-          controller.push(lastRoute.route);
+          // 是往前推, 檢查是否有刪除歷史
+          final removedIndex = _getRemovedRouteIndex(
+            pre: routes,
+            current: event,
+          );
+          controller.push(
+            lastRoute.route,
+            removeUntil: (tag, index) {
+              if (removedIndex.contains(index)) {
+                return false;
+              }
+              return true;
+            },
+          );
         } else {
-          controller.pop(tag: lastRoute.route);
+          controller.pop(popUntil: (tag, index) {
+            if (index == event.length - 1) {
+              return true;
+            }
+            return false;
+          });
         }
+      } else {
+        controller.pop(popUntil: (tag, index) => false);
       }
+      routes = event;
     });
     super.initState();
+  }
+
+  /// 比較前後兩個route history
+  /// 取得被刪除的歷史
+  List<int> _getRemovedRouteIndex({
+    required List<RouteData> pre,
+    required List<RouteData> current,
+  }) {
+    final maxIndex = max(pre.length, current.length);
+    final List<int> removedIndex = [];
+
+    for (var i = 0; i < maxIndex; i++) {
+      final preRoute = pre.length > i ? pre[i] : null;
+      final currentRoute = current.length > i ? current[i] : null;
+
+      if (preRoute != null && currentRoute != null) {
+        // 比較兩個是否一樣
+        if (preRoute.route == currentRoute.route) {
+          // 路由相同
+        } else {
+          // 路由不同
+          removedIndex.add(i);
+        }
+      } else if (preRoute == null) {
+        // 新添加的route
+      } else if (currentRoute == null) {
+        // 路由已被刪除
+        removedIndex.add(i);
+      }
+    }
+    return removedIndex;
   }
 
   @override

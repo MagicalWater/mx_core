@@ -51,7 +51,6 @@ class _WidgetSwitcherPageState extends State<WidgetSwitcherPage> {
                       print('沒有上一頁了');
                       return;
                     }
-                    print('回退上一頁');
                     nowIndex--;
                     controller.pop();
                   },
@@ -59,11 +58,33 @@ class _WidgetSwitcherPageState extends State<WidgetSwitcherPage> {
                 ),
                 TextButton(
                   onPressed: () {
-                    print('切換下一頁');
                     nowIndex++;
-                    controller.push(nowIndex.toString());
+                    controller.push(nowIndex.toString(), removeUntil: (tag, index) {
+                      // print('移除index: $index');
+                      // if (index == 5) {
+                      //   return false;
+                      // }
+                      return true;
+                    });
                   },
                   child: Text('下一頁'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    print('歷史: ${controller.history}');
+                  },
+                  child: Text('檢查歷史'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    controller.clearHistory(removeHandler: (tag, index) {
+                      if (index == 2) {
+                        return false;
+                      }
+                      return true;
+                    });
+                  },
+                  child: Text('清除歷史'),
                 ),
               ],
             ),
@@ -78,6 +99,7 @@ class _WidgetSwitcherPageState extends State<WidgetSwitcherPage> {
                 opacityOut: 1,
                 duration: Duration(seconds: 1),
                 swipePopEnabled: false,
+                curve: Curves.fastLinearToSlowEaseIn,
                 builder: (BuildContext context, String tag) {
                   return Container(
                     width: double.infinity,

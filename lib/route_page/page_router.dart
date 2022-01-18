@@ -185,7 +185,7 @@ abstract class PageRouter implements PageInterface {
     return false;
   }
 
-  /// 貯列式分發頁面
+  /// 堆疊式分發頁面
   /// 若分發了頁面, 但由於
   void _stackDispatchPage(
     RouteData data, {
