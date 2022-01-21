@@ -1,7 +1,7 @@
-mixin VolumeEntity {
-  late double open;
-  late double close;
-  late double vol;
-  late double ma5Volume;
-  late double ma10Volume;
+abstract class VolumeEntity {
+  abstract double open;
+  abstract double close;
+  abstract double vol;
+  abstract double ma5Volume;
+  abstract double ma10Volume;
 }

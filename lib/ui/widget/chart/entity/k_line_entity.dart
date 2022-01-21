@@ -1,47 +1,111 @@
 import '../entity/k_entity.dart';
 
-class KLineEntity extends KEntity {
+class KLineEntity implements KEntity {
   @override
-  // ignore: overridden_fields
-  late double open;
-  @override
-  // ignore: overridden_fields
-  late double high;
-  @override
-  // ignore: overridden_fields
-  late double low;
-  @override
-  // ignore: overridden_fields
-  late double close;
+  double open;
 
   @override
-  // ignore: overridden_fields
-  late double vol;
-  late double amount;
-  late int count;
-  late DateTime dateTime;
+  double high;
+
+  @override
+  double low;
+
+  @override
+  double close;
+
+  @override
+  double vol;
+
+  @override
+  late double d;
+
+  @override
+  late double dea;
+
+  @override
+  late double dif;
+
+  @override
+  late double dn;
+
+  @override
+  late double ema12;
+
+  @override
+  late double ema26;
+
+  @override
+  late double j;
+
+  @override
+  late double k;
+
+  @override
+  late double ma10Price;
+
+  @override
+  late double ma10Volume;
+
+  @override
+  late double ma20Price;
+
+  @override
+  late double ma30Price;
+
+  @override
+  late double ma5Price;
+
+  @override
+  late double ma5Volume;
+
+  @override
+  late double macd;
+
+  @override
+  late double mb;
+
+  @override
+  late double r;
+
+  @override
+  late double rsi;
+
+  @override
+  late double rsiABSEma;
+
+  @override
+  late double rsiMaxEma;
+
+  @override
+  late double up;
+
+  final double amount;
+  final int count;
+  DateTime dateTime;
 
   KLineEntity({
-    required double open,
-    required double high,
-    required double low,
-    required double close,
-    required double vol,
+    required this.open,
+    required this.high,
+    required this.low,
+    required this.close,
+    required this.vol,
     required this.amount,
     required this.count,
     required this.dateTime,
   });
 
-  KLineEntity.fromJson(Map<String, dynamic> json) {
-    open = (json['open'] as num).toDouble();
-    high = (json['high'] as num).toDouble();
-    low = (json['low'] as num).toDouble();
-    close = (json['close'] as num).toDouble();
-    vol = (json['vol'] as num).toDouble();
-    amount = (json['amount'] as num).toDouble();
-    count = (json['count'] as num).toInt();
-    var milliSecond = (json['date'] as num).toInt();
-    dateTime = DateTime.fromMillisecondsSinceEpoch(milliSecond);
+  factory KLineEntity.fromJson(Map<String, dynamic> json) {
+    final milliSecond = (json['date'] as num).toInt();
+    return KLineEntity(
+      open: (json['open'] as num).toDouble(),
+      high: (json['high'] as num).toDouble(),
+      low: (json['low'] as num).toDouble(),
+      close: (json['close'] as num).toDouble(),
+      vol: (json['vol'] as num).toDouble(),
+      amount: (json['amount'] as num).toDouble(),
+      count: (json['count'] as num).toInt(),
+      dateTime: DateTime.fromMillisecondsSinceEpoch(milliSecond),
+    );
   }
 
   Map<String, dynamic> toJson() {

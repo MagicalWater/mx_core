@@ -1,4 +1,4 @@
-mixin RSIEntity {
+abstract class RSIEntity {
   /// RSI值
   late double rsi;
   late double rsiABSEma;

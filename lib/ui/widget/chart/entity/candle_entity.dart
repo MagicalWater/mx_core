@@ -1,20 +1,20 @@
-mixin CandleEntity {
-  late double open;
-  late double high;
-  late double low;
-  late double close;
+abstract class CandleEntity {
+  abstract double open;
+  abstract double high;
+  abstract double low;
+  abstract double close;
 
-  late double ma5Price;
-  late double ma10Price;
-  late double ma20Price;
-  late double ma30Price;
+  abstract double ma5Price;
+  abstract double ma10Price;
+  abstract double ma20Price;
+  abstract double ma30Price;
 
 //  上轨线
-  late double up;
+  abstract double up;
 
 //  中轨线
-  late double mb;
+  abstract double mb;
 
 //  下轨线
-  late double dn;
+  abstract double dn;
 }

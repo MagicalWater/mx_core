@@ -1,11 +1,11 @@
 import 'kdj_entity.dart';
 import 'rsi_entity.dart';
-import 'rw_entity.dart';
+import 'wr_entity.dart';
 
-mixin MACDEntity on KDJEntity, RSIEntity, WREntity {
-  late double dea;
-  late double dif;
-  late double macd;
-  late double ema12;
-  late double ema26;
+abstract class MACDEntity implements KDJEntity, RSIEntity, WREntity {
+  abstract double dea;
+  abstract double dif;
+  abstract double macd;
+  abstract double ema12;
+  abstract double ema26;
 }

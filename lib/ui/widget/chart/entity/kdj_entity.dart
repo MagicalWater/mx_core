@@ -1,5 +1,5 @@
-mixin KDJEntity {
-  late double k;
-  late double d;
-  late double j;
+abstract class KDJEntity {
+  abstract double k;
+  abstract double d;
+  abstract double j;
 }
