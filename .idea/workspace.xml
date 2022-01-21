@@ -14,15 +14,25 @@
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/candle_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/candle_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/k_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/k_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/k_line_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/k_line_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/kdj_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/kdj_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/macd_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/macd_entity.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/chart_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/chart_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/entity/rsi_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/entity/rsi_entity.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/k_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/k_chart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_painter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/main_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/main_renderer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/secondary_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/secondary_renderer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/vol_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/vol_renderer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/chart_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/chart_style.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/rsi_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/rsi_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/rw_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/wr_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/volume_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/volume_entity.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/k_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/k_chart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_painter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/main_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/main_renderer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/secondary_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/secondary_renderer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/vol_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/vol_renderer.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

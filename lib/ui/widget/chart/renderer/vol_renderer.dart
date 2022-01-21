@@ -39,18 +39,21 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
         Rect.fromLTRB(curX - r, top, curX + r, bottom),
         chartPaint
           ..color = curPoint.close >= curPoint.open
-              ? style.upColor
-              : style.downColor);
+              ? style.buyInColor
+              : style.sellOutColor);
 
-    if (lastPoint.ma5Volume != 0) {
-      drawLine(lastPoint.ma5Volume, curPoint.ma5Volume, canvas, lastX, curX,
-          maStyle.ma5Color);
-    }
-
-    if (lastPoint.ma10Volume != 0) {
-      drawLine(lastPoint.ma10Volume, curPoint.ma10Volume, canvas, lastX, curX,
-          maStyle.ma10Color);
-    }
+    // final oriWidth = chartPaint.strokeWidth;
+    // chartPaint.strokeWidth = 1;
+    // if (lastPoint.ma5Volume != 0) {
+    //   drawLine(lastPoint.ma5Volume, curPoint.ma5Volume, canvas, lastX, curX,
+    //       maStyle.ma5Color);
+    // }
+    //
+    // if (lastPoint.ma10Volume != 0) {
+    //   drawLine(lastPoint.ma10Volume, curPoint.ma10Volume, canvas, lastX, curX,
+    //       maStyle.ma10Color);
+    // }
+    // chartPaint.strokeWidth = oriWidth;
   }
 
   @override
@@ -66,12 +69,12 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
         TextSpan(
             text: "VOL:${NumberUtil.volFormat(data.vol)}    ",
             style: getTextStyle(style.volTextColor)),
-        TextSpan(
-            text: "MA5:${NumberUtil.volFormat(data.ma5Volume)}    ",
-            style: getTextStyle(maStyle.ma5Color)),
-        TextSpan(
-            text: "MA10:${NumberUtil.volFormat(data.ma10Volume)}    ",
-            style: getTextStyle(maStyle.ma10Color)),
+        // TextSpan(
+        //     text: "MA5:${NumberUtil.volFormat(data.ma5Volume)}    ",
+        //     style: getTextStyle(maStyle.ma5Color)),
+        // TextSpan(
+        //     text: "MA10:${NumberUtil.volFormat(data.ma10Volume)}    ",
+        //     style: getTextStyle(maStyle.ma10Color)),
       ],
     );
     TextPainter tp = TextPainter(

@@ -1,6 +1,6 @@
 abstract class RSIEntity {
   /// RSI值
-  late double rsi;
-  late double rsiABSEma;
-  late double rsiMaxEma;
+  abstract double rsi;
+  abstract double rsiABSEma;
+  abstract double rsiMaxEma;
 }

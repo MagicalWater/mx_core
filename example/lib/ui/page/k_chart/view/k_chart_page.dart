@@ -72,7 +72,6 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
             children: <Widget>[
               Stack(children: <Widget>[
                 Container(
-                  margin: EdgeInsets.symmetric(horizontal: 50),
                   width: double.infinity,
                   child: AnimatedSize(
                     duration: Duration(milliseconds: 500),

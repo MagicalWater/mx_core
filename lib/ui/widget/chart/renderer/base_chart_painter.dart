@@ -144,9 +144,9 @@ abstract class BaseChartPainter extends CustomPainter {
   void drawCrossLineText(Canvas canvas, Size size);
 
   void initRect(Size size) {
-    double mainHeight = mDisplayHeight * 0.6;
-    double volHeight = mDisplayHeight * 0.2;
-    double secondaryHeight = mDisplayHeight * 0.2;
+    double mainHeight = mDisplayHeight * 0.7;
+    double volHeight = mDisplayHeight * 0.15;
+    double secondaryHeight = mDisplayHeight * 0.15;
     if (volState == VolState.none && secondaryState == SecondaryState.none) {
       mainHeight = mDisplayHeight;
     } else if (volState == VolState.none ||

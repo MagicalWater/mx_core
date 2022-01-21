@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 
 import 'chart_style.dart';
 import 'entity/info_window_entity.dart';

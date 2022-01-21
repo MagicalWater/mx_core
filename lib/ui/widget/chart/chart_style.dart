@@ -266,6 +266,10 @@ class MainChartStyle {
   final Color upColor;
   final Color downColor;
 
+  /// 買賣顏色, 通常顏色的方向會跟著漲跌顏色更改
+  final Color buyInColor;
+  final Color sellOutColor;
+
   /// 分時線顏色
   final Color timelineColor;
 
@@ -322,6 +326,8 @@ class MainChartStyle {
     this.bollStyle = const BOLLStyle.dark(),
     this.upColor = _ChartColors.upColor,
     this.downColor = _ChartColors.dnColor,
+    this.buyInColor = _ChartColors.buyInColor,
+    this.sellOutColor = _ChartColors.sellOutColor,
     this.timelineColor = _ChartColors.kLineColor,
     this.timelineShadowColor = _ChartColors.kLineShadowColor,
     this.volTextColor = _ChartColors.volColor,
@@ -361,6 +367,8 @@ class MainChartStyle {
     this.bollStyle = const BOLLStyle.light(),
     this.upColor = _ChartReverseColors.upColor,
     this.downColor = _ChartReverseColors.dnColor,
+    this.buyInColor = _ChartReverseColors.buyInColor,
+    this.sellOutColor = _ChartReverseColors.sellOutColor,
     this.timelineColor = _ChartReverseColors.kLineColor,
     this.timelineShadowColor = _ChartReverseColors.kLineShadowColor,
     this.volTextColor = _ChartReverseColors.volColor,
@@ -403,6 +411,10 @@ class MainChartStyle {
       upColor: chartUpDown == ChartUpDown.greenUpRedDown ? upColor : downColor,
       downColor:
           chartUpDown == ChartUpDown.greenUpRedDown ? downColor : upColor,
+      buyInColor:
+          chartUpDown == ChartUpDown.greenUpRedDown ? buyInColor : sellOutColor,
+      sellOutColor:
+          chartUpDown == ChartUpDown.greenUpRedDown ? sellOutColor : buyInColor,
       timelineColor: timelineColor,
       timelineShadowColor: timelineShadowColor,
       volTextColor: volTextColor,
@@ -445,26 +457,32 @@ class _ChartColors {
     Color(0x554C86CD),
     Color(0x00000000)
   ]; //k线阴影渐变
-  static const Color ma5Color = Color(0xffC9B885);
-  static const Color ma10Color = Color(0xff6CB0A6);
-  static const Color ma20Color = Color(0xff1b94ff);
-  static const Color ma30Color = Color(0xff9979C6);
+  static const Color ma5Color = Color(0xffb47731);
+  static const Color ma10Color = Color(0xffae33ba);
+  static const Color ma20Color = Color(0xff59d0d0);
+  static const Color ma30Color = Color(0xff59d0d0);
   static const Color upColor = Color(0xff26a39d);
-  static const Color dnColor = Color(0xffeb524f);
+  static const Color dnColor = Color(0xffd55c5a);
+
+  static const Color buyInColor = Color(0xff1d5f5e);
+  static const Color sellOutColor = Color(0xff82363a);
+
   static const Color candleBorderColor = Color(0xff656565);
 
   static const Color volColor = Color(0xff4729AE);
 
-  static const Color macdColor = Color(0xff4729AE);
-  static const Color macdUpColor = Color(0xff26a69a);
-  static const Color macdDnColor = Color(0xffef5350);
-  static const Color difColor = Color(0xffC9B885);
-  static const Color deaColor = Color(0xff6CB0A6);
+  static const Color macdColor = Color(0xffb8d651);
+  static const Color macdSellUpColor = Color(0xff1d5f5e);
+  static const Color macdSellDnColor = Color(0xff3b9594);
+  static const Color macdBuyUpColor = Color(0xff82363a);
+  static const Color macdBuyDnColor = Color(0xffc6676c);
+  static const Color difColor = Color(0xffae33ba);
+  static const Color deaColor = Color(0xff59d0d0);
 
-  static const Color kColor = Color(0xffC9B885);
-  static const Color dColor = Color(0xff6CB0A6);
-  static const Color jColor = Color(0xff9979C6);
-  static const Color rsiColor = Color(0xffC9B885);
+  static const Color kColor = Color(0xffb47731);
+  static const Color dColor = Color(0xffae33ba);
+  static const Color jColor = Color(0xff59d0d0);
+  static const Color rsiColor = Color(0xffae33ba);
 
   static const Color yAxisTextColor = Color(0xff60738E); //右边y轴刻度
   static const Color xAxisTextColor = Color(0xff60738E); //下方时间刻度
@@ -506,27 +524,29 @@ class _ChartReverseColors {
     Color(0x554C86CD),
     Color(0x00ffffff)
   ]; //k线阴影渐变
-  static const Color ma5Color = Color(0xff7e7e7e);
-  static const Color ma10Color = Color(0xfffa8f40);
-  static const Color ma20Color = Color(0xff1b94ff);
-  static const Color ma30Color = Color(0xffb061b0);
+  static const Color ma5Color = Color(0xffb47731);
+  static const Color ma10Color = Color(0xffae33ba);
+  static const Color ma20Color = Color(0xff59d0d0);
+  static const Color ma30Color = Color(0xff59d0d0);
   static const Color upColor = Color(0xff19aa1e);
-  static const Color dnColor = Color(0xfff60600);
+  static const Color dnColor = Color(0xffd55c5a);
+  static const Color buyInColor = Color(0xff1d5f5e);
+  static const Color sellOutColor = Color(0xff82363a);
   static const Color candleBorderColor = Color(0xff656565);
   static const Color volColor = Color(0xffb8d651);
 
   static const Color macdColor = Color(0xffb8d651);
-  static const Color macdSellUpColor = Color(0xff26a79c);
-  static const Color macdSellDnColor = Color(0xffb1c7c4);
-  static const Color macdBuyUpColor = Color(0xffef5350);
-  static const Color macdBuyDnColor = Color(0xffe5c9cc);
-  static const Color difColor = Color(0xff1b94ff);
-  static const Color deaColor = Color(0xfffa8f40);
+  static const Color macdSellUpColor = Color(0xff1d5f5e);
+  static const Color macdSellDnColor = Color(0xff3b9594);
+  static const Color macdBuyUpColor = Color(0xff82363a);
+  static const Color macdBuyDnColor = Color(0xffc6676c);
+  static const Color difColor = Color(0xffae33ba);
+  static const Color deaColor = Color(0xff59d0d0);
 
-  static const Color kColor = Color(0xfffa8f40);
-  static const Color dColor = Color(0xff1b94ff);
-  static const Color jColor = Color(0xffb061b0);
-  static const Color rsiColor = Color(0xfffa8f40);
+  static const Color kColor = Color(0xffb47731);
+  static const Color dColor = Color(0xffae33ba);
+  static const Color jColor = Color(0xff59d0d0);
+  static const Color rsiColor = Color(0xffae33ba);
 
   static const Color yAxisTextColor = Color(0xff9f8c71); //右边y轴刻度
   static const Color xAxisTextColor = Color(0xff9f8c71); //下方时间刻度
@@ -561,19 +581,19 @@ class ChartStyle {
   ChartStyle._();
 
   //点与点的距离
-  static const double pointWidth = 6.0;
+  static const double pointWidth = 8.0;
 
   //蜡烛宽度
-  static const double candleWidth = 3;
+  static const double candleWidth = 7;
 
   //蜡烛中间线的宽度
-  static const double candleLineWidth = 0.5;
+  static const double candleLineWidth = 1.3;
 
   //vol柱子宽度
-  static const double volWidth = 4.5;
+  static const double volWidth = 7;
 
   //macd柱子宽度
-  static const double macdWidth = 5;
+  static const double macdWidth = 7;
 
   //垂直交叉线宽度
   static const double vCrossWidth = 4.5;

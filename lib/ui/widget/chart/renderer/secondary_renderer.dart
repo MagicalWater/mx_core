@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../entity/macd_entity.dart';
@@ -51,6 +49,8 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
         drawMACD(curPoint, canvas, curX, lastPoint, lastX);
         break;
       case SecondaryState.kdj:
+        final oriWidth = chartPaint.strokeWidth;
+        chartPaint.strokeWidth = 1;
         if (lastPoint.k != 0) {
           drawLine(
               lastPoint.k, curPoint.k, canvas, lastX, curX, kdjStyle.kColor);
@@ -63,17 +63,24 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
           drawLine(
               lastPoint.j, curPoint.j, canvas, lastX, curX, kdjStyle.jColor);
         }
+        chartPaint.strokeWidth = oriWidth;
         break;
       case SecondaryState.rsi:
+        final oriWidth = chartPaint.strokeWidth;
+        chartPaint.strokeWidth = 1;
         if (lastPoint.rsi != 0) {
           drawLine(
               lastPoint.rsi, curPoint.rsi, canvas, lastX, curX, rsiStyle.color);
         }
+        chartPaint.strokeWidth = oriWidth;
         break;
       case SecondaryState.wr:
+        final oriWidth = chartPaint.strokeWidth;
+        chartPaint.strokeWidth = 1;
         if (lastPoint.r != 0) {
           drawLine(lastPoint.r, curPoint.r, canvas, lastX, curX, wrStyle.color);
         }
+        chartPaint.strokeWidth = oriWidth;
         break;
       default:
         break;
@@ -113,6 +120,8 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
         chartPaint,
       );
     }
+    final oriWidth = chartPaint.strokeWidth;
+    chartPaint.strokeWidth = 1;
     if (lastPoint.dif != 0) {
       drawLine(
           lastPoint.dif, curPoint.dif, canvas, lastX, curX, macdStyle.difColor);
@@ -121,6 +130,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
       drawLine(
           lastPoint.dea, curPoint.dea, canvas, lastX, curX, macdStyle.deaColor);
     }
+    chartPaint.strokeWidth = oriWidth;
   }
 
   @override

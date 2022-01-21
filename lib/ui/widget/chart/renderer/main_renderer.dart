@@ -6,7 +6,6 @@ import 'package:mx_core/mx_core.dart' show NumUtil;
 import 'package:mx_core/ui/widget/chart/entity/k_line_entity.dart';
 
 import '../entity/candle_entity.dart';
-import '../k_chart.dart' show MainState;
 import '../k_chart.dart';
 import 'base_chart_renderer.dart';
 
@@ -319,6 +318,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 
   void drawMaLine(CandleEntity lastPoint, CandleEntity curPoint, Canvas canvas,
       double lastX, double curX) {
+    final oriWidth = chartPaint.strokeWidth;
+    chartPaint.strokeWidth = 1.2;
     if (maLine.contains(MALine.ma5) && lastPoint.ma5Price != 0) {
       drawLine(lastPoint.ma5Price, curPoint.ma5Price, canvas, lastX, curX,
           maStyle.ma5Color);
@@ -335,10 +336,13 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       drawLine(lastPoint.ma30Price, curPoint.ma30Price, canvas, lastX, curX,
           maStyle.ma30Color);
     }
+    chartPaint.strokeWidth = oriWidth;
   }
 
   void drawBollLine(CandleEntity lastPoint, CandleEntity curPoint,
       Canvas canvas, double lastX, double curX) {
+    final oriWidth = chartPaint.strokeWidth;
+    chartPaint.strokeWidth = 1.2;
     if (lastPoint.up != 0) {
       drawLine(
           lastPoint.up, curPoint.up, canvas, lastX, curX, maStyle.ma10Color);
@@ -351,6 +355,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
       drawLine(
           lastPoint.dn, curPoint.dn, canvas, lastX, curX, maStyle.ma30Color);
     }
+    chartPaint.strokeWidth = oriWidth;
   }
 
   void drawCandle(CandleEntity curPoint, Canvas canvas, double curX) {
@@ -376,7 +381,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     if (open > close) {
       canvas.drawRect(
         Rect.fromLTRB(curX - lineR, high, curX + lineR, low),
-        chartPaint..color = style.candleStrokeColor,
+        chartPaint..color = style.upColor,
       );
       canvas.drawRect(
         Rect.fromLTRB(curX - r, close, curX + r, open),
@@ -385,7 +390,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     } else {
       canvas.drawRect(
         Rect.fromLTRB(curX - lineR / 2, high, curX + lineR, low),
-        chartPaint..color = style.candleStrokeColor,
+        chartPaint..color = style.downColor,
       );
       canvas.drawRect(
         Rect.fromLTRB(curX - r, open, curX + r, close),
