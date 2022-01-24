@@ -14,6 +14,25 @@ class KChartPage extends StatefulWidget {
   _KChartPageState createState() => _KChartPageState();
 }
 
+class Test extends CustomPainter {
+  var aa = 1;
+  int? bb;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    print('paint start: $aa, $bb');
+    aa += 1;
+    bb = 1;
+    print('paint end: $aa, $bb');
+  }
+
+  @override
+  bool shouldRepaint(covariant Test oldDelegate) {
+    print('shouldRepaint: $aa, $bb, old = ${oldDelegate.aa}, ${oldDelegate.bb}');
+    return true;
+  }
+}
+
 class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
@@ -32,6 +51,12 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
           alignment: Alignment.center,
         );
       } else {
+        return Container(
+          height: Screen.height * 2 / 3,
+          child: KLineChart(
+            datas: state.datas2,
+          ),
+        );
         return Container(
           height: Screen.height * 2 / 3,
           child: KChart(

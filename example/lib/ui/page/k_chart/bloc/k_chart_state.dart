@@ -4,6 +4,7 @@ part of 'k_chart_bloc.dart';
 class KChartState {
   final bool isLoading;
   final List<KLineEntity> datas;
+  final List<KLineData> datas2;
   final MainState mainState;
   final SecondaryState secondaryState;
 
@@ -13,6 +14,7 @@ class KChartState {
   KChartState({
     required this.isLoading,
     this.datas = const [],
+    this.datas2 = const [],
     this.mainState = MainState.ma,
     this.secondaryState = SecondaryState.macd,
     this.isLine = false,
@@ -30,6 +32,17 @@ class KChartState {
     return KChartState(
       isLoading: isLoading ?? this.isLoading,
       datas: datas ?? this.datas,
+      datas2: (datas ?? this.datas).map((e) {
+        return KLineData(
+          open: e.open,
+          high: e.high,
+          low: e.low,
+          close: e.close,
+          volume: e.vol.toInt(),
+          amount: e.amount,
+          dateTime: e.dateTime,
+        );
+      }).toList(),
       mainState: mainState ?? this.mainState,
       secondaryState: secondaryState ?? this.secondaryState,
       isLine: isLine ?? this.isLine,

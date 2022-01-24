@@ -13,26 +13,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/gesture_handle.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_handler_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/k_line_chart.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/chart_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/main_chart_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/volume_chart_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/indicator_macd.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_color_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_height_ratio_setting/chart_height_ratio_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/k_line_chart_ui_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/chart_render.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_color_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_size_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_ui_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/example_lib_main_dart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/main_dart.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/chart_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/chart_style.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/entity/rsi_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/entity/rsi_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/k_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/k_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/base_chart_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/main_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/main_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/secondary_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/secondary_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/vol_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/renderer/vol_renderer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/assets/jsons/chart_example/kline.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/jsons/chart_example/kline.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ex_main.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main_debug.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main_example.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main_release.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/chart_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/chart_style.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/entity/rsi_entity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/entity/rsi_entity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/k_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/k_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/base_chart_painter.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/main_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/main_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/secondary_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/secondary_renderer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/vol_renderer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/renderer/vol_renderer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +98,7 @@
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget/page_switcher" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget/k_chart/view" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -84,44 +107,21 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_chart\view" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/page_switcher" />
       <recent name="$PROJECT_DIR$/test" />
       <recent name="$PROJECT_DIR$/example/lib/ui/page/three_point_layout" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="D:\Project\Base-APP-Core\example\lib\ui\page\wave_progress" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lib/ui/widget/route_switcher" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/widget_switcher" />
-      <recent name="$PROJECT_DIR$/example/lib/ui/page/widget_switcher" />
-      <recent name="$PROJECT_DIR$/lib/util/num_util" />
-      <recent name="D:\Project\Base-APP-Core\example\lib\ui\page\route_push_third" />
+      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\widget\chart_painter\ui_style" />
+      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\widget\chart_render\impl\main_chart" />
+      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\widget\chart_painter" />
+      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\widget\chart_render" />
+      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\model\chart_state" />
     </key>
   </component>
-  <component name="RunManager" selected="Flutter.example/lib/main.dart">
-    <configuration name="main_example.dart" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
-      <option name="filePath" value="$PROJECT_DIR$/example/lib/main_example.dart" />
-      <option name="workingDirectory" value="$PROJECT_DIR$/example" />
-      <method v="2" />
-    </configuration>
-    <configuration name="android_debug" type="FlutterRunConfigurationType" factoryName="Flutter" singleton="false">
-      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
-      <method v="2" />
-    </configuration>
-    <configuration name="android_release" type="FlutterRunConfigurationType" factoryName="Flutter" singleton="false">
-      <option name="additionalArgs" value="--release" />
-      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ios_debug" type="FlutterRunConfigurationType" factoryName="Flutter" singleton="false">
-      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ios_release" type="FlutterRunConfigurationType" factoryName="Flutter" singleton="false">
-      <option name="additionalArgs" value="--release" />
-      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Flutter.main.dart">
     <configuration name="Test" type="FlutterTestConfigType" factoryName="Flutter Test" temporary="true" nameIsGenerated="true">
       <option name="testName" value="Test" />
       <option name="testFile" value="$PROJECT_DIR$/example/test/widget_test.dart" />
@@ -135,12 +135,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Dart Command Line App.main_example.dart" />
-      <item itemvalue="Flutter.android_debug" />
-      <item itemvalue="Flutter.android_release" />
-      <item itemvalue="Flutter.example/lib/main.dart" />
-      <item itemvalue="Flutter.ios_debug" />
-      <item itemvalue="Flutter.ios_release" />
+      <item itemvalue="Flutter.main.dart" />
       <item itemvalue="Flutter Test.login" />
       <item itemvalue="Flutter Test.Test" />
     </list>
