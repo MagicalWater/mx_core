@@ -2,8 +2,6 @@ import 'package:flutter/gestures.dart';
 
 /// 需要處理的手勢
 abstract class GestureHandle {
-  abstract int _scale;
-
   /// === 橫向拖移手勢 ===
   void onHorizontalDragDown(DragDownDetails details);
 
@@ -12,6 +10,7 @@ abstract class GestureHandle {
   void onHorizontalDragEnd(DragEndDetails details);
 
   void onHorizontalDragCancel();
+
   /// =================
 
   /// === 縮放手勢 ===
@@ -20,6 +19,7 @@ abstract class GestureHandle {
   void onScaleUpdate(ScaleUpdateDetails details);
 
   void onScaleEnd(ScaleEndDetails details);
+
   /// =================
 
   /// === 長按手勢 ===
@@ -28,5 +28,6 @@ abstract class GestureHandle {
   void onLongPressMoveUpdate(LongPressMoveUpdateDetails details);
 
   void onLongPressEnd(LongPressEndDetails details);
-/// =================
+
+  /// =================
 }

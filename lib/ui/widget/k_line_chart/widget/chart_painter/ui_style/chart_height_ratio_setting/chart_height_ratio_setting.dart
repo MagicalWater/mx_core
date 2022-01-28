@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:mx_core/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/chart_state/volume_chart_state.dart';
 
@@ -22,10 +24,7 @@ class ChartHeightRatioSetting {
   final double? indicatorRatio;
 
   /// 下方日期占用高度
-  final double bottomDateFixed;
-
-  /// 主圖表的上方空格高度
-  final double topSpaceFixed;
+  final double bottomTimeFixed;
 
   /// 是否有設定主圖表高度
   bool get _isMainSetting => mainFixed != null || mainRatio != null;
@@ -37,40 +36,42 @@ class ChartHeightRatioSetting {
   bool get _isIndicatorSetting =>
       indicatorFixed != null || indicatorRatio != null;
 
-  ChartHeightRatioSetting({
+  const ChartHeightRatioSetting({
     this.mainFixed,
     this.mainRatio,
     this.volumeFixed,
     this.volumeRatio,
     this.indicatorFixed,
     this.indicatorRatio,
-    this.topSpaceFixed = 40,
-    this.bottomDateFixed = 20,
+    this.bottomTimeFixed = 25,
   });
 
   /// 分配各個主題占用高度
-  ChartHeightCampute computeChartHeight({
+  ChartHeightCampute<double> computeChartHeight({
     required double totalHeight,
     required VolumeChartState volumeChartState,
     required IndicatorChartState indicatorChartState,
   }) {
-    final remainTotalHeight = totalHeight - bottomDateFixed - topSpaceFixed;
+    final remainTotalHeight = totalHeight - bottomTimeFixed;
 
     double? mainHeight, volumeHeight, indicatorHeight;
     if (_isMainSetting) {
-      mainHeight = mainFixed ?? (mainRatio! * remainTotalHeight);
+      mainHeight =
+          mainFixed ?? (mainRatio! * remainTotalHeight).floorToDouble();
     }
 
     if (volumeChartState == VolumeChartState.none) {
       volumeHeight = 0;
     } else if (_isVolumeSetting) {
-      volumeHeight = volumeFixed ?? (volumeRatio! * remainTotalHeight);
+      volumeHeight =
+          volumeFixed ?? (volumeRatio! * remainTotalHeight).floorToDouble();
     }
 
-    if (indicatorChartState != IndicatorChartState.none) {
+    if (indicatorChartState == IndicatorChartState.none) {
       indicatorHeight = 0;
     } else if (_isIndicatorSetting) {
-      indicatorHeight = indicatorFixed ?? (indicatorRatio! * remainTotalHeight);
+      indicatorHeight = indicatorFixed ??
+          (indicatorRatio! * remainTotalHeight).floorToDouble();
     }
 
     mainHeight ??=
@@ -78,22 +79,43 @@ class ChartHeightRatioSetting {
     volumeHeight ??= remainTotalHeight - mainHeight - (indicatorHeight ?? 0);
     indicatorHeight ??= remainTotalHeight - mainHeight - volumeHeight;
 
-    return ChartHeightCampute(
-      mainHeight: mainHeight,
-      volumeHeight: volumeHeight,
-      indicatorHeight: indicatorHeight,
+    return ChartHeightCampute<double>(
+      main: mainHeight,
+      volume: volumeHeight,
+      indicator: indicatorHeight,
+      bottomTime: bottomTimeFixed,
     );
   }
 }
 
-class ChartHeightCampute {
-  final double mainHeight;
-  final double volumeHeight;
-  final double indicatorHeight;
+class ChartHeightCampute<T> {
+  final T main;
+  final T volume;
+  final T indicator;
+  final T bottomTime;
 
   ChartHeightCampute({
-    required this.mainHeight,
-    required this.volumeHeight,
-    required this.indicatorHeight,
+    required this.main,
+    required this.volume,
+    required this.indicator,
+    required this.bottomTime,
   });
+}
+
+extension HeightToRect on ChartHeightCampute<double> {
+  /// 將高轉換為Rect
+  ChartHeightCampute<Rect> toRect(Size size) {
+    final mainRect = Rect.fromLTRB(0, 0, size.width, main);
+    final volumeRect = Rect.fromLTWH(0, main, size.width, volume);
+    final indicatorRect =
+        Rect.fromLTWH(0, volumeRect.bottom, size.width, indicator);
+    final bottomTimeRect =
+        Rect.fromLTWH(0, indicatorRect.bottom, size.width, bottomTime);
+    return ChartHeightCampute<Rect>(
+      main: mainRect,
+      volume: volumeRect,
+      indicator: indicatorRect,
+      bottomTime: bottomTimeRect,
+    );
+  }
 }

@@ -5,7 +5,18 @@ class ChartInertialScroller {
   final AnimationController _controller;
 
   ChartInertialScroller({required AnimationController controller})
-      : _controller = controller;
+      : _controller = controller {
+    _controller.addListener(() {
+      _scrollUpdated?.call(_controller.value);
+    });
+  }
+
+  ValueChanged? _scrollUpdated;
+
+  /// 設置滑動更新時回調
+  void setScrollUpdatedCallback(ValueChanged? callback) {
+    _scrollUpdated = callback;
+  }
 
   /// 是否正在慣性滾動中
   bool get isScroll => _controller.isAnimating;
@@ -20,7 +31,7 @@ class ChartInertialScroller {
   /// 進行慣性滾動
   /// [position] - 開始進行慣性滾動的位置
   /// [velocity] - 初始慣性滑動速率
-  void startIntertialScroll({
+  TickerFuture startIntertialScroll({
     required double position,
     required double velocity,
   }) {
@@ -33,12 +44,20 @@ class ChartInertialScroller {
       distance: 1.0 / pixelRatio,
     );
 
+    // print('速率: ${tolerance.velocity}, 距離: ${tolerance.distance}');
+    // print('實際速率: $velocity');
+
     // 從 [position] 開始進行模擬滾動
     final simulation = ClampingScrollSimulation(
       position: position,
       velocity: velocity,
       tolerance: tolerance,
     );
-    _controller.animateWith(simulation);
+    return _controller.animateWith(simulation);
+  }
+
+  void dispose() {
+    _controller.dispose();
+    _scrollUpdated = null;
   }
 }

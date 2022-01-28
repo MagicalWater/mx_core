@@ -450,7 +450,7 @@ class _ChartColors {
   // static const clearBlue02 = const Color(0xff2e8efb);
 
   //背景颜色
-  static const Color bgColor = Color(0xff171b26);
+  static const Color bgColor = Color(0xff1e2129);
   static const Color kLineColor = Color(0xff4C86CD);
   static const Color gridColor = Color(0xff2c303e);
   static const List<Color> kLineShadowColor = [

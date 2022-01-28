@@ -6,11 +6,14 @@ import '../chart_gesture.dart';
 import 'gesture_handler_mixin.dart';
 
 /// 圖表手勢處理
-class ChartGestureImpl extends ChartGesture
-    with GestureHandlerMixin {
-
+class ChartGestureImpl extends ChartGesture with GestureHandlerMixin {
   ChartGestureImpl({
     required VoidCallback onDrawUpdateNeed,
     required ChartInertialScroller chartScroller,
-  }) : super(onDrawUpdateNeed: onDrawUpdateNeed, chartScroller: chartScroller);
+    Function(bool right)? onLoadMore,
+  }) : super(
+          onDrawUpdateNeed: onDrawUpdateNeed,
+          chartScroller: chartScroller,
+          onLoadMore: onLoadMore,
+        );
 }

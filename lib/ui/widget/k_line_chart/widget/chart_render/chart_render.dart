@@ -19,7 +19,10 @@ abstract class ChartRender {
   void paintGrid(Canvas canvas, Rect rect);
 
   /// 繪製最上方的說明文字
-  void paintText(Canvas canvas, Rect rect);
+  void paintTopValueText(Canvas canvas, Rect rect);
+
+  /// 繪製右邊的數值Tag文字
+  void paintRightValueText(Canvas canvas, Rect rect);
 
   /// 繪製圖表
   void paintChart(Canvas canvas, Rect rect);

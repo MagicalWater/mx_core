@@ -11,9 +11,13 @@ class KLineChartUiStyle {
   final ChartHeightRatioSetting heightRatioSetting;
   final ChartColorSetting colorSetting;
 
-  KLineChartUiStyle({
-    required this.sizeSetting,
-    required this.heightRatioSetting,
-    required this.colorSetting,
+  const KLineChartUiStyle({
+    this.sizeSetting = const ChartSizeSetting(),
+    this.colorSetting = const ChartColorSetting(),
+    this.heightRatioSetting = const ChartHeightRatioSetting(
+      mainRatio: 0.7,
+      volumeRatio: 0.15,
+      indicatorRatio: 0.15,
+    ),
   });
 }

@@ -13,49 +13,126 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/gesture_handle.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_handler_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/k_line_chart.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/chart_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/main_chart_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/volume_chart_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/indicator_macd.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_color_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_height_ratio_setting/chart_height_ratio_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/k_line_chart_ui_style.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/chart_render.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_color_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_size_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_ui_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/draw_content_info.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/chart_indicator_calculate.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_boll.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_ma.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/long_press_data.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_value_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_paint_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_value_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/ui_style/macd_chart_color_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/ui_style/macd_chart_size_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/ui_style/macd_chart_ui_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_paint_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/ui_style/volume_chart_color_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/ui_style/volume_chart_size_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/ui_style/volume_chart_ui_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/volume_chart_render_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/volume_chart_render_value_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/macd_chart_render.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/k_line_data_tooltip.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/model/model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/model/tooltip_prefix.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/ui_style/k_line_data_tooltip_color_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/ui_style/k_line_data_tooltip_size_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/ui_style/k_line_data_tooltip_ui_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/draw_content_info.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/chart_indicator_calculate.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_boll.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_ma.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/long_press_data.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_value_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_paint_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_value_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/ui_style/macd_chart_color_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/ui_style/macd_chart_size_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/ui_style/macd_chart_ui_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_paint_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/ui_style/volume_chart_color_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/ui_style/volume_chart_size_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/ui_style/volume_chart_ui_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/volume_chart_render_impl.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/volume_chart_render_value_mixin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/macd_chart_render.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/k_line_data_tooltip.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/model/model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/model/tooltip_prefix.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/ui_style/k_line_data_tooltip_color_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/ui_style/k_line_data_tooltip_size_setting.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/ui_style/k_line_data_tooltip_ui_style.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/example_lib_main_dart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/main_dart.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/assets/jsons/chart_example/kline.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/assets/jsons/chart_example/kline.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/chart_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/chart/chart_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_gesture/gesture_handle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_gesture/gesture_handle.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_handler_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_handler_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/indicator_macd.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_macd.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_color_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_color_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_height_ratio_setting/chart_height_ratio_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_height_ratio_setting/chart_height_ratio_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/k_line_chart_ui_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/k_line_chart_ui_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/chart_render.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/chart_render.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_color_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_color_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_value_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_size_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_size_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_ui_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_ui_style.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ex_main.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main_debug.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main_example.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main_release.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/chart/chart_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/chart/chart_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/gesture_handle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/gesture_handle.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_handler_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_handler_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/indicator_macd.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_macd.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_color_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_color_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_height_ratio_setting/chart_height_ratio_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_height_ratio_setting/chart_height_ratio_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/k_line_chart_ui_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/k_line_chart_ui_style.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/chart_render.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/chart_render.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_color_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_color_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_value_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_size_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_size_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_ui_style.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_ui_style.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +175,7 @@
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget/k_chart/view" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -107,18 +184,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_chart\view" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/page_switcher" />
-      <recent name="$PROJECT_DIR$/test" />
-      <recent name="$PROJECT_DIR$/example/lib/ui/page/three_point_layout" />
-      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/ui_style" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\widget\chart_painter\ui_style" />
-      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\widget\chart_render\impl\main_chart" />
-      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\widget\chart_painter" />
-      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\widget\chart_render" />
-      <recent name="D:\Project\Base-APP-Core\lib\ui\widget\k_line_chart\model\chart_state" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render" />
+      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.main.dart">

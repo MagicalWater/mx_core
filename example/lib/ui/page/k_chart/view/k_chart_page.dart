@@ -87,12 +87,13 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
     }
 
     return Scaffold(
+      // backgroundColor: Color(0xff1e2129),
       backgroundColor: Colors.white,
       appBar: baseAppBar('行情圖表'),
       body: BlocBuilder<KChartBloc, KChartState>(
         builder: (context, state) {
           var stateIsLine = state.isLine;
-          print('是線條嗎: ${stateIsLine}');
+          // print('是線條嗎: ${stateIsLine}');
           return ListView(
             children: <Widget>[
               Stack(children: <Widget>[

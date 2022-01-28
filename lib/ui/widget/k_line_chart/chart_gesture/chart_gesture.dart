@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart';
+import 'package:mx_core/ui/widget/k_line_chart/model/draw_content_info.dart';
 
 import 'gesture_handle.dart';
 
@@ -20,8 +21,9 @@ abstract class ChartGesture implements GestureHandle {
   /// x軸被長按的位置
   double longPressX = 0, longPressY = 0;
 
-  /// x軸最大可滾動距離
-  double maxScrollX = 0;
+  /// 元件繪製完成後才可獲取到的資料
+  /// 1. x軸可滑動距離, 2. 資料表總寬度, 3. 畫布寬度
+  DrawContentInfo? drawContentInfo;
 
   /// 慣性滑動
   final ChartInertialScroller chartScroller;
@@ -30,13 +32,21 @@ abstract class ChartGesture implements GestureHandle {
   /// 代表需要通知外部進行畫面刷新
   final VoidCallback onDrawUpdateNeed;
 
+  /// 滑動到最左/最右回調
+  final Function(bool right)? onLoadMore;
+
   ChartGesture({
     required this.onDrawUpdateNeed,
     required this.chartScroller,
+    this.onLoadMore,
   });
 
   /// 設置最大可滾動距離
-  void setMaxScrollX(double maxScrollX) {
-    this.maxScrollX = maxScrollX;
+  void setDrawInfo(DrawContentInfo info) {
+    drawContentInfo = info;
+  }
+
+  void dispose() {
+    chartScroller.dispose();
   }
 }

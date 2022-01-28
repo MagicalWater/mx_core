@@ -29,20 +29,24 @@ class KChartState {
     MainState? mainState,
     SecondaryState? secondaryState,
   }) {
+    final datas2 = (datas ?? this.datas).map((e) {
+      return KLineData(
+        open: e.open,
+        high: e.high,
+        low: e.low,
+        close: e.close,
+        volume: e.vol.toInt(),
+        amount: e.amount,
+        dateTime: e.dateTime,
+      );
+    }).toList();
+    datas2.calculateMA([5, 10, 20]);
+    datas2.calculateBOLL(20);
+    datas2.calculateMACD();
     return KChartState(
       isLoading: isLoading ?? this.isLoading,
       datas: datas ?? this.datas,
-      datas2: (datas ?? this.datas).map((e) {
-        return KLineData(
-          open: e.open,
-          high: e.high,
-          low: e.low,
-          close: e.close,
-          volume: e.vol.toInt(),
-          amount: e.amount,
-          dateTime: e.dateTime,
-        );
-      }).toList(),
+      datas2: datas2,
       mainState: mainState ?? this.mainState,
       secondaryState: secondaryState ?? this.secondaryState,
       isLine: isLine ?? this.isLine,
