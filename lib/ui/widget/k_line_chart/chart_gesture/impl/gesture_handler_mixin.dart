@@ -10,6 +10,7 @@ mixin GestureHandlerMixin on ChartGesture implements GestureHandle {
   /// 橫向拖動開始
   @override
   void onHorizontalDragDown(DragDownDetails details) {
+    print('拖拉開始:');
     isDrag = true;
     if (chartScroller.isScroll) {
       chartScroller.stopScroll();
@@ -78,6 +79,7 @@ mixin GestureHandlerMixin on ChartGesture implements GestureHandle {
 
   @override
   void onScaleStart(ScaleStartDetails details) {
+    print('縮放開始');
     isScale = true;
   }
 

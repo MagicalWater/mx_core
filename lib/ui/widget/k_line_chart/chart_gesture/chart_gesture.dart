@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/draw_content_info.dart';
 
-import 'gesture_handle.dart';
+import 'gesture_handle_new.dart';
 
 /// 圖表手勢處理
-abstract class ChartGesture implements GestureHandle {
+abstract class ChartGesture implements GestureHandleNew {
   /// 是否正在縮放 / 拖移 / 長按
   bool isScale = false, isDrag = false, isLongPress = false;
 

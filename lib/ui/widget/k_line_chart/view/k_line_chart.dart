@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core/route_page/page_route_mixin.dart';
@@ -5,6 +6,7 @@ import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart'
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
+import 'package:mx_core/ui/widget/k_line_chart/multi_touch_gesture_recognizer/multi_touch_gesture_recognizer.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_ui_style.dart';
@@ -73,9 +75,9 @@ class KLineChart extends StatefulWidget {
 
   /// 預設tooltip彈窗
   static KLineDataInfoTooltip _defaultTooltip(
-      BuildContext context,
-      LongPressData data,
-      ) {
+    BuildContext context,
+    LongPressData data,
+  ) {
     return KLineDataInfoTooltip(
       longPressData: data,
       dateTimeFormat: 'yyyy-MM-dd HH:mm',
@@ -115,17 +117,15 @@ class _KLineChartState extends State<KLineChart>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onHorizontalDragDown: chartGesture.onHorizontalDragDown,
-      onHorizontalDragUpdate: chartGesture.onHorizontalDragUpdate,
-      onHorizontalDragEnd: chartGesture.onHorizontalDragEnd,
-      onHorizontalDragCancel: chartGesture.onHorizontalDragCancel,
-      onScaleStart: chartGesture.onScaleStart,
-      onScaleUpdate: chartGesture.onScaleUpdate,
-      onScaleEnd: chartGesture.onScaleEnd,
-      onLongPressStart: chartGesture.onLongPressStart,
-      onLongPressMoveUpdate: chartGesture.onLongPressMoveUpdate,
-      onLongPressEnd: chartGesture.onLongPressEnd,
+    return RawGestureDetector(
+      gestures: <Type, GestureRecognizerFactory>{
+        MultiTouchGestureRecognizer: MultiTouchGestureRecognizer.factory(
+          onTouchStart: chartGesture.onTouchDown,
+          onTouchUpdate: chartGesture.onTouchUpdate,
+          onTouchEnd: chartGesture.onTouchUp,
+          onTouchCancel: chartGesture.onTouchCancel,
+        ),
+      },
       child: Stack(
         children: <Widget>[
           CustomPaint(
