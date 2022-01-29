@@ -5,6 +5,7 @@ import 'package:mx_core/ui/widget/k_line_chart/multi_touch_gesture_recognizer/mu
 /// 多點觸控手勢
 class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
   final void Function(int pointer, DragStartDetails details)? onTouchDown;
+  final void Function(int pointer)? onTouchCancel;
 
   MultiTouchGestureRecognizer({
     Object? debugOwner,
@@ -12,13 +13,12 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
     this.onTouchDown,
     void Function(int pointer, DragUpdateDetails details)? onTouchUpdate,
     void Function(int pointer, DragEndDetails details)? onTouchUp,
-    void Function(int pointer)? onTouchCancel,
+    this.onTouchCancel,
   }) : super(
           debugOwner: debugOwner,
           supportedDevices: supportedDevices,
         ) {
     onStart = (offset) {
-      print('kk = $offset');
       final eventEntry = _pointerEvent.entries
           .firstWhere((element) => element.value.position == offset);
       final pointer = eventEntry.key;
@@ -74,7 +74,15 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
       ),
     );
 
-    return _MultiTouchState(event.position, event.kind, gestureSettings);
+    return _MultiTouchState(
+      initialPosition: event.position,
+      kind: event.kind,
+      deviceGestureSettings: gestureSettings,
+      onCancelWithNoDrag: () {
+        _pointerEvent.remove(event.pointer);
+        onTouchCancel?.call(event.pointer);
+      },
+    );
   }
 
   @override
@@ -82,20 +90,40 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
 }
 
 class _MultiTouchState extends MultiDragPointerState {
-  _MultiTouchState(Offset initialPosition, PointerDeviceKind kind,
-      DeviceGestureSettings? deviceGestureSettings)
-      : super(initialPosition, kind, deviceGestureSettings);
+  /// 是否已初始化Drag
+  var isDragInit = false;
+
+  /// 尚未拖拉之前就取消了觸摸, 那麼觸摸取消手勢就會從此發出
+  final VoidCallback onCancelWithNoDrag;
+
+  _MultiTouchState({
+    required Offset initialPosition,
+    required PointerDeviceKind kind,
+    DeviceGestureSettings? deviceGestureSettings,
+    required this.onCancelWithNoDrag,
+  }) : super(initialPosition, kind, deviceGestureSettings);
 
   @override
   void checkForResolutionAfterMove() {
     assert(pendingDelta != null);
-    if (pendingDelta!.distance > computeHitSlop(kind, gestureSettings)) {
-      resolve(GestureDisposition.accepted);
-    }
+    // 無論距離為何, 一律接受移動
+    resolve(GestureDisposition.accepted);
+    // if (pendingDelta!.distance > computeHitSlop(kind, gestureSettings)) {
+    //   resolve(GestureDisposition.accepted);
+    // }
   }
 
   @override
   void accepted(GestureMultiDragStartCallback starter) {
     starter(initialPosition);
+    isDragInit = true;
+  }
+
+  @override
+  void dispose() {
+    if (!isDragInit) {
+      onCancelWithNoDrag();
+    }
+    super.dispose();
   }
 }

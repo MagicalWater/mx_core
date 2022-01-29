@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 
 /// 需要處理的手勢
-abstract class GestureHandleNew {
+abstract class TapGesture {
   void onTouchDown(int pointer, DragStartDetails details);
 
   void onTouchUpdate(int pointer, DragUpdateDetails details);
