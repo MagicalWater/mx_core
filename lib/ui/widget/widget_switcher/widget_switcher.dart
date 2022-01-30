@@ -450,7 +450,8 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
         removeResult = removeUntil(tagStack.tag, tagStack.displayIndex);
         if (!removeResult) {
           // 需要被移除, 因此於完整的歷史堆疊將之指定為null
-          tagStacks[tagStack.historyIndex] = null;
+          // tagStacks[tagStack.historyIndex] = null;
+          tagStacks.removeAt(tagStack.historyIndex);
         }
         index--;
       } while (!removeResult && index >= 0);
@@ -458,6 +459,7 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
 
     // 添加需要push的tag
     tagStacks.add(tag);
+    print('widtetSwitcher: 長度 - ${tagStacks.length}');
   }
 
   /// 彈出標示列表

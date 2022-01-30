@@ -118,8 +118,8 @@ class RouteStackSwitcher extends StatefulWidget {
     }
 
     assert(
-      !swipePopEnabled || (swipePopEnabled && onPopHandler != null),
-      'RouteStackSwitcher: 當開啟滑動彈出頁面時, 必須帶入onPopHandler自訂動作',
+    !swipePopEnabled || (swipePopEnabled && onPopHandler != null),
+    'RouteStackSwitcher: 當開啟滑動彈出頁面時, 必須帶入onPopHandler自訂動作',
     );
 
     return RouteStackSwitcher._(
@@ -169,6 +169,8 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
             pre: routes,
             current: event,
           );
+          // print('RouteStackSwitcher: 比較: ${routes.map((e) => e.route)}, ${event.map((e) => e.route)}');
+          // print('RouteStackSwitcher: 移除: $removedIndex');
           controller.push(
             lastRoute.route,
             removeUntil: (tag, index) {
@@ -189,7 +191,8 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
       } else {
         controller.pop(popUntil: (tag, index) => false);
       }
-      routes = event;
+      routes = List.from(event);
+      // print('RouteStackSwitcher: ${event.map((e) => e.route)}');
     });
     super.initState();
   }
