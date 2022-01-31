@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
-import '../../macd_chart_render.dart';
+import '../../wr_chart_render.dart';
+import 'ui_style/wr_chart_ui_style.dart';
 
-mixin MACDChartValueMixin on MACDChartRender {
+mixin WRChartValueMixin on WRChartRender {
   /// 資料檢視區間擁有最小值/最大值的資料index
   late int minValueDataIndex, maxValueDataIndex;
 
@@ -20,9 +19,6 @@ mixin MACDChartValueMixin on MACDChartRender {
   /// 快速將 value 轉換為 y軸位置的縮放參數
   late double valueToYScale;
 
-  /// 長條圖的柱子寬度(已乘上縮放)
-  late double barWidthScaled;
-
   /// 實時線畫筆
   final Paint realTimeLinePaint = Paint();
 
@@ -31,15 +27,11 @@ mixin MACDChartValueMixin on MACDChartRender {
 
   final Paint linePaint = Paint()..style = PaintingStyle.stroke;
 
-  // final Paint lineShadowPaint = Paint()
-  //   ..style = PaintingStyle.fill
-  //   ..isAntiAlias = true;
+  WRChartUiStyle get uiStyle => dataViewer.wrChartUiStyle;
 
-  MACDChartUiStyle get uiStyle => dataViewer.macdChartUiStyle;
+  WRChartColorSetting get colors => uiStyle.colorSetting;
 
-  MACDChartColorSetting get colors => uiStyle.colorSetting;
-
-  MACDChartSizeSetting get sizes => uiStyle.sizeSetting;
+  WRChartSizeSetting get sizes => uiStyle.sizeSetting;
 
   List<MainChartState> get mainState => dataViewer.mainState;
 
@@ -60,33 +52,27 @@ mixin MACDChartValueMixin on MACDChartRender {
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
-      final macdData = data.indciatorData.macd;
+      final wrData = data.indciatorData.wr;
 
-      if (macdData == null) {
+      if (wrData == null) {
         continue;
       }
 
-      final values = [macdData.dif, macdData.dea, macdData.macd];
-      final maxReduce = values.reduce(max);
-      final minReduce = values.reduce(min);
-
-      if (maxValue <= maxReduce) {
-        maxValue = maxReduce;
+      final value = wrData.r;
+      if (maxValue <= value) {
+        maxValue = value;
         maxValueDataIndex = i;
       }
 
-      if (minValue >= minReduce) {
-        minValue = minReduce;
+      if (minValue >= value) {
+        minValue = value;
         minValueDataIndex = i;
       }
     }
 
-    barWidthScaled = sizes.barWidth * dataViewer.scaleX;
-
     // 取得 value 快速轉換 y軸位置的縮放參數
     final valueInterval = maxValue - minValue;
     final yInterval = maxY - minY;
-    // print('最大: $maxValue => $minY, 最小: $minValue => $maxY');
     valueToYScale = yInterval / valueInterval;
   }
 

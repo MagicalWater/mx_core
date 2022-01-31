@@ -1,19 +1,28 @@
 import 'dart:math';
 
-import 'package:mx_core/ui/widget/k_line_chart/model/k_line_data/indicator/indicator.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
+
+import 'indicator/indicator_kdj.dart';
+import 'indicator/indicator_rsi.dart';
+import 'indicator/indicator_wr.dart';
 
 /// 圖表技術指標計算
 class ChartIndicatorCalculator {
-  // static calculate(List<KLineData> datas) {
-  //   _calculateMA(datas);
-  //   _calculateBOLL(datas);
-  //   // _calcVolumeMA(datas);
-  //   // _calcKDJ(datas);
-  //   _calculateMACD(datas);
-  //   // _calcRSI(datas);
-  //   // _calcWR(datas);
-  // }
+  /// 計算所有技術指標
+  /// [maPeriods] - 收盤均線週期
+  /// [bollPeriod] - boll線週期
+  static calculateAllIndicator(
+    List<KLineData> datas, {
+    List<int> maPeriods = const [5, 10, 20],
+    int bollPeriod = 20,
+  }) {
+    calculateMA(maPeriods, datas);
+    calculateBOLL(bollPeriod, datas);
+    calculateMACD(datas);
+    calculateKDJ(datas);
+    calculateRSI(datas);
+    calculateWR(datas);
+  }
 
   /// 計算收盤價均線
   static calculateMA(List<int> periods, List<KLineData> datas) {
@@ -72,6 +81,7 @@ class ChartIndicatorCalculator {
     }
   }
 
+  /// 計算指數平滑異同移動平均線
   static void calculateMACD(List<KLineData> datas) {
     double ema12 = 0;
     double ema26 = 0;
@@ -108,160 +118,101 @@ class ChartIndicatorCalculator {
     }
   }
 
-// static void _calcVolumeMA(List<KLineEntity> dataList, [bool isLast = false]) {
-//   double volumeMa5 = 0;
-//   double volumeMa10 = 0;
-//
-//   int i = 0;
-//   if (isLast && dataList.length > 10) {
-//     i = dataList.length - 1;
-//     var data = dataList[dataList.length - 2];
-//     volumeMa5 = data.ma5Volume * 5;
-//     volumeMa10 = data.ma10Volume * 10;
-//   }
-//
-//   for (; i < dataList.length; i++) {
-//     KLineEntity entry = dataList[i];
-//
-//     volumeMa5 += entry.vol;
-//     volumeMa10 += entry.vol;
-//
-//     if (i == 4) {
-//       entry.ma5Volume = (volumeMa5 / 5);
-//     } else if (i > 4) {
-//       volumeMa5 -= dataList[i - 5].vol;
-//       entry.ma5Volume = volumeMa5 / 5;
-//     } else {
-//       entry.ma5Volume = 0;
-//     }
-//
-//     if (i == 9) {
-//       entry.ma10Volume = volumeMa10 / 10;
-//     } else if (i > 9) {
-//       volumeMa10 -= dataList[i - 10].vol;
-//       entry.ma10Volume = volumeMa10 / 10;
-//     } else {
-//       entry.ma10Volume = 0;
-//     }
-//   }
-// }
+  /// 計算相對強弱指標
+  static void calculateRSI(List<KLineData> datas) {
+    double rsi;
+    double rsiABSEma = 0;
+    double rsiMaxEma = 0;
 
-// static void _calcRSI(List<KLineEntity> dataList, [bool isLast = false]) {
-//   double rsi;
-//   double rsiABSEma = 0;
-//   double rsiMaxEma = 0;
-//
-//   int i = 0;
-//   if (isLast && dataList.length > 1) {
-//     i = dataList.length - 1;
-//     var data = dataList[dataList.length - 2];
-//     rsi = data.rsi;
-//     rsiABSEma = data.rsiABSEma;
-//     rsiMaxEma = data.rsiMaxEma;
-//   }
-//
-//   for (; i < dataList.length; i++) {
-//     KLineEntity entity = dataList[i];
-//     final double closePrice = entity.close;
-//     if (i == 0) {
-//       rsi = 0;
-//       rsiABSEma = 0;
-//       rsiMaxEma = 0;
-//     } else {
-//       double rmax = max(0, closePrice - dataList[i - 1].close);
-//       double rAbs = (closePrice - dataList[i - 1].close).abs();
-//
-//       rsiMaxEma = (rmax + (14 - 1) * rsiMaxEma) / 14;
-//       rsiABSEma = (rAbs + (14 - 1) * rsiABSEma) / 14;
-//       rsi = (rsiMaxEma / rsiABSEma) * 100;
-//     }
-//     if (i < 13) rsi = 0;
-//     if (rsi.isNaN) rsi = 0;
-//     entity.rsi = rsi;
-//     entity.rsiABSEma = rsiABSEma;
-//     entity.rsiMaxEma = rsiMaxEma;
-//   }
-// }
-//
-// static void _calcKDJ(List<KLineEntity> dataList, [bool isLast = false]) {
-//   double k = 0;
-//   double d = 0;
-//
-//   int i = 0;
-//   if (isLast && dataList.length > 1) {
-//     i = dataList.length - 1;
-//     var data = dataList[dataList.length - 2];
-//     k = data.k;
-//     d = data.d;
-//   }
-//
-//   for (; i < dataList.length; i++) {
-//     KLineEntity entity = dataList[i];
-//     final double closePrice = entity.close;
-//     int startIndex = i - 13;
-//     if (startIndex < 0) {
-//       startIndex = 0;
-//     }
-//     double max14 = -double.maxFinite;
-//     double min14 = double.maxFinite;
-//     for (int index = startIndex; index <= i; index++) {
-//       max14 = max(max14, dataList[index].high);
-//       min14 = min(min14, dataList[index].low);
-//     }
-//     double rsv = 100 * (closePrice - min14) / (max14 - min14);
-//     if (rsv.isNaN) {
-//       rsv = 0;
-//     }
-//     if (i == 0) {
-//       k = 50;
-//       d = 50;
-//     } else {
-//       k = (rsv + 2 * k) / 3;
-//       d = (k + 2 * d) / 3;
-//     }
-//     if (i < 13) {
-//       entity.k = 0;
-//       entity.d = 0;
-//       entity.j = 0;
-//     } else if (i == 13 || i == 14) {
-//       entity.k = k;
-//       entity.d = 0;
-//       entity.j = 0;
-//     } else {
-//       entity.k = k;
-//       entity.d = d;
-//       entity.j = 3 * k - 2 * d;
-//     }
-//   }
-// }
-//
-// //WR(N) = 100 * [ HIGH(N)-C ] / [ HIGH(N)-LOW(N) ]
-// static void _calcWR(List<KLineEntity> dataList, [bool isLast = false]) {
-//   int i = 0;
-//   if (isLast && dataList.length > 1) {
-//     i = dataList.length - 1;
-//   }
-//   for (; i < dataList.length; i++) {
-//     KLineEntity entity = dataList[i];
-//     int startIndex = i - 14;
-//     if (startIndex < 0) {
-//       startIndex = 0;
-//     }
-//     double max14 = -double.maxFinite;
-//     double min14 = double.maxFinite;
-//     for (int index = startIndex; index <= i; index++) {
-//       max14 = max(max14, dataList[index].high);
-//       min14 = min(min14, dataList[index].low);
-//     }
-//     if (i < 13) {
-//       entity.r = 0;
-//     } else {
-//       if ((max14 - min14) == 0) {
-//         entity.r = 0;
-//       } else {
-//         entity.r = 100 * (max14 - dataList[i].close) / (max14 - min14);
-//       }
-//     }
-//   }
-// }
+    for (var i = 1; i < datas.length; i++) {
+      final data = datas[i];
+      final closePrice = data.close;
+      final rmax = max(0, closePrice - datas[i - 1].close);
+      final rAbs = (closePrice - datas[i - 1].close).abs();
+
+      rsiMaxEma = (rmax + (14 - 1) * rsiMaxEma) / 14;
+      rsiABSEma = (rAbs + (14 - 1) * rsiABSEma) / 14;
+      if (i < 13 || rsiABSEma == 0) {
+        rsi = 0;
+      } else {
+        rsi = (rsiMaxEma / rsiABSEma) * 100;
+      }
+
+      data.indciatorData.rsi = IndicatorRSI(
+        rsi: rsi,
+        rsiABSEma: rsiABSEma,
+        rsiMaxEma: rsiMaxEma,
+      );
+    }
+  }
+
+  /// 計算隨機指標
+  static void calculateKDJ(List<KLineData> datas) {
+    double k = 0;
+    double d = 0;
+
+    for (var i = 0; i < datas.length; i++) {
+      final data = datas[i];
+      final closePrice = data.close;
+      int startIndex = i - 13;
+      if (startIndex < 0) {
+        startIndex = 0;
+      }
+      var max14 = -double.maxFinite;
+      var min14 = double.maxFinite;
+      for (var index = startIndex; index <= i; index++) {
+        max14 = max(max14, datas[index].high);
+        min14 = min(min14, datas[index].low);
+      }
+
+      double rsv;
+      if (max14 == min14) {
+        rsv = 0;
+      } else {
+        rsv = 100 * (closePrice - min14) / (max14 - min14);
+      }
+
+      if (i == 0) {
+        k = 50;
+        d = 50;
+      } else {
+        k = (rsv + 2 * k) / 3;
+        d = (k + 2 * d) / 3;
+      }
+
+      if (i == 13 || i == 14) {
+        data.indciatorData.kdj = IndicatorKDJ(k: k, d: 0, j: 0);
+      } else if (i > 14) {
+        data.indciatorData.kdj = IndicatorKDJ(k: k, d: d, j: 3 * k - 2 * d);
+      }
+    }
+  }
+
+  /// 計算威廉指標(兼具超買超賣和強弱分界的指標)
+  /// WR(N) = 100 * [ HIGH(N)-C ] / [ HIGH(N)-LOW(N) ]
+  static void calculateWR(List<KLineData> datas) {
+    for (var i = 0; i < datas.length; i++) {
+      final data = datas[i];
+      int startIndex = i - 14;
+      if (startIndex < 0) {
+        startIndex = 0;
+      }
+      var max14 = -double.maxFinite;
+      var min14 = double.maxFinite;
+      for (var index = startIndex; index <= i; index++) {
+        max14 = max(max14, datas[index].high);
+        min14 = min(min14, datas[index].low);
+      }
+
+      if (i >= 14) {
+        final double r;
+        if ((max14 - min14) == 0) {
+          r = 0;
+        } else {
+          r = 100 * (max14 - datas[i].close) / (max14 - min14);
+        }
+        data.indciatorData.wr = IndicatorWR(r: r);
+      }
+    }
+  }
 }

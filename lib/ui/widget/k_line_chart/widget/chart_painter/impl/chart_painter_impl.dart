@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_ui_style.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
 import '../chart_painter.dart';
@@ -34,6 +37,18 @@ class ChartPainterImpl extends ChartPainter
   @override
   final MACDChartUiStyle macdChartUiStyle;
 
+  /// RSI圖表ui風格
+  @override
+  final RSIChartUiStyle rsiChartUiStyle;
+
+  /// WR圖表ui風格
+  @override
+  final WRChartUiStyle wrChartUiStyle;
+
+  /// KDJ圖表ui風格
+  @override
+  final KDJChartUiStyle kdjChartUiStyle;
+
   /// 主圖表顯示的資料
   @override
   final List<MainChartState> mainState;
@@ -63,6 +78,9 @@ class ChartPainterImpl extends ChartPainter
     required this.mainChartUiStyle,
     required this.macdChartUiStyle,
     required this.volumeChartUiStyle,
+    required this.rsiChartUiStyle,
+    required this.wrChartUiStyle,
+    required this.kdjChartUiStyle,
     required this.maPeriods,
     required ValueChanged<DrawContentInfo>? onDrawInfo,
     required ValueChanged<LongPressData?>? onLongPressData,

@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
-import '../../macd_chart_render.dart';
+import '../../kdj_chart_render.dart';
 
-mixin MACDChartValueMixin on MACDChartRender {
+mixin KDJChartValueMixin on KDJChartRender {
   /// 資料檢視區間擁有最小值/最大值的資料index
   late int minValueDataIndex, maxValueDataIndex;
 
@@ -25,21 +25,16 @@ mixin MACDChartValueMixin on MACDChartRender {
 
   /// 實時線畫筆
   final Paint realTimeLinePaint = Paint();
-
   final Paint backgroundPaint = Paint();
   final Paint gripPaint = Paint();
 
   final Paint linePaint = Paint()..style = PaintingStyle.stroke;
 
-  // final Paint lineShadowPaint = Paint()
-  //   ..style = PaintingStyle.fill
-  //   ..isAntiAlias = true;
+  KDJChartUiStyle get uiStyle => dataViewer.kdjChartUiStyle;
 
-  MACDChartUiStyle get uiStyle => dataViewer.macdChartUiStyle;
+  KDJChartColorSetting get colors => uiStyle.colorSetting;
 
-  MACDChartColorSetting get colors => uiStyle.colorSetting;
-
-  MACDChartSizeSetting get sizes => uiStyle.sizeSetting;
+  KDJChartSizeSetting get sizes => uiStyle.sizeSetting;
 
   List<MainChartState> get mainState => dataViewer.mainState;
 
@@ -60,13 +55,13 @@ mixin MACDChartValueMixin on MACDChartRender {
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
-      final macdData = data.indciatorData.macd;
+      final kdjData = data.indciatorData.kdj;
 
-      if (macdData == null) {
+      if (kdjData == null) {
         continue;
       }
 
-      final values = [macdData.dif, macdData.dea, macdData.macd];
+      final values = [kdjData.k, kdjData.d, kdjData.j];
       final maxReduce = values.reduce(max);
       final minReduce = values.reduce(min);
 

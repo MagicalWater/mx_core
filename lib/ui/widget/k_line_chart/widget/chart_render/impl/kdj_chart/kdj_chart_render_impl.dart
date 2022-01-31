@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
-import '../../macd_chart_render.dart';
+import '../../kdj_chart_render.dart';
 
-import 'macd_chart_render_paint_mixin.dart';
-import 'macd_chart_render_value_mixin.dart';
+import 'kdj_chart_render_paint_mixin.dart';
+import 'kdj_chart_render_value_mixin.dart';
 
-export 'ui_style/macd_chart_ui_style.dart';
+export 'ui_style/kdj_chart_ui_style.dart';
 
-class MACDChartRenderImpl extends MACDChartRender
-    with MACDChartValueMixin, MACDChartRenderPaintMixin {
-  MACDChartRenderImpl({
+class KDJChartRenderImpl extends KDJChartRender
+    with KDJChartValueMixin, KDJChartRenderPaintMixin {
+  KDJChartRenderImpl({
     required DataViewer dataViewer,
   }) : super(dataViewer: dataViewer);
 
@@ -21,11 +21,8 @@ class MACDChartRenderImpl extends MACDChartRender
 
   @override
   void paintChart(Canvas canvas, Rect rect) {
-    // 繪製長柱圖
-    paintBarChart(canvas, rect);
-
-    // 繪製dif/dea線圖
-    paintDifDeaChart(canvas, rect);
+    // 繪製k/d/j線圖
+    paintKDJChart(canvas, rect);
   }
 
   @override
@@ -83,9 +80,9 @@ class MACDChartRenderImpl extends MACDChartRender
   @override
   void paintTopValueText(Canvas canvas, Rect rect) {
     final displayData = dataViewer.getLongPressData() ?? dataViewer.datas.last;
-    final macdData = displayData.indciatorData.macd;
+    final kdjData = displayData.indciatorData.kdj;
 
-    if (macdData == null) {
+    if (kdjData == null) {
       return;
     }
 
@@ -93,21 +90,24 @@ class MACDChartRenderImpl extends MACDChartRender
 
     final spans = <TextSpan>[
       TextSpan(
-        text: 'MACD(12,26,9)    ',
-        style: textStyle.copyWith(color: colors.statisticsTip),
+        text: "KDJ(14,1,3)    ",
+        style: textStyle.copyWith(color: colors.kdjTip),
       ),
-      TextSpan(
-        text: 'MACD:${dataViewer.formatPrice(macdData.macd)}    ',
-        style: textStyle.copyWith(color: colors.macdTip),
-      ),
-      TextSpan(
-        text: 'DIF:${dataViewer.formatPrice(macdData.dif)}    ',
-        style: textStyle.copyWith(color: colors.difColor),
-      ),
-      TextSpan(
-        text: 'DEA:${dataViewer.formatPrice(macdData.dea)}    ',
-        style: textStyle.copyWith(color: colors.deaColor),
-      ),
+      if (kdjData.k != 0)
+        TextSpan(
+          text: "K:${dataViewer.formatPrice(kdjData.k)}    ",
+          style: textStyle.copyWith(color: colors.kColor),
+        ),
+      if (kdjData.d != 0)
+        TextSpan(
+          text: "D:${dataViewer.formatPrice(kdjData.d)}    ",
+          style: textStyle.copyWith(color: colors.dColor),
+        ),
+      if (kdjData.k != 0)
+        TextSpan(
+          text: "J:${dataViewer.formatPrice(kdjData.j)}    ",
+          style: textStyle.copyWith(color: colors.jColor),
+        ),
     ];
 
     final textPainter = TextPainter(

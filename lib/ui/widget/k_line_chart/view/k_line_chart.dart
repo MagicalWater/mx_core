@@ -7,8 +7,11 @@ import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_ine
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 import 'package:mx_core/ui/widget/k_line_chart/multi_touch_gesture_recognizer/multi_touch_gesture_recognizer.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_ui_style.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_ui_style.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/k_line_data_tooltip/k_line_data_tooltip.dart';
 
@@ -35,6 +38,15 @@ class KLineChart extends StatefulWidget {
   /// macd技術線的ui
   final MACDChartUiStyle macdChartUiStyle;
 
+  /// rsi技術線的ui
+  final RSIChartUiStyle rsiChartUiStyle;
+
+  /// wr技術線的ui
+  final WRChartUiStyle wrChartUiStyle;
+
+  /// kdj技術線的ui
+  final KDJChartUiStyle kdjChartUiStyle;
+
   /// 主圖表顯示
   final List<MainChartState> mainChartState;
 
@@ -59,13 +71,16 @@ class KLineChart extends StatefulWidget {
   const KLineChart({
     Key? key,
     required this.datas,
-    this.mainChartState = const [MainChartState.kLine],
+    this.mainChartState = const [MainChartState.kLine, MainChartState.ma],
     this.volumeChartState = VolumeChartState.volume,
-    this.indicatorChartState = IndicatorChartState.macd,
+    this.indicatorChartState = IndicatorChartState.kdj,
     this.chartUiStyle = const KLineChartUiStyle(),
     this.mainChartUiStyle = const MainChartUiStyle(),
     this.volumeChartUiStyle = const VolumeChartUiStyle(),
     this.macdChartUiStyle = const MACDChartUiStyle(),
+    this.rsiChartUiStyle = const RSIChartUiStyle(),
+    this.wrChartUiStyle = const WRChartUiStyle(),
+    this.kdjChartUiStyle = const KDJChartUiStyle(),
     this.maPeriods = const [5, 10, 20],
     this.xAxisDateFormat = 'MM-dd mm:ss',
     this.tooltipBuilder = _defaultTooltip,
@@ -137,6 +152,11 @@ class _KLineChartState extends State<KLineChart>
               volumeState: widget.volumeChartState,
               indicatorState: widget.indicatorChartState,
               mainChartUiStyle: widget.mainChartUiStyle,
+              volumeChartUiStyle: widget.volumeChartUiStyle,
+              macdChartUiStyle: widget.macdChartUiStyle,
+              rsiChartUiStyle: widget.rsiChartUiStyle,
+              wrChartUiStyle: widget.wrChartUiStyle,
+              kdjChartUiStyle: widget.kdjChartUiStyle,
               maPeriods: widget.maPeriods,
               onDrawInfo: (info) {
                 chartGesture.setDrawInfo(info);
@@ -144,8 +164,6 @@ class _KLineChartState extends State<KLineChart>
               onLongPressData: (data) {
                 _longPressDataStreamController.add(data);
               },
-              volumeChartUiStyle: widget.volumeChartUiStyle,
-              macdChartUiStyle: widget.macdChartUiStyle,
               // onCalculateMaxScrolled: (maxScroll) {
               //   maxScrollX = maxScroll;
               //

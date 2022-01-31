@@ -2,6 +2,10 @@ import 'package:flutter/painting.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/chart_state/volume_chart_state.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/chart_render.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/kdj_chart_render_impl.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/rsi_chart_render_impl.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/wr_chart_render_impl.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/macd_chart_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
@@ -51,25 +55,29 @@ mixin ChartPainterPaintMixin on ChartPainter {
 
   /// 繪製技術指標圖表
   void paintIndicatorChart(Canvas canvas, Rect rect) {
+    ChartRender? render;
     switch (indicatorState) {
       case IndicatorChartState.macd:
-        final render = MACDChartRenderImpl(dataViewer: this);
-        render.initValue(rect);
-        render.paintBackground(canvas, rect);
-        render.paintGrid(canvas, rect);
-        render.paintTopValueText(canvas, rect);
-        render.paintChart(canvas, rect);
-        render.paintRightValueText(canvas, rect);
+        render = MACDChartRenderImpl(dataViewer: this);
         break;
       case IndicatorChartState.rsi:
-        // TODO: Handle this case.
+        render = RSIChartRenderImpl(dataViewer: this);
         break;
       case IndicatorChartState.wr:
-        // TODO: Handle this case.
+        render = WRChartRenderImpl(dataViewer: this);
+        break;
+      case IndicatorChartState.kdj:
+        render = KDJChartRenderImpl(dataViewer: this);
         break;
       default:
         break;
     }
+    render?.initValue(rect);
+    render?.paintBackground(canvas, rect);
+    render?.paintGrid(canvas, rect);
+    render?.paintTopValueText(canvas, rect);
+    render?.paintChart(canvas, rect);
+    render?.paintRightValueText(canvas, rect);
   }
 
   /// 繪製長按豎線

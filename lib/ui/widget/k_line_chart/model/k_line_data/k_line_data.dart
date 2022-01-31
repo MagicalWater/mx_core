@@ -1,5 +1,8 @@
 import 'chart_indicator_calculate.dart';
 import 'indicator/indicator.dart';
+import 'indicator/indicator_kdj.dart';
+import 'indicator/indicator_rsi.dart';
+import 'indicator/indicator_wr.dart';
 
 export 'indicator/indicator.dart';
 
@@ -41,21 +44,67 @@ class KLineData {
 }
 
 class IndciatorData {
+  /// 收盤價均線
   IndicatorMa? ma;
+
+  /// boll線
   IndicatorBOLL? boll;
+
+  /// 指數平滑異同移動平均線
   IndicatorMACD? macd;
+
+  /// 相對強弱指標
+  IndicatorRSI? rsi;
+
+  /// 隨機指標
+  IndicatorKDJ? kdj;
+
+  /// 威廉指標(兼具超買超賣和強弱分界的指標)
+  IndicatorWR? wr;
 }
 
 extension IndicatorCalculateExtension on List<KLineData> {
+  /// 計算所有技術指標
+  /// [maPeriods] - 收盤均線週期
+  /// [bollPeriod] - boll線週期
+  void calculateAllIndicator({
+    List<int> maPeriods = const [5, 10, 20],
+    int bollPeriod = 20,
+  }) {
+    ChartIndicatorCalculator.calculateAllIndicator(
+      this,
+      maPeriods: maPeriods,
+      bollPeriod: bollPeriod,
+    );
+  }
+
+  /// 計算收盤價均線
   void calculateMA(List<int> periods) {
     ChartIndicatorCalculator.calculateMA(periods, this);
   }
 
+  /// 計算boll線
   void calculateBOLL(int period) {
     ChartIndicatorCalculator.calculateBOLL(period, this);
   }
 
+  /// 計算指數平滑異同移動平均線
   void calculateMACD() {
     ChartIndicatorCalculator.calculateMACD(this);
+  }
+
+  /// 計算相對強弱指標
+  void calculateRSI() {
+    ChartIndicatorCalculator.calculateRSI(this);
+  }
+
+  /// 計算隨機指標
+  void calculateKDJ() {
+    ChartIndicatorCalculator.calculateKDJ(this);
+  }
+
+  /// 計算威廉指標(兼具超買超賣和強弱分界的指標)
+  void calculateWR() {
+    ChartIndicatorCalculator.calculateWR(this);
   }
 }

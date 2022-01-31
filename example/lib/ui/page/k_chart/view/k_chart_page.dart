@@ -28,7 +28,8 @@ class Test extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant Test oldDelegate) {
-    print('shouldRepaint: $aa, $bb, old = ${oldDelegate.aa}, ${oldDelegate.bb}');
+    print(
+        'shouldRepaint: $aa, $bb, old = ${oldDelegate.aa}, ${oldDelegate.bb}');
     return true;
   }
 }
@@ -55,6 +56,10 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
           height: Screen.height * 2 / 3,
           child: KLineChart(
             datas: state.datas2,
+            mainChartState: [
+              if (!state.isLine) MainChartState.kLine else MainChartState.ma,
+
+            ],
           ),
         );
         return Container(

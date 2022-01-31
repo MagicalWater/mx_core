@@ -40,9 +40,10 @@ class KChartState {
         dateTime: e.dateTime,
       );
     }).toList();
-    datas2.calculateMA([5, 10, 20]);
-    datas2.calculateBOLL(20);
-    datas2.calculateMACD();
+    datas2.calculateAllIndicator(
+      maPeriods: [5, 10, 20],
+      bollPeriod: 20,
+    );
     return KChartState(
       isLoading: isLoading ?? this.isLoading,
       datas: datas ?? this.datas,

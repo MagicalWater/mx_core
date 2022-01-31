@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
-import '../../macd_chart_render.dart';
 
-import 'macd_chart_render_paint_mixin.dart';
-import 'macd_chart_render_value_mixin.dart';
+import '../../rsi_chart_render.dart';
 
-export 'ui_style/macd_chart_ui_style.dart';
+import 'rsi_chart_render_paint_mixin.dart';
+import 'rsi_chart_render_value_mixin.dart';
 
-class MACDChartRenderImpl extends MACDChartRender
-    with MACDChartValueMixin, MACDChartRenderPaintMixin {
-  MACDChartRenderImpl({
+export 'ui_style/rsi_chart_ui_style.dart';
+
+class RSIChartRenderImpl extends RSIChartRender
+    with RSIChartValueMixin, RSIChartRenderPaintMixin {
+  RSIChartRenderImpl({
     required DataViewer dataViewer,
   }) : super(dataViewer: dataViewer);
 
@@ -21,11 +22,8 @@ class MACDChartRenderImpl extends MACDChartRender
 
   @override
   void paintChart(Canvas canvas, Rect rect) {
-    // 繪製長柱圖
-    paintBarChart(canvas, rect);
-
-    // 繪製dif/dea線圖
-    paintDifDeaChart(canvas, rect);
+    // 繪製rsi線圖
+    paintRSIChart(canvas, rect);
   }
 
   @override
@@ -83,9 +81,9 @@ class MACDChartRenderImpl extends MACDChartRender
   @override
   void paintTopValueText(Canvas canvas, Rect rect) {
     final displayData = dataViewer.getLongPressData() ?? dataViewer.datas.last;
-    final macdData = displayData.indciatorData.macd;
+    final rsiData = displayData.indciatorData.rsi;
 
-    if (macdData == null) {
+    if (rsiData == null) {
       return;
     }
 
@@ -93,20 +91,8 @@ class MACDChartRenderImpl extends MACDChartRender
 
     final spans = <TextSpan>[
       TextSpan(
-        text: 'MACD(12,26,9)    ',
-        style: textStyle.copyWith(color: colors.statisticsTip),
-      ),
-      TextSpan(
-        text: 'MACD:${dataViewer.formatPrice(macdData.macd)}    ',
-        style: textStyle.copyWith(color: colors.macdTip),
-      ),
-      TextSpan(
-        text: 'DIF:${dataViewer.formatPrice(macdData.dif)}    ',
-        style: textStyle.copyWith(color: colors.difColor),
-      ),
-      TextSpan(
-        text: 'DEA:${dataViewer.formatPrice(macdData.dea)}    ',
-        style: textStyle.copyWith(color: colors.deaColor),
+        text: "RSI(14): ${dataViewer.formatPrice(rsiData.rsi)}    ",
+        style: textStyle.copyWith(color: colors.rsiColor),
       ),
     ];
 

@@ -1,6 +1,9 @@
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/volume_chart/ui_style/volume_chart_ui_style.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart';
 
 import 'ui_style/k_line_chart_ui_style.dart';
@@ -30,6 +33,15 @@ abstract class DataViewer {
 
   /// macd圖表ui風格
   abstract final MACDChartUiStyle macdChartUiStyle;
+
+  /// rsi圖表ui風格
+  abstract final RSIChartUiStyle rsiChartUiStyle;
+
+  /// wr圖表ui風格
+  abstract final WRChartUiStyle wrChartUiStyle;
+
+  /// kdj圖表ui風格
+  abstract final KDJChartUiStyle kdjChartUiStyle;
 
   /// 主圖表顯示的資料
   abstract final List<MainChartState> mainState;
