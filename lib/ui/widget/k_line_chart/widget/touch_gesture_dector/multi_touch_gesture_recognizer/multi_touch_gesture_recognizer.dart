@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mx_core/ui/widget/k_line_chart/multi_touch_gesture_recognizer/multi_touch_drag.dart';
+import 'multi_touch_drag.dart';
 
 /// 多點觸控手勢
 class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {

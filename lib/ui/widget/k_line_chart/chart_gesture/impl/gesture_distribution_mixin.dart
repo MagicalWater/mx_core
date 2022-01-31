@@ -158,6 +158,7 @@ mixin GestureDistributionMixin on ChartGesture
       ));
     } else if (isScale) {
       isScale = false;
+      isDrag = true;
       onScaleEnd(ScaleEndDetails(
         velocity: details.velocity,
         pointerCount: 2,

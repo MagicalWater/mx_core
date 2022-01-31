@@ -5,7 +5,6 @@ import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart'
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
-import 'package:mx_core/ui/widget/k_line_chart/multi_touch_gesture_recognizer/multi_touch_gesture_recognizer.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart';
@@ -14,6 +13,7 @@ import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/rsi_char
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/k_line_data_tooltip/k_line_data_tooltip.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/touch_gesture_dector/touch_gesture_dector.dart';
 
 /// 長按tooltip構建
 typedef KLineChartTooltipBuilder = KLineDataInfoTooltip Function(
@@ -104,10 +104,6 @@ class KLineChart extends StatefulWidget {
 
 class _KLineChartState extends State<KLineChart>
     with SingleTickerProviderStateMixin {
-  /// 手勢觸摸元件的GlobalKey
-  /// 用於供給[MultiTouchGestureRecognizer]可進行localPostion的更新
-  final GlobalKey<RawGestureDetectorState> gestureKey = GlobalKey();
-
   /// 圖表拖移處理
   late final ChartGesture chartGesture;
 
@@ -135,17 +131,11 @@ class _KLineChartState extends State<KLineChart>
 
   @override
   Widget build(BuildContext context) {
-    return RawGestureDetector(
-      key: gestureKey,
-      gestures: <Type, GestureRecognizerFactory>{
-        MultiTouchGestureRecognizer: MultiTouchGestureRecognizer.factory(
-          transformPositionKey: gestureKey,
-          onTouchStart: chartGesture.onTouchDown,
-          onTouchUpdate: chartGesture.onTouchUpdate,
-          onTouchEnd: chartGesture.onTouchUp,
-          onTouchCancel: chartGesture.onTouchCancel,
-        ),
-      },
+    return TouchGestureDector(
+      onTouchStart: chartGesture.onTouchDown,
+      onTouchUpdate: chartGesture.onTouchUpdate,
+      onTouchEnd: chartGesture.onTouchUp,
+      onTouchCancel: chartGesture.onTouchCancel,
       child: Stack(
         children: <Widget>[
           CustomPaint(
