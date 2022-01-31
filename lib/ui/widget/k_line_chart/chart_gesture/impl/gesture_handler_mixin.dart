@@ -64,7 +64,7 @@ mixin GestureHandlerMixin on ChartGesture
 
     await completer.future;
 
-    isDrag = false;
+    // isDrag = false;
     chartScroller.setScrollUpdatedCallback(null);
     onDrawUpdateNeed();
   }

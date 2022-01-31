@@ -15,10 +15,10 @@ mixin GestureDistributionMixin on ChartGesture
   final activePointer = <int, _PointerPosition>{};
 
   /// 觸摸到變成長按的檢測時間
-  final _longPressDetect = const Duration(milliseconds: 200);
+  final _longPressDetect = const Duration(milliseconds: 500);
 
   /// 當拖拉超過此距離, 則結束長按倒數
-  final _cancelLongPressTimerDistance = 10;
+  final _cancelLongPressTimerDistance = 5;
 
   /// 長按倒數
   Timer? _longPressTimer;

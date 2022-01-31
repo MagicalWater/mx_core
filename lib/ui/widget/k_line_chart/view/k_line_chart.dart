@@ -104,6 +104,10 @@ class KLineChart extends StatefulWidget {
 
 class _KLineChartState extends State<KLineChart>
     with SingleTickerProviderStateMixin {
+  /// 手勢觸摸元件的GlobalKey
+  /// 用於供給[MultiTouchGestureRecognizer]可進行localPostion的更新
+  final GlobalKey<RawGestureDetectorState> gestureKey = GlobalKey();
+
   /// 圖表拖移處理
   late final ChartGesture chartGesture;
 
@@ -132,8 +136,10 @@ class _KLineChartState extends State<KLineChart>
   @override
   Widget build(BuildContext context) {
     return RawGestureDetector(
+      key: gestureKey,
       gestures: <Type, GestureRecognizerFactory>{
         MultiTouchGestureRecognizer: MultiTouchGestureRecognizer.factory(
+          transformPositionKey: gestureKey,
           onTouchStart: chartGesture.onTouchDown,
           onTouchUpdate: chartGesture.onTouchUpdate,
           onTouchEnd: chartGesture.onTouchUp,

@@ -7,7 +7,12 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
   final void Function(int pointer, DragStartDetails details)? onTouchDown;
   final void Function(int pointer)? onTouchCancel;
 
+  /// 用於取得裝載此按鍵處理的RawGestureDector
+  /// 目的是將globalPostion轉化為localPosition
+  final GlobalKey<RawGestureDetectorState>? transformPositionKey;
+
   MultiTouchGestureRecognizer({
+    required this.transformPositionKey,
     Object? debugOwner,
     Set<PointerDeviceKind>? supportedDevices,
     this.onTouchDown,
@@ -29,7 +34,26 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
       return MultiTouchDrag(
         pointer: pointer,
         onUpdate: (details) {
-          onTouchUpdate?.call(pointer, details);
+          // 由於MultiDragGestureRecognizer的拖拉訊息缺少local
+          // 因此獲取到的位置將會是global的, 在此需要進行轉化
+          final renderBox = transformPositionKey?.currentContext
+              ?.findRenderObject() as RenderBox?;
+          final Offset localPosition;
+          if (renderBox != null) {
+            localPosition = renderBox.globalToLocal(details.globalPosition);
+          } else {
+            localPosition = details.localPosition;
+          }
+          onTouchUpdate?.call(
+            pointer,
+            DragUpdateDetails(
+              sourceTimeStamp: details.sourceTimeStamp,
+              delta: details.delta,
+              primaryDelta: details.primaryDelta,
+              globalPosition: details.globalPosition,
+              localPosition: localPosition,
+            ),
+          );
         },
         onEnd: (details) {
           onTouchUp?.call(pointer, details);
@@ -42,6 +66,7 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
   }
 
   static GestureRecognizerFactory factory({
+    required GlobalKey<RawGestureDetectorState>? transformPositionKey,
     void Function(int pointer, DragStartDetails details)? onTouchStart,
     void Function(int pointer, DragUpdateDetails details)? onTouchUpdate,
     void Function(int pointer, DragEndDetails details)? onTouchEnd,
@@ -49,6 +74,7 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
   }) {
     return GestureRecognizerFactoryWithHandlers<MultiTouchGestureRecognizer>(
       () => MultiTouchGestureRecognizer(
+        transformPositionKey: transformPositionKey,
         onTouchDown: onTouchStart,
         onTouchUpdate: onTouchUpdate,
         onTouchUp: onTouchEnd,
@@ -63,6 +89,8 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
   @override
   MultiDragPointerState createNewPointerState(PointerDownEvent event) {
     _pointerEvent[event.pointer] = event;
+
+    print('按下囉: ${event.position}, ${event.localPosition}');
 
     onTouchDown?.call(
       event.pointer,

@@ -13,79 +13,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_kdj.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_rsi.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_wr.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/kdj_chart_render_impl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/kdj_chart_render_paint_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/kdj_chart_render_value_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_color_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_size_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_ui_style.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/rsi_chart_render_impl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/rsi_chart_render_paint_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/rsi_chart_render_value_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_color_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_size_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_ui_style.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_color_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_size_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_ui_style.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/wr_chart_render_impl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/wr_chart_render_paint_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/wr_chart_render_value_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/kdj_chart_render.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/rsi_chart_render.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/wr_chart_render.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_kdj.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_rsi.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator/indicator_wr.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/kdj_chart_render_impl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/kdj_chart_render_paint_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/kdj_chart_render_value_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_color_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_size_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_ui_style.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/rsi_chart_render_impl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/rsi_chart_render_paint_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/rsi_chart_render_value_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_color_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_size_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_ui_style.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_color_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_size_setting.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_ui_style.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/wr_chart_render_impl.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/wr_chart_render_paint_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/wr_chart_render_value_mixin.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/kdj_chart_render.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/rsi_chart_render.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/wr_chart_render.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/chart_indicator_calculate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/chart_indicator_calculate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_value_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_value_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/chart_indicator_calculate.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/chart_indicator_calculate.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_distribution_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_distribution_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_handler_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/impl/gesture_handler_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/multi_touch_gesture_recognizer/multi_touch_gesture_recognizer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/multi_touch_gesture_recognizer/multi_touch_gesture_recognizer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_value_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_value_mixin.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +66,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="Console" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
