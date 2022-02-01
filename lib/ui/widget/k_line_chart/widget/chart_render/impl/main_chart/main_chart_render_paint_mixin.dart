@@ -216,22 +216,19 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
       dottedLineX += dashTotalWidth;
     }
 
-    // 檢查是否為折線圖, 弱勢哲需要繪製實時價最右側原點
-    // TODO: 需要加入圓點動畫
+    // 檢查是否為折線圖, 若是需要繪製實時價最右側原點
     if (dataViewer.mainState.contains(MainChartState.lineIndex)) {
       // startAnimation();
-      final flashColors = List.of(colors.realTimeRightPointFlash);
-      // flashColors[0] = flashColors[0].withOpacity(opacity);
-      final pointGradient = RadialGradient(colors: flashColors);
-      realTimeLinePaint.shader = pointGradient.createShader(
-        Rect.fromCircle(center: Offset(startX, y), radius: 10.0),
-      );
-      canvas.drawCircle(Offset(startX, y), 10.0, realTimeLinePaint);
-      realTimeLinePaint.shader = null;
-      realTimeLinePaint.color = Colors.white;
+      // final flashColors = List.of(colors.realTimeRightPointFlash);
+      // // flashColors[0] = flashColors[0].withOpacity(opacity);
+      // final pointGradient = RadialGradient(colors: flashColors);
+      // realTimeLinePaint.shader = pointGradient.createShader(
+      //   Rect.fromCircle(center: Offset(startX, y), radius: 10.0),
+      // );
+      // canvas.drawCircle(Offset(startX, y), 10.0, realTimeLinePaint);
+      // realTimeLinePaint.shader = null;
+      realTimeLinePaint.color = colors.realTimeRightPointFlash.first;
       canvas.drawCircle(Offset(startX, y), 2, realTimeLinePaint);
-    } else {
-      // stopAnimation(); //停止一闪闪
     }
 
     // 畫最右側的實時數值
@@ -406,7 +403,7 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
 
     final valuePainter = TextPainter(
       text: TextSpan(
-        text: dataViewer.formatPrice(value),
+        text: dataViewer.priceFormatter(value),
         style: TextStyle(
           color: uiStyle.colorSetting.longPressValue,
           fontSize: uiStyle.sizeSetting.longPressValue,

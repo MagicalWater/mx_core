@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
 import '../../wr_chart_render.dart';
-import 'ui_style/wr_chart_ui_style.dart';
 
 mixin WRChartValueMixin on WRChartRender {
   /// 資料檢視區間擁有最小值/最大值的資料index

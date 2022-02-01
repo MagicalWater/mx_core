@@ -3,14 +3,14 @@ import 'package:mx_core/ui/widget/k_line_chart/k_line_chart.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/k_line_data_tooltip/ui_style/k_line_data_tooltip_ui_style.dart';
 import 'package:mx_core/util/date_util.dart';
 
-import 'model/tooltip_prefix.dart';
+export 'model/model.dart';
 
 /// 長按對應的k線資料彈窗
 class KLineDataInfoTooltip extends StatelessWidget {
   final LongPressData longPressData;
   final KLineDataTooltipUiStyle uiStyle;
   final TooltipPrefix tooltipPrefix;
-  final String? dateTimeFormat;
+  final String Function(DateTime dateTime) dateTimeFormatter;
 
   KLineData get data => longPressData.data;
 
@@ -18,18 +18,24 @@ class KLineDataInfoTooltip extends StatelessWidget {
 
   KLineDataTooltipSizeSetting get sizes => uiStyle.sizeSetting;
 
+  static String _defaultDateTimeFormatter(DateTime dateTime) {
+    return DateUtil.getDateStr(dateTime, format: 'yyyy-MM-dd HH:mm');
+  }
+
   const KLineDataInfoTooltip({
     Key? key,
     required this.longPressData,
     this.uiStyle = const KLineDataTooltipUiStyle(),
     this.tooltipPrefix = const TooltipPrefix(),
-    this.dateTimeFormat = 'yyyy-MM-dd HH:mm',
+    this.dateTimeFormatter = _defaultDateTimeFormatter,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: longPressData.isLongPressAtLeft ? Alignment.topRight : Alignment.topLeft,
+      alignment: longPressData.isLongPressAtLeft
+          ? Alignment.topRight
+          : Alignment.topLeft,
       child: Container(
         margin: EdgeInsets.only(
           left: sizes.horizontalMargin,
@@ -67,9 +73,7 @@ class KLineDataInfoTooltip extends StatelessWidget {
   Widget _date() {
     return _item(
       prefix: tooltipPrefix.time,
-      value: data.dateTime.getDateStr(
-        format: dateTimeFormat ?? 'yyyy-MM-dd HH:mm:ss',
-      ),
+      value: dateTimeFormatter(data.dateTime),
     );
   }
 

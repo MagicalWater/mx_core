@@ -51,7 +51,7 @@ class MACDChartRenderImpl extends MACDChartRender
       fontSize: sizes.rightValueText,
     );
     final maxValueSpan = TextSpan(
-      text: dataViewer.formateVolume(maxValue),
+      text: dataViewer.priceFormatter(maxValue),
       style: textStyle,
     );
 
@@ -68,7 +68,7 @@ class MACDChartRenderImpl extends MACDChartRender
 
     // 畫最小值
     final minValueSpan = TextSpan(
-      text: dataViewer.formateVolume(minValue),
+      text: dataViewer.priceFormatter(minValue),
       style: textStyle,
     );
     textPainter.text = minValueSpan;
@@ -97,15 +97,15 @@ class MACDChartRenderImpl extends MACDChartRender
         style: textStyle.copyWith(color: colors.statisticsTip),
       ),
       TextSpan(
-        text: 'MACD:${dataViewer.formatPrice(macdData.macd)}    ',
+        text: 'MACD:${dataViewer.priceFormatter(macdData.macd)}    ',
         style: textStyle.copyWith(color: colors.macdTip),
       ),
       TextSpan(
-        text: 'DIF:${dataViewer.formatPrice(macdData.dif)}    ',
+        text: 'DIF:${dataViewer.priceFormatter(macdData.dif)}    ',
         style: textStyle.copyWith(color: colors.difColor),
       ),
       TextSpan(
-        text: 'DEA:${dataViewer.formatPrice(macdData.dea)}    ',
+        text: 'DEA:${dataViewer.priceFormatter(macdData.dea)}    ',
         style: textStyle.copyWith(color: colors.deaColor),
       ),
     ];

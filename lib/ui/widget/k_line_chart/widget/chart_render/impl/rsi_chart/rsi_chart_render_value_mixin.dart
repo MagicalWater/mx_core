@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
 import '../../rsi_chart_render.dart';
-import 'ui_style/rsi_chart_ui_style.dart';
 
 mixin RSIChartValueMixin on RSIChartRender {
   /// 資料檢視區間擁有最小值/最大值的資料index

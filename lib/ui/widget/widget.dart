@@ -4,7 +4,7 @@ export 'arrow_popup_button.dart';
 export 'assist_touch/assist_touch.dart';
 export 'axis_transition.dart';
 export 'bullet_paint.dart';
-export 'chart/chart.dart';
+// export 'chart/chart.dart';
 export 'coordinate_layout/layout.dart';
 export 'focus_layout.dart';
 export 'info_popup.dart';

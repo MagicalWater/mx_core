@@ -15,11 +15,11 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
           isLoading: false,
         )) {
     on<KChartInitEvent>(_onInitData);
-    on<KChartToggleLineEvent>(_onToggleLine);
     on<KChartUpdateLastEvent>(_onUpdateLast);
     on<KChartAddDataEvent>(_onAddData);
     on<KChartMainStateEvent>(_onChangedMainState);
-    on<KChartSecondaryStateEvent>(_onChangedSubState);
+    on<KChartVolumeChartStateEvent>(_onChangedVolumeState);
+    on<KChartIndicatorChartStateEvent>(_onChangedIndicatorState);
   }
 
   final ChartRepository repository;
@@ -34,25 +34,36 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     emit(state.copyWith(datas: datas));
   }
 
-  /// 切換線條跟k線
-  void _onToggleLine(
-    KChartToggleLineEvent event,
-    Emitter<KChartState> emit,
-  ) {
-    emit(state.copyWith(isLine: event.isLine));
-  }
-
   /// 更新最後一筆
   void _onUpdateLast(
     KChartUpdateLastEvent event,
     Emitter<KChartState> emit,
   ) {
-    var data = state.datas.last;
-    data.close += (Random().nextInt(100) - 50).toDouble();
-    data.high = max(data.high, data.close);
-    data.low = min(data.low, data.close);
-    ChartDataCalculator.updateLastData(state.datas);
-    emit(state.copyWith(datas: state.datas));
+    var lastData = state.datas.last;
+    final open = lastData.close;
+    final close = open + (Random().nextInt(100) - 50).toDouble();
+    final maxOpenClose = max(open, close);
+    final minOpenClose = min(open, close);
+    final high = max(
+      maxOpenClose,
+      maxOpenClose + (Random().nextInt(100) - 50).toDouble(),
+    );
+    final low = max(
+      minOpenClose,
+      minOpenClose + (Random().nextInt(100) - 50).toDouble(),
+    );
+    final newData = KLineData(
+      open: open,
+      close: close,
+      high: high,
+      low: low,
+      volume: lastData.volume + 10,
+      amount: lastData.amount + 100,
+      dateTime: lastData.dateTime.add(const Duration(days: 1)),
+    );
+    final newDatas = List<KLineData>.from(state.datas)..removeLast()..add(newData);
+    newDatas.calculateAllIndicator();
+    emit(state.copyWith(datas: newDatas));
   }
 
   /// 切換主視圖
@@ -60,15 +71,23 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     KChartMainStateEvent event,
     Emitter<KChartState> emit,
   ) {
-    emit(state.copyWith(mainState: event.state));
+    emit(state.copyWith(mainChartState: event.state));
   }
 
-  /// 切換副視圖
-  void _onChangedSubState(
-    KChartSecondaryStateEvent event,
+  /// 切換成交量視圖
+  void _onChangedVolumeState(
+    KChartVolumeChartStateEvent event,
     Emitter<KChartState> emit,
   ) {
-    emit(state.copyWith(secondaryState: event.state));
+    emit(state.copyWith(volumeChartState: event.state));
+  }
+
+  /// 切換技術線視圖
+  void _onChangedIndicatorState(
+    KChartIndicatorChartStateEvent event,
+    Emitter<KChartState> emit,
+  ) {
+    emit(state.copyWith(indicatorChartState: event.state));
   }
 
   void _onAddData(
@@ -76,13 +95,29 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     Emitter<KChartState> emit,
   ) {
     var lastData = state.datas.last;
-    var kLineEntity = KLineEntity.fromJson(lastData.toJson());
-    kLineEntity.dateTime = kLineEntity.dateTime.add(Duration(days: 1));
-    kLineEntity.open = kLineEntity.close;
-    kLineEntity.close += (Random().nextInt(100) - 50).toDouble();
-    lastData.high = max(lastData.high, lastData.close);
-    lastData.low = min(lastData.low, lastData.close);
-    ChartDataCalculator.addLastData(state.datas, kLineEntity);
-    emit(state.copyWith(datas: state.datas));
+    final open = lastData.close;
+    final close = open + (Random().nextInt(100) - 50).toDouble();
+    final maxOpenClose = max(open, close);
+    final minOpenClose = min(open, close);
+    final high = max(
+      maxOpenClose,
+      maxOpenClose + (Random().nextInt(100) - 50).toDouble(),
+    );
+    final low = max(
+      minOpenClose,
+      minOpenClose + (Random().nextInt(100) - 50).toDouble(),
+    );
+    final newData = KLineData(
+      open: open,
+      close: close,
+      high: high,
+      low: low,
+      volume: lastData.volume + 10,
+      amount: lastData.amount + 100,
+      dateTime: lastData.dateTime.add(const Duration(days: 1)),
+    );
+    final newDatas = List<KLineData>.from(state.datas)..add(newData);
+    newDatas.calculateAllIndicator();
+    emit(state.copyWith(datas: newDatas));
   }
 }

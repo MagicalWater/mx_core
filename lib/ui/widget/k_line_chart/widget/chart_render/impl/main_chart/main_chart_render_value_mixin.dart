@@ -3,10 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
-import '../../chart_render.dart';
-import 'ui_style/main_chart_ui_style.dart';
+import '../../main_chart_render.dart';
 
-mixin MainChartValueMixin on ChartRender {
+mixin MainChartValueMixin on MainChartRender {
   /// 資料檢視區間擁有最小值/最大值的資料index
   late int minValueDataIndex, maxValueDataIndex;
 
@@ -73,50 +72,63 @@ mixin MainChartValueMixin on ChartRender {
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
 
-      if (maxValue <= data.high) {
-        maxValue = data.high;
-        maxValueDataIndex = i;
-      }
-      if (minValue >= data.low) {
-        minValue = data.low;
-        minValueDataIndex = i;
-      }
+      if (mainState.contains(MainChartState.lineIndex)) {
+        // 折線圖只有收盤價
+        if (maxValue <= data.close) {
+          maxValue = data.close;
+          maxValueDataIndex = i;
+        }
+        if (minValue >= data.close) {
+          minValue = data.close;
+          minValueDataIndex = i;
+        }
 
-      if (maDisplay) {
-        final maData = data.indciatorData.ma?.ma;
-        if (maData != null && maData.isNotEmpty) {
-          final values = maData.values;
-          final maxReduce = values.reduce(max);
-          final minReduce = values.reduce(min);
+      } else {
+        if (maxValue <= data.high) {
+          maxValue = data.high;
+          maxValueDataIndex = i;
+        }
+        if (minValue >= data.low) {
+          minValue = data.low;
+          minValueDataIndex = i;
+        }
 
-          if (maxValue <= maxReduce) {
-            maxValue = maxReduce;
-            maxValueDataIndex = i;
-          }
+        if (maDisplay) {
+          final maData = data.indciatorData.ma?.ma;
+          if (maData != null && maData.isNotEmpty) {
+            final values = maData.values;
+            final maxReduce = values.reduce(max);
+            final minReduce = values.reduce(min);
 
-          if (minValue >= minReduce) {
-            minValue = minReduce;
-            minValueDataIndex = i;
+            if (maxValue <= maxReduce) {
+              maxValue = maxReduce;
+              maxValueDataIndex = i;
+            }
+
+            if (minValue >= minReduce) {
+              minValue = minReduce;
+              minValueDataIndex = i;
+            }
           }
         }
-      }
 
-      if (bollDisplay) {
-        final bollData = data.indciatorData.boll;
-        if (bollData != null) {
-          final values = [bollData.up, bollData.dn, bollData.mb];
+        if (bollDisplay) {
+          final bollData = data.indciatorData.boll;
+          if (bollData != null) {
+            final values = [bollData.up, bollData.dn, bollData.mb];
 
-          final maxReduce = values.reduce(max);
-          final minReduce = values.reduce(min);
+            final maxReduce = values.reduce(max);
+            final minReduce = values.reduce(min);
 
-          if (maxValue <= maxReduce) {
-            maxValue = maxReduce;
-            maxValueDataIndex = i;
-          }
+            if (maxValue <= maxReduce) {
+              maxValue = maxReduce;
+              maxValueDataIndex = i;
+            }
 
-          if (minValue >= minReduce) {
-            minValue = minReduce;
-            minValueDataIndex = i;
+            if (minValue >= minReduce) {
+              minValue = minReduce;
+              minValueDataIndex = i;
+            }
           }
         }
       }

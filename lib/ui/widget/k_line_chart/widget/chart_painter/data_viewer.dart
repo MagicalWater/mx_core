@@ -55,6 +55,15 @@ abstract class DataViewer {
   /// ma(均線)週期
   abstract final List<int> maPeriods;
 
+  /// 價格格式化
+  abstract final String Function(num price) priceFormatter;
+
+  /// 成交量格式化
+  abstract final String Function(num volume) volumeFormatter;
+
+  /// x軸日期時間格式化
+  abstract final String Function(DateTime dateTime) xAxisDateTimeFormatter;
+
   /// 取得長按中的data index
   int? getLongPressDataIndex();
 
@@ -66,13 +75,4 @@ abstract class DataViewer {
 
   /// 將畫布繪製的x軸座標轉換為data的索引值
   int realXToDataIndex(double realX);
-
-  /// 將價格格式化成字串
-  String formatPrice(num price);
-
-  /// 將買賣量格式化成字串
-  String formateVolume(num volume);
-
-  /// 將日期時間格式化
-  String formateTime(DateTime dateTime);
 }

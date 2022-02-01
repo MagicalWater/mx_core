@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/chart_render.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
 
 import 'volume_chart_render_value_mixin.dart';
 
 export 'ui_style/volume_chart_ui_style.dart';
 
-class VolumeChartRenderImpl extends ChartRender with VolumeChartValueMixin {
+class VolumeChartRenderImpl extends VolumeChartRender
+    with VolumeChartValueMixin {
   VolumeChartRenderImpl({
     required DataViewer dataViewer,
   }) : super(dataViewer: dataViewer);
@@ -67,7 +68,7 @@ class VolumeChartRenderImpl extends ChartRender with VolumeChartValueMixin {
       fontSize: sizes.rightMaxValueText,
     );
     final textSpan = TextSpan(
-      text: dataViewer.formateVolume(maxValue),
+      text: dataViewer.volumeFormatter(maxValue),
       style: textStyle,
     );
     final textPainter = TextPainter(
@@ -89,7 +90,7 @@ class VolumeChartRenderImpl extends ChartRender with VolumeChartValueMixin {
       color: colors.indexTip,
     );
     final textSpan = TextSpan(
-      text: 'VOL:${dataViewer.formateVolume(displayData.volume)}',
+      text: 'VOL:${dataViewer.volumeFormatter(displayData.volume)}',
       style: textStyle,
     );
     final textPainter = TextPainter(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_value_mixin.dart';
 
 import '../../main_chart_render.dart';
@@ -12,7 +12,11 @@ class MainChartRenderImpl extends MainChartRender
     with MainChartValueMixin, MainChartRenderPaintMixin {
   MainChartRenderImpl({
     required DataViewer dataViewer,
-  }) : super(dataViewer: dataViewer);
+    final void Function(Offset? localPosition)? rightRealPriceOffset,
+  }) : super(
+          dataViewer: dataViewer,
+          rightRealPriceOffset: rightRealPriceOffset,
+        );
 
   /// 繪製背景
   @override
@@ -92,15 +96,15 @@ class MainChartRenderImpl extends MainChartRender
 
       final bollSpan = [
         TextSpan(
-          text: 'BOLL:${dataViewer.formatPrice(bollData.mb)}    ',
+          text: 'BOLL:${dataViewer.priceFormatter(bollData.mb)}    ',
           style: bollTextStyle.copyWith(color: colors.bollMb),
         ),
         TextSpan(
-          text: 'UP:${dataViewer.formatPrice(bollData.up)}    ',
+          text: 'UP:${dataViewer.priceFormatter(bollData.up)}    ',
           style: bollTextStyle.copyWith(color: colors.bollUp),
         ),
         TextSpan(
-          text: 'LB:${dataViewer.formatPrice(bollData.dn)}    ',
+          text: 'LB:${dataViewer.priceFormatter(bollData.dn)}    ',
           style: bollTextStyle.copyWith(color: colors.bollDn),
         ),
       ];
@@ -137,7 +141,7 @@ class MainChartRenderImpl extends MainChartRender
       // 取得分隔線對應的數值
       final value = realYToValue(positionY);
       final span = TextSpan(
-        text: dataViewer.formatPrice(value),
+        text: dataViewer.priceFormatter(value),
         style: textStyle,
       );
       final textPainter = TextPainter(
@@ -161,18 +165,19 @@ class MainChartRenderImpl extends MainChartRender
     // 蠟燭線跟折線只能存在一個
     if (dataViewer.mainState.contains(MainChartState.kLine)) {
       paintCandleChart(canvas, rect);
+
+      // 繪製ma線
+      if (dataViewer.mainState.contains(MainChartState.ma)) {
+        paintMaChart(canvas, rect);
+      }
+
+      // 繪製boll線
+      if (dataViewer.mainState.contains(MainChartState.boll)) {
+        paintBollChart(canvas, rect);
+      }
     } else if (dataViewer.mainState.contains(MainChartState.lineIndex)) {
+      // 折線狀態不可再有ma以及boll
       paintLineChart(canvas, rect);
-    }
-
-    // 繪製ma線
-    if (dataViewer.mainState.contains(MainChartState.ma)) {
-      paintMaChart(canvas, rect);
-    }
-
-    // 繪製boll線
-    if (dataViewer.mainState.contains(MainChartState.boll)) {
-      paintBollChart(canvas, rect);
     }
   }
 
@@ -184,7 +189,7 @@ class MainChartRenderImpl extends MainChartRender
 
     // 右側顯示的實時數值
     final rightValueSpan = TextSpan(
-      text: dataViewer.formatPrice(realTimeValue),
+      text: dataViewer.priceFormatter(realTimeValue),
       style: TextStyle(
         fontSize: sizes.realTimeLineValue,
         color: colors.realTimeRightValue,
@@ -211,14 +216,19 @@ class MainChartRenderImpl extends MainChartRender
     if (valuePainter.width < rightRemainingSpace) {
       // 右側空間可容納實時數值
 
+      final startX = rect.width - rightRemainingSpace;
+
       // 繪製右側的實時線
       paintRealTimeLineAtRight(
         canvas: canvas,
         rect: rect,
-        startX: rect.width - rightRemainingSpace,
+        startX: startX,
         valuePainter: valuePainter,
         y: y,
       );
+
+      // 將最右側的實時價格位置打出去
+      rightRealPriceOffset?.call(Offset(startX, y));
     } else {
       // 右側不可容納實時數值
 
@@ -236,6 +246,9 @@ class MainChartRenderImpl extends MainChartRender
         valuePainter: valuePainter,
         y: y,
       );
+
+      // 將最右側的實時價格位置打出去
+      rightRealPriceOffset?.call(null);
     }
   }
 
@@ -265,8 +278,8 @@ class MainChartRenderImpl extends MainChartRender
       final valueAtLeft = valueX < rect.width / 2;
 
       final valueText = valueAtLeft
-          ? '── ${dataViewer.formatPrice(value)}'
-          : '${dataViewer.formatPrice(value)} ──';
+          ? '── ${dataViewer.priceFormatter(value)}'
+          : '${dataViewer.priceFormatter(value)} ──';
 
       final valuePainter = TextPainter(
         text: TextSpan(text: valueText, style: textStyle),

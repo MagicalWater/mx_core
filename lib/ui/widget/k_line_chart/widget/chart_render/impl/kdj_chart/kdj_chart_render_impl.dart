@@ -48,7 +48,7 @@ class KDJChartRenderImpl extends KDJChartRender
       fontSize: sizes.rightValueText,
     );
     final maxValueSpan = TextSpan(
-      text: dataViewer.formateVolume(maxValue),
+      text: dataViewer.priceFormatter(maxValue),
       style: textStyle,
     );
 
@@ -65,7 +65,7 @@ class KDJChartRenderImpl extends KDJChartRender
 
     // 畫最小值
     final minValueSpan = TextSpan(
-      text: dataViewer.formateVolume(minValue),
+      text: dataViewer.priceFormatter(minValue),
       style: textStyle,
     );
     textPainter.text = minValueSpan;
@@ -95,17 +95,17 @@ class KDJChartRenderImpl extends KDJChartRender
       ),
       if (kdjData.k != 0)
         TextSpan(
-          text: "K:${dataViewer.formatPrice(kdjData.k)}    ",
+          text: "K:${dataViewer.priceFormatter(kdjData.k)}    ",
           style: textStyle.copyWith(color: colors.kColor),
         ),
       if (kdjData.d != 0)
         TextSpan(
-          text: "D:${dataViewer.formatPrice(kdjData.d)}    ",
+          text: "D:${dataViewer.priceFormatter(kdjData.d)}    ",
           style: textStyle.copyWith(color: colors.dColor),
         ),
       if (kdjData.k != 0)
         TextSpan(
-          text: "J:${dataViewer.formatPrice(kdjData.j)}    ",
+          text: "J:${dataViewer.priceFormatter(kdjData.j)}    ",
           style: textStyle.copyWith(color: colors.jColor),
         ),
     ];

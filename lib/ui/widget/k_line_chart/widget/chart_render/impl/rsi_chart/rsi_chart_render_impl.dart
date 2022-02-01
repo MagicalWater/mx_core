@@ -49,7 +49,7 @@ class RSIChartRenderImpl extends RSIChartRender
       fontSize: sizes.rightValueText,
     );
     final maxValueSpan = TextSpan(
-      text: dataViewer.formateVolume(maxValue),
+      text: dataViewer.priceFormatter(maxValue),
       style: textStyle,
     );
 
@@ -66,7 +66,7 @@ class RSIChartRenderImpl extends RSIChartRender
 
     // 畫最小值
     final minValueSpan = TextSpan(
-      text: dataViewer.formateVolume(minValue),
+      text: dataViewer.priceFormatter(minValue),
       style: textStyle,
     );
     textPainter.text = minValueSpan;
@@ -91,7 +91,7 @@ class RSIChartRenderImpl extends RSIChartRender
 
     final spans = <TextSpan>[
       TextSpan(
-        text: "RSI(14): ${dataViewer.formatPrice(rsiData.rsi)}    ",
+        text: "RSI(14): ${dataViewer.priceFormatter(rsiData.rsi)}    ",
         style: textStyle.copyWith(color: colors.rsiColor),
       ),
     ];

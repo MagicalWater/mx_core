@@ -52,39 +52,69 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
           alignment: Alignment.center,
         );
       } else {
+        print('state=  ${state.indicatorChartState}');
         return Container(
           height: Screen.height * 2 / 3,
           child: KLineChart(
-            datas: state.datas2,
-            mainChartState: [
-              if (!state.isLine) MainChartState.kLine else MainChartState.ma,
-
-            ],
-          ),
-        );
-        return Container(
-          height: Screen.height * 2 / 3,
-          child: KChart(
-            state.datas,
-            isLine: state.isLine,
-            mainState: state.mainState,
-            secondaryState: state.secondaryState,
-            volState: VolState.vol,
-            fractionDigits: 4,
-            longPressY: ChartLongPressY.absolute,
-            maLine: [
-              MALine.ma5,
-              // MALine.ma10,
-              // MALine.ma20,
-              // MALine.ma30,
-            ],
-            mainStyle: MainChartStyle.dark(),
-            subStyle: SubChartStyle.dark(),
-            onLoadMore: (isRight) {
-              print('加載更多: $isRight');
+            datas: state.datas,
+            mainChartState: state.mainChartState,
+            volumeChartState: state.volumeChartState,
+            indicatorChartState: state.indicatorChartState,
+            chartUiStyle: KLineChartUiStyle(
+              colorSetting: ChartColorSetting(),
+              sizeSetting: ChartSizeSetting(),
+              heightRatioSetting: ChartHeightRatioSetting(
+                mainRatio: 0.7,
+                volumeRatio: 0.15,
+                indicatorRatio: 0.15,
+              ),
+            ),
+            mainChartUiStyle: MainChartUiStyle(
+              colorSetting: MainChartColorSetting(),
+              sizeSetting: MainChartSizeSetting(),
+            ),
+            volumeChartUiStyle: VolumeChartUiStyle(
+              colorSetting: VolumeChartColorSetting(),
+              sizeSetting: VolumeChartSizeSetting(),
+            ),
+            macdChartUiStyle: MACDChartUiStyle(
+              colorSetting: MACDChartColorSetting(),
+              sizeSetting: MACDChartSizeSetting(),
+            ),
+            rsiChartUiStyle: RSIChartUiStyle(
+              colorSetting: RSIChartColorSetting(),
+              sizeSetting: RSIChartSizeSetting(),
+            ),
+            wrChartUiStyle: WRChartUiStyle(
+              colorSetting: WRChartColorSetting(),
+              sizeSetting: WRChartSizeSetting(),
+            ),
+            kdjChartUiStyle: KDJChartUiStyle(
+              colorSetting: KDJChartColorSetting(),
+              sizeSetting: KDJChartSizeSetting(),
+            ),
+            maPeriods: [5, 10, 20],
+            priceFormatter: (price) => price.toStringAsFixed(2),
+            volumeFormatter: (volume) {
+              if (volume > 10000 && volume < 999999) {
+                final d = volume / 1000;
+                return '${d.toStringAsFixed(2)}K';
+              } else if (volume > 1000000) {
+                final d = volume / 1000000;
+                return '${d.toStringAsFixed(2)}M';
+              }
+              return volume.toStringAsFixed(2);
             },
-            onDataLessOnePage: () {
-              print('資料未滿一頁');
+            xAxisDateTimeFormatter: (dateTime) => dateTime.getDateStr(
+              format: 'MM-dd mm:ss',
+            ),
+            onLoadMore: (value) {
+              print('加載更多: $value');
+            },
+            tooltipBuilder: (context, longPressData) {
+              return KLineDataInfoTooltip(
+                longPressData: longPressData,
+              );
             },
           ),
         );
@@ -97,7 +127,6 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
       appBar: baseAppBar('行情圖表'),
       body: BlocBuilder<KChartBloc, KChartState>(
         builder: (context, state) {
-          var stateIsLine = state.isLine;
           // print('是線條嗎: ${stateIsLine}');
           return ListView(
             children: <Widget>[
@@ -149,61 +178,90 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
         button(
           "分時",
           onPressed: () {
-            bloc().add(KChartToggleLineEvent(isLine: true));
+            final chartState = List<MainChartState>.from(state.mainChartState);
+            if (chartState.contains(MainChartState.lineIndex)) {
+              chartState.remove(MainChartState.lineIndex);
+            } else {
+              chartState.add(MainChartState.lineIndex);
+            }
+            bloc().add(KChartMainStateEvent(state: chartState));
           },
         ),
         button(
           "k線",
           onPressed: () {
-            bloc().add(KChartToggleLineEvent(isLine: false));
+            final chartState = List<MainChartState>.from(state.mainChartState);
+            if (chartState.contains(MainChartState.kLine)) {
+              chartState.remove(MainChartState.kLine);
+            } else {
+              chartState.add(MainChartState.kLine);
+            }
+            bloc().add(KChartMainStateEvent(state: chartState));
           },
         ),
         button(
           "MA",
           onPressed: () {
-            bloc().add(KChartMainStateEvent(state: MainState.ma));
+            final chartState = List<MainChartState>.from(state.mainChartState);
+            if (chartState.contains(MainChartState.ma)) {
+              chartState.remove(MainChartState.ma);
+            } else {
+              chartState.add(MainChartState.ma);
+            }
+            bloc().add(KChartMainStateEvent(state: chartState));
           },
         ),
         button(
           "BOLL",
           onPressed: () {
-            bloc().add(KChartMainStateEvent(state: MainState.boll));
+            final chartState = List<MainChartState>.from(state.mainChartState);
+            if (chartState.contains(MainChartState.boll)) {
+              chartState.remove(MainChartState.boll);
+            } else {
+              chartState.add(MainChartState.boll);
+            }
+            bloc().add(KChartMainStateEvent(state: chartState));
           },
         ),
         button(
-          "隱藏",
+          "隱藏主圖表",
           onPressed: () {
-            bloc().add(KChartMainStateEvent(state: MainState.none));
+            bloc().add(KChartMainStateEvent(state: []));
           },
         ),
         button(
           "MACD",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.macd));
+            bloc().add(KChartIndicatorChartStateEvent(
+                state: IndicatorChartState.macd));
           },
         ),
         button(
           "KDJ",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.kdj));
+            bloc().add(
+                KChartIndicatorChartStateEvent(state: IndicatorChartState.kdj));
           },
         ),
         button(
           "RSI",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.rsi));
+            bloc().add(
+                KChartIndicatorChartStateEvent(state: IndicatorChartState.rsi));
           },
         ),
         button(
           "WR",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.wr));
+            bloc().add(
+                KChartIndicatorChartStateEvent(state: IndicatorChartState.wr));
           },
         ),
         button(
-          "隱藏副視圖",
+          "隱藏技術線視圖",
           onPressed: () {
-            bloc().add(KChartSecondaryStateEvent(state: SecondaryState.none));
+            bloc().add(KChartIndicatorChartStateEvent(
+                state: IndicatorChartState.none));
           },
         ),
         button(

@@ -10,7 +10,8 @@ import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/main_chart_re
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
 import '../chart_painter.dart';
 import 'chart_painter_value_mixin.dart';
-import 'package:mx_core/util/date_util.dart';
+
+export '../ui_style/k_line_chart_ui_style.dart';
 
 class ChartPainterImpl extends ChartPainter
     with ChartPainterPaintMixin, ChartPainterValueMixin {
@@ -61,12 +62,28 @@ class ChartPainterImpl extends ChartPainter
   @override
   final IndicatorChartState indicatorState;
 
+  /// 價格格式化
+  @override
+  final String Function(num price) priceFormatter;
+
+  /// 成交量格式化
+  @override
+  final String Function(num volume) volumeFormatter;
+
+  /// x軸日期時間格式化
+  @override
+  final String Function(DateTime dateTime) xAxisDateTimeFormatter;
+
   @override
   final List<int> maPeriods;
 
   @override
   double? get longPressY =>
       chartGesture.isLongPress ? chartGesture.longPressY : null;
+
+  /// 主圖表最右側實時價格的位置
+  /// 若處於不可見狀態, 則[localPosition]為null
+  final void Function(Offset? localPosition)? rightRealPriceOffset;
 
   ChartPainterImpl({
     required this.datas,
@@ -82,8 +99,12 @@ class ChartPainterImpl extends ChartPainter
     required this.wrChartUiStyle,
     required this.kdjChartUiStyle,
     required this.maPeriods,
+    required this.priceFormatter,
+    required this.volumeFormatter,
+    required this.xAxisDateTimeFormatter,
     required ValueChanged<DrawContentInfo>? onDrawInfo,
     required ValueChanged<LongPressData?>? onLongPressData,
+    this.rightRealPriceOffset,
   }) : super(
           chartGesture: chartGesture,
           onDrawInfo: onDrawInfo,
@@ -114,7 +135,7 @@ class ChartPainterImpl extends ChartPainter
     // print('繪製: $mainRect, $volumeHeight, $indicatorHeight, size = $size');
 
     // 繪製主圖
-    paintMainChart(canvas, computeRect.main);
+    paintMainChart(canvas, computeRect.main, rightRealPriceOffset);
 
     // 繪製成交量圖
     paintVolumeChart(canvas, computeRect.volume);
@@ -130,31 +151,6 @@ class ChartPainterImpl extends ChartPainter
 
     // 繪製長按時間
     paintLongPressTime(canvas, computeRect.bottomTime);
-  }
-
-  /// 將價格格式化成字串
-  @override
-  String formatPrice(num value) {
-    return value.toStringAsFixed(2);
-  }
-
-  /// 將買賣量格式化成字串
-  @override
-  String formateVolume(num volume) {
-    if (volume > 10000 && volume < 999999) {
-      final d = volume / 1000;
-      return '${d.toStringAsFixed(2)}K';
-    } else if (volume > 1000000) {
-      final d = volume / 1000000;
-      return '${d.toStringAsFixed(2)}M';
-    }
-    return volume.toStringAsFixed(2);
-  }
-
-  /// 將日期時間格式化
-  @override
-  String formateTime(DateTime dateTime) {
-    return dateTime.getDateStr(format: 'MM-dd HH:mm');
   }
 
   @override

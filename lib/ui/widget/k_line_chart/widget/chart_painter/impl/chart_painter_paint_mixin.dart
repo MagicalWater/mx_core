@@ -21,41 +21,33 @@ mixin ChartPainterPaintMixin on ChartPainter {
   final _longPressTimePaint = Paint()..isAntiAlias = true;
 
   /// 繪製主圖表
-  void paintMainChart(Canvas canvas, Rect rect) {
-    final render = MainChartRenderImpl(dataViewer: this);
-    render.initValue(rect);
-    render.paintBackground(canvas, rect);
-    render.paintGrid(canvas, rect);
-    render.paintTopValueText(canvas, rect);
-    render.paintChart(canvas, rect);
-    render.paintRightValueText(canvas, rect);
-    render.paintMaxMinValue(canvas, rect);
-    render.paintRealTimeLine(canvas, rect);
-    render.paintLongPressHorizontalLineAndValue(canvas, rect);
-    render.paintLongPressHorizontalLineAndValue(canvas, rect);
+  void paintMainChart(
+    Canvas canvas,
+    Rect rect,
+    void Function(Offset? localPosition)? rightRealPriceOffset,
+  ) {
+    final ChartRender render = MainChartRenderImpl(
+      dataViewer: this,
+      rightRealPriceOffset: rightRealPriceOffset,
+    );
+    render.paint(canvas, rect);
   }
 
   /// 繪製volume圖表
   void paintVolumeChart(Canvas canvas, Rect rect) {
     switch (volumeState) {
       case VolumeChartState.volume:
-        final render = VolumeChartRenderImpl(dataViewer: this);
-        render.initValue(rect);
-        render.paintBackground(canvas, rect);
-        render.paintGrid(canvas, rect);
-        render.paintTopValueText(canvas, rect);
-        render.paintChart(canvas, rect);
-        render.paintRightValueText(canvas, rect);
+        final ChartRender render = VolumeChartRenderImpl(dataViewer: this);
+        render.paint(canvas, rect);
         break;
       case VolumeChartState.none:
-        // TODO: Handle this case.
         break;
     }
   }
 
   /// 繪製技術指標圖表
   void paintIndicatorChart(Canvas canvas, Rect rect) {
-    ChartRender? render;
+    final ChartRender? render;
     switch (indicatorState) {
       case IndicatorChartState.macd:
         render = MACDChartRenderImpl(dataViewer: this);
@@ -70,14 +62,10 @@ mixin ChartPainterPaintMixin on ChartPainter {
         render = KDJChartRenderImpl(dataViewer: this);
         break;
       default:
+        render = null;
         break;
     }
-    render?.initValue(rect);
-    render?.paintBackground(canvas, rect);
-    render?.paintGrid(canvas, rect);
-    render?.paintTopValueText(canvas, rect);
-    render?.paintChart(canvas, rect);
-    render?.paintRightValueText(canvas, rect);
+    render?.paint(canvas, rect);
   }
 
   /// 繪製長按豎線
@@ -116,7 +104,7 @@ mixin ChartPainterPaintMixin on ChartPainter {
     final data = datas[index];
     final timePainter = TextPainter(
       text: TextSpan(
-        text: formateTime(data.dateTime),
+        text: xAxisDateTimeFormatter(data.dateTime),
         style: TextStyle(
           color: colors.longPressTime,
           fontSize: sizes.longPressTime,
@@ -217,7 +205,7 @@ mixin ChartPainterPaintMixin on ChartPainter {
       final data = datas[dataIndex];
       final textPainter = TextPainter(
         text: TextSpan(
-          text: formateTime(data.dateTime),
+          text: xAxisDateTimeFormatter(data.dateTime),
           style: timeTextStyle,
         ),
         textDirection: TextDirection.ltr,

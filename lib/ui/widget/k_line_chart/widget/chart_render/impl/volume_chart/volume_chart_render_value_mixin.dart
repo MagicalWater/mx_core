@@ -1,12 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
-import '../../chart_render.dart';
-import 'ui_style/volume_chart_ui_style.dart';
+import '../../volume_chart_render.dart';
 
-mixin VolumeChartValueMixin on ChartRender {
+mixin VolumeChartValueMixin on VolumeChartRender {
   /// 資料檢視區間擁有最小值/最大值的資料index
   late int minValueDataIndex, maxValueDataIndex;
 

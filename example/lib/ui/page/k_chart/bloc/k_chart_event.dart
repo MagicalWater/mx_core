@@ -6,25 +6,25 @@ abstract class KChartEvent {}
 /// 初始化加載資料事件
 class KChartInitEvent extends KChartEvent {}
 
-/// 切換線條與折線
-class KChartToggleLineEvent extends KChartEvent {
-  final bool isLine;
-
-  KChartToggleLineEvent({required this.isLine});
-}
-
 /// 切換主視圖類型
 class KChartMainStateEvent extends KChartEvent {
-  final MainState state;
+  final List<MainChartState> state;
 
   KChartMainStateEvent({required this.state});
 }
 
-/// 切換副視圖類型
-class KChartSecondaryStateEvent extends KChartEvent {
-  final SecondaryState state;
+/// 切換成交量視圖類型
+class KChartVolumeChartStateEvent extends KChartEvent {
+  final VolumeChartState state;
 
-  KChartSecondaryStateEvent({required this.state});
+  KChartVolumeChartStateEvent({required this.state});
+}
+
+/// 切換技術線視圖類型
+class KChartIndicatorChartStateEvent extends KChartEvent {
+  final IndicatorChartState state;
+
+  KChartIndicatorChartStateEvent({required this.state});
 }
 
 /// 更新最後一筆數據

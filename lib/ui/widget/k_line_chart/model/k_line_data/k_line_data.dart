@@ -21,7 +21,7 @@ class KLineData {
   final double close;
 
   /// 成交量(手數)
-  final int volume;
+  final double volume;
 
   /// 成交金額
   final double amount;

@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:mx_core/mx_core.dart';
 import 'package:mx_core/route_page/page_route_mixin.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart';
-import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/ui_style/kdj_chart_ui_style.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/macd_chart/macd_chart_render_impl.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_ui_style.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart/ui_style/rsi_chart_ui_style.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_ui_style.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/k_line_data_tooltip/k_line_data_tooltip.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/flash_point/flast_point.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/touch_gesture_dector/touch_gesture_dector.dart';
+import 'package:mx_core/util/date_util.dart';
+
+import '../k_line_chart.dart';
+export '../widget/chart_painter/chart_painter.dart';
+export '../widget/chart_render/main_chart_render.dart';
+export '../widget/chart_render/volume_chart_render.dart';
+export '../widget/chart_render/macd_chart_render.dart';
+export '../widget/chart_render/rsi_chart_render.dart';
+export '../widget/chart_render/kdj_chart_render.dart';
+export '../widget/chart_render/wr_chart_render.dart';
+export '../widget/k_line_data_tooltip/k_line_data_tooltip.dart';
 
 /// 長按tooltip構建
-typedef KLineChartTooltipBuilder = KLineDataInfoTooltip Function(
+typedef KLineChartTooltipBuilder = Widget Function(
   BuildContext context,
   LongPressData data,
 );
@@ -60,13 +62,19 @@ class KLineChart extends StatefulWidget {
   final List<int> maPeriods;
 
   /// x軸時間格式化
-  final String xAxisDateFormat;
+  final String Function(DateTime dateTime) xAxisDateTimeFormatter;
 
   /// tooltip彈窗構建
   final KLineChartTooltipBuilder? tooltipBuilder;
 
   /// 加載更多調用, false代表滑動到最左邊, true則為最右邊
   final Function(bool right)? onLoadMore;
+
+  /// 價格格式化
+  final String Function(num price) priceFormatter;
+
+  /// 成交量格式化
+  final String Function(num volume) volumeFormatter;
 
   const KLineChart({
     Key? key,
@@ -82,20 +90,43 @@ class KLineChart extends StatefulWidget {
     this.wrChartUiStyle = const WRChartUiStyle(),
     this.kdjChartUiStyle = const KDJChartUiStyle(),
     this.maPeriods = const [5, 10, 20],
-    this.xAxisDateFormat = 'MM-dd mm:ss',
     this.tooltipBuilder = _defaultTooltip,
+    this.xAxisDateTimeFormatter = _defaultXAxisDateFormatter,
+    this.priceFormatter = _defaultPriceFormatter,
+    this.volumeFormatter = _defaultVolumeFormatter,
     this.onLoadMore,
   }) : super(key: key);
 
-  /// 預設tooltip彈窗
-  static KLineDataInfoTooltip _defaultTooltip(
+  /// 預設tooltip元件
+  static Widget _defaultTooltip(
     BuildContext context,
     LongPressData data,
   ) {
     return KLineDataInfoTooltip(
       longPressData: data,
-      dateTimeFormat: 'yyyy-MM-dd HH:mm',
     );
+  }
+
+  /// 預設x軸時間格式化
+  static String _defaultXAxisDateFormatter(DateTime dateTime) {
+    return DateUtil.getDateStr(dateTime, format: 'MM-dd mm:ss');
+  }
+
+  /// 預設價格格式化
+  static String _defaultPriceFormatter(num price) {
+    return price.toStringAsFixed(2);
+  }
+
+  /// 預設成交量格式化
+  static String _defaultVolumeFormatter(num volume) {
+    if (volume > 10000 && volume < 999999) {
+      final d = volume / 1000;
+      return '${d.toStringAsFixed(2)}K';
+    } else if (volume > 1000000) {
+      final d = volume / 1000000;
+      return '${d.toStringAsFixed(2)}M';
+    }
+    return volume.toStringAsFixed(2);
   }
 
   @override
@@ -104,6 +135,9 @@ class KLineChart extends StatefulWidget {
 
 class _KLineChartState extends State<KLineChart>
     with SingleTickerProviderStateMixin {
+  /// 最右側最新價格的位置
+  final _rightRealPricePositionStreamController = StreamController<Offset?>();
+
   /// 圖表拖移處理
   late final ChartGesture chartGesture;
 
@@ -141,39 +175,71 @@ class _KLineChartState extends State<KLineChart>
           CustomPaint(
             size: Size.infinite,
             painter: ChartPainterImpl(
-              datas: widget.datas,
-              chartGesture: chartGesture,
-              chartUiStyle: widget.chartUiStyle,
-              mainState: widget.mainChartState,
-              volumeState: widget.volumeChartState,
-              indicatorState: widget.indicatorChartState,
-              mainChartUiStyle: widget.mainChartUiStyle,
-              volumeChartUiStyle: widget.volumeChartUiStyle,
-              macdChartUiStyle: widget.macdChartUiStyle,
-              rsiChartUiStyle: widget.rsiChartUiStyle,
-              wrChartUiStyle: widget.wrChartUiStyle,
-              kdjChartUiStyle: widget.kdjChartUiStyle,
-              maPeriods: widget.maPeriods,
-              onDrawInfo: (info) {
-                chartGesture.setDrawInfo(info);
-              },
-              onLongPressData: (data) {
-                _longPressDataStreamController.add(data);
-              },
-              // onCalculateMaxScrolled: (maxScroll) {
-              //   maxScrollX = maxScroll;
-              //
-              //   // 假設 maxScrollX 為 0, 且資料量或者scale與舊有不同時觸發加載更多
-              //   if (widget.onDataLessOnePage != null &&
-              //       maxScrollX == 0 &&
-              //       isDataLenChanged) {
-              //     isDataLenChanged = false;
-              //     widget.onDataLessOnePage?.call();
-              //   }
-              // },
-            ),
+                datas: widget.datas,
+                chartGesture: chartGesture,
+                chartUiStyle: widget.chartUiStyle,
+                mainState: widget.mainChartState,
+                volumeState: widget.volumeChartState,
+                indicatorState: widget.indicatorChartState,
+                mainChartUiStyle: widget.mainChartUiStyle,
+                volumeChartUiStyle: widget.volumeChartUiStyle,
+                macdChartUiStyle: widget.macdChartUiStyle,
+                rsiChartUiStyle: widget.rsiChartUiStyle,
+                wrChartUiStyle: widget.wrChartUiStyle,
+                kdjChartUiStyle: widget.kdjChartUiStyle,
+                maPeriods: widget.maPeriods,
+                priceFormatter: widget.priceFormatter,
+                volumeFormatter: widget.volumeFormatter,
+                xAxisDateTimeFormatter: widget.xAxisDateTimeFormatter,
+                onDrawInfo: (info) {
+                  chartGesture.setDrawInfo(info);
+                },
+                onLongPressData: (data) {
+                  _longPressDataStreamController.add(data);
+                },
+                rightRealPriceOffset: (offset) {
+                  print('開始');
+                  // if (offset != null &&
+                  //     widget.mainChartState
+                  //         .contains(MainChartState.lineIndex)) {
+                  //   _rightRealPricePositionStreamController.add(offset);
+                  // } else {
+                  //   _rightRealPricePositionStreamController.add(null);
+                  // }
+                  print('結束');
+                }
+                // onCalculateMaxScrolled: (maxScroll) {
+                //   maxScrollX = maxScroll;
+                //
+                //   // 假設 maxScrollX 為 0, 且資料量或者scale與舊有不同時觸發加載更多
+                //   if (widget.onDataLessOnePage != null &&
+                //       maxScrollX == 0 &&
+                //       isDataLenChanged) {
+                //     isDataLenChanged = false;
+                //     widget.onDataLessOnePage?.call();
+                //   }
+                // },
+                ),
           ),
           _tooltip(),
+          StreamBuilder<Offset?>(
+            stream: _rightRealPricePositionStreamController.stream,
+            builder: (context, snapshot) {
+              final offset = snapshot.data;
+              const circleSize = 15.0;
+              return Positioned(
+                left: offset == null ? null : offset.dx - circleSize / 2,
+                top: offset == null ? null : offset.dy - circleSize / 2,
+                child: FlashPoint(
+                  active: offset != null,
+                  width: circleSize,
+                  height: circleSize,
+                  flastColors: widget
+                      .mainChartUiStyle.colorSetting.realTimeRightPointFlash,
+                ),
+              );
+            },
+          ),
         ],
       ),
     );

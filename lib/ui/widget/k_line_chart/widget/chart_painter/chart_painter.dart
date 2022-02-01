@@ -4,8 +4,6 @@ import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart'
 
 import 'data_viewer.dart';
 
-export 'ui_style/k_line_chart_ui_style.dart';
-export 'data_viewer.dart';
 export 'impl/chart_painter_impl.dart';
 
 abstract class ChartPainter extends CustomPainter implements DataViewer {

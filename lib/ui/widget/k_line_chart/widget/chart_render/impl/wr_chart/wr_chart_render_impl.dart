@@ -49,7 +49,7 @@ class WRChartRenderImpl extends WRChartRender
       fontSize: sizes.rightValueText,
     );
     final maxValueSpan = TextSpan(
-      text: dataViewer.formateVolume(maxValue),
+      text: dataViewer.priceFormatter(maxValue),
       style: textStyle,
     );
 
@@ -66,7 +66,7 @@ class WRChartRenderImpl extends WRChartRender
 
     // 畫最小值
     final minValueSpan = TextSpan(
-      text: dataViewer.formateVolume(minValue),
+      text: dataViewer.priceFormatter(minValue),
       style: textStyle,
     );
     textPainter.text = minValueSpan;
@@ -91,7 +91,7 @@ class WRChartRenderImpl extends WRChartRender
 
     final spans = <TextSpan>[
       TextSpan(
-        text: "WR(14): ${dataViewer.formatPrice(wrData.r)}    ",
+        text: "WR(14): ${dataViewer.priceFormatter(wrData.r)}    ",
         style: textStyle.copyWith(color: colors.rColor),
       ),
     ];
