@@ -34,17 +34,39 @@ mixin GestureHandlerMixin on ChartGesture
 
   @override
   void onDragEnd(DragEndDetails details) async {
+    // 速度方向
+    final scrollVelocity = details.velocity.pixelsPerSecond.dx;
     chartScroller.setScrollUpdatedCallback((value) {
       scrollX = value;
-      if (scrollX <= 0) {
-        // 滑到最右邊
-        scrollX = 0;
-        onLoadMore?.call(true);
-        chartScroller.stopScroll();
+
+      // 如果maxScrollX == 0
+      // 則依照加速度方向判斷
+      // 是否已滑動至最右邊/最左邊
+      var isScrollToRightSide = false;
+      var isScrollToLeftSide = false;
+      if (maxScrollX == 0) {
+        if (scrollVelocity < 0) {
+          isScrollToRightSide = true;
+        } else {
+          isScrollToLeftSide = true;
+        }
       } else if (scrollX >= maxScrollX) {
+        // 滑動到最左邊
+        isScrollToLeftSide = true;
+      } else if (scrollX <= 0) {
+        // 滑動到最右邊
+        isScrollToRightSide = true;
+      }
+
+      if (isScrollToLeftSide) {
         // 滑到最左邊
         scrollX = maxScrollX;
         onLoadMore?.call(false);
+        chartScroller.stopScroll();
+      } else if (isScrollToRightSide) {
+        // 滑到最右邊
+        scrollX = 0;
+        onLoadMore?.call(true);
         chartScroller.stopScroll();
       }
       onDrawUpdateNeed();
@@ -52,11 +74,13 @@ mixin GestureHandlerMixin on ChartGesture
 
     final completer = Completer<bool>();
 
+    // print('加速度: ${details.velocity.pixelsPerSecond.dx}');
+
     // 拖動結束後接著依照當前速度以及x軸位置進行模擬滑動
     chartScroller
         .startIntertialScroll(
       position: scrollX,
-      velocity: details.velocity.pixelsPerSecond.dx,
+      velocity: scrollVelocity,
     )
         .whenCompleteOrCancel(() {
       completer.complete(true);

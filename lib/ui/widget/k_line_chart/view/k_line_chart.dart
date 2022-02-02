@@ -26,6 +26,24 @@ typedef KLineChartTooltipBuilder = Widget Function(
 );
 
 /// k線圖表
+/// ===
+///
+/// 原作者: gwhcn
+/// 參考: https://github.com/gwhcn/flutter_k_chart
+/// 非常感謝原作者在圖表上的製作思路
+///
+/// 重構者: Water
+///
+/// 了解完整體的元件結構後
+/// 以自己的了解進行了整體元件的重構/優化
+/// 除了程式碼的結構差異之外, 主要在功能體現上
+/// 1. 修正折線圖的光亮點造成整個圖表元件不斷的重構的問題
+/// 2. 自定義手勢處理, 解決使用[GestureDetector]手勢縮放/拖拉沒有確實觸發的問題
+/// 3. 圖表樣式/尺寸可由外部自由訂製
+/// 4. 新增圖表滑動到最右側/最左側時會觸發加載更多的方法
+/// 5. tooltip可由外部自由訂製顯示
+/// 6. 點擊實時線的價格箭頭可彈跳至圖表最右側
+/// 7. 初始資料未滿一頁時, 會自動觸發一次加載更多
 class KLineChart extends StatefulWidget {
   /// 圖表資料
   final List<KLineData> datas;
@@ -70,7 +88,7 @@ class KLineChart extends StatefulWidget {
   final KLineChartTooltipBuilder? tooltipBuilder;
 
   /// 加載更多調用, false代表滑動到最左邊, true則為最右邊
-  final Function(bool right)? onLoadMore;
+  final void Function(bool right)? onLoadMore;
 
   /// 價格格式化
   final String Function(num price) priceFormatter;
@@ -154,6 +172,14 @@ class _KLineChartState extends State<KLineChart>
   /// 圖表拖移處理
   late final ChartGesture chartGesture;
 
+  /// 當資料未滿一頁時所記錄下的資料筆數
+  /// 用途是當再次傳出資料筆數未滿一頁時
+  /// 不再持續重複調用加載更多資料
+  int oldDataCount = 0;
+
+  /// 與[oldDataCount]搭配使用, 代表當頁數未滿一頁時, 是否已經調用過未滿一頁所觸發的回調了
+  bool isDataLessOnePageCallBack = false;
+
   /// 長按的資料串流控制
   final _longPressDataStreamController = StreamController<LongPressData?>();
 
@@ -179,7 +205,19 @@ class _KLineChartState extends State<KLineChart>
       onLoadMore: widget.onLoadMore,
     );
 
+    oldDataCount = widget.datas.length;
+    isDataLessOnePageCallBack = false;
+
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant KLineChart oldWidget) {
+    if (oldDataCount != widget.datas.length) {
+      oldDataCount = widget.datas.length;
+      isDataLessOnePageCallBack = false;
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -203,52 +241,49 @@ class _KLineChartState extends State<KLineChart>
             child: CustomPaint(
               size: Size.infinite,
               painter: ChartPainterImpl(
-                  datas: widget.datas,
-                  chartGesture: chartGesture,
-                  chartUiStyle: widget.chartUiStyle,
-                  mainState: widget.mainChartState,
-                  volumeState: widget.volumeChartState,
-                  indicatorState: widget.indicatorChartState,
-                  mainChartUiStyle: widget.mainChartUiStyle,
-                  volumeChartUiStyle: widget.volumeChartUiStyle,
-                  macdChartUiStyle: widget.macdChartUiStyle,
-                  rsiChartUiStyle: widget.rsiChartUiStyle,
-                  wrChartUiStyle: widget.wrChartUiStyle,
-                  kdjChartUiStyle: widget.kdjChartUiStyle,
-                  maPeriods: widget.maPeriods,
-                  priceFormatter: widget.priceFormatter,
-                  volumeFormatter: widget.volumeFormatter,
-                  xAxisDateTimeFormatter: widget.xAxisDateTimeFormatter,
-                  onDrawInfo: (info) {
-                    chartGesture.setDrawInfo(info);
-                  },
-                  onLongPressData: (data) {
-                    _longPressDataStreamController.add(data);
-                  },
-                  rightRealTimePriceOffset: (offset) {
-                    if (offset != null &&
-                        widget.mainChartState
-                            .contains(MainChartState.lineIndex)) {
-                      _rightRealTimePricePositionStreamController.add(offset);
-                    } else {
-                      _rightRealTimePricePositionStreamController.add(null);
+                datas: widget.datas,
+                chartGesture: chartGesture,
+                chartUiStyle: widget.chartUiStyle,
+                mainState: widget.mainChartState,
+                volumeState: widget.volumeChartState,
+                indicatorState: widget.indicatorChartState,
+                mainChartUiStyle: widget.mainChartUiStyle,
+                volumeChartUiStyle: widget.volumeChartUiStyle,
+                macdChartUiStyle: widget.macdChartUiStyle,
+                rsiChartUiStyle: widget.rsiChartUiStyle,
+                wrChartUiStyle: widget.wrChartUiStyle,
+                kdjChartUiStyle: widget.kdjChartUiStyle,
+                maPeriods: widget.maPeriods,
+                priceFormatter: widget.priceFormatter,
+                volumeFormatter: widget.volumeFormatter,
+                xAxisDateTimeFormatter: widget.xAxisDateTimeFormatter,
+                onDrawInfo: (info) {
+                  chartGesture.setDrawInfo(info);
+
+                  if (info.maxScrollX == 0) {
+                    // 資料未滿一頁
+                    if (!isDataLessOnePageCallBack) {
+                      isDataLessOnePageCallBack = true;
+                      widget.onLoadMore?.call(false);
                     }
-                  },
-                  globalRealTimePriceY: (localY) {
-                    _realTimePriceGlobalPositionStreamController.add(localY);
                   }
-                  // onCalculateMaxScrolled: (maxScroll) {
-                  //   maxScrollX = maxScroll;
-                  //
-                  //   // 假設 maxScrollX 為 0, 且資料量或者scale與舊有不同時觸發加載更多
-                  //   if (widget.onDataLessOnePage != null &&
-                  //       maxScrollX == 0 &&
-                  //       isDataLenChanged) {
-                  //     isDataLenChanged = false;
-                  //     widget.onDataLessOnePage?.call();
-                  //   }
-                  // },
-                  ),
+                },
+                onLongPressData: (data) {
+                  _longPressDataStreamController.add(data);
+                },
+                rightRealTimePriceOffset: (offset) {
+                  if (offset != null &&
+                      widget.mainChartState
+                          .contains(MainChartState.lineIndex)) {
+                    _rightRealTimePricePositionStreamController.add(offset);
+                  } else {
+                    _rightRealTimePricePositionStreamController.add(null);
+                  }
+                },
+                globalRealTimePriceY: (localY) {
+                  _realTimePriceGlobalPositionStreamController.add(localY);
+                },
+              ),
             ),
           ),
 
