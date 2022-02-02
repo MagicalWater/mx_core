@@ -90,7 +90,7 @@ class MultiTouchGestureRecognizer extends MultiDragGestureRecognizer {
   MultiDragPointerState createNewPointerState(PointerDownEvent event) {
     _pointerEvent[event.pointer] = event;
 
-    print('按下囉: ${event.position}, ${event.localPosition}');
+    // print('按下囉: ${event.position}, ${event.localPosition}');
 
     onTouchDown?.call(
       event.pointer,
