@@ -71,7 +71,7 @@ class MainChartColorSetting {
     this.timeLine = const Color(0xff4C86CD),
     this.timeLineShadow = const [
       Color(0x554C86CD),
-      Color(0x00ffffff),
+      Color(0x001e2129),
     ],
     this.bollMb = const Color(0xffb47731),
     this.bollUp = const Color(0xffae33ba),

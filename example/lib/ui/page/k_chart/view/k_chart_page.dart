@@ -52,7 +52,6 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
           alignment: Alignment.center,
         );
       } else {
-        print('state=  ${state.indicatorChartState}');
         return Container(
           height: Screen.height * 2 / 3,
           child: KLineChart(
@@ -181,8 +180,14 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
             final chartState = List<MainChartState>.from(state.mainChartState);
             if (chartState.contains(MainChartState.lineIndex)) {
               chartState.remove(MainChartState.lineIndex);
+              if (!chartState.contains(MainChartState.kLine)) {
+                chartState.add(MainChartState.kLine);
+              }
             } else {
               chartState.add(MainChartState.lineIndex);
+              if (chartState.contains(MainChartState.kLine)) {
+                chartState.remove(MainChartState.kLine);
+              }
             }
             bloc().add(KChartMainStateEvent(state: chartState));
           },
@@ -193,8 +198,14 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
             final chartState = List<MainChartState>.from(state.mainChartState);
             if (chartState.contains(MainChartState.kLine)) {
               chartState.remove(MainChartState.kLine);
+              if (!chartState.contains(MainChartState.lineIndex)) {
+                chartState.remove(MainChartState.kLine);
+              }
             } else {
               chartState.add(MainChartState.kLine);
+              if (chartState.contains(MainChartState.lineIndex)) {
+                chartState.remove(MainChartState.lineIndex);
+              }
             }
             bloc().add(KChartMainStateEvent(state: chartState));
           },

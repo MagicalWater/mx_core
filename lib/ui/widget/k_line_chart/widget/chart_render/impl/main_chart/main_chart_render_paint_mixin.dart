@@ -16,13 +16,20 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
     final linePath =
         _getDisplayLinePath(dataViewer.datas.map((e) => e.close).toList());
 
+    final paintRect = Rect.fromLTRB(
+      rect.left,
+      rect.top + sizes.topPadding,
+      rect.right,
+      rect.bottom - sizes.bottomPadding,
+    );
+
     // 繪製漸變渲染
     final shader = LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       tileMode: TileMode.clamp,
       colors: colors.timeLineShadow,
-    ).createShader(rect);
+    ).createShader(paintRect);
     lineShadowPaint.shader = shader;
 
     final fillPath = Path.from(linePath);
@@ -217,7 +224,7 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
     }
 
     // 檢查是否為折線圖, 若是需要繪製實時價最右側原點
-    if (dataViewer.mainState.contains(MainChartState.lineIndex)) {
+    if (mainState.contains(MainChartState.lineIndex)) {
       // startAnimation();
       // final flashColors = List.of(colors.realTimeRightPointFlash);
       // // flashColors[0] = flashColors[0].withOpacity(opacity);
@@ -228,7 +235,11 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
       // canvas.drawCircle(Offset(startX, y), 10.0, realTimeLinePaint);
       // realTimeLinePaint.shader = null;
       realTimeLinePaint.color = colors.realTimeRightPointFlash.first;
-      canvas.drawCircle(Offset(startX, y), 2, realTimeLinePaint);
+      canvas.drawCircle(
+        Offset(startX, y),
+        sizes.realTimePriceCircle,
+        realTimeLinePaint,
+      );
     }
 
     // 畫最右側的實時數值
@@ -245,23 +256,14 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
 
   /// 繪製跨越整個畫布的實時線
   /// [startX] - 實時線的起始x軸位置
-  /// [valuePainter] - 實時數值繪製
   /// [y] - 實時線的y軸位置
   void paintRealTimeLineAtGlobal({
     required Canvas canvas,
     required Rect rect,
-    required TextPainter valuePainter,
     required double y,
   }) {
     // 虛線總寬度
     final dashTotalWidth = sizes.realTimeDashWidth + sizes.realTimeDashSpace;
-
-    // 檢查實時數值是否超過最高/最低限
-    if (y > maxY) {
-      y = maxY;
-    } else if (y < minY) {
-      y = minY;
-    }
 
     // 繪製實時虛線
     var dottedLineX = 0.0;
@@ -274,83 +276,6 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
       );
       dottedLineX += dashTotalWidth;
     }
-
-    // 繪製標籤tag
-    // x軸位置將會處於最後一個豎直隔線上
-
-    // 三角箭頭size
-    final triangleSize = sizes.realTimeTagTriangle;
-
-    // 距離邊框的空隙 / 文字與三角箭頭中間的空隙
-    final verticalPadding = sizes.realTimeTagVerticalPadding,
-        horizontalPadding = sizes.realTimeTagHorizontalPadding,
-        textSpace = 5;
-
-    // 一個行的寬度
-    final columnSpace =
-        rect.width / dataViewer.chartUiStyle.sizeSetting.gridColumns;
-
-    final left = rect.width -
-        columnSpace -
-        (valuePainter.width / 2) -
-        (horizontalPadding * 2);
-    final top = y - valuePainter.height / 2 - verticalPadding;
-
-    // 標籤tag內容寬度
-    final tagWidth = horizontalPadding * 2 +
-        valuePainter.width +
-        textSpace +
-        triangleSize.width;
-
-    // 標籤內容高度
-    final tagHeight = verticalPadding * 2 + valuePainter.height;
-
-    // 標籤圓弧半徑
-    final tagArcRadius = tagHeight / 2;
-
-    final tagRect = RRect.fromLTRBR(
-      left,
-      top,
-      left + tagWidth,
-      top + tagHeight,
-      Radius.circular(tagArcRadius),
-    );
-
-    // 繪製外框/背景
-    canvas.drawRRect(
-      tagRect,
-      realTimeLinePaint
-        ..color = colors.realTimeValueBg
-        ..style = PaintingStyle.fill,
-    );
-    canvas.drawRRect(
-      tagRect,
-      realTimeLinePaint
-        ..color = colors.realTimeValueBorder
-        ..style = PaintingStyle.stroke,
-    );
-
-    // 繪製實時數值
-    final valueOffset = Offset(
-      left + horizontalPadding,
-      y - valuePainter.height / 2,
-    );
-    valuePainter.paint(canvas, valueOffset);
-
-    // 畫三角標示
-    final path = Path();
-    final dx = valuePainter.width + valueOffset.dx + textSpace;
-    final dy = y - triangleSize.height / 2;
-    path.moveTo(dx, dy);
-    path.lineTo(dx + triangleSize.width, y);
-    path.lineTo(dx, dy + triangleSize.height);
-    path.close();
-    canvas.drawPath(
-      path,
-      realTimeLinePaint
-        ..color = colors.realTimeTriangleTag
-        ..style = PaintingStyle.fill,
-    );
   }
 
   /// 繪製長按橫線以及交叉點
@@ -433,6 +358,19 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
     Offset valuePaintOffset;
 
     if (atLeft) {
+      final x = rect.width - 5;
+      // 將數值繪製於右邊
+      path.moveTo(x, longPressY - totalHeight / 2);
+      path.lineTo(x, longPressY + totalHeight / 2);
+      path.lineTo(x - totalWidth, longPressY + totalHeight / 2);
+      path.lineTo(x - totalWidth - arrowWidth, longPressY);
+      path.lineTo(x - totalWidth, longPressY - totalHeight / 2);
+      path.close();
+      valuePaintOffset = Offset(
+        x - horizontalPadding - valueWidth,
+        longPressY - valueHeight / 2,
+      );
+    } else {
       const x = 5.0;
 
       // 將數值繪製於右邊
@@ -445,19 +383,6 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
 
       valuePaintOffset = Offset(
         x + horizontalPadding,
-        longPressY - valueHeight / 2,
-      );
-    } else {
-      final x = rect.width - 5;
-      // 將數值繪製於右邊
-      path.moveTo(x, longPressY - totalHeight / 2);
-      path.lineTo(x, longPressY + totalHeight / 2);
-      path.lineTo(x - totalWidth, longPressY + totalHeight / 2);
-      path.lineTo(x - totalWidth - arrowWidth, longPressY);
-      path.lineTo(x - totalWidth, longPressY - totalHeight / 2);
-      path.close();
-      valuePaintOffset = Offset(
-        x - horizontalPadding - valueWidth,
         longPressY - valueHeight / 2,
       );
     }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/draw_content_info.dart';
@@ -41,6 +43,35 @@ abstract class ChartGesture implements TapGesture {
   /// 設置最大可滾動距離
   void setDrawInfo(DrawContentInfo info) {
     drawContentInfo = info;
+  }
+
+  /// 滑動到scrollX為0的位置
+  Future<void> scrollToRight() async {
+    chartScroller.setScrollUpdatedCallback((value) {
+      scrollX = value;
+      if (scrollX <= 0) {
+        // 滑到最右邊
+        scrollX = 0;
+        onLoadMore?.call(true);
+        chartScroller.stopScroll();
+      }
+      onDrawUpdateNeed();
+    });
+
+    final completer = Completer<bool>();
+
+    // 拖動結束後接著依照當前速度以及x軸位置進行模擬滑動
+    chartScroller
+        .animatedScrollTo(from: scrollX, to: 0)
+        .whenCompleteOrCancel(() {
+      completer.complete(true);
+    });
+
+    await completer.future;
+
+    // isDrag = false;
+    chartScroller.setScrollUpdatedCallback(null);
+    onDrawUpdateNeed();
   }
 
   void dispose() {

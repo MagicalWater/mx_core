@@ -88,7 +88,7 @@ class AxisTransition extends AnimatedWidget {
           offset = Offset(-progress, 0);
           break;
         case TransDirection.none:
-          offset = Offset(0, 0);
+          offset = const Offset(0, 0);
           break;
       }
     } else {

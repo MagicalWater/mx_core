@@ -10,12 +10,16 @@ export 'ui_style/main_chart_ui_style.dart';
 
 class MainChartRenderImpl extends MainChartRender
     with MainChartValueMixin, MainChartRenderPaintMixin {
+  /// [rightRealTimePriceOffset] - 主圖表處於最新時最右側實時價格的位置回調
+  /// [globalRealTimePriceY] - 主圖表非處於最新時實時價格的y軸位置回調
   MainChartRenderImpl({
     required DataViewer dataViewer,
     final void Function(Offset? localPosition)? rightRealPriceOffset,
+    final void Function(double? localY)? globalRealTimePriceY,
   }) : super(
           dataViewer: dataViewer,
           rightRealPriceOffset: rightRealPriceOffset,
+          globalRealTimePriceY: globalRealTimePriceY,
         );
 
   /// 繪製背景
@@ -163,19 +167,19 @@ class MainChartRenderImpl extends MainChartRender
   @override
   void paintChart(Canvas canvas, Rect rect) {
     // 蠟燭線跟折線只能存在一個
-    if (dataViewer.mainState.contains(MainChartState.kLine)) {
+    if (isShowKLine) {
       paintCandleChart(canvas, rect);
 
       // 繪製ma線
-      if (dataViewer.mainState.contains(MainChartState.ma)) {
+      if (mainState.contains(MainChartState.ma)) {
         paintMaChart(canvas, rect);
       }
 
       // 繪製boll線
-      if (dataViewer.mainState.contains(MainChartState.boll)) {
+      if (mainState.contains(MainChartState.boll)) {
         paintBollChart(canvas, rect);
       }
-    } else if (dataViewer.mainState.contains(MainChartState.lineIndex)) {
+    } else if (isShowLineIndex) {
       // 折線狀態不可再有ma以及boll
       paintLineChart(canvas, rect);
     }
@@ -204,19 +208,22 @@ class MainChartRenderImpl extends MainChartRender
     // 取得實時線的y軸位置
     // 之所以不用final, 是因為當在右側空間不可容納實時數值時
     // 可能會有超出上下限的情況, 此時需要調整至最高/最低
-    final y = valueToRealY(realTimeValue);
+    var y = valueToRealY(realTimeValue);
+
+    final dataX = dataViewer.dataIndexToRealX(dataViewer.endDataIndex);
 
     // 取得右側可以用來顯示的剩餘空間
-    final rightRemainingSpace = rect.width -
-        (dataViewer.dataIndexToRealX(dataViewer.endDataIndex) +
-            (dataViewer.chartUiStyle.sizeSetting.dataWidth / 2));
+    final rightRemainingSpace = rect.width - (dataX + (dataWidthScaled / 2));
 
     // if (!isLine) x += mPointWidth / 2;
 
     if (valuePainter.width < rightRemainingSpace) {
       // 右側空間可容納實時數值
 
-      final startX = rect.width - rightRemainingSpace;
+      var startX = dataX;
+      if (isShowKLine) {
+        startX += candleWidthScaled / 2;
+      }
 
       // 繪製右側的實時線
       paintRealTimeLineAtRight(
@@ -229,26 +236,27 @@ class MainChartRenderImpl extends MainChartRender
 
       // 將最右側的實時價格位置打出去
       rightRealPriceOffset?.call(Offset(startX, y));
+
+      // 全局最新實時價格處於不可見
+      globalRealTimePriceY?.call(null);
     } else {
       // 右側不可容納實時數值
 
-      // 需要繪製的實時數值
-      // 與[rightValueSpan]顏色可能會不同
-      final valueSpan = TextSpan(
-          text: rightValueSpan.text,
-          style: rightValueSpan.style!.copyWith(color: colors.realTimeValue));
-      valuePainter.text = valueSpan;
+      // y軸不可超過最大最小值
+      y = y.clamp(minY, maxY);
 
       // 繪製跨越整個畫布的實時線
       paintRealTimeLineAtGlobal(
         canvas: canvas,
         rect: rect,
-        valuePainter: valuePainter,
         y: y,
       );
 
-      // 將最右側的實時價格位置打出去
+      // 右側最新實時價格處於不可見位置
       rightRealPriceOffset?.call(null);
+
+      // 將全局最新實時價格y軸位置打出去
+      globalRealTimePriceY?.call(y);
     }
   }
 
@@ -256,7 +264,7 @@ class MainChartRenderImpl extends MainChartRender
   @override
   void paintMaxMinValue(Canvas canvas, Rect rect) {
     // 圖表狀態為折線圖時不需顯示
-    if (dataViewer.mainState.contains(MainChartState.lineIndex)) {
+    if (mainState.contains(MainChartState.lineIndex)) {
       return;
     }
 

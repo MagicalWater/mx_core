@@ -23,6 +23,9 @@ mixin MainChartValueMixin on MainChartRender {
   /// 蠟燭圖的蠟燭寬度(已乘上縮放)
   late double candleWidthScaled;
 
+  /// 每筆資料寬度(已乘上縮放)
+  late double dataWidthScaled;
+
   /// 實時線畫筆
   final Paint realTimeLinePaint = Paint();
 
@@ -51,6 +54,12 @@ mixin MainChartValueMixin on MainChartRender {
 
   List<MainChartState> get mainState => dataViewer.mainState;
 
+  /// 是否顯示k線
+  late final bool isShowKLine;
+
+  /// 是否顯示收盤價折線
+  late final bool isShowLineIndex;
+
   final chartPaint = Paint()
     ..isAntiAlias = true
     ..filterQuality = FilterQuality.high
@@ -65,8 +74,12 @@ mixin MainChartValueMixin on MainChartRender {
     maxValue = 0;
     minValue = double.infinity;
 
-    final maDisplay = dataViewer.mainState.contains(MainChartState.ma);
-    final bollDisplay = dataViewer.mainState.contains(MainChartState.boll);
+    isShowKLine = mainState.contains(MainChartState.kLine);
+    isShowLineIndex =
+        !isShowKLine && mainState.contains(MainChartState.lineIndex);
+
+    final maDisplay = mainState.contains(MainChartState.ma);
+    final bollDisplay = mainState.contains(MainChartState.boll);
 
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
@@ -82,7 +95,6 @@ mixin MainChartValueMixin on MainChartRender {
           minValue = data.close;
           minValueDataIndex = i;
         }
-
       } else {
         if (maxValue <= data.high) {
           maxValue = data.high;
@@ -134,6 +146,8 @@ mixin MainChartValueMixin on MainChartRender {
       }
     }
 
+    dataWidthScaled =
+        dataViewer.chartUiStyle.sizeSetting.dataWidth * dataViewer.scaleX;
     candleWidthScaled = sizes.candleWidth * dataViewer.scaleX;
 
     // 取得 value 快速轉換 y軸位置的縮放參數

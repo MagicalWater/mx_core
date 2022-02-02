@@ -28,6 +28,15 @@ class ChartInertialScroller {
     }
   }
 
+  /// 滑動到
+  TickerFuture animatedScrollTo({required double from, required double to}) {
+    _controller.value = from;
+    return _controller.animateTo(
+      to,
+      curve: Curves.fastLinearToSlowEaseIn,
+    );
+  }
+
   /// 進行慣性滾動
   /// [position] - 開始進行慣性滾動的位置
   /// [velocity] - 初始慣性滑動速率

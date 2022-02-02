@@ -64,7 +64,7 @@ class _FlashPointState extends State<FlashPoint>
       animation: _rightRealPriceAnimationController,
       builder: (BuildContext context, Widget? child) {
         return Opacity(
-          opacity: _rightRealPriceAnimationController.value,
+          opacity: widget.active ? _rightRealPriceAnimationController.value : 0,
           child: Container(
             width: widget.width,
             height: widget.height,

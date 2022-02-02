@@ -4,7 +4,9 @@ import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart'
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/flash_point/flast_point.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/global_real_tim_price_tag/global_real_time_price_tag.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/touch_gesture_dector/touch_gesture_dector.dart';
+import 'package:mx_core/ui/widget/position_layout.dart';
 import 'package:mx_core/util/date_util.dart';
 
 import '../k_line_chart.dart';
@@ -136,7 +138,18 @@ class KLineChart extends StatefulWidget {
 class _KLineChartState extends State<KLineChart>
     with SingleTickerProviderStateMixin {
   /// 最右側最新價格的位置
-  final _rightRealPricePositionStreamController = StreamController<Offset?>();
+  final _rightRealTimePricePositionStreamController =
+      StreamController<Offset?>();
+
+  /// 全局最新價格的y軸位置
+  final _realTimePriceGlobalPositionStreamController =
+      StreamController<double?>();
+
+  /// 最右側最新價格, 禁止重複串流
+  late final Stream<Offset?> _rightRealPricePositionStream;
+
+  /// 全局最新價格的y軸位置, 禁止重複串流
+  late final Stream<double?> _realTimePriceGlobalPositionStream;
 
   /// 圖表拖移處理
   late final ChartGesture chartGesture;
@@ -146,6 +159,12 @@ class _KLineChartState extends State<KLineChart>
 
   @override
   void initState() {
+    _rightRealPricePositionStream =
+        _rightRealTimePricePositionStreamController.stream.distinct();
+
+    _realTimePriceGlobalPositionStream =
+        _realTimePriceGlobalPositionStreamController.stream.distinct();
+
     // 慣性滑動控制器
     final controller = AnimationController(
       vsync: this,
@@ -164,6 +183,14 @@ class _KLineChartState extends State<KLineChart>
   }
 
   @override
+  void dispose() {
+    chartGesture.dispose();
+    _rightRealTimePricePositionStreamController.close();
+    _realTimePriceGlobalPositionStreamController.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TouchGestureDector(
       onTouchStart: chartGesture.onTouchDown,
@@ -172,79 +199,73 @@ class _KLineChartState extends State<KLineChart>
       onTouchCancel: chartGesture.onTouchCancel,
       child: Stack(
         children: <Widget>[
-          CustomPaint(
-            size: Size.infinite,
-            painter: ChartPainterImpl(
-                datas: widget.datas,
-                chartGesture: chartGesture,
-                chartUiStyle: widget.chartUiStyle,
-                mainState: widget.mainChartState,
-                volumeState: widget.volumeChartState,
-                indicatorState: widget.indicatorChartState,
-                mainChartUiStyle: widget.mainChartUiStyle,
-                volumeChartUiStyle: widget.volumeChartUiStyle,
-                macdChartUiStyle: widget.macdChartUiStyle,
-                rsiChartUiStyle: widget.rsiChartUiStyle,
-                wrChartUiStyle: widget.wrChartUiStyle,
-                kdjChartUiStyle: widget.kdjChartUiStyle,
-                maPeriods: widget.maPeriods,
-                priceFormatter: widget.priceFormatter,
-                volumeFormatter: widget.volumeFormatter,
-                xAxisDateTimeFormatter: widget.xAxisDateTimeFormatter,
-                onDrawInfo: (info) {
-                  chartGesture.setDrawInfo(info);
-                },
-                onLongPressData: (data) {
-                  _longPressDataStreamController.add(data);
-                },
-                rightRealPriceOffset: (offset) {
-                  print('開始');
-                  // if (offset != null &&
-                  //     widget.mainChartState
-                  //         .contains(MainChartState.lineIndex)) {
-                  //   _rightRealPricePositionStreamController.add(offset);
-                  // } else {
-                  //   _rightRealPricePositionStreamController.add(null);
-                  // }
-                  print('結束');
-                }
-                // onCalculateMaxScrolled: (maxScroll) {
-                //   maxScrollX = maxScroll;
-                //
-                //   // 假設 maxScrollX 為 0, 且資料量或者scale與舊有不同時觸發加載更多
-                //   if (widget.onDataLessOnePage != null &&
-                //       maxScrollX == 0 &&
-                //       isDataLenChanged) {
-                //     isDataLenChanged = false;
-                //     widget.onDataLessOnePage?.call();
-                //   }
-                // },
-                ),
+          RepaintBoundary(
+            child: CustomPaint(
+              size: Size.infinite,
+              painter: ChartPainterImpl(
+                  datas: widget.datas,
+                  chartGesture: chartGesture,
+                  chartUiStyle: widget.chartUiStyle,
+                  mainState: widget.mainChartState,
+                  volumeState: widget.volumeChartState,
+                  indicatorState: widget.indicatorChartState,
+                  mainChartUiStyle: widget.mainChartUiStyle,
+                  volumeChartUiStyle: widget.volumeChartUiStyle,
+                  macdChartUiStyle: widget.macdChartUiStyle,
+                  rsiChartUiStyle: widget.rsiChartUiStyle,
+                  wrChartUiStyle: widget.wrChartUiStyle,
+                  kdjChartUiStyle: widget.kdjChartUiStyle,
+                  maPeriods: widget.maPeriods,
+                  priceFormatter: widget.priceFormatter,
+                  volumeFormatter: widget.volumeFormatter,
+                  xAxisDateTimeFormatter: widget.xAxisDateTimeFormatter,
+                  onDrawInfo: (info) {
+                    chartGesture.setDrawInfo(info);
+                  },
+                  onLongPressData: (data) {
+                    _longPressDataStreamController.add(data);
+                  },
+                  rightRealTimePriceOffset: (offset) {
+                    if (offset != null &&
+                        widget.mainChartState
+                            .contains(MainChartState.lineIndex)) {
+                      _rightRealTimePricePositionStreamController.add(offset);
+                    } else {
+                      _rightRealTimePricePositionStreamController.add(null);
+                    }
+                  },
+                  globalRealTimePriceY: (localY) {
+                    _realTimePriceGlobalPositionStreamController.add(localY);
+                  }
+                  // onCalculateMaxScrolled: (maxScroll) {
+                  //   maxScrollX = maxScroll;
+                  //
+                  //   // 假設 maxScrollX 為 0, 且資料量或者scale與舊有不同時觸發加載更多
+                  //   if (widget.onDataLessOnePage != null &&
+                  //       maxScrollX == 0 &&
+                  //       isDataLenChanged) {
+                  //     isDataLenChanged = false;
+                  //     widget.onDataLessOnePage?.call();
+                  //   }
+                  // },
+                  ),
+            ),
           ),
+
+          // 長按時顯示的詳細資訊彈窗
           _tooltip(),
-          StreamBuilder<Offset?>(
-            stream: _rightRealPricePositionStreamController.stream,
-            builder: (context, snapshot) {
-              final offset = snapshot.data;
-              const circleSize = 15.0;
-              return Positioned(
-                left: offset == null ? null : offset.dx - circleSize / 2,
-                top: offset == null ? null : offset.dy - circleSize / 2,
-                child: FlashPoint(
-                  active: offset != null,
-                  width: circleSize,
-                  height: circleSize,
-                  flastColors: widget
-                      .mainChartUiStyle.colorSetting.realTimeRightPointFlash,
-                ),
-              );
-            },
-          ),
+
+          // 右側最新價可見時的閃亮動畫
+          _realTimePriceFlash(),
+
+          // 全局實時價tag
+          _globalRealTimePriceTag(),
         ],
       ),
     );
   }
 
+  /// 長按顯示的tooltip
   Widget _tooltip() {
     return StreamBuilder<LongPressData?>(
       stream: _longPressDataStreamController.stream,
@@ -255,6 +276,58 @@ class _KLineChartState extends State<KLineChart>
               const SizedBox.shrink();
         }
         return const SizedBox.shrink();
+      },
+    );
+  }
+
+  /// 折線圖, 實時價格的閃亮圓點動畫
+  Widget _realTimePriceFlash() {
+    return StreamBuilder<Offset?>(
+      stream: _rightRealPricePositionStream,
+      builder: (context, snapshot) {
+        final offset = snapshot.data;
+        if (offset == null) {}
+        final circleSize =
+            widget.mainChartUiStyle.sizeSetting.realTimePriceFlash;
+        return Positioned(
+          left: offset == null ? null : offset.dx - circleSize / 2,
+          top: offset == null ? null : offset.dy - circleSize / 2,
+          child: RepaintBoundary(
+            child: FlashPoint(
+              active: offset != null,
+              width: circleSize,
+              height: circleSize,
+              flastColors:
+                  widget.mainChartUiStyle.colorSetting.realTimeRightPointFlash,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// 全局顯示的最新價格標示的tag
+  Widget _globalRealTimePriceTag() {
+    return StreamBuilder<double?>(
+      stream: _realTimePriceGlobalPositionStream,
+      builder: (context, snapshot) {
+        final y = snapshot.data;
+        if (y == null) {
+          return const SizedBox.shrink();
+        }
+        final price = widget.datas.last.close;
+        final gridColumns = widget.chartUiStyle.sizeSetting.gridColumns;
+        return PositionLayout(
+          xRatio: (gridColumns - 1) / gridColumns,
+          yFixed: y,
+          child: GlobalRealTimePriceTag(
+            price: widget.priceFormatter(price),
+            uiStyle: widget.mainChartUiStyle,
+            onTap: () {
+              chartGesture.scrollToRight();
+            },
+          ),
+        );
       },
     );
   }

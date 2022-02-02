@@ -41,6 +41,12 @@ class MainChartSizeSetting {
   final double topPadding;
   final double bottomPadding;
 
+  /// 折線圖風格的最右側實時價格圓點尺寸
+  final double realTimePriceCircle;
+
+  /// 折線圖風格的最右側實時價格閃亮圓點尺寸
+  final double realTimePriceFlash;
+
   const MainChartSizeSetting({
     this.indexTip = 12,
     this.lineWidth = 1.3,
@@ -57,5 +63,7 @@ class MainChartSizeSetting {
     this.maxValueText = 10,
     this.topPadding = 30,
     this.bottomPadding = 10,
+    this.realTimePriceCircle = 2,
+    this.realTimePriceFlash = 15,
   });
 }

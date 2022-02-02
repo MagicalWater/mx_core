@@ -9,13 +9,18 @@ export 'impl/main_chart/main_chart_render_impl.dart';
 
 abstract class MainChartRender extends ChartRender
     implements ChartComponentRender {
-  /// 最右側實時價格的位置
+  /// 主圖表處於最新時最右側實時價格的位置回調
   /// 若處於不可見狀態, 則[localPosition]為null
   final void Function(Offset? localPosition)? rightRealPriceOffset;
+
+  /// [globalRealTimePriceY] - 主圖表非處於最新時實時價格的y軸位置回調
+  /// 若處於不可見狀態, 則[localY]為null
+  final void Function(double? localY)? globalRealTimePriceY;
 
   MainChartRender({
     required DataViewer dataViewer,
     this.rightRealPriceOffset,
+    this.globalRealTimePriceY,
   }) : super(dataViewer: dataViewer);
 
   @override

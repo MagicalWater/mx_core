@@ -81,9 +81,13 @@ class ChartPainterImpl extends ChartPainter
   double? get longPressY =>
       chartGesture.isLongPress ? chartGesture.longPressY : null;
 
-  /// 主圖表最右側實時價格的位置
+  /// 主圖表處於最新時最右側實時價格的位置
   /// 若處於不可見狀態, 則[localPosition]為null
-  final void Function(Offset? localPosition)? rightRealPriceOffset;
+  final void Function(Offset? localPosition)? rightRealTimePriceOffset;
+
+  /// 主圖表非處於最新時, 顯示的全局實時價格y軸位置
+  /// 若處於不可見狀態, 則[localY]為null
+  final void Function(double? localY)? globalRealTimePriceY;
 
   ChartPainterImpl({
     required this.datas,
@@ -104,7 +108,8 @@ class ChartPainterImpl extends ChartPainter
     required this.xAxisDateTimeFormatter,
     required ValueChanged<DrawContentInfo>? onDrawInfo,
     required ValueChanged<LongPressData?>? onLongPressData,
-    this.rightRealPriceOffset,
+    this.rightRealTimePriceOffset,
+    this.globalRealTimePriceY,
   }) : super(
           chartGesture: chartGesture,
           onDrawInfo: onDrawInfo,
@@ -135,7 +140,12 @@ class ChartPainterImpl extends ChartPainter
     // print('繪製: $mainRect, $volumeHeight, $indicatorHeight, size = $size');
 
     // 繪製主圖
-    paintMainChart(canvas, computeRect.main, rightRealPriceOffset);
+    paintMainChart(
+      canvas: canvas,
+      rect: computeRect.main,
+      rightRealTimePriceOffset: rightRealTimePriceOffset,
+      globalRealTimePriceY: globalRealTimePriceY,
+    );
 
     // 繪製成交量圖
     paintVolumeChart(canvas, computeRect.volume);

@@ -21,14 +21,18 @@ mixin ChartPainterPaintMixin on ChartPainter {
   final _longPressTimePaint = Paint()..isAntiAlias = true;
 
   /// 繪製主圖表
-  void paintMainChart(
-    Canvas canvas,
-    Rect rect,
-    void Function(Offset? localPosition)? rightRealPriceOffset,
-  ) {
+  /// [rightRealTimePriceOffset] - 主圖表處於最新時最右側實時價格的位置回調
+  /// [globalRealTimePriceY] - 主圖表非處於最新時實時價格的y軸位置回調
+  void paintMainChart({
+    required Canvas canvas,
+    required Rect rect,
+    void Function(Offset? localPosition)? rightRealTimePriceOffset,
+    void Function(double? localY)? globalRealTimePriceY,
+  }) {
     final ChartRender render = MainChartRenderImpl(
       dataViewer: this,
-      rightRealPriceOffset: rightRealPriceOffset,
+      rightRealPriceOffset: rightRealTimePriceOffset,
+      globalRealTimePriceY: globalRealTimePriceY,
     );
     render.paint(canvas, rect);
   }

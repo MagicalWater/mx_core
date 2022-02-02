@@ -37,14 +37,14 @@ mixin GestureHandlerMixin on ChartGesture
     chartScroller.setScrollUpdatedCallback((value) {
       scrollX = value;
       if (scrollX <= 0) {
-        // 滑到最左邊
+        // 滑到最右邊
         scrollX = 0;
-        onLoadMore?.call(false);
+        onLoadMore?.call(true);
         chartScroller.stopScroll();
       } else if (scrollX >= maxScrollX) {
-        // 滑到最右邊
+        // 滑到最左邊
         scrollX = maxScrollX;
-        onLoadMore?.call(true);
+        onLoadMore?.call(false);
         chartScroller.stopScroll();
       }
       onDrawUpdateNeed();
