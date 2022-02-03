@@ -44,23 +44,20 @@ class ChartInertialScroller {
     required double position,
     required double velocity,
   }) {
-    final pixelRatio = WidgetsBinding.instance!.window.devicePixelRatio;
+    // final pixelRatio = WidgetsBinding.instance!.window.devicePixelRatio;
 
-    // 計算模擬滾動公差
-    // TODO: 這邊是模擬滾動的重點, 對於圖表的絲滑程度有個很重要的決定性差異, 之後需要多多研究
-    final tolerance = Tolerance(
-      velocity: 1.0 / (0.050 * pixelRatio),
-      distance: 1.0 / pixelRatio,
-    );
-
-    // print('速率: ${tolerance.velocity}, 距離: ${tolerance.distance}');
-    // print('實際速率: $velocity');
+    // final tolerance = Tolerance(
+    //   velocity: 1.0 / (0.050 * pixelRatio),
+    //   distance: 1.0 / pixelRatio,
+    // );
 
     // 從 [position] 開始進行模擬滾動
     final simulation = ClampingScrollSimulation(
       position: position,
       velocity: velocity,
-      tolerance: tolerance,
+      // tolerance: tolerance,
+      // 滾動摩擦力, 預設為0.015
+      friction: 0.003,
     );
     return _controller.animateWith(simulation);
   }
