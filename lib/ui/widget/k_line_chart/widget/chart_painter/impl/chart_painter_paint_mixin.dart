@@ -203,13 +203,24 @@ mixin ChartPainterPaintMixin on ChartPainter {
       fontSize: sizes.bottomTimeText,
     );
 
-    for (var i = 1; i < sizes.gridColumns; ++i) {
+    final lastGridIndex = sizes.gridColumns - 1;
+
+    for (var i = lastGridIndex; i > 0; i--) {
       final x = columnWidth * i;
-      final dataIndex = realXToDataIndex(x);
-      final data = datas[dataIndex];
+
+      DateTime dateTime;
+
+      if (datas.isNotEmpty) {
+        final dataIndex = realXToDataIndex(x);
+        dateTime = datas[dataIndex].dateTime;
+      } else {
+        final subtractIndex = lastGridIndex - i;
+        final subtractDuration = const Duration(days: 1) * subtractIndex;
+        dateTime = DateTime.now().subtract(subtractDuration);
+      }
       final textPainter = TextPainter(
         text: TextSpan(
-          text: xAxisDateTimeFormatter(data.dateTime),
+          text: xAxisDateTimeFormatter(dateTime),
           style: timeTextStyle,
         ),
         textDirection: TextDirection.ltr,

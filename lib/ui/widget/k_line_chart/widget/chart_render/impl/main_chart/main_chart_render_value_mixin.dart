@@ -18,7 +18,7 @@ mixin MainChartValueMixin on MainChartRender {
   late double minY, maxY;
 
   /// 快速將 value 轉換為 y軸位置的縮放參數
-  late double valueToYScale;
+  late double _valueToYScale;
 
   /// 蠟燭圖的蠟燭寬度(已乘上縮放)
   late double candleWidthScaled;
@@ -46,6 +46,11 @@ mixin MainChartValueMixin on MainChartRender {
   /// 交叉橫線畫筆
   final Paint crossHorizontalPaint = Paint()..isAntiAlias = true;
 
+  final chartPaint = Paint()
+    ..isAntiAlias = true
+    ..filterQuality = FilterQuality.high
+    ..strokeWidth = 0.5;
+
   MainChartUiStyle get uiStyle => dataViewer.mainChartUiStyle;
 
   MainChartColorSetting get colors => uiStyle.colorSetting;
@@ -60,10 +65,8 @@ mixin MainChartValueMixin on MainChartRender {
   /// 是否顯示收盤價折線
   late final bool isShowLineIndex;
 
-  final chartPaint = Paint()
-    ..isAntiAlias = true
-    ..filterQuality = FilterQuality.high
-    ..strokeWidth = 0.5;
+  /// 最大最小值是否相同(代表為一條線)
+  late final bool isMinMaxValueEqual;
 
   @override
   void initValue(Rect rect) {
@@ -85,7 +88,7 @@ mixin MainChartValueMixin on MainChartRender {
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
 
-      if (mainState.contains(MainChartState.lineIndex)) {
+      if (isShowLineIndex) {
         // 折線圖只有收盤價
         if (maxValue <= data.close) {
           maxValue = data.close;
@@ -146,6 +149,19 @@ mixin MainChartValueMixin on MainChartRender {
       }
     }
 
+    if (minValue == double.infinity || maxValue == 0) {
+      minValue = 0;
+      maxValue = 0;
+    }
+
+    isMinMaxValueEqual = minValue == maxValue;
+
+    // 最大最小值相同, 上下增減10%, 再加減5
+    if (isMinMaxValueEqual) {
+      minValue = minValue * 0.9 - 5;
+      maxValue = maxValue * 1.1 + 5;
+    }
+
     dataWidthScaled =
         dataViewer.chartUiStyle.sizeSetting.dataWidth * dataViewer.scaleX;
     candleWidthScaled = sizes.candleWidth * dataViewer.scaleX;
@@ -154,16 +170,16 @@ mixin MainChartValueMixin on MainChartRender {
     final valueInterval = maxValue - minValue;
     final yInterval = maxY - minY;
     // print('最大: $maxValue => $minY, 最小: $minValue => $maxY');
-    valueToYScale = yInterval / valueInterval;
+    _valueToYScale = yInterval / valueInterval;
   }
 
   /// 帶入數值, 取得顯示的y軸位置
   double valueToRealY(double value) {
-    return maxY - ((value - minValue) * valueToYScale);
+    return maxY - ((value - minValue) * _valueToYScale);
   }
 
   /// 帶入y軸位置, 取得對應數值
   double realYToValue(double y) {
-    return minValue - ((y - maxY) / valueToYScale);
+    return minValue - ((y - maxY) / _valueToYScale);
   }
 }

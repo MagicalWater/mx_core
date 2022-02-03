@@ -29,7 +29,6 @@ abstract class MainChartRender extends ChartRender
     initValue(rect);
     paintBackground(canvas, rect);
     paintGrid(canvas, rect);
-    paintTopValueText(canvas, rect);
     canvas.save();
     canvas.clipRect(Rect.fromLTRB(
       rect.left,
@@ -40,6 +39,10 @@ abstract class MainChartRender extends ChartRender
     paintChart(canvas, rect);
     canvas.restore();
     paintRightValueText(canvas, rect);
+    if (dataViewer.datas.isEmpty) {
+      return;
+    }
+    paintTopValueText(canvas, rect);
     paintMaxMinValue(canvas, rect);
     paintRealTimeLine(canvas, rect);
     paintLongPressHorizontalLineAndValue(canvas, rect);

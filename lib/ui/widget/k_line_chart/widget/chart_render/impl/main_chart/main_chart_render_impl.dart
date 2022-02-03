@@ -263,10 +263,15 @@ class MainChartRenderImpl extends MainChartRender
   /// 繪製最大最小值
   @override
   void paintMaxMinValue(Canvas canvas, Rect rect) {
-    // 圖表狀態為折線圖時不需顯示
-    if (mainState.contains(MainChartState.lineIndex)) {
+    if (isShowLineIndex) {
+      // 圖表狀態為折線圖時不需顯示
+      return;
+    } else if (isMinMaxValueEqual) {
+      // 最大最小值相同時不需顯示
       return;
     }
+
+    // 圖表最大最小值一樣時不需顯示
 
     // 畫值
     // [value] - 需要畫的值

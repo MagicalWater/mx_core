@@ -358,19 +358,7 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
     Offset valuePaintOffset;
 
     if (atLeft) {
-      final x = rect.width - 5;
-      // 將數值繪製於右邊
-      path.moveTo(x, longPressY - totalHeight / 2);
-      path.lineTo(x, longPressY + totalHeight / 2);
-      path.lineTo(x - totalWidth, longPressY + totalHeight / 2);
-      path.lineTo(x - totalWidth - arrowWidth, longPressY);
-      path.lineTo(x - totalWidth, longPressY - totalHeight / 2);
-      path.close();
-      valuePaintOffset = Offset(
-        x - horizontalPadding - valueWidth,
-        longPressY - valueHeight / 2,
-      );
-    } else {
+      // 長按位於左邊, 需要將數值繪製於右邊, 防止與tooltip重疊
       const x = 5.0;
 
       // 將數值繪製於右邊
@@ -383,6 +371,19 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
 
       valuePaintOffset = Offset(
         x + horizontalPadding,
+        longPressY - valueHeight / 2,
+      );
+    } else {
+      // 長按位於右邊, 需要將數值繪製於左邊, 防止與tooltip重疊
+      final x = rect.width - 5;
+      path.moveTo(x, longPressY - totalHeight / 2);
+      path.lineTo(x, longPressY + totalHeight / 2);
+      path.lineTo(x - totalWidth, longPressY + totalHeight / 2);
+      path.lineTo(x - totalWidth - arrowWidth, longPressY);
+      path.lineTo(x - totalWidth, longPressY - totalHeight / 2);
+      path.close();
+      valuePaintOffset = Offset(
+        x - horizontalPadding - valueWidth,
         longPressY - valueHeight / 2,
       );
     }

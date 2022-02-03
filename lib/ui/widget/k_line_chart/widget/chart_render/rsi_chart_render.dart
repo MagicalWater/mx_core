@@ -17,8 +17,11 @@ abstract class RSIChartRender extends ChartRender
     initValue(rect);
     paintBackground(canvas, rect);
     paintGrid(canvas, rect);
-    paintTopValueText(canvas, rect);
     paintChart(canvas, rect);
     paintRightValueText(canvas, rect);
+    if (dataViewer.datas.isEmpty) {
+      return;
+    }
+    paintTopValueText(canvas, rect);
   }
 }

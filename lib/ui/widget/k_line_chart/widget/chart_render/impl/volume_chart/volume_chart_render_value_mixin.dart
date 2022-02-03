@@ -4,9 +4,6 @@ import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 import '../../volume_chart_render.dart';
 
 mixin VolumeChartValueMixin on VolumeChartRender {
-  /// 資料檢視區間擁有最小值/最大值的資料index
-  late int minValueDataIndex, maxValueDataIndex;
-
   /// 資料檢視區間的最小值/最大值
   late double minValue, maxValue;
 
@@ -16,20 +13,18 @@ mixin VolumeChartValueMixin on VolumeChartRender {
   late double minY, maxY;
 
   /// 快速將 value 轉換為 y軸位置的縮放參數
-  late double valueToYScale;
+  late double _valueToYScale;
 
   /// 長條圖的柱子寬度(已乘上縮放)
   late double barWidthScaled;
 
-  /// 實時線畫筆
-  final Paint realTimeLinePaint = Paint();
-
   final Paint backgroundPaint = Paint();
   final Paint gripPaint = Paint();
-  // final Paint linePaint = Paint()..style = PaintingStyle.stroke;
-  // final Paint lineShadowPaint = Paint()
-  //   ..style = PaintingStyle.fill
-  //   ..isAntiAlias = true;
+
+  final chartPaint = Paint()
+    ..isAntiAlias = true
+    ..filterQuality = FilterQuality.high
+    ..strokeWidth = 0.5;
 
   VolumeChartUiStyle get uiStyle => dataViewer.volumeChartUiStyle;
 
@@ -39,10 +34,8 @@ mixin VolumeChartValueMixin on VolumeChartRender {
 
   List<MainChartState> get mainState => dataViewer.mainState;
 
-  final chartPaint = Paint()
-    ..isAntiAlias = true
-    ..filterQuality = FilterQuality.high
-    ..strokeWidth = 0.5;
+  /// 最大最小值是否相同(代表為一條線)
+  late final bool isMinMaxValueEqual;
 
   @override
   void initValue(Rect rect) {
@@ -51,7 +44,7 @@ mixin VolumeChartValueMixin on VolumeChartRender {
 
     // 取得顯示區間的資料的最大值
     maxValue = 0;
-    minValue = double.infinity;
+    minValue = 0;
 
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
@@ -59,30 +52,32 @@ mixin VolumeChartValueMixin on VolumeChartRender {
 
       if (maxValue <= data.volume) {
         maxValue = data.volume.toDouble();
-        maxValueDataIndex = i;
-      }
-      if (minValue >= data.volume) {
-        minValue = data.volume.toDouble();
-        minValueDataIndex = i;
       }
     }
 
     barWidthScaled = sizes.barWidth * dataViewer.scaleX;
 
+    isMinMaxValueEqual = minValue == maxValue;
+
+    // 最大最小值相同, 最大值+10%+5
+    if (isMinMaxValueEqual) {
+      maxValue = maxValue * 1.1 + 5;
+    }
+
     // 取得 value 快速轉換 y軸位置的縮放參數
     final valueInterval = maxValue - minValue;
     final yInterval = maxY - minY;
     // print('最大: $maxValue => $minY, 最小: $minValue => $maxY');
-    valueToYScale = yInterval / valueInterval;
+    _valueToYScale = yInterval / valueInterval;
   }
 
   /// 帶入數值, 取得顯示的y軸位置
   double valueToRealY(double value) {
-    return maxY - ((value - minValue) * valueToYScale);
+    return maxY - ((value - minValue) * _valueToYScale);
   }
 
   /// 帶入y軸位置, 取得對應數值
   double realYToValue(double y) {
-    return minValue - ((y - maxY) / valueToYScale);
+    return minValue - ((y - maxY) / _valueToYScale);
   }
 }

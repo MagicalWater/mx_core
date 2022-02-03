@@ -118,10 +118,10 @@ class ChartPainterImpl extends ChartPainter
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (datas.isEmpty) {
-      canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), Paint());
-      return;
-    }
+    // if (datas.isEmpty) {
+    //   canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), Paint());
+    //   return;
+    // }
 
     // 初始化數值
     initDataValue(size);
@@ -155,6 +155,10 @@ class ChartPainterImpl extends ChartPainter
 
     // 繪製時間軸
     paintTimeAxis(canvas, computeRect.bottomTime);
+
+    if (datas.isEmpty) {
+      return;
+    }
 
     // 繪製長按豎線
     paintLongPressVerticalLine(canvas, size);

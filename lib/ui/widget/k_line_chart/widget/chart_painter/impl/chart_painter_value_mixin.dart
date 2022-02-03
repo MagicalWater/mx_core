@@ -133,6 +133,9 @@ mixin ChartPainterValueMixin on ChartPainter {
     if (_longPressDataIndex != null) {
       return _longPressDataIndex;
     }
+    if (datas.isEmpty) {
+      return null;
+    }
     final displayX = realXToDisplayX(chartGesture.longPressX);
     final index = displayXToDataIndex(displayX);
     _longPressDataIndex = index >= datas.length ? datas.length - 1 : index;
