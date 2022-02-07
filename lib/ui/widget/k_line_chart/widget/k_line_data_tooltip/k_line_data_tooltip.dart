@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/k_line_chart.dart';
-import 'package:mx_core/ui/widget/k_line_chart/widget/k_line_data_tooltip/ui_style/k_line_data_tooltip_ui_style.dart';
 import 'package:mx_core/util/date_util.dart';
 
 export 'model/model.dart';
+export 'ui_style/k_line_data_tooltip_ui_style.dart';
 
 /// 長按對應的k線資料彈窗
 class KLineDataInfoTooltip extends StatelessWidget {
