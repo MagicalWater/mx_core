@@ -28,8 +28,8 @@ typedef KLineChartTooltipBuilder = Widget Function(
 /// k線圖表
 /// ===
 ///
-/// 製作思路參考自: https://github.com/gwhcn/flutter_k_chart
-/// 非常感謝原作者在圖表上的設計
+/// 起源自: https://github.com/gwhcn/flutter_k_chart
+/// 非常感謝原作者在圖表上的製作思路
 ///
 /// 了解完圖表的核心設計方式後, 進行了整體元件的重寫
 /// 除了程式碼的結構差異之外, 在BUG/新增功能上
@@ -40,6 +40,7 @@ typedef KLineChartTooltipBuilder = Widget Function(
 /// 5. tooltip可由外部自由訂製顯示
 /// 6. 點擊實時線的價格箭頭可彈跳至圖表最右側
 /// 7. 初始資料未滿一頁時, 會自動觸發一次加載更多
+/// 8. 圖表高度若皆為固定值, 則外部不需將高度設死
 class KLineChart extends StatefulWidget {
   /// 圖表資料
   final List<KLineData> datas;
@@ -66,7 +67,10 @@ class KLineChart extends StatefulWidget {
   final KDJChartUiStyle kdjChartUiStyle;
 
   /// 主圖表顯示
-  final List<MainChartState> mainChartState;
+  final MainChartState mainChartState;
+
+  /// 主圖表技術線
+  final MainChartIndicatorState mainChartIndicatorState;
 
   /// 成交量圖表顯示
   final VolumeChartState volumeChartState;
@@ -95,7 +99,8 @@ class KLineChart extends StatefulWidget {
   const KLineChart({
     Key? key,
     required this.datas,
-    this.mainChartState = const [MainChartState.kLine, MainChartState.ma],
+    this.mainChartState = MainChartState.kLine,
+    this.mainChartIndicatorState = MainChartIndicatorState.ma,
     this.volumeChartState = VolumeChartState.volume,
     this.indicatorChartState = IndicatorChartState.kdj,
     this.chartUiStyle = const KLineChartUiStyle(),
@@ -226,6 +231,12 @@ class _KLineChartState extends State<KLineChart>
 
   @override
   Widget build(BuildContext context) {
+    final heightSetting = widget.chartUiStyle.heightRatioSetting;
+    final chartHeight = heightSetting.getFixedHeight(
+          volumeChartState: widget.volumeChartState,
+          indicatorChartState: widget.indicatorChartState,
+        ) ??
+        double.infinity;
     return TouchGestureDector(
       onTouchStart: chartGesture.onTouchDown,
       onTouchUpdate: chartGesture.onTouchUpdate,
@@ -235,14 +246,15 @@ class _KLineChartState extends State<KLineChart>
         children: <Widget>[
           RepaintBoundary(
             child: CustomPaint(
-              size: Size.infinite,
+              size: Size(double.infinity, chartHeight),
               painter: ChartPainterImpl(
                 datas: widget.datas,
                 chartGesture: chartGesture,
                 chartUiStyle: widget.chartUiStyle,
-                mainState: widget.mainChartState,
-                volumeState: widget.volumeChartState,
-                indicatorState: widget.indicatorChartState,
+                mainChartState: widget.mainChartState,
+                mainChartIndicatorState: widget.mainChartIndicatorState,
+                volumeChartState: widget.volumeChartState,
+                indicatorChartState: widget.indicatorChartState,
                 mainChartUiStyle: widget.mainChartUiStyle,
                 volumeChartUiStyle: widget.volumeChartUiStyle,
                 macdChartUiStyle: widget.macdChartUiStyle,
@@ -269,8 +281,7 @@ class _KLineChartState extends State<KLineChart>
                 },
                 rightRealTimePriceOffset: (offset) {
                   if (offset != null &&
-                      widget.mainChartState
-                          .contains(MainChartState.lineIndex)) {
+                      widget.mainChartState == MainChartState.lineIndex) {
                     _rightRealTimePricePositionStreamController.add(offset);
                   } else {
                     _rightRealTimePricePositionStreamController.add(null);

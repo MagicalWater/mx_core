@@ -20,6 +20,7 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     on<KChartMainStateEvent>(_onChangedMainState);
     on<KChartVolumeChartStateEvent>(_onChangedVolumeState);
     on<KChartIndicatorChartStateEvent>(_onChangedIndicatorState);
+    on<KChartMainIndicatorStateEvent>(_onChangedMainIndicatorState);
   }
 
   final ChartRepository repository;
@@ -61,7 +62,9 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
       amount: lastData.amount + 100,
       dateTime: lastData.dateTime.add(const Duration(days: 1)),
     );
-    final newDatas = List<KLineData>.from(state.datas)..removeLast()..add(newData);
+    final newDatas = List<KLineData>.from(state.datas)
+      ..removeLast()
+      ..add(newData);
     newDatas.calculateAllIndicator();
     emit(state.copyWith(datas: newDatas));
   }
@@ -72,6 +75,14 @@ class KChartBloc extends Bloc<KChartEvent, KChartState> {
     Emitter<KChartState> emit,
   ) {
     emit(state.copyWith(mainChartState: event.state));
+  }
+
+  /// 切換主視圖技術指標
+  void _onChangedMainIndicatorState(
+    KChartMainIndicatorStateEvent event,
+    Emitter<KChartState> emit,
+  ) {
+    emit(state.copyWith(mainChartIndicatorState: event.state));
   }
 
   /// 切換成交量視圖

@@ -36,6 +36,45 @@ class ChartHeightRatioSetting {
   bool get _isIndicatorSetting =>
       indicatorFixed != null || indicatorRatio != null;
 
+  /// 高度是否全為固定值
+  bool isHeightFixed({
+    required VolumeChartState volumeChartState,
+    required IndicatorChartState indicatorChartState,
+  }) {
+    if (mainFixed == null) {
+      return false;
+    }
+    if (volumeChartState != VolumeChartState.none && volumeFixed == null) {
+      return false;
+    }
+    if (indicatorChartState != IndicatorChartState.none &&
+        indicatorFixed == null) {
+      return false;
+    }
+    return true;
+  }
+
+  /// 若高度全為固定值, 取得總高度
+  /// 若不是全為固定值, 則回傳null
+  double? getFixedHeight({
+    required VolumeChartState volumeChartState,
+    required IndicatorChartState indicatorChartState,
+  }) {
+    if (!isHeightFixed(
+      volumeChartState: volumeChartState,
+      indicatorChartState: indicatorChartState,
+    )) {
+      return null;
+    }
+
+    final mainHeight = mainFixed!;
+    final volumeHeight =
+        volumeChartState == VolumeChartState.none ? 0 : volumeFixed!;
+    final indicatorHeight =
+        indicatorChartState == IndicatorChartState.none ? 0 : indicatorFixed!;
+    return mainHeight + volumeHeight + indicatorHeight + bottomTimeFixed;
+  }
+
   const ChartHeightRatioSetting({
     this.mainFixed,
     this.mainRatio,
@@ -78,6 +117,8 @@ class ChartHeightRatioSetting {
         remainTotalHeight - (volumeHeight ?? 0) - (indicatorHeight ?? 0);
     volumeHeight ??= remainTotalHeight - mainHeight - (indicatorHeight ?? 0);
     indicatorHeight ??= remainTotalHeight - mainHeight - volumeHeight;
+
+    print('高: $mainHeight, $volumeHeight, $indicatorHeight');
 
     return ChartHeightCampute<double>(
       main: mainHeight,

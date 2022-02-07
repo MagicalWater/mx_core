@@ -39,7 +39,7 @@ mixin ChartPainterPaintMixin on ChartPainter {
 
   /// 繪製volume圖表
   void paintVolumeChart(Canvas canvas, Rect rect) {
-    switch (volumeState) {
+    switch (volumeChartState) {
       case VolumeChartState.volume:
         final ChartRender render = VolumeChartRenderImpl(dataViewer: this);
         render.paint(canvas, rect);
@@ -52,7 +52,7 @@ mixin ChartPainterPaintMixin on ChartPainter {
   /// 繪製技術指標圖表
   void paintIndicatorChart(Canvas canvas, Rect rect) {
     final ChartRender? render;
-    switch (indicatorState) {
+    switch (indicatorChartState) {
       case IndicatorChartState.macd:
         render = MACDChartRenderImpl(dataViewer: this);
         break;

@@ -224,16 +224,7 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
     }
 
     // 檢查是否為折線圖, 若是需要繪製實時價最右側原點
-    if (mainState.contains(MainChartState.lineIndex)) {
-      // startAnimation();
-      // final flashColors = List.of(colors.realTimeRightPointFlash);
-      // // flashColors[0] = flashColors[0].withOpacity(opacity);
-      // final pointGradient = RadialGradient(colors: flashColors);
-      // realTimeLinePaint.shader = pointGradient.createShader(
-      //   Rect.fromCircle(center: Offset(startX, y), radius: 10.0),
-      // );
-      // canvas.drawCircle(Offset(startX, y), 10.0, realTimeLinePaint);
-      // realTimeLinePaint.shader = null;
+    if (isShowLineIndex) {
       realTimeLinePaint.color = colors.realTimeRightPointFlash.first;
       canvas.drawCircle(
         Offset(startX, y),

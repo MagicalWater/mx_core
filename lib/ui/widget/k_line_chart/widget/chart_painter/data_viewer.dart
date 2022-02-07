@@ -44,13 +44,16 @@ abstract class DataViewer {
   abstract final KDJChartUiStyle kdjChartUiStyle;
 
   /// 主圖表顯示的資料
-  abstract final List<MainChartState> mainState;
+  abstract final MainChartState mainChartState;
+
+  /// 主圖表的技術指標線
+  abstract final MainChartIndicatorState mainChartIndicatorState;
 
   /// 買賣量圖表
-  abstract final VolumeChartState volumeState;
+  abstract final VolumeChartState volumeChartState;
 
   /// 技術指標圖表
-  abstract final IndicatorChartState indicatorState;
+  abstract final IndicatorChartState indicatorChartState;
 
   /// ma(均線)週期
   abstract final List<int> maPeriods;

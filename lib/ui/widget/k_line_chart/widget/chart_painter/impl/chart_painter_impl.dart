@@ -52,15 +52,19 @@ class ChartPainterImpl extends ChartPainter
 
   /// 主圖表顯示的資料
   @override
-  final List<MainChartState> mainState;
+  final MainChartState mainChartState;
+
+  /// 主圖表的技術指標線
+  @override
+  final MainChartIndicatorState mainChartIndicatorState;
 
   /// 買賣量圖表
   @override
-  final VolumeChartState volumeState;
+  final VolumeChartState volumeChartState;
 
   /// 技術指標圖表
   @override
-  final IndicatorChartState indicatorState;
+  final IndicatorChartState indicatorChartState;
 
   /// 價格格式化
   @override
@@ -93,9 +97,10 @@ class ChartPainterImpl extends ChartPainter
     required this.datas,
     required ChartGesture chartGesture,
     required this.chartUiStyle,
-    required this.mainState,
-    required this.volumeState,
-    required this.indicatorState,
+    required this.mainChartState,
+    required this.mainChartIndicatorState,
+    required this.volumeChartState,
+    required this.indicatorChartState,
     required this.mainChartUiStyle,
     required this.macdChartUiStyle,
     required this.volumeChartUiStyle,
@@ -133,8 +138,8 @@ class ChartPainterImpl extends ChartPainter
     final computeRect = chartUiStyle.heightRatioSetting
         .computeChartHeight(
           totalHeight: size.height,
-          volumeChartState: volumeState,
-          indicatorChartState: indicatorState,
+          volumeChartState: volumeChartState,
+          indicatorChartState: indicatorChartState,
         )
         .toRect(size);
     // print('繪製: $mainRect, $volumeHeight, $indicatorHeight, size = $size');

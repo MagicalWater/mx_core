@@ -25,8 +25,6 @@ mixin WRChartValueMixin on WRChartRender {
 
   WRChartSizeSetting get sizes => uiStyle.sizeSetting;
 
-  List<MainChartState> get mainState => dataViewer.mainState;
-
   /// 最大最小值是否相同(代表為一條線)
   late final bool isMinMaxValueEqual;
 

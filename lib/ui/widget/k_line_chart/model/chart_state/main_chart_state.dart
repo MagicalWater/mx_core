@@ -3,12 +3,6 @@ enum MainChartState {
   /// 蠟燭圖
   kLine,
 
-  /// 指標折線圖(與kLine不可同時存在)
+  /// 收盤價折線圖
   lineIndex,
-
-  /// 均線
-  ma,
-
-  /// boll
-  boll,
 }

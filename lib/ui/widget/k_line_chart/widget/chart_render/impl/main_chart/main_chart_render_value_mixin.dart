@@ -57,13 +57,22 @@ mixin MainChartValueMixin on MainChartRender {
 
   MainChartSizeSetting get sizes => uiStyle.sizeSetting;
 
-  List<MainChartState> get mainState => dataViewer.mainState;
+  MainChartState get chartState => dataViewer.mainChartState;
+
+  MainChartIndicatorState get indicatorState =>
+      dataViewer.mainChartIndicatorState;
 
   /// 是否顯示k線
   late final bool isShowKLine;
 
   /// 是否顯示收盤價折線
   late final bool isShowLineIndex;
+
+  /// 是否顯示ma線
+  late final bool isShowMa;
+
+  /// 是否顯示boll線
+  late final bool isShowBoll;
 
   /// 最大最小值是否相同(代表為一條線)
   late final bool isMinMaxValueEqual;
@@ -77,12 +86,11 @@ mixin MainChartValueMixin on MainChartRender {
     maxValue = 0;
     minValue = double.infinity;
 
-    isShowKLine = mainState.contains(MainChartState.kLine);
-    isShowLineIndex =
-        !isShowKLine && mainState.contains(MainChartState.lineIndex);
+    isShowKLine = chartState == MainChartState.kLine;
+    isShowLineIndex = chartState == MainChartState.lineIndex;
 
-    final maDisplay = mainState.contains(MainChartState.ma);
-    final bollDisplay = mainState.contains(MainChartState.boll);
+    isShowMa = indicatorState == MainChartIndicatorState.ma;
+    isShowBoll = indicatorState == MainChartIndicatorState.boll;
 
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
@@ -108,7 +116,7 @@ mixin MainChartValueMixin on MainChartRender {
           minValueDataIndex = i;
         }
 
-        if (maDisplay) {
+        if (isShowMa) {
           final maData = data.indciatorData.ma?.ma;
           if (maData != null && maData.isNotEmpty) {
             final values = maData.values;
@@ -127,7 +135,7 @@ mixin MainChartValueMixin on MainChartRender {
           }
         }
 
-        if (bollDisplay) {
+        if (isShowBoll) {
           final bollData = data.indciatorData.boll;
           if (bollData != null) {
             final values = [bollData.up, bollData.dn, bollData.mb];

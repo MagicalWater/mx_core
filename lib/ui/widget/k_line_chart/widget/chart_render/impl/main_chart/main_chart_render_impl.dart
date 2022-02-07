@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_value_mixin.dart';
 
@@ -73,7 +72,7 @@ class MainChartRenderImpl extends MainChartRender
     final spanTexts = <TextSpan>[];
 
     // 檢查是否需要顯示ma資訊
-    if (mainState.contains(MainChartState.ma)) {
+    if (isShowMa) {
       final maTextStyle = TextStyle(fontSize: sizes.indexTip);
       final maSpan = dataViewer.maPeriods
           .map((e) {
@@ -95,7 +94,7 @@ class MainChartRenderImpl extends MainChartRender
 
     // 檢查是否需要顯示boll訊息
     final bollData = displayData.indciatorData.boll;
-    if (mainState.contains(MainChartState.boll) && bollData != null) {
+    if (isShowBoll && bollData != null) {
       final bollTextStyle = TextStyle(fontSize: sizes.indexTip);
 
       final bollSpan = [
@@ -171,12 +170,12 @@ class MainChartRenderImpl extends MainChartRender
       paintCandleChart(canvas, rect);
 
       // 繪製ma線
-      if (mainState.contains(MainChartState.ma)) {
+      if (isShowMa) {
         paintMaChart(canvas, rect);
       }
 
       // 繪製boll線
-      if (mainState.contains(MainChartState.boll)) {
+      if (isShowBoll) {
         paintBollChart(canvas, rect);
       }
     } else if (isShowLineIndex) {

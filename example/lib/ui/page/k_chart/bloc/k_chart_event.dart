@@ -8,9 +8,16 @@ class KChartInitEvent extends KChartEvent {}
 
 /// 切換主視圖類型
 class KChartMainStateEvent extends KChartEvent {
-  final List<MainChartState> state;
+  final MainChartState state;
 
   KChartMainStateEvent({required this.state});
+}
+
+/// 切換主視圖技術線類型
+class KChartMainIndicatorStateEvent extends KChartEvent {
+  final MainChartIndicatorState state;
+
+  KChartMainIndicatorStateEvent({required this.state});
 }
 
 /// 切換成交量視圖類型

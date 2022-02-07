@@ -4,14 +4,16 @@ part of 'k_chart_bloc.dart';
 class KChartState {
   final bool isLoading;
   final List<KLineData> datas;
-  final List<MainChartState> mainChartState;
+  final MainChartState mainChartState;
+  final MainChartIndicatorState mainChartIndicatorState;
   final VolumeChartState volumeChartState;
   final IndicatorChartState indicatorChartState;
 
   KChartState({
     required this.isLoading,
     this.datas = const [],
-    this.mainChartState = const [MainChartState.kLine, MainChartState.ma],
+    this.mainChartState = MainChartState.kLine,
+    this.mainChartIndicatorState = MainChartIndicatorState.ma,
     this.volumeChartState = VolumeChartState.volume,
     this.indicatorChartState = IndicatorChartState.macd,
   });
@@ -19,7 +21,8 @@ class KChartState {
   KChartState copyWith({
     bool? isLoading,
     List<KLineData>? datas,
-    List<MainChartState>? mainChartState,
+    MainChartState? mainChartState,
+    MainChartIndicatorState? mainChartIndicatorState,
     VolumeChartState? volumeChartState,
     IndicatorChartState? indicatorChartState,
   }) {
@@ -27,6 +30,8 @@ class KChartState {
       isLoading: isLoading ?? this.isLoading,
       datas: datas ?? this.datas,
       mainChartState: mainChartState ?? this.mainChartState,
+      mainChartIndicatorState:
+          mainChartIndicatorState ?? this.mainChartIndicatorState,
       volumeChartState: volumeChartState ?? this.volumeChartState,
       indicatorChartState: indicatorChartState ?? this.indicatorChartState,
     );
