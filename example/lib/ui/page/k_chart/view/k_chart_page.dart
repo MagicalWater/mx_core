@@ -145,6 +145,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
                       child: CircularProgressIndicator()),
               ]),
               _buttons(context, state),
+              SizedBox(height: 500),
             ],
           );
         },

@@ -1,12 +1,20 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'multi_touch_gesture_recognizer/multi_touch_gesture_recognizer.dart';
+
+export 'package:flutter/gestures.dart';
+export 'multi_touch_gesture_recognizer/multi_touch_gesture_recognizer.dart';
 
 class TouchGestureDector extends StatefulWidget {
   final void Function(int pointer, DragStartDetails details)? onTouchStart;
   final void Function(int pointer, DragUpdateDetails details)? onTouchUpdate;
   final void Function(int pointer, DragEndDetails details)? onTouchEnd;
   final void Function(int pointer)? onTouchCancel;
+
+  /// 當前點擊狀態(影響到決策點擊是否引入)
+  final GestureDisposition? Function(TouchPointerMove move)? isAllowPointerMove;
+
   final Widget? child;
 
   const TouchGestureDector({
@@ -16,6 +24,7 @@ class TouchGestureDector extends StatefulWidget {
     this.onTouchUpdate,
     this.onTouchEnd,
     this.onTouchCancel,
+    this.isAllowPointerMove,
   }) : super(key: key);
 
   @override
@@ -38,6 +47,7 @@ class _TouchGestureDectorState extends State<TouchGestureDector> {
           onTouchUpdate: widget.onTouchUpdate,
           onTouchEnd: widget.onTouchEnd,
           onTouchCancel: widget.onTouchCancel,
+          isAllowPointerMove: widget.isAllowPointerMove,
         ),
       },
       child: widget.child,

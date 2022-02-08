@@ -242,6 +242,24 @@ class _KLineChartState extends State<KLineChart>
       onTouchUpdate: chartGesture.onTouchUpdate,
       onTouchEnd: chartGesture.onTouchUp,
       onTouchCancel: chartGesture.onTouchCancel,
+      isAllowPointerMove: (move) {
+        final touchStatus = chartGesture.getTouchPointerStatus(move.pointer);
+
+        switch (touchStatus) {
+          case TouchStatus.none:
+            return GestureDisposition.rejected;
+          case TouchStatus.drag:
+            final hitSlop = computeHitSlop(move.kind, move.gestureSettings);
+            if (move.pendingDelta.dx.abs() > hitSlop) {
+              return GestureDisposition.accepted;
+            }
+            break;
+          case TouchStatus.scale:
+            return GestureDisposition.accepted;
+          case TouchStatus.longPress:
+            return GestureDisposition.accepted;
+        }
+      },
       child: Stack(
         children: <Widget>[
           RepaintBoundary(
@@ -301,7 +319,7 @@ class _KLineChartState extends State<KLineChart>
           _realTimePriceFlash(),
 
           // 全局實時價tag
-          _globalRealTimePriceTag(),
+          _globalRealTimePriceTag(chartHeight),
         ],
       ),
     );
@@ -349,7 +367,7 @@ class _KLineChartState extends State<KLineChart>
   }
 
   /// 全局顯示的最新價格標示的tag
-  Widget _globalRealTimePriceTag() {
+  Widget _globalRealTimePriceTag(double chartHeight) {
     return StreamBuilder<double?>(
       stream: _realTimePriceGlobalPositionStream,
       builder: (context, snapshot) {
@@ -359,15 +377,18 @@ class _KLineChartState extends State<KLineChart>
         }
         final price = widget.datas.last.close;
         final gridColumns = widget.chartUiStyle.sizeSetting.gridColumns;
-        return PositionLayout(
-          xRatio: (gridColumns - 1) / gridColumns,
-          yFixed: y,
-          child: GlobalRealTimePriceTag(
-            price: widget.priceFormatter(price),
-            uiStyle: widget.mainChartUiStyle,
-            onTap: () {
-              chartGesture.scrollToRight();
-            },
+        return SizedBox(
+          height: chartHeight,
+          child: PositionLayout(
+            xRatio: (gridColumns - 1) / gridColumns,
+            yFixed: y,
+            child: GlobalRealTimePriceTag(
+              price: widget.priceFormatter(price),
+              uiStyle: widget.mainChartUiStyle,
+              onTap: () {
+                chartGesture.scrollToRight();
+              },
+            ),
           ),
         );
       },

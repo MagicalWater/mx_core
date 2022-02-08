@@ -118,7 +118,7 @@ class ChartHeightRatioSetting {
     volumeHeight ??= remainTotalHeight - mainHeight - (indicatorHeight ?? 0);
     indicatorHeight ??= remainTotalHeight - mainHeight - volumeHeight;
 
-    print('高: $mainHeight, $volumeHeight, $indicatorHeight');
+    // print('高: $mainHeight, $volumeHeight, $indicatorHeight');
 
     return ChartHeightCampute<double>(
       main: mainHeight,

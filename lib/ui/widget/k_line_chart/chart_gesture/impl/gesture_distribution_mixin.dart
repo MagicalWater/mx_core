@@ -5,6 +5,7 @@ import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/gestures/drag_gestu
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/gestures/long_press_gesture.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/gestures/scale_gesture.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/gestures/tap_gesture.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/touch_gesture_dector/touch_gesture_dector.dart';
 
 import '../chart_gesture.dart';
 
@@ -54,6 +55,25 @@ mixin GestureDistributionMixin on ChartGesture
     final point1 = pointers[0];
     final point2 = pointers[1];
     return (point2.global - point1.global).distance / _initSclaeDistance;
+  }
+
+  @override
+  TouchStatus getTouchPointerStatus(int pointer) {
+    if (activePointer.keys.contains(pointer)) {
+      if (isDrag) {
+        return TouchStatus.drag;
+      } else if (isScale) {
+        return TouchStatus.scale;
+      } else if (isLongPress) {
+        return TouchStatus.longPress;
+      } else {
+        // 正常狀態不會在此
+        print('GestureDistributionMixin: 觸摸狀態異常');
+        throw 'GestureDistributionMixin: 觸摸狀態異常';
+      }
+    } else {
+      return TouchStatus.none;
+    }
   }
 
   @override
@@ -190,11 +210,11 @@ mixin GestureDistributionMixin on ChartGesture
     _cancelLongPressTimer();
 
     _longPressTimer = Timer(_longPressDetect, () {
-      print('長按激活');
+      // print('長按激活');
       _cancelLongPressTimer();
       final entrys = activePointer.entries;
       if (entrys.isEmpty) {
-        print('長按為空, 取消');
+        // print('長按為空, 取消');
         return;
       }
       final position = entrys.first;

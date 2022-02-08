@@ -3,8 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_inertial_scroller/chart_inertial_scroller.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/draw_content_info.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/touch_gesture_dector/multi_touch_gesture_recognizer/multi_touch_gesture_recognizer.dart';
 
 import 'gestures/tap_gesture.dart';
+
+/// 手勢狀態
+enum TouchStatus {
+  none,
+  drag,
+  scale,
+  longPress,
+}
 
 /// 圖表手勢處理
 abstract class ChartGesture implements TapGesture {
@@ -44,6 +53,9 @@ abstract class ChartGesture implements TapGesture {
   void setDrawInfo(DrawContentInfo info) {
     drawContentInfo = info;
   }
+
+  /// 取得某個pointer的狀態
+  TouchStatus getTouchPointerStatus(int pointer);
 
   /// 滑動到scrollX為0的位置
   Future<void> scrollToRight() async {
