@@ -1,24 +1,24 @@
-extension OrNullList<E> on Iterable<E> {
-  E? get lastOrNull {
-    Iterator<E> it = iterator;
-    if (!it.moveNext()) {
-      return null;
-    }
-    E result;
-    do {
-      result = it.current;
-    } while (it.moveNext());
-    return result;
-  }
-
-  E? get firstOrNull {
-    Iterator<E> it = iterator;
-    if (!it.moveNext()) {
-      return null;
-    }
-    return it.current;
-  }
-}
+// extension OrNullList<E> on Iterable<E> {
+//   E? get lastOrNull {
+//     Iterator<E> it = iterator;
+//     if (!it.moveNext()) {
+//       return null;
+//     }
+//     E result;
+//     do {
+//       result = it.current;
+//     } while (it.moveNext());
+//     return result;
+//   }
+//
+//   E? get firstOrNull {
+//     Iterator<E> it = iterator;
+//     if (!it.moveNext()) {
+//       return null;
+//     }
+//     return it.current;
+//   }
+// }
 
 extension IntersperseList<E> on List<E> {
   /// 在每個元素之間穿插

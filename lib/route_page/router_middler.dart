@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:mx_core/extension/extension.dart';
+import 'package:collection/collection.dart';
 import 'package:mx_core/router/router.dart';
 import 'package:rxdart/rxdart.dart';
 
