@@ -81,7 +81,7 @@ class MainChartRenderImpl extends MainChartRender
               return null;
             }
             return TextSpan(
-              text: 'MA$e:$value    ',
+              text: 'MA$e:${dataViewer.priceFormatter(value)}    ',
               style: maTextStyle.copyWith(
                 color: colors.maLine[e],
               ),

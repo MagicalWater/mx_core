@@ -84,7 +84,13 @@ class KLineChart extends StatefulWidget {
   /// x軸時間格式化
   final String Function(DateTime dateTime) xAxisDateTimeFormatter;
 
-  /// tooltip彈窗構建
+  /// tooltip 樣式
+  final KLineDataTooltipUiStyle tooltipUiStyle;
+
+  /// tooltip前綴字
+  final TooltipPrefix tooltipPrefix;
+
+  /// tooltip彈窗構建(若不帶入則使用預設彈窗)
   final KLineChartTooltipBuilder? tooltipBuilder;
 
   /// 加載更多調用, false代表滑動到最左邊, true則為最右邊
@@ -94,7 +100,7 @@ class KLineChart extends StatefulWidget {
   final String Function(num price) priceFormatter;
 
   /// 成交量格式化
-  final String Function(num volume) volumeFormatter;
+  final String Function(num volume)? volumeFormatter;
 
   const KLineChart({
     Key? key,
@@ -111,22 +117,14 @@ class KLineChart extends StatefulWidget {
     this.wrChartUiStyle = const WRChartUiStyle(),
     this.kdjChartUiStyle = const KDJChartUiStyle(),
     this.maPeriods = const [5, 10, 20],
-    this.tooltipBuilder = _defaultTooltip,
+    this.tooltipPrefix = const TooltipPrefix(),
+    this.tooltipUiStyle = const KLineDataTooltipUiStyle(),
+    this.tooltipBuilder,
     this.xAxisDateTimeFormatter = _defaultXAxisDateFormatter,
     this.priceFormatter = _defaultPriceFormatter,
-    this.volumeFormatter = _defaultVolumeFormatter,
+    this.volumeFormatter,
     this.onLoadMore,
   }) : super(key: key);
-
-  /// 預設tooltip元件
-  static Widget _defaultTooltip(
-    BuildContext context,
-    LongPressData data,
-  ) {
-    return KLineDataInfoTooltip(
-      longPressData: data,
-    );
-  }
 
   /// 預設x軸時間格式化
   static String _defaultXAxisDateFormatter(DateTime dateTime) {
@@ -136,18 +134,6 @@ class KLineChart extends StatefulWidget {
   /// 預設價格格式化
   static String _defaultPriceFormatter(num price) {
     return price.toStringAsFixed(2);
-  }
-
-  /// 預設成交量格式化
-  static String _defaultVolumeFormatter(num volume) {
-    if (volume > 10000 && volume < 999999) {
-      final d = volume / 1000;
-      return '${d.toStringAsFixed(2)}K';
-    } else if (volume > 1000000) {
-      final d = volume / 1000000;
-      return '${d.toStringAsFixed(2)}M';
-    }
-    return volume.toStringAsFixed(2);
   }
 
   @override
@@ -229,6 +215,18 @@ class _KLineChartState extends State<KLineChart>
     super.dispose();
   }
 
+  /// 預設成交量格式化
+  String _defaultVolumeFormatter(num volume) {
+    if (volume > 10000 && volume < 999999) {
+      final d = volume / 1000;
+      return '${widget.priceFormatter(d)}K';
+    } else if (volume > 1000000) {
+      final d = volume / 1000000;
+      return '${widget.priceFormatter(d)}M';
+    }
+    return widget.priceFormatter(volume);
+  }
+
   @override
   Widget build(BuildContext context) {
     final heightSetting = widget.chartUiStyle.heightRatioSetting;
@@ -281,7 +279,8 @@ class _KLineChartState extends State<KLineChart>
                 kdjChartUiStyle: widget.kdjChartUiStyle,
                 maPeriods: widget.maPeriods,
                 priceFormatter: widget.priceFormatter,
-                volumeFormatter: widget.volumeFormatter,
+                volumeFormatter:
+                    widget.volumeFormatter ?? _defaultVolumeFormatter,
                 xAxisDateTimeFormatter: widget.xAxisDateTimeFormatter,
                 onDrawInfo: (info) {
                   chartGesture.setDrawInfo(info);
@@ -333,7 +332,13 @@ class _KLineChartState extends State<KLineChart>
         if (snapshot.hasData) {
           final data = snapshot.data!;
           return widget.tooltipBuilder?.call(context, data) ??
-              const SizedBox.shrink();
+              KLineDataInfoTooltip(
+                longPressData: data,
+                priceFormatter: widget.priceFormatter,
+                volumeFormatter: widget.volumeFormatter ?? _defaultVolumeFormatter,
+                uiStyle: widget.tooltipUiStyle,
+                tooltipPrefix: widget.tooltipPrefix,
+              );
         }
         return const SizedBox.shrink();
       },

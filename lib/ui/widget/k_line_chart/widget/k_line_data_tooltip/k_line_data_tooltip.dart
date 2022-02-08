@@ -12,6 +12,12 @@ class KLineDataInfoTooltip extends StatelessWidget {
   final TooltipPrefix tooltipPrefix;
   final String Function(DateTime dateTime) dateTimeFormatter;
 
+  /// 價格格式化
+  final String Function(num price) priceFormatter;
+
+  /// 成交量格式化
+  final String Function(num volume)? volumeFormatter;
+
   KLineData get data => longPressData.data;
 
   KLineDataTooltipColorSetting get colors => uiStyle.colorSetting;
@@ -22,12 +28,31 @@ class KLineDataInfoTooltip extends StatelessWidget {
     return DateUtil.getDateStr(dateTime, format: 'yyyy-MM-dd HH:mm');
   }
 
+  /// 預設價格格式化
+  static String _defaultPriceFormatter(num price) {
+    return price.toStringAsFixed(2);
+  }
+
+  /// 預設成交量格式化
+  String _defaultVolumeFormatter(num volume) {
+    if (volume > 10000 && volume < 999999) {
+      final d = volume / 1000;
+      return '${priceFormatter(d)}K';
+    } else if (volume > 1000000) {
+      final d = volume / 1000000;
+      return '${priceFormatter(d)}M';
+    }
+    return priceFormatter(volume);
+  }
+
   const KLineDataInfoTooltip({
     Key? key,
     required this.longPressData,
     this.uiStyle = const KLineDataTooltipUiStyle(),
     this.tooltipPrefix = const TooltipPrefix(),
     this.dateTimeFormatter = _defaultDateTimeFormatter,
+    this.priceFormatter = _defaultPriceFormatter,
+    this.volumeFormatter,
   }) : super(key: key);
 
   @override
@@ -80,28 +105,28 @@ class KLineDataInfoTooltip extends StatelessWidget {
   Widget _open() {
     return _item(
       prefix: tooltipPrefix.open,
-      value: data.open.toStringAsFixed(2),
+      value: priceFormatter(data.open),
     );
   }
 
   Widget _close() {
     return _item(
       prefix: tooltipPrefix.close,
-      value: data.close.toStringAsFixed(2),
+      value: priceFormatter(data.close),
     );
   }
 
   Widget _high() {
     return _item(
       prefix: tooltipPrefix.high,
-      value: data.high.toStringAsFixed(2),
+      value: priceFormatter(data.high),
     );
   }
 
   Widget _low() {
     return _item(
       prefix: tooltipPrefix.low,
-      value: data.low.toStringAsFixed(2),
+      value: priceFormatter(data.low),
     );
   }
 
@@ -124,7 +149,7 @@ class KLineDataInfoTooltip extends StatelessWidget {
     final changedRate = changedValue / data.open * 100;
 
     final isUp = changedValue >= 0;
-    var valueText = changedRate.toStringAsFixed(2);
+    var valueText = priceFormatter(changedRate);
     if (isUp) {
       valueText = '+$valueText';
     }
@@ -139,7 +164,8 @@ class KLineDataInfoTooltip extends StatelessWidget {
   Widget _volume() {
     return _item(
       prefix: tooltipPrefix.volume,
-      value: data.volume.toStringAsFixed(2),
+      value: volumeFormatter?.call(data.volume) ??
+          _defaultVolumeFormatter(data.volume),
     );
   }
 
