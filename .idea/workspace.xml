@@ -12,14 +12,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_impl.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/k_line_data_tooltip.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip/k_line_data_tooltip.dart" afterDir="false" />
-    </list>
+    <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
