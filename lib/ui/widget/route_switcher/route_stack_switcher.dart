@@ -148,7 +148,7 @@ class RouteStackSwitcher extends StatefulWidget {
 }
 
 class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
-  final controller = WidgetSwitchController<String>();
+  final controller = WidgetSwitchController<RouteData>();
 
   /// 路由訂閱監聽
   StreamSubscription<List<RouteData>>? routeSubscription;
@@ -172,7 +172,7 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
           // print('RouteStackSwitcher: 比較: ${routes.map((e) => e.route)}, ${event.map((e) => e.route)}');
           // print('RouteStackSwitcher: 移除: $removedIndex');
           controller.push(
-            lastRoute.route,
+            lastRoute,
             removeUntil: (tag, index) {
               if (removedIndex.contains(index)) {
                 return false;
@@ -236,9 +236,9 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetSwitcher(
+    return WidgetSwitcher<RouteData>(
       controller: controller,
-      builder: (BuildContext context, String tag) {
+      builder: (BuildContext context, RouteData tag) {
         return appRouter.getPage(tag);
       },
       onPopHandler: widget.onPopHandler,

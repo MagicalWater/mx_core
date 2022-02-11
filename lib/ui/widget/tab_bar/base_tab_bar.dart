@@ -93,8 +93,8 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       actionIndexMap[splitIndex + (lastTabIndex + 1)] = i;
     }
 
-    print('tab index = $tabIndexMap');
-    print('action index = $actionIndexMap');
+    // print('tab index = $tabIndexMap');
+    // print('action index = $actionIndexMap');
   }
 
   /// 給所有的 tab 加入 globalKey

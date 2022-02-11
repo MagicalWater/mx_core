@@ -2,12 +2,10 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:mx_core/mx_core.dart';
-import 'package:mx_core/router/route_compute.dart';
+import 'package:mx_core/router/router.dart';
+import 'package:mx_core/ui/widget/navigator_provider.dart';
+import 'package:mx_core/util/util.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'app_router_base.dart';
-import 'route_setting.dart';
 
 MixinRouteBuilder? _defaultRouteBuilder;
 
@@ -83,11 +81,10 @@ AppRouter appRouter = AppRouter._();
 
 /// route mixin 類
 class AppRouter implements AppRouterBase, RoutePageBase {
-
   AppRouter._();
 
   /// 存放所有監聽子頁面跳轉的 callback
-  List<_SubPageHandler> _subPageListener = [];
+  final List<_SubPageHandler> _subPageListener = [];
 
   /// app 入口頁面的別名
   String? _entryPointRouteAlias;
@@ -96,7 +93,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
   List<RouteData> get pageHistory => _pageSubject.valueOrNull ?? [];
 
   /// 大頁面跳轉紀錄串流
-  BehaviorSubject<List<RouteData>> _pageSubject = BehaviorSubject();
+  final BehaviorSubject<List<RouteData>> _pageSubject = BehaviorSubject();
 
   /// 所有頁面跳轉通知串流
   Stream<RouteData> get pageStream =>
@@ -111,12 +108,17 @@ class AppRouter implements AppRouterBase, RoutePageBase {
   }
 
   /// 頁面詳細跳轉
-  BehaviorSubject<String> _pageDetailSubject = BehaviorSubject();
+  final BehaviorSubject<String> _pageDetailSubject = BehaviorSubject();
 
   Stream<String> get pageDetailStream => _pageDetailSubject.stream;
 
   /// 當前顯示的詳細頁面(涵蓋子頁面)
   String? get currentDetailPage => _pageDetailSubject.valueOrNull;
+
+  /// 是否需要阻擋一下監測系統返回頁面通過 _onDetectPop 打回來的請求
+  /// 此需求用在當 popPage 時, [_pageDetailSubject] 已經進行頁面回退
+  /// 因此 _onDetectPop 不需要再次進行回退
+  bool isNeedBlockOnceSystemPopDetect = false;
 
   /// 從當前大頁面重新尋找最終子頁面
   /// 並且讓其頁面進行刷新
@@ -454,10 +456,11 @@ class AppRouter implements AppRouterBase, RoutePageBase {
       _researchCurrentDetailPage();
       return true;
     } else {
-      // 返回單個頁面
+      // 返回單個頁面, 將
       _removeLastPage();
       _pageSubject.add(_pageSubject.value);
       _researchCurrentDetailPage();
+      isNeedBlockOnceSystemPopDetect = true;
       navigator.pop(result);
       return true;
     }
@@ -526,6 +529,11 @@ class AppRouter implements AppRouterBase, RoutePageBase {
         .first;
 
     routeNavigatorObservable._onDetectPop ??= (name) {
+      if (isNeedBlockOnceSystemPopDetect) {
+        // 阻擋一次頁面返回請求
+        isNeedBlockOnceSystemPopDetect = false;
+        return;
+      }
       var lastPage = pageHistory.last;
       if (lastPage.route == name) {
         print('刪除最後: ${pageHistory.map((e) => e.route)}');
