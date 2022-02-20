@@ -89,7 +89,7 @@ class App extends StatelessWidget {
             // ),
           ),
           home: appRouter.getPage(
-            Pages.kChart,
+            Pages.introduction,
             entryPoint: true,
           ),
         ),

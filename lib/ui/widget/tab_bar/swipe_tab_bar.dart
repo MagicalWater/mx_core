@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:mx_core/util/screen_util.dart';
 
 import '../line_indicator.dart';

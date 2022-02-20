@@ -85,7 +85,8 @@ class LineIndicator extends StatefulWidget {
   /// 線條佔位
   final List<LinePlace>? places;
 
-  const LineIndicator({Key? key,
+  const LineIndicator({
+    Key? key,
     required this.start,
     required this.end,
     this.color,
@@ -100,7 +101,9 @@ class LineIndicator extends StatefulWidget {
     this.places,
     this.appearAnimation = true,
     this.animation = true,
-  }) : assert(color != null || decoration != null), super(key: key);
+  })
+      : assert(color != null || decoration != null),
+        super(key: key);
 
   @override
   _LineIndicatorState createState() => _LineIndicatorState();
@@ -112,18 +115,23 @@ class _LineIndicatorState extends State<LineIndicator>
 
   Tween<double>? startTween;
   Tween<double>? endTween;
+  Tween<Decoration>? decorationTween;
 
   Animation<double>? startAnim;
   Animation<double>? endAnim;
+  Animation<Decoration>? decorationAnim;
+
+  bool startAnimEnable = false,
+      endAnimEnable = false,
+      decorationAnimEnable = false;
 
   double currentStart = 0;
   double currentEnd = 0;
+  Decoration currentDecoration = const BoxDecoration();
 
   BoxPainter? painter;
 
   List<_PlacePainter> placePainter = [];
-
-  Decoration? currentDecoration;
 
   @override
   void initState() {
@@ -137,8 +145,17 @@ class _LineIndicatorState extends State<LineIndicator>
   }
 
   void _handleAnimValueUpdate() {
-    currentStart = startAnim!.value;
-    currentEnd = endAnim!.value;
+    if (startAnimEnable && startAnim != null) {
+      currentStart = startAnim!.value;
+    }
+    if (endAnimEnable && endAnim != null) {
+      currentEnd = endAnim!.value;
+    }
+    if (decorationAnimEnable && decorationAnim != null) {
+      currentDecoration = decorationAnim!.value;
+      painter?.dispose();
+      painter = currentDecoration.createBoxPainter(() => setState(() {}));
+    }
     setState(() {});
   }
 
@@ -157,19 +174,6 @@ class _LineIndicatorState extends State<LineIndicator>
   }
 
   void syncShow(LineIndicator widget) {
-    var newDecoration = widget.decoration ?? BoxDecoration(color: widget.color);
-
-    if (currentDecoration != null && currentDecoration != newDecoration) {
-      painter?.dispose();
-      painter = null;
-    }
-
-    currentDecoration = newDecoration;
-    painter ??= currentDecoration!.createBoxPainter(() {
-      print('需要重繪');
-      setState(() {});
-    });
-
     // 同步 widget.places 與 placePainter 的數量
     void _syncPlacePainter() {
       var places = widget.places ?? [];
@@ -210,14 +214,27 @@ class _LineIndicatorState extends State<LineIndicator>
       }
 
       if (placePainter.length > places.length) {
-        placePainter.removeLast().painter.dispose();
+        placePainter
+            .removeLast()
+            .painter
+            .dispose();
       }
     }
 
     _syncPlacePainter();
 
-    if (currentStart == widget.start && currentEnd == widget.end) {
-      return;
+    startAnimEnable = false;
+    endAnimEnable = false;
+    decorationAnimEnable = false;
+
+    final newDecoration = widget.decoration ??
+        BoxDecoration(color: widget.color);
+
+    final isDecorationDifference = currentDecoration != newDecoration;
+
+    if (isDecorationDifference) {
+      painter?.dispose();
+      painter = null;
     }
 
     if (!widget.appearAnimation) {
@@ -227,6 +244,8 @@ class _LineIndicatorState extends State<LineIndicator>
       if (isStartAppear && isEndAppear) {
         currentStart = widget.start;
         currentEnd = widget.end;
+        currentDecoration = newDecoration;
+        painter ??= currentDecoration.createBoxPainter(() => setState(() {}));
         return;
       }
     }
@@ -234,45 +253,72 @@ class _LineIndicatorState extends State<LineIndicator>
     if (!widget.animation) {
       currentStart = widget.start;
       currentEnd = widget.end;
+      currentDecoration = newDecoration;
+      painter ??= currentDecoration.createBoxPainter(() => setState(() {}));
       return;
     }
 
-    if (startTween != null) {
-      startTween!.begin = currentStart;
-      startTween!.end = widget.start;
-    } else {
-      double startPoint;
-      if (currentStart == 0 && currentEnd == 0) {
-        startPoint = (widget.start + widget.end) / 2;
+    if (isDecorationDifference) {
+      decorationAnimEnable = true;
+      if (decorationTween != null) {
+        decorationTween!.begin = currentDecoration;
+        decorationTween!.end = newDecoration;
       } else {
-        startPoint = currentStart;
+        decorationTween = DecorationTween(
+          begin: currentDecoration,
+          end: newDecoration,
+        );
+        decorationAnim = decorationTween!.animate(CurvedAnimation(
+          parent: _controller,
+          curve: widget.curve,
+        ));
       }
-      startTween = Tween(begin: startPoint, end: widget.start);
-      startAnim = startTween!.animate(CurvedAnimation(
-        parent: _controller,
-        curve: widget.curve,
-      ));
     }
 
-    if (endTween != null) {
-      endTween!.begin = currentEnd;
-      endTween!.end = widget.end;
-    } else {
-      double endPoint;
-      if (currentStart == 0 && currentEnd == 0) {
-        endPoint = (widget.start + widget.end) / 2;
+    if (currentStart != widget.start) {
+      startAnimEnable = true;
+      if (startTween != null) {
+        startTween!.begin = currentStart;
+        startTween!.end = widget.start;
       } else {
-        endPoint = currentEnd;
+        double startPoint;
+        if (currentStart == 0 && currentEnd == 0) {
+          startPoint = (widget.start + widget.end) / 2;
+        } else {
+          startPoint = currentStart;
+        }
+        startTween = Tween(begin: startPoint, end: widget.start);
+        startAnim = startTween!.animate(CurvedAnimation(
+          parent: _controller,
+          curve: widget.curve,
+        ));
       }
-      endTween = Tween(begin: endPoint, end: widget.end);
-      endAnim = endTween!.animate(CurvedAnimation(
-        parent: _controller,
-        curve: widget.curve,
-      ));
     }
 
-    _controller.reset();
-    _controller.forward();
+    if (currentEnd != widget.end) {
+      endAnimEnable = true;
+      if (endTween != null) {
+        endTween!.begin = currentEnd;
+        endTween!.end = widget.end;
+      } else {
+        double endPoint;
+        if (currentStart == 0 && currentEnd == 0) {
+          endPoint = (widget.start + widget.end) / 2;
+        } else {
+          endPoint = currentEnd;
+        }
+        endTween = Tween(begin: endPoint, end: widget.end);
+        endAnim = endTween!.animate(CurvedAnimation(
+          parent: _controller,
+          curve: widget.curve,
+        ));
+      }
+    }
+
+    if (startAnimEnable || endAnimEnable || decorationAnimEnable) {
+      _controller.reset();
+      _controller.forward();
+    }
   }
 
   @override
@@ -371,8 +417,8 @@ class _LinePainter extends CustomPainter {
     }
   }
 
-  void _paintVertical(
-      Canvas canvas, Size size, BoxPainter painter, double start, double end) {
+  void _paintVertical(Canvas canvas, Size size, BoxPainter painter,
+      double start, double end) {
     var startPos = size.height * start;
     var endPos = size.height * end;
 
@@ -420,8 +466,8 @@ class _LinePainter extends CustomPainter {
     );
   }
 
-  void _paintHorizontal(
-      Canvas canvas, Size size, BoxPainter painter, double start, double end) {
+  void _paintHorizontal(Canvas canvas, Size size, BoxPainter painter,
+      double start, double end) {
     var startPos = size.width * start;
     var endPos = size.width * end;
 
