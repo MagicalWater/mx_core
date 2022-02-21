@@ -275,6 +275,8 @@ class _LineIndicatorState extends State<LineIndicator>
       }
     }
 
+    painter ??= currentDecoration.createBoxPainter(() => setState(() {}));
+
     if (currentStart != widget.start) {
       startAnimEnable = true;
       if (startTween != null) {
