@@ -468,7 +468,15 @@ class _RefreshViewState extends State<RefreshView> {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _firstTrigger = true;
       var scrollController = widget._easyRefresh.scrollController!;
-      scrollController.jumpTo(scrollController.offset - 0.0000001);
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(scrollController.offset - 0.0000001);
+      } else {
+        WidgetsBinding.instance!.addPostFrameCallback((_) {
+          if (scrollController.hasClients) {
+            scrollController.jumpTo(scrollController.offset - 0.0000001);
+          }
+        });
+      }
     });
   }
 
