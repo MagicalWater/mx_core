@@ -234,14 +234,14 @@ class _LoadProviderState extends State<LoadProvider>
         var hasPos = (_showPos != null) && (_showSize != null);
 
         return Positioned.fill(
-          left: _showPos?.dx,
-          top: _showPos?.dy,
+          left: _showPos?.dx ?? 0,
+          top: _showPos?.dy ?? 0,
           right: hasPos
               ? (Screen.width - (_showPos!.dx + _showSize!.width))
-              : null,
+              : 0,
           bottom: hasPos
               ? (Screen.height - (_showPos!.dy + _showSize!.height))
-              : null,
+              : 0,
           child: IgnorePointer(
             ignoring: !_currentShow || widget.tapThrough,
             child: loadAttach,
