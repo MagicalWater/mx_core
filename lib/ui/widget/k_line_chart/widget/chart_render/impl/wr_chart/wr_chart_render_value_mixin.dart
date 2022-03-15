@@ -40,7 +40,7 @@ mixin WRChartValueMixin on WRChartRender {
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
-      final wrData = data.indciatorData.wr;
+      final wrData = data.indicatorData.wr;
 
       if (wrData == null) {
         continue;

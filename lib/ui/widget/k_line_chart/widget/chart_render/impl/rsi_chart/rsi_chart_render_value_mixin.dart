@@ -40,7 +40,7 @@ mixin RSIChartValueMixin on RSIChartRender {
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
-      final rsiData = data.indciatorData.rsi;
+      final rsiData = data.indicatorData.rsi;
 
       if (rsiData == null) {
         continue;

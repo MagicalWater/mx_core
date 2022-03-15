@@ -9,7 +9,7 @@ mixin RSIChartRenderPaintMixin on RSIChartValueMixin {
   void paintRSIChart(Canvas canvas, Rect rect) {
     linePaint.strokeWidth = sizes.lineWidth;
 
-    final rsiData = dataViewer.datas.map((e) => e.indciatorData.rsi);
+    final rsiData = dataViewer.datas.map((e) => e.indicatorData.rsi);
 
     // 繪rsi線
     final rsiList = rsiData.map((e) => e?.rsi).toList();

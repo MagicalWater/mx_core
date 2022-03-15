@@ -9,7 +9,7 @@ mixin WRChartRenderPaintMixin on WRChartValueMixin {
   void paintWRChart(Canvas canvas, Rect rect) {
     linePaint.strokeWidth = sizes.lineWidth;
 
-    final wrData = dataViewer.datas.map((e) => e.indciatorData.wr);
+    final wrData = dataViewer.datas.map((e) => e.indicatorData.wr);
 
     // 繪rsi線
     final rList = wrData.map((e) => e?.r).toList();

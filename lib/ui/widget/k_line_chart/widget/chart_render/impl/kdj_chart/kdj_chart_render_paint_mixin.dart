@@ -9,7 +9,7 @@ mixin KDJChartRenderPaintMixin on KDJChartValueMixin {
   void paintKDJChart(Canvas canvas, Rect rect) {
     linePaint.strokeWidth = sizes.lineWidth;
 
-    final kdjData = dataViewer.datas.map((e) => e.indciatorData.kdj);
+    final kdjData = dataViewer.datas.map((e) => e.indicatorData.kdj);
 
     // 繪k線
     final kList = kdjData.map((e) => e?.k).toList();

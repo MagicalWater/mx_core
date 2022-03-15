@@ -10,7 +10,7 @@ mixin MACDChartRenderPaintMixin on MACDChartValueMixin {
   void paintDifDeaChart(Canvas canvas, Rect rect) {
     linePaint.strokeWidth = sizes.lineWidth;
 
-    final macdData = dataViewer.datas.map((e) => e.indciatorData.macd);
+    final macdData = dataViewer.datas.map((e) => e.indicatorData.macd);
 
     // 繪dif線
     final difList = macdData.map((e) => e?.dif).toList();
@@ -79,7 +79,7 @@ mixin MACDChartRenderPaintMixin on MACDChartValueMixin {
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
       final x = dataViewer.dataIndexToRealX(i);
-      final macdData = data.indciatorData.macd;
+      final macdData = data.indicatorData.macd;
       if (macdData == null) {
         continue;
       }

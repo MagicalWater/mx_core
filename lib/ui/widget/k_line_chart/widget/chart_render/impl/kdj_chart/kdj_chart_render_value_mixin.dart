@@ -42,7 +42,7 @@ mixin KDJChartValueMixin on KDJChartRender {
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
-      final kdjData = data.indciatorData.kdj;
+      final kdjData = data.indicatorData.kdj;
 
       if (kdjData == null) {
         continue;

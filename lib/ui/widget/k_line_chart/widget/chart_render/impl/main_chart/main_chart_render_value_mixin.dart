@@ -117,7 +117,7 @@ mixin MainChartValueMixin on MainChartRender {
         }
 
         if (isShowMa) {
-          final maData = data.indciatorData.ma?.ma;
+          final maData = data.indicatorData.ma?.ma;
           if (maData != null && maData.isNotEmpty) {
             final values = maData.values;
             final maxReduce = values.reduce(max);
@@ -136,7 +136,7 @@ mixin MainChartValueMixin on MainChartRender {
         }
 
         if (isShowBoll) {
-          final bollData = data.indciatorData.boll;
+          final bollData = data.indicatorData.boll;
           if (bollData != null) {
             final values = [bollData.up, bollData.dn, bollData.mb];
 

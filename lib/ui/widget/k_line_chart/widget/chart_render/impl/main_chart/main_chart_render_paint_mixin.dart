@@ -46,7 +46,7 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
   void paintMaChart(Canvas canvas, Rect rect) {
     linePaint.strokeWidth = sizes.lineWidth;
 
-    final maData = dataViewer.datas.map((e) => e.indciatorData.ma?.ma);
+    final maData = dataViewer.datas.map((e) => e.indicatorData.ma?.ma);
     final periods = dataViewer.maPeriods;
 
     for (final element in periods) {
@@ -61,7 +61,7 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
   void paintBollChart(Canvas canvas, Rect rect) {
     linePaint.strokeWidth = sizes.lineWidth;
 
-    final bollData = dataViewer.datas.map((e) => e.indciatorData.boll);
+    final bollData = dataViewer.datas.map((e) => e.indicatorData.boll);
 
     // 繪mb線
     final mbList = bollData.map((e) => e?.mb).toList();

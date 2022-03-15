@@ -81,7 +81,7 @@ class RSIChartRenderImpl extends RSIChartRender
   @override
   void paintTopValueText(Canvas canvas, Rect rect) {
     final displayData = dataViewer.getLongPressData() ?? dataViewer.datas.last;
-    final rsiData = displayData.indciatorData.rsi;
+    final rsiData = displayData.indicatorData.rsi;
 
     if (rsiData == null) {
       return;

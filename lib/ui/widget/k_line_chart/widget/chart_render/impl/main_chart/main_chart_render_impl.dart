@@ -68,7 +68,7 @@ class MainChartRenderImpl extends MainChartRender
   @override
   void paintTopValueText(Canvas canvas, Rect rect) {
     final displayData = dataViewer.getLongPressData() ?? dataViewer.datas.last;
-    final maData = displayData.indciatorData.ma?.ma;
+    final maData = displayData.indicatorData.ma?.ma;
     final spanTexts = <TextSpan>[];
 
     // 檢查是否需要顯示ma資訊
@@ -93,7 +93,7 @@ class MainChartRenderImpl extends MainChartRender
     }
 
     // 檢查是否需要顯示boll訊息
-    final bollData = displayData.indciatorData.boll;
+    final bollData = displayData.indicatorData.boll;
     if (isShowBoll && bollData != null) {
       final bollTextStyle = TextStyle(fontSize: sizes.indexTip);
 

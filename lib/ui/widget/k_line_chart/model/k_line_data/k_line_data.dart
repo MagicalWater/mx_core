@@ -30,7 +30,7 @@ class KLineData {
   final DateTime dateTime;
 
   /// 技術指標資料
-  final indciatorData = IndciatorData();
+  final indicatorData = IndicatorData();
 
   KLineData({
     required this.open,
@@ -43,7 +43,7 @@ class KLineData {
   });
 }
 
-class IndciatorData {
+class IndicatorData {
   /// 收盤價均線
   IndicatorMa? ma;
 

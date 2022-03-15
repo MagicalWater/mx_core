@@ -81,7 +81,7 @@ class WRChartRenderImpl extends WRChartRender
   @override
   void paintTopValueText(Canvas canvas, Rect rect) {
     final displayData = dataViewer.getLongPressData() ?? dataViewer.datas.last;
-    final wrData = displayData.indciatorData.wr;
+    final wrData = displayData.indicatorData.wr;
 
     if (wrData == null) {
       return;

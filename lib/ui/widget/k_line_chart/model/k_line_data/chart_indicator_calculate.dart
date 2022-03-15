@@ -48,7 +48,7 @@ class ChartIndicatorCalculator {
         }
       }
 
-      data.indciatorData.ma = indicator;
+      data.indicatorData.ma = indicator;
     }
   }
 
@@ -57,7 +57,7 @@ class ChartIndicatorCalculator {
     for (var i = 0; i < datas.length; i++) {
       final data = datas[i];
       // 先檢查是否有均線
-      final indicatorMaValue = data.indciatorData.ma?.ma[period];
+      final indicatorMaValue = data.indicatorData.ma?.ma[period];
       if (indicatorMaValue == null) {
         continue;
       }
@@ -76,7 +76,7 @@ class ChartIndicatorCalculator {
         up = mb + 2.0 * md;
         dn = mb - 2.0 * md;
 
-        data.indciatorData.boll = IndicatorBOLL(mb: mb, up: up, dn: dn);
+        data.indicatorData.boll = IndicatorBOLL(mb: mb, up: up, dn: dn);
       }
     }
   }
@@ -108,7 +108,7 @@ class ChartIndicatorCalculator {
       dea = dea * 8 / 10 + dif * 2 / 10;
       macd = (dif - dea) * 2;
 
-      data.indciatorData.macd = IndicatorMACD(
+      data.indicatorData.macd = IndicatorMACD(
         dea: dea,
         dif: dif,
         macd: macd,
@@ -138,7 +138,7 @@ class ChartIndicatorCalculator {
         rsi = (rsiMaxEma / rsiABSEma) * 100;
       }
 
-      data.indciatorData.rsi = IndicatorRSI(
+      data.indicatorData.rsi = IndicatorRSI(
         rsi: rsi,
         rsiABSEma: rsiABSEma,
         rsiMaxEma: rsiMaxEma,
@@ -181,9 +181,9 @@ class ChartIndicatorCalculator {
       }
 
       if (i == 13 || i == 14) {
-        data.indciatorData.kdj = IndicatorKDJ(k: k, d: 0, j: 0);
+        data.indicatorData.kdj = IndicatorKDJ(k: k, d: 0, j: 0);
       } else if (i > 14) {
-        data.indciatorData.kdj = IndicatorKDJ(k: k, d: d, j: 3 * k - 2 * d);
+        data.indicatorData.kdj = IndicatorKDJ(k: k, d: d, j: 3 * k - 2 * d);
       }
     }
   }
@@ -211,7 +211,7 @@ class ChartIndicatorCalculator {
         } else {
           r = 100 * (max14 - datas[i].close) / (max14 - min14);
         }
-        data.indciatorData.wr = IndicatorWR(r: r);
+        data.indicatorData.wr = IndicatorWR(r: r);
       }
     }
   }
