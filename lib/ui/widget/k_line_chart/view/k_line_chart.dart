@@ -10,6 +10,7 @@ import 'package:mx_core/ui/widget/position_layout.dart';
 import 'package:mx_core/util/date_util.dart';
 
 import '../k_line_chart.dart';
+
 export '../widget/chart_painter/chart_painter.dart';
 export '../widget/chart_render/main_chart_render.dart';
 export '../widget/chart_render/volume_chart_render.dart';
@@ -18,6 +19,8 @@ export '../widget/chart_render/rsi_chart_render.dart';
 export '../widget/chart_render/kdj_chart_render.dart';
 export '../widget/chart_render/wr_chart_render.dart';
 export '../widget/k_line_data_tooltip/k_line_data_tooltip.dart';
+
+part '../model/k_line_chart_controller.dart';
 
 /// 長按tooltip構建
 typedef KLineChartTooltipBuilder = Widget Function(
@@ -102,6 +105,9 @@ class KLineChart extends StatefulWidget {
   /// 成交量格式化
   final String Function(num volume)? volumeFormatter;
 
+  /// 圖表控制
+  final KLineChartController? controller;
+
   const KLineChart({
     Key? key,
     required this.datas,
@@ -124,6 +130,7 @@ class KLineChart extends StatefulWidget {
     this.priceFormatter = _defaultPriceFormatter,
     this.volumeFormatter,
     this.onLoadMore,
+    this.controller,
   }) : super(key: key);
 
   /// 預設x軸時間格式化
@@ -195,11 +202,18 @@ class _KLineChartState extends State<KLineChart>
     oldDataCount = widget.datas.length;
     isDataLessOnePageCallBack = false;
 
+    widget.controller?._bind = this;
+
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant KLineChart oldWidget) {
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller?._bind = null;
+      widget.controller?._bind = this;
+    }
+
     if (oldDataCount != widget.datas.length) {
       oldDataCount = widget.datas.length;
       isDataLessOnePageCallBack = false;
@@ -212,6 +226,7 @@ class _KLineChartState extends State<KLineChart>
     chartGesture.dispose();
     _rightRealTimePricePositionStreamController.close();
     _realTimePriceGlobalPositionStreamController.close();
+    widget.controller?._bind = null;
     super.dispose();
   }
 
@@ -335,7 +350,8 @@ class _KLineChartState extends State<KLineChart>
               KLineDataInfoTooltip(
                 longPressData: data,
                 priceFormatter: widget.priceFormatter,
-                volumeFormatter: widget.volumeFormatter ?? _defaultVolumeFormatter,
+                volumeFormatter:
+                    widget.volumeFormatter ?? _defaultVolumeFormatter,
                 uiStyle: widget.tooltipUiStyle,
                 tooltipPrefix: widget.tooltipPrefix,
               );
@@ -391,12 +407,17 @@ class _KLineChartState extends State<KLineChart>
               price: widget.priceFormatter(price),
               uiStyle: widget.mainChartUiStyle,
               onTap: () {
-                chartGesture.scrollToRight();
+                scrollToRight(animated: true);
               },
             ),
           ),
         );
       },
     );
+  }
+
+  /// 將圖表滾動回原點
+  Future<void> scrollToRight({bool animated = true}) {
+    return chartGesture.scrollToRight(animated: animated);
   }
 }
