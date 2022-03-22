@@ -17,6 +17,7 @@ import 'package:mx_core_example/ui/page/marquee/marquee.dart';
 import 'package:mx_core_example/ui/page/normal_popup/normal_popup.dart';
 import 'package:mx_core_example/ui/page/particle_animation/particle_animation.dart';
 import 'package:mx_core_example/ui/page/refresh_view/refresh_view.dart';
+import 'package:mx_core_example/ui/page/rotation_3d/rotation_3d.dart';
 import 'package:mx_core_example/ui/page/route_push_entry/route_push_entry.dart';
 import 'package:mx_core_example/ui/page/route_push_second/route_push_second.dart';
 import 'package:mx_core_example/ui/page/route_push_sub1/route_push_sub1.dart';
@@ -77,6 +78,7 @@ class RouteWidget implements RouteWidgetBase {
     Pages.routePushSubB,
     Pages.forceCenterLayout,
     Pages.widgetSwitcher,
+    Pages.rotation3D,
   ];
 
   @override
@@ -267,6 +269,12 @@ class RouteWidget implements RouteWidgetBase {
         return RouterMiddler(
           childBuilder: (context) => WidgetSwitcherPage(option),
           routeBuilder: () => WidgetSwitcherRoute(option),
+          key: key,
+        );
+      case Pages.rotation3D:
+        return RouterMiddler(
+          childBuilder: (context) => Rotation3DPage(option),
+          routeBuilder: () => Rotation3DRoute(option),
           key: key,
         );
       default:

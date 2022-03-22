@@ -69,16 +69,6 @@ class _RefreshViewPageState extends State<RefreshViewPage> {
             _controller.refreshEnd(success: true);
           });
         },
-        placeBuilder: (
-          BuildContext context,
-          RefreshState state,
-          PlaceStyle place,
-        ) {
-          if (state.type == RefreshType.loadMore && state.empty) {
-            return Text('無資料');
-          }
-          return null;
-        },
         onLoadMore: () {
           Future.delayed(Duration(milliseconds: 100)).then((_) {
             if (isDisposed) {

@@ -10,16 +10,12 @@ import 'package:rxdart/rxdart.dart';
 
 import '../load_provider/load_provider.dart';
 import 'refresh_controller.dart';
+import 'refresh_state.dart';
 
 export 'refresh_controller.dart';
+export 'refresh_state.dart';
 
 part 'easy_refresh_style.dart';
-
-typedef RefreshBuilder = Widget? Function(
-  BuildContext context,
-  RefreshState state,
-  PlaceStyle place,
-);
 
 typedef RefreshHeaderBuilder = Header Function(
   BuildContext context,
@@ -34,12 +30,6 @@ RefreshHeaderBuilder? _defaultHeaderBuilder;
 
 /// 預設 footer
 RefreshFooterBuilder? _defaultFooterBuilder;
-
-/// 預設佔位提示屬性
-PlaceStyle? _defaultPlaceStyle;
-
-/// 預設的自訂佔位元件
-RefreshBuilder? _defaultPlaceBuilder;
 
 /// 可刷新元件, 內部封裝了第三方庫 [EasyRefresh]
 class RefreshView extends StatefulWidget {
@@ -57,13 +47,6 @@ class RefreshView extends StatefulWidget {
   /// 加載更多回調, null 為沒有加載更多
   final VoidCallback? onLoad;
 
-  /// 自訂列表狀態佔位元件, 回傳 null 代表不處理, 使用預設顯示
-  /// 若要顯示空則回傳 Container()
-  final RefreshBuilder? placeBuilder;
-
-  /// 佔位提示屬性
-  final PlaceStyle? placeStyle;
-
   /// 中間的讀取圓圈風格
   final RefreshLoadStyle? loadStyle;
 
@@ -77,8 +60,6 @@ class RefreshView extends StatefulWidget {
     this.onLoad,
     this.initState = RefreshState.none,
     this.refreshController,
-    this.placeStyle,
-    this.placeBuilder,
     this.loadStyle,
     this.loadingDebounce,
   }) : _easyRefresh = easyRefreshStyle;
@@ -89,8 +70,6 @@ class RefreshView extends StatefulWidget {
   factory RefreshView({
     key,
     RefreshState initState = RefreshState.none,
-    PlaceStyle? placeStyle,
-    RefreshBuilder? placeBuilder,
     VoidCallback? onRefresh,
     VoidCallback? onLoadMore,
     bool taskIndependence = false,
@@ -129,8 +108,6 @@ class RefreshView extends StatefulWidget {
       onLoad: onLoadMore,
       initState: initState,
       refreshController: refreshController,
-      placeStyle: placeStyle,
-      placeBuilder: placeBuilder,
       loadStyle: loadStyle,
     );
   }
@@ -140,8 +117,6 @@ class RefreshView extends StatefulWidget {
   factory RefreshView.custom({
     key,
     RefreshState initState = RefreshState.none,
-    PlaceStyle? placeStyle,
-    RefreshBuilder? placeBuilder,
     VoidCallback? onRefresh,
     VoidCallback? onLoadMore,
     Widget? emptyWidget,
@@ -198,8 +173,6 @@ class RefreshView extends StatefulWidget {
       onLoad: onLoadMore,
       initState: initState,
       refreshController: refreshController,
-      placeStyle: placeStyle,
-      placeBuilder: placeBuilder,
       loadStyle: loadStyle,
       loadingDebounce: loadingDebounce,
     );
@@ -210,11 +183,9 @@ class RefreshView extends StatefulWidget {
   factory RefreshView.builder({
     key,
     RefreshState initState = RefreshState.none,
-    PlaceStyle? placeStyle,
     bool firstRefresh = false,
     Widget? firstRefreshWidget,
     int headerIndex = 0,
-    RefreshBuilder? placeBuilder,
     VoidCallback? onRefresh,
     VoidCallback? onLoadMore,
     bool taskIndependence = false,
@@ -246,21 +217,9 @@ class RefreshView extends StatefulWidget {
       onLoad: onLoadMore,
       initState: initState,
       refreshController: refreshController,
-      placeStyle: placeStyle,
-      placeBuilder: placeBuilder,
       loadStyle: loadStyle,
       loadingDebounce: loadingDebounce,
     );
-  }
-
-  /// 設定預設的佔位元件(全局)
-  static void setDefaultPlace(RefreshBuilder builder) {
-    _defaultPlaceBuilder = builder;
-  }
-
-  /// 設定預設的佔位提示屬性
-  static void setDefaultPlaceStyle(PlaceStyle style) {
-    _defaultPlaceStyle = style;
   }
 
   /// 設定預設 Header Footer Builder
@@ -277,11 +236,6 @@ class RefreshView extends StatefulWidget {
 }
 
 class _RefreshViewState extends State<RefreshView> {
-  /// 最終顯示的佔位屬性
-  PlaceStyle get _placeStyle {
-    return widget.placeStyle ?? _defaultPlaceStyle ?? PlaceStyle._default;
-  }
-
   /// 是否正在刷新中
   bool _isRefreshing = false;
 
@@ -488,17 +442,6 @@ class _RefreshViewState extends State<RefreshView> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> stackList = [];
-
-    // 依照下列狀態有不同的顯示目標
-    // 1. loadingBody - 顯示讀取圈圈
-    // 2. errorBody - 顯示錯誤文字
-    // 3. emptyBody - 顯示無資料文字
-    // 3. 其餘狀態 - 無任何顯示
-    var placeView = _getPlaceWidget();
-
-    stackList.add(_easyRefreshNotification ?? _easyRefresh);
-    stackList.add(placeView);
     return LoadProvider(
       initValue: _stateSubject.value.centerLoad,
       controller: _loadController,
@@ -506,8 +449,9 @@ class _RefreshViewState extends State<RefreshView> {
         color: widget.loadStyle?.color ?? Colors.blueAccent,
         size: widget.loadStyle?.size ?? 50,
       ),
-      child: Stack(
-        children: stackList,
+      child: AbsorbPointer(
+        absorbing: _freezeTouch,
+        child: _easyRefreshNotification ?? _easyRefresh,
       ),
     );
   }
@@ -574,90 +518,9 @@ class _RefreshViewState extends State<RefreshView> {
         },
         child: _easyRefresh,
       );
+    } else {
+      _easyRefreshNotification = null;
     }
-  }
-
-  /// 取得 body 的佔位元件
-  Widget _getPlaceWidget() {
-    return StreamBuilder<RefreshState>(
-      initialData: _stateSubject.valueOrNull,
-      stream: _stateSubject.stream,
-      builder: (context, snapshot) {
-//          print("取得資料~~~");
-        Widget? child;
-
-        RefreshBuilder? childBuilder =
-            widget.placeBuilder ?? _defaultPlaceBuilder;
-
-        if (childBuilder != null) {
-          // 代表有實現自定義 佔位 元件
-          child = childBuilder(
-            context,
-            snapshot.data!,
-            _placeStyle,
-          );
-        }
-
-        child ??= _getDefaultPlaceWidget(snapshot.data!);
-        return AbsorbPointer(
-          absorbing: _freezeTouch,
-          child: child,
-        );
-      },
-    );
-  }
-
-  /// 取得默認佔位元件
-  Widget _getDefaultPlaceWidget(RefreshState state) {
-    // 等於 null 代表使用默認顯示
-    switch (state.type) {
-      case RefreshType.refresh:
-        if (state.isLoading) {
-          // 正在加載中
-//          return Container(
-//            alignment: Alignment.center,
-//            child: Loading.circle(
-//              color: Colors.blueAccent,
-//              size: 50,
-//            ),
-//          );
-        } else if (state.empty && state.success) {
-          // 加載成功, 但內容為空
-          return Container(
-            alignment: Alignment.center,
-            child: Text(
-              _placeStyle.empty,
-              style: _placeStyle.textStyle,
-            ),
-          );
-        } else if (!state.success) {
-          // 有錯誤
-          return Container(
-            alignment: Alignment.center,
-            child: Text(
-              _placeStyle.error,
-              style: _placeStyle.textStyle,
-            ),
-          );
-        }
-        break;
-      case RefreshType.loadMore:
-//        print("前置: ${state.isLoading}, bounce = ${state.bounce}");
-//        if (state.isLoading && !state.bounce) {
-////          print("需要顯示加載更多");
-//          return Container(
-//            alignment: Alignment.center,
-//            child: Loading.circle(
-//              color: Colors.blueAccent,
-//              size: 50,
-//            ),
-//          );
-//        }
-        break;
-      default:
-        break;
-    }
-    return const SizedBox(width: 0, height: 0);
   }
 
   @override
@@ -670,125 +533,6 @@ class _RefreshViewState extends State<RefreshView> {
     _loadController.dispose();
     super.dispose();
   }
-}
-
-/// 佔位屬性
-class PlaceStyle {
-  final String error;
-  final String empty;
-
-  final TextStyle? textStyle;
-
-  static const PlaceStyle _default = PlaceStyle();
-
-  const PlaceStyle({
-    this.error = "发生错误, 请重新刷新",
-    this.empty = "无资料",
-    this.textStyle,
-  });
-}
-
-/// 元件狀態
-class RefreshState {
-  final bool isInit;
-
-  final RefreshType type;
-
-  /// 是否為空內容元件
-  final bool empty;
-
-  /// 是否刷新成功
-  final bool success;
-
-  /// 是否已是最新資料
-  final bool noMore;
-
-  /// 是否正在刷新/加載中
-  final bool isLoading;
-
-  /// 上方下拉loading顯示 / 下方上拉loading顯示
-  final bool bounce;
-
-  /// 中間的 loading 顯示
-  final bool centerLoad;
-
-  /// 重置刷新狀態
-  final bool resetRefresh;
-
-  /// 重置加載更多狀態
-  final bool resetLoadMore;
-
-  /// 用於刷新之後設置加載更多的 noMore
-  final bool? noLoadMore;
-
-  const RefreshState._()
-      : isInit = true,
-        empty = false,
-        success = true,
-        noMore = false,
-        isLoading = false,
-        bounce = true,
-        centerLoad = false,
-        type = RefreshType.refresh,
-        resetRefresh = false,
-        resetLoadMore = false,
-        noLoadMore = null;
-
-  static const RefreshState none = RefreshState._();
-
-  /// 設置讀取狀態
-  /// * [type] - 讀取的類型, 刷新或加載更多
-  /// * [bounce] - 是否顯示對應的下拉刷新或者上拉加載, 若 false 則只有中間的 loading
-  /// * [centerLoad] - 中央的 loading 顯示, 預設加載更多不會顯示
-  const RefreshState.loading({
-    this.type = RefreshType.refresh,
-    this.bounce = true,
-    this.centerLoad = false,
-  })  : isInit = false,
-        empty = false,
-        success = true,
-        noMore = false,
-        isLoading = true,
-        resetRefresh = false,
-        resetLoadMore = false,
-        noLoadMore = null;
-
-  /// 設置刷新的結果
-  const RefreshState.refreshEnd({
-    required this.success,
-    this.empty = false,
-    this.noMore = false,
-    this.resetLoadMore = true,
-    this.noLoadMore,
-  })  : isInit = false,
-        isLoading = false,
-        bounce = true,
-        type = RefreshType.refresh,
-        resetRefresh = false,
-        centerLoad = false;
-
-  /// 設置加載更多的結果
-  const RefreshState.loadMoreEnd({
-    required this.success,
-    this.empty = false,
-    this.noMore = false,
-    this.resetRefresh = false,
-  })  : isInit = false,
-        isLoading = false,
-        bounce = true,
-        type = RefreshType.loadMore,
-        resetLoadMore = false,
-        noLoadMore = null,
-        centerLoad = false;
-}
-
-/// 狀態類型
-enum RefreshType {
-  /// 刷新
-  refresh,
-
-  /// 加載更多
-  loadMore,
 }
 
 class RefreshLoadStyle {

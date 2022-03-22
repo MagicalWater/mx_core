@@ -10,6 +10,7 @@ abstract class IntroductionState {
 class IntroductionInitial extends IntroductionState {
   IntroductionInitial()
       : super([
+          PageInfo(Pages.rotation3D, "3D旋轉"),
           PageInfo(Pages.kChart, "行情圖表"),
           PageInfo(Pages.forceCenterLayout, "強制置中元件"),
           PageInfo(Pages.widgetSwitcher, "元件仿造頁面切換"),

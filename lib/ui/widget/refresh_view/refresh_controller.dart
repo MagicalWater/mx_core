@@ -1,6 +1,8 @@
 import 'package:mx_core/ui/widget/refresh_view/refresh_view.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'refresh_state.dart';
+
 class RefreshController {
   /// 當前 [RefreshView] 是否正在刷新中
   bool get currentRefresh {

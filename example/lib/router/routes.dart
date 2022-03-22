@@ -95,6 +95,9 @@ class Pages {
   /// 元件仿造頁面切換
   static const widgetSwitcher = "/widgetSwitcher";
 
+  /// 3D旋轉特效
+  static const rotation3D = "/rotation3D";
+
   Pages._();
 }
 
