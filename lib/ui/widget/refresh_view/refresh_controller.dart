@@ -54,13 +54,11 @@ class RefreshController {
 
   /// 設置刷新的結果
   /// * [success] - 刷新是否成功
-  /// * [empty] - 刷新是否為空
   /// * [noMore] - 是否沒有更多刷新
   /// * [resetLoadMore] - 是否重置上拉加載狀態
   /// * [noLoadMore] - 是否沒有上拉加載了, 此參數優先度在 [resetLoadMore] 之上
   void refreshEnd({
     required bool success,
-    bool empty = false,
     bool noMore = false,
     bool resetLoadMore = true,
     bool? noLoadMore,
@@ -76,7 +74,6 @@ class RefreshController {
 
   /// 設置加載更多的結果
   /// * [success] - 加載更多是否成功
-  /// * [empty] - 加載更多是否為空
   /// * [noMore] - 是否沒有加載更多
   /// * [resetRefresh] - 是否重置下拉刷新狀態
   void loadMoreEnd({
