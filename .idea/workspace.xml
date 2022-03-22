@@ -19,6 +19,11 @@
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/rotation_3d.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/rotation_3d_route.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/view/rotation_3d_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_chart_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

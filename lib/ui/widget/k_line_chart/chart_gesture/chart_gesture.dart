@@ -58,32 +58,38 @@ abstract class ChartGesture implements TapGesture {
   TouchStatus getTouchPointerStatus(int pointer);
 
   /// 滑動到scrollX為0的位置
-  Future<void> scrollToRight() async {
-    chartScroller.setScrollUpdatedCallback((value) {
-      scrollX = value;
-      if (scrollX <= 0) {
-        // 滑到最右邊
-        scrollX = 0;
-        onLoadMore?.call(true);
-        chartScroller.stopScroll();
-      }
+  /// [animated] - 是否動畫滾動
+  Future<void> scrollToRight({bool animated = true}) async {
+    if (animated) {
+      chartScroller.setScrollUpdatedCallback((value) {
+        scrollX = value;
+        if (scrollX <= 0) {
+          // 滑到最右邊
+          scrollX = 0;
+          onLoadMore?.call(true);
+          chartScroller.stopScroll();
+        }
+        onDrawUpdateNeed();
+      });
+
+      final completer = Completer<bool>();
+
+      // 拖動結束後接著依照當前速度以及x軸位置進行模擬滑動
+      chartScroller
+          .animatedScrollTo(from: scrollX, to: 0)
+          .whenCompleteOrCancel(() {
+        completer.complete(true);
+      });
+
+      await completer.future;
+
+      // isDrag = false;
+      chartScroller.setScrollUpdatedCallback(null);
       onDrawUpdateNeed();
-    });
-
-    final completer = Completer<bool>();
-
-    // 拖動結束後接著依照當前速度以及x軸位置進行模擬滑動
-    chartScroller
-        .animatedScrollTo(from: scrollX, to: 0)
-        .whenCompleteOrCancel(() {
-      completer.complete(true);
-    });
-
-    await completer.future;
-
-    // isDrag = false;
-    chartScroller.setScrollUpdatedCallback(null);
-    onDrawUpdateNeed();
+    } else {
+      scrollX = 0;
+      onDrawUpdateNeed();
+    }
   }
 
   void dispose() {
