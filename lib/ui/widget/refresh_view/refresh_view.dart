@@ -417,9 +417,17 @@ class _RefreshViewState extends State<RefreshView> {
   }
 
   void _triggerScrollPosDetect() {
+    // 若滑動監聽為空 or 元件的emptyWidget不為空, 則不需要
+    if (_easyRefreshNotification == null || _easyRefresh.emptyWidget != null) {
+      return;
+    }
+
     // 在下一幀之後, 直接推移一個非常非常小的距離
     // 目的只為觸發 NotificationListener 監聽 scrollView 的 size
     WidgetsBinding.instance!.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
       _firstTrigger = true;
       var scrollController = widget._easyRefresh.scrollController!;
       if (scrollController.hasClients) {
@@ -492,7 +500,6 @@ class _RefreshViewState extends State<RefreshView> {
     // 4. 滑動監聽回調不為null
     if (widget.onLoad != null) {
 //      print("啟動滑動監聽");
-
       _easyRefreshNotification = NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification notification) {
           if (_firstTrigger) {
@@ -518,8 +525,6 @@ class _RefreshViewState extends State<RefreshView> {
         },
         child: _easyRefresh,
       );
-    } else {
-      _easyRefreshNotification = null;
     }
   }
 

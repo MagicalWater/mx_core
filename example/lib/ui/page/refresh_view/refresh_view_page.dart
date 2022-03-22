@@ -77,7 +77,7 @@ class _RefreshViewPageState extends State<RefreshViewPage> {
             setState(() {
               hh += 10;
             });
-            _controller.loadMoreEnd(success: true, empty: true);
+            _controller.loadMoreEnd(success: true);
           });
         },
       ),

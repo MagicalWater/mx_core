@@ -16,31 +16,23 @@
       <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/rotation_3d/rotation_3d.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/rotation_3d/rotation_3d_route.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/rotation_3d/view/rotation_3d_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_state.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/rotation_3d.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/rotation_3d_route.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/view/rotation_3d_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/route_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/router/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction/bloc/introduction_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/introduction/bloc/introduction_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/refresh_view/refresh_view_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/refresh_view/refresh_view_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/route_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/route_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/router/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/router/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/introduction/bloc/introduction_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/introduction/bloc/introduction_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/ui/page/refresh_view/refresh_view_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/refresh_view/refresh_view_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/refresh_view/refresh_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>

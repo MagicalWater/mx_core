@@ -4,9 +4,6 @@ class RefreshState {
 
   final RefreshType type;
 
-  /// 是否為空內容元件
-  final bool empty;
-
   /// 是否刷新成功
   final bool success;
 
@@ -33,7 +30,6 @@ class RefreshState {
 
   const RefreshState._()
       : isInit = true,
-        empty = false,
         success = true,
         noMore = false,
         isLoading = false,
@@ -55,7 +51,6 @@ class RefreshState {
     this.bounce = true,
     this.centerLoad = false,
   })  : isInit = false,
-        empty = false,
         success = true,
         noMore = false,
         isLoading = true,
@@ -66,7 +61,6 @@ class RefreshState {
   /// 設置刷新的結果
   const RefreshState.refreshEnd({
     required this.success,
-    this.empty = false,
     this.noMore = false,
     this.resetLoadMore = true,
     this.noLoadMore,
@@ -80,7 +74,6 @@ class RefreshState {
   /// 設置加載更多的結果
   const RefreshState.loadMoreEnd({
     required this.success,
-    this.empty = false,
     this.noMore = false,
     this.resetRefresh = false,
   })  : isInit = false,

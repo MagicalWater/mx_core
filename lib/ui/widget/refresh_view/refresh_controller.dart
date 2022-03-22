@@ -1,8 +1,6 @@
 import 'package:mx_core/ui/widget/refresh_view/refresh_view.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'refresh_state.dart';
-
 class RefreshController {
   /// 當前 [RefreshView] 是否正在刷新中
   bool get currentRefresh {
@@ -69,7 +67,6 @@ class RefreshController {
   }) {
     var state = RefreshState.refreshEnd(
       success: success,
-      empty: empty,
       noMore: noMore,
       resetLoadMore: resetLoadMore,
       noLoadMore: noLoadMore,
@@ -84,13 +81,11 @@ class RefreshController {
   /// * [resetRefresh] - 是否重置下拉刷新狀態
   void loadMoreEnd({
     required bool success,
-    bool empty = false,
     bool noMore = false,
     bool resetRefresh = false,
   }) {
     var state = RefreshState.loadMoreEnd(
       success: success,
-      empty: empty,
       noMore: noMore,
       resetRefresh: resetRefresh,
     );
