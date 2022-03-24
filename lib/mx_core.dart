@@ -1,5 +1,3 @@
-import 'package:mx_core/router/app_router_base.dart';
-
 import 'router/router.dart';
 import 'util/screen_util.dart';
 
@@ -13,6 +11,7 @@ export 'route_page/route_page.dart';
 export 'router/router.dart';
 export 'storage/storage.dart';
 export 'ui/widget/widget.dart';
+export 'ui/clipper/clipper.dart';
 export 'util/util.dart';
 
 /// 專案初始化核心

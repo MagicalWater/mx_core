@@ -44,7 +44,8 @@ class GlobalRealTimePriceTag extends StatelessWidget {
               children: [
                 Text(price, style: textStyle),
                 SizedBox(width: sizes.realTimeTagHorizontalPadding),
-                _triangle(colors.realTimeTriangleTag, sizes.realTimeTagTriangle),
+                _triangle(
+                    colors.realTimeTriangleTag, sizes.realTimeTagTriangle),
               ],
             ),
           ),
@@ -55,11 +56,13 @@ class GlobalRealTimePriceTag extends StatelessWidget {
 
   Widget _triangle(Color color, Size size) {
     return ClipPath(
-      clipper: const PointClipper(
+      clipper: PointClipper(
         points: [
-          Size(0, 0),
-          Size(1, 0.5),
-          Size(0, 1),
+          [
+            const Offset(0, 0),
+            const Offset(1, 0.5),
+            const Offset(0, 1),
+          ],
         ],
       ),
       child: Container(
