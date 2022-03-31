@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_value_mixin.dart';
 
+import '../../../../k_line_chart.dart';
 import '../../main_chart_render.dart';
 import 'main_chart_render_paint_mixin.dart';
 
@@ -9,16 +10,13 @@ export 'ui_style/main_chart_ui_style.dart';
 
 class MainChartRenderImpl extends MainChartRender
     with MainChartValueMixin, MainChartRenderPaintMixin {
-  /// [rightRealTimePriceOffset] - 主圖表處於最新時最右側實時價格的位置回調
-  /// [globalRealTimePriceY] - 主圖表非處於最新時實時價格的y軸位置回調
+  /// [pricePositionGetter] - 價格標示y軸位置獲取
   MainChartRenderImpl({
     required DataViewer dataViewer,
-    final void Function(Offset? localPosition)? rightRealPriceOffset,
-    final void Function(double? localY)? globalRealTimePriceY,
+    PricePositionGetter? pricePositionGetter,
   }) : super(
           dataViewer: dataViewer,
-          rightRealPriceOffset: rightRealPriceOffset,
-          globalRealTimePriceY: globalRealTimePriceY,
+          pricePositionGetter: pricePositionGetter,
         );
 
   /// 繪製背景
@@ -187,76 +185,100 @@ class MainChartRenderImpl extends MainChartRender
   /// 繪製實時線
   @override
   void paintRealTimeLine(Canvas canvas, Rect rect) {
-    final lastData = dataViewer.datas.last;
-    final realTimeValue = lastData.close;
+    // final lastData = dataViewer.datas.last;
+    // final realTimeValue = lastData.close;
 
     // 右側顯示的實時數值
-    final rightValueSpan = TextSpan(
-      text: dataViewer.priceFormatter(realTimeValue),
-      style: TextStyle(
-        fontSize: sizes.realTimeLineValue,
-        color: colors.realTimeRightValue,
-      ),
-    );
-    final valuePainter = TextPainter(
-      text: rightValueSpan,
-      textDirection: TextDirection.ltr,
-    );
-    valuePainter.layout();
+    // final rightValueSpan = TextSpan(
+    //   text: dataViewer.priceFormatter(realTimeValue),
+    //   style: TextStyle(
+    //     fontSize: sizes.realTimeLineValue,
+    //     color: colors.realTimeRightValue,
+    //   ),
+    // );
+    // final valuePainter = TextPainter(
+    //   text: rightValueSpan,
+    //   textDirection: TextDirection.ltr,
+    // );
+    // valuePainter.layout();
 
     // 取得實時線的y軸位置
     // 之所以不用final, 是因為當在右側空間不可容納實時數值時
     // 可能會有超出上下限的情況, 此時需要調整至最高/最低
-    var y = valueToRealY(realTimeValue);
+    // var y = valueToRealY(realTimeValue);
 
-    final dataX = dataViewer.dataIndexToRealX(dataViewer.endDataIndex);
+    final dataX = dataViewer.dataIndexToRealX(dataViewer.datas.length - 1);
 
     // 取得右側可以用來顯示的剩餘空間
-    final rightRemainingSpace = rect.width - (dataX + (dataWidthScaled / 2));
+    double rightRemainingSpace;
 
-    // if (!isLine) x += mPointWidth / 2;
-
-    if (valuePainter.width < rightRemainingSpace) {
-      // 右側空間可容納實時數值
-
-      var startX = dataX;
-      if (isShowKLine) {
-        startX += candleWidthScaled / 2;
-      }
-
-      // 繪製右側的實時線
-      paintRealTimeLineAtRight(
-        canvas: canvas,
-        rect: rect,
-        startX: startX,
-        valuePainter: valuePainter,
-        y: y,
-      );
-
-      // 將最右側的實時價格位置打出去
-      rightRealPriceOffset?.call(Offset(startX, y));
-
-      // 全局最新實時價格處於不可見
-      globalRealTimePriceY?.call(null);
+    if (isShowLineIndex) {
+      // 折線圖
+      rightRemainingSpace = rect.width - dataX;
     } else {
-      // 右側不可容納實時數值
-
-      // y軸不可超過最大最小值
-      y = y.clamp(minY, maxY);
-
-      // 繪製跨越整個畫布的實時線
-      paintRealTimeLineAtGlobal(
-        canvas: canvas,
-        rect: rect,
-        y: y,
-      );
-
-      // 右側最新實時價格處於不可見位置
-      rightRealPriceOffset?.call(null);
-
-      // 將全局最新實時價格y軸位置打出去
-      globalRealTimePriceY?.call(y);
+      // 蠟燭圖, 需要再加上一半的蠟燭寬度
+      rightRemainingSpace = rect.width - (dataX + (dataWidthScaled / 2));
     }
+
+    if (rightRemainingSpace <= 0) {
+      rightRemainingSpace = 0;
+    }
+
+    pricePositionGetter?.call(
+      rightRemainingSpace,
+      valueToRealYWithClamp,
+    );
+
+    //
+    // // if (!isLine) x += mPointWidth / 2;
+    //
+    // if (valuePainter.width < rightRemainingSpace) {
+    //   // 右側空間可容納實時數值
+    //
+    //   var startX = dataX;
+    //   if (isShowKLine) {
+    //     startX += candleWidthScaled / 2;
+    //   }
+    //
+    //   // 繪製右側的實時線
+    //   paintRealTimeLineAtRight(
+    //     canvas: canvas,
+    //     rect: rect,
+    //     startX: startX,
+    //     valuePainter: valuePainter,
+    //     y: y,
+    //   );
+    //
+    //   // 將最右側的實時價格位置打出去
+    //   pricePosition?.call(Offset(startX, y));
+    //
+    //   // 全局最新實時價格處於不可見
+    //   globalRealTimePriceY?.call(null);
+    // } else {
+    //   // 右側不可容納實時數值
+    //
+    //   // y軸不可超過最大最小值
+    //   y = y.clamp(minY, maxY);
+    //
+    //   // 繪製跨越整個畫布的實時線
+    //   paintRealTimeLineAtGlobal(
+    //     canvas: canvas,
+    //     rect: rect,
+    //     y: y,
+    //   );
+    //
+    //   // 右側最新實時價格處於不可見位置
+    //   rightRealPriceOffset?.call(null);
+    //
+    //   // 將全局最新實時價格y軸位置打出去
+    //   globalRealTimePriceY?.call(y);
+    // }
+  }
+
+  double valueToRealYWithClamp(double value) {
+    var y = valueToRealY(value);
+    y = y.clamp(minY, maxY);
+    return y;
   }
 
   /// 繪製最大最小值

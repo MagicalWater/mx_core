@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/repository/chart_repository.dart';
 import 'package:mx_core_example/ui/page/k_chart/bloc/k_chart_bloc.dart';
+import 'package:mx_core_example/ui/page/k_chart/widget/custom_price_line_tag.dart';
 import 'package:mx_core_example/ui/widget/base_app_bar.dart';
 
 class KChartPage extends StatefulWidget {
@@ -114,6 +115,20 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
               longPressData: longPressData,
             );
           },
+          priceTagBuilder: (context, position) {
+            return Stack(
+              children: [
+                CustomPriceLineTag(
+                  gridColumns: ChartSizeSetting().gridColumns,
+                  price: state.datas.last.close,
+                  position: position,
+                  priceFormatter: (value) => value.toStringAsFixed(2),
+                  tag: '現價',
+                  onTapGlobalTag: () {},
+                ),
+              ],
+            );
+          },
         );
       }
     }
@@ -139,10 +154,11 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
                 ),
                 if (state.isLoading)
                   Container(
-                      width: double.infinity,
-                      height: 450,
-                      alignment: Alignment.center,
-                      child: CircularProgressIndicator()),
+                    width: double.infinity,
+                    height: 450,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(),
+                  ),
               ]),
               _buttons(context, state),
               SizedBox(height: 500),

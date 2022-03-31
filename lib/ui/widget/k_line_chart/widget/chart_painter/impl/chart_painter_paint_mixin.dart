@@ -1,6 +1,7 @@
 import 'package:flutter/painting.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/chart_state/indicator_chart_state.dart';
 import 'package:mx_core/ui/widget/k_line_chart/model/chart_state/volume_chart_state.dart';
+import 'package:mx_core/ui/widget/k_line_chart/model/price_position.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/chart_painter.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/chart_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/kdj_chart/kdj_chart_render_impl.dart';
@@ -21,18 +22,15 @@ mixin ChartPainterPaintMixin on ChartPainter {
   final _longPressTimePaint = Paint()..isAntiAlias = true;
 
   /// 繪製主圖表
-  /// [rightRealTimePriceOffset] - 主圖表處於最新時最右側實時價格的位置回調
-  /// [globalRealTimePriceY] - 主圖表非處於最新時實時價格的y軸位置回調
+  /// [pricePositionGetter] - 價格標示y軸位置獲取
   void paintMainChart({
     required Canvas canvas,
     required Rect rect,
-    void Function(Offset? localPosition)? rightRealTimePriceOffset,
-    void Function(double? localY)? globalRealTimePriceY,
+    PricePositionGetter? pricePositionGetter,
   }) {
     final ChartRender render = MainChartRenderImpl(
       dataViewer: this,
-      rightRealPriceOffset: rightRealTimePriceOffset,
-      globalRealTimePriceY: globalRealTimePriceY,
+      pricePositionGetter: pricePositionGetter,
     );
     render.paint(canvas, rect);
   }

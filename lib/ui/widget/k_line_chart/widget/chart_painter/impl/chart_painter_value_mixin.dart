@@ -69,6 +69,7 @@ mixin ChartPainterValueMixin on ChartPainter {
       final x = dataIndexToRealX(dataIndex);
       final data = datas[dataIndex];
       onLongPressData?.call(LongPressData(
+        index: dataIndex,
         data: data,
         isLongPressAtLeft: x <= size.width / 2,
       ));

@@ -28,10 +28,10 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   final Decoration? actionDecoration;
 
   @override
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
 
   @override
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsets? margin;
 
   WidgetTabBuilder({
     required this.tabBuilder,

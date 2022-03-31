@@ -12,7 +12,7 @@ class KChartState {
   KChartState({
     required this.isLoading,
     this.datas = const [],
-    this.mainChartState = MainChartState.kLine,
+    this.mainChartState = MainChartState.lineIndex,
     this.mainChartIndicatorState = MainChartIndicatorState.ma,
     this.volumeChartState = VolumeChartState.volume,
     this.indicatorChartState = IndicatorChartState.macd,

@@ -13,16 +13,89 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3415e4b2-6958-4dec-ab74-abdad59ff806" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/widget/custom_global_price_tag.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/widget/custom_price_line_tag.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/rotation_3d/rotation_3d.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/rotation_3d/rotation_3d_route.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/rotation_3d/view/rotation_3d_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/price_position.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/price_tag_line.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/line_indicator/line_painter.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/line_indicator/model/dash_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/line_indicator/model/line_place.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/line_indicator/model/model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/widget/custom_global_price_tag.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/widget/custom_price_line_tag.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/rotation_3d.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/rotation_3d_route.dart" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/example/lib/ui/page/rotation_3d/view/rotation_3d_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_chart_controller.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/price_position.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/price_tag_line.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/line_indicator/line_painter.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/line_indicator/model/dash_style.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/line_indicator/model/line_place.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/widget/line_indicator/model/model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/android/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/android/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/line_indicator/line_indicator_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/lib/ui/page/line_indicator/line_indicator_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/long_press_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/long_press_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/model/model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_value_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_value_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/global_real_tim_price_tag/global_real_time_price_tag.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/k_line_chart/widget/global_real_tim_price_tag/global_real_time_price_tag.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/line_indicator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/line_indicator/line_indicator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/position_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/position_layout.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/base_tab_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/base_tab_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/swipe_tab_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/tab_bar/swipe_tab_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/lib/ui/widget/widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/.symlinks/plugins/mx_core/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/bloc/k_chart_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/k_chart/view/k_chart_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/ui/page/line_indicator/line_indicator_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/ui/page/line_indicator/line_indicator_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/k_line_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/long_press_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/long_press_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/view/k_line_chart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_paint_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_value_mixin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/impl/chart_painter_value_mixin.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style/chart_size_setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_impl.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_impl.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/global_real_tim_price_tag/global_real_time_price_tag.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/global_real_tim_price_tag/global_real_time_price_tag.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/line_indicator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/line_indicator/line_indicator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/position_layout.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/position_layout.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/base_tab_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/base_tab_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/text_tab_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/builder/widget_tab_builder.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/tab_bar/swipe_tab_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/widget/widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/widget/widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +140,7 @@
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/ui" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example/lib/ui/page/k_chart/widget" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -76,18 +149,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/example/lib/ui/page/k_chart/widget" />
       <recent name="$PROJECT_DIR$/lib/ui" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render/impl/rsi_chart" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/k_line_data/indicator" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/ui/widget/line_indicator" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_painter/ui_style" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/model/chart_state" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/chart_render" />
       <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/chart_gesture/gestures" />
-      <recent name="$PROJECT_DIR$/lib/ui/widget/k_line_chart/widget/k_line_data_tooltip" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.main.dart">
@@ -130,12 +203,12 @@
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
-    <option name="COLUMN_ORDER">
+    <option name="COLUMN_ID_ORDER">
       <list>
-        <option value="0" />
-        <option value="2" />
-        <option value="3" />
-        <option value="1" />
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
       </list>
     </option>
   </component>

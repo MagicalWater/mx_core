@@ -38,7 +38,7 @@ class ChartSizeSetting {
     this.gridColumns = 4,
     this.rightSpace = 70,
     this.longPressVerticalLineWidth = 8,
-    this.longPressHorizontalLineHeight = 0.5,
+    this.longPressHorizontalLineHeight = 0.2,
     this.longPressValue = 12,
     this.longPressValueBorderVerticalPadding = 4,
     this.longPressValueBorderHorizontalPadding = 12,

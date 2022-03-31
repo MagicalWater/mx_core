@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/extension/list.dart';
-import 'package:mx_core/mx_core.dart';
-import 'package:mx_core/ui/widget/line_indicator.dart';
+import 'package:mx_core/ui/widget/line_indicator/line_indicator.dart';
 import 'package:mx_core/ui/widget/locate_row.dart';
+import 'package:mx_core/util/num_util/num_util.dart';
 
 import 'action_width.dart';
 import 'tab_width.dart';
@@ -16,7 +15,8 @@ abstract class AbstractTabWidget extends StatefulWidget {
   final int tabCount;
   final int actionCount;
 
-  const AbstractTabWidget({Key? key,
+  const AbstractTabWidget({
+    Key? key,
     required this.scrollable,
     required this.tabCount,
     required this.actionCount,
@@ -195,7 +195,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
     required Curve curve,
     required bool animation,
     Decoration? decoration,
-    EdgeInsetsGeometry? padding,
+    EdgeInsets? padding,
   }) {
     // print('刷新指示: $indicatorStart, $indicatorEnd');
     return LineIndicator(
@@ -285,7 +285,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       var actionWidth = widget.actionWidth;
       if (actionWidth?.fixed != null) {
 //        print('固定寬度');
-        return Container(width: actionWidth!.fixed, child: actionWidget);
+        return SizedBox(width: actionWidth!.fixed, child: actionWidget);
       } else if (!widget.scrollable && actionWidth?.flex != null) {
         return Expanded(flex: actionWidth!.flex!, child: actionWidget);
       } else {

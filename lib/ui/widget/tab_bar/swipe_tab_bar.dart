@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/util/screen_util.dart';
 
-import '../line_indicator.dart';
+import '../line_indicator/line_indicator.dart';
 import 'action_width.dart';
 import 'base_tab_bar.dart';
 import 'builder/builder.dart';

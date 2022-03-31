@@ -41,6 +41,21 @@ class KLineData {
     required this.amount,
     required this.dateTime,
   });
+
+  @override
+  // ignore: hash_and_equals
+  bool operator ==(Object other) {
+    if (other is KLineData) {
+      return open == other.open &&
+          close == other.close &&
+          low == other.low &&
+          high == other.high &&
+          volume == other.volume &&
+          amount == other.amount &&
+          dateTime == other.dateTime;
+    }
+    return false;
+  }
 }
 
 class IndicatorData {

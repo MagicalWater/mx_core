@@ -24,8 +24,8 @@ class TextTabBuilder extends WidgetTabBuilder {
 
   TextTabBuilder({
     required List<String> texts,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
+    EdgeInsets? padding,
+    EdgeInsets? margin,
     List<String>? actions,
     TabStyleBuilder<Decoration>? tabDecoration,
     this.textAlign = TextAlign.center,

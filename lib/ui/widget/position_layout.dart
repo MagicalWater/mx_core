@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 
 /// 決定child放置位置的佈局
-/// [PositionLayout]自身會將寬高拉治允許的最大值
+/// [PositionLayout]自身會將寬高拉至允許的最大值
 /// [child]則會按照給定的x,y位置以及對齊方式進行佈局
 class PositionLayout extends SingleChildRenderObjectWidget {
   /// 固定x

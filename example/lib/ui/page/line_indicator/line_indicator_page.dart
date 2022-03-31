@@ -15,7 +15,7 @@ class _LineIndicatorPageState extends State<LineIndicatorPage> {
   Color lineColor = Colors.blue;
 
   double lineStart = 0.1;
-  double lineEnd = 0.3;
+  double lineEnd = 1;
 
 
   @override
@@ -37,29 +37,44 @@ class _LineIndicatorPageState extends State<LineIndicatorPage> {
           child: Column(
             children: [
               Text('線條指示'),
-              LineIndicator(
-                color: lineColor,
-                start: lineStart,
-                end: lineEnd,
-                size: 10.scaleA,
-                direction: Axis.horizontal,
-                alignment: Alignment.topRight,
-                duration: Duration(seconds: 5),
-                appearAnimation: false,
-                places: [
-                  LinePlace(
-                    start: 0.25,
-                    end: 0.28,
-                    color: Colors.green,
-                    placeUp: true,
+              Expanded(
+                child: LineIndicator(
+                  color: lineColor,
+                  start: lineStart,
+                  end: lineEnd,
+                  size: 10.scaleA,
+                  direction: Axis.horizontal,
+                  alignment: Alignment.topRight,
+                  duration: Duration(seconds: 5),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.black,
+                        Colors.blueAccent
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    )
                   ),
-                  LinePlace(
-                    start: 0.65,
-                    end: 0.90,
-                    color: Colors.black,
-                    placeUp: true,
+                  appearAnimation: false,
+                  places: [
+                    LinePlace(
+                      start: 0.25,
+                      end: 0.28,
+                      color: Colors.green,
+                      placeUp: true,
+                    ),
+                    LinePlace(
+                      start: 0.65,
+                      end: 0.90,
+                      color: Colors.black,
+                      placeUp: true,
+                    ),
+                  ],
+                  dashStyle: DashStyle(
+                    20, 12,
                   ),
-                ],
+                ),
               ),
             ],
           ),

@@ -8,7 +8,7 @@ export 'bullet_paint.dart';
 export 'coordinate_layout/layout.dart';
 export 'focus_layout.dart';
 export 'info_popup.dart';
-export 'line_indicator.dart';
+export 'line_indicator/line_indicator.dart';
 export 'load_provider/load_provider.dart';
 export 'loading/loading.dart';
 export 'locate_column.dart';

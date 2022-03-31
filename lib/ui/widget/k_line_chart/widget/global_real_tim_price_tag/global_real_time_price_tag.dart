@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mx_core/mx_core.dart';
 import 'package:mx_core/ui/clipper/point_clipper.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/ui_style/main_chart_ui_style.dart';
 
 class GlobalRealTimePriceTag extends StatelessWidget {
   final String price;

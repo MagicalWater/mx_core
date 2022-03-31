@@ -3,24 +3,19 @@ import 'dart:ui';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/chart_render.dart';
 
+import '../../k_line_chart.dart';
 import 'chart_component_render.dart';
 
 export 'impl/main_chart/main_chart_render_impl.dart';
 
 abstract class MainChartRender extends ChartRender
     implements ChartComponentRender {
-  /// 主圖表處於最新時最右側實時價格的位置回調
-  /// 若處於不可見狀態, 則[localPosition]為null
-  final void Function(Offset? localPosition)? rightRealPriceOffset;
-
-  /// [globalRealTimePriceY] - 主圖表非處於最新時實時價格的y軸位置回調
-  /// 若處於不可見狀態, 則[localY]為null
-  final void Function(double? localY)? globalRealTimePriceY;
+  /// 價格標示y軸位置獲取
+  final PricePositionGetter? pricePositionGetter;
 
   MainChartRender({
     required DataViewer dataViewer,
-    this.rightRealPriceOffset,
-    this.globalRealTimePriceY,
+    this.pricePositionGetter,
   }) : super(dataViewer: dataViewer);
 
   @override
