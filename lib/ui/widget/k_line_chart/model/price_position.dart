@@ -11,6 +11,9 @@ class PricePosition {
   /// 畫布最大的寬度
   final double canvasWidth;
 
+  /// 最新一筆的價格
+  final double? lastPrice;
+
   /// 對應[PricePositionGetter]的[rightSpace]
   final double rightSpace;
 
@@ -21,5 +24,6 @@ class PricePosition {
     required this.canvasWidth,
     required this.rightSpace,
     required this.valueToY,
+    required this.lastPrice,
   });
 }

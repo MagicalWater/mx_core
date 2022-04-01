@@ -350,6 +350,7 @@ class _KLineChartState extends State<KLineChart>
                     canvasWidth: chartGesture.drawContentInfo!.canvasWidth,
                     rightSpace: rightSpace,
                     valueToY: valueToY,
+                    lastPrice: realTimePrice,
                   );
                   _pricePositionStreamController.add(position);
                 },
