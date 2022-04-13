@@ -1,8 +1,6 @@
+import '../indicator_setting/indicator_setting.dart';
 import 'chart_indicator_calculate.dart';
 import 'indicator/indicator.dart';
-import 'indicator/indicator_kdj.dart';
-import 'indicator/indicator_rsi.dart';
-import 'indicator/indicator_wr.dart';
 
 export 'indicator/indicator.dart';
 
@@ -83,43 +81,66 @@ extension IndicatorCalculateExtension on List<KLineData> {
   /// [maPeriods] - 收盤均線週期
   /// [bollPeriod] - boll線週期
   void calculateAllIndicator({
-    List<int> maPeriods = const [5, 10, 20],
-    int bollPeriod = 20,
+    IndicatorSetting indicatorSetting = const IndicatorSetting(),
   }) {
-    ChartIndicatorCalculator.calculateAllIndicator(
-      this,
-      maPeriods: maPeriods,
-      bollPeriod: bollPeriod,
+    calculateMA(periods: indicatorSetting.maSetting.periods);
+    calculateBOLL(period: indicatorSetting.bollSetting.period);
+    calculateMACD(
+      shortPeriod: indicatorSetting.macdSetting.shortPeriod,
+      longPeriod: indicatorSetting.macdSetting.longPeriod,
+      difPeriod: indicatorSetting.macdSetting.difPeriod,
     );
+    calculateRSI(periods: indicatorSetting.rsiSetting.periods);
+    calculateKDJ(period: indicatorSetting.kdjSetting.period);
+    calculateWR(periods: indicatorSetting.wrSetting.periods);
   }
 
   /// 計算收盤價均線
-  void calculateMA(List<int> periods) {
-    ChartIndicatorCalculator.calculateMA(periods, this);
+  void calculateMA({
+    List<int> periods = const [5, 10, 20],
+  }) {
+    ChartIndicatorCalculator.calculateMA(periods: periods, datas: this);
   }
 
   /// 計算boll線
-  void calculateBOLL(int period) {
-    ChartIndicatorCalculator.calculateBOLL(period, this);
+  void calculateBOLL({
+    int period = 20,
+  }) {
+    ChartIndicatorCalculator.calculateBOLL(period: period, datas: this);
   }
 
   /// 計算指數平滑異同移動平均線
-  void calculateMACD() {
-    ChartIndicatorCalculator.calculateMACD(this);
+  void calculateMACD({
+    int shortPeriod = 12,
+    int longPeriod = 26,
+    int difPeriod = 9,
+  }) {
+    ChartIndicatorCalculator.calculateMACD(
+      shortPeriod: shortPeriod,
+      longPeriod: longPeriod,
+      difPeriod: difPeriod,
+      datas: this,
+    );
   }
 
   /// 計算相對強弱指標
-  void calculateRSI() {
-    ChartIndicatorCalculator.calculateRSI(this);
+  void calculateRSI({
+    List<int> periods = const [6, 12, 24],
+  }) {
+    ChartIndicatorCalculator.calculateRSI(periods: periods, datas: this);
   }
 
   /// 計算隨機指標
-  void calculateKDJ() {
-    ChartIndicatorCalculator.calculateKDJ(this);
+  void calculateKDJ({
+    int period = 9,
+  }) {
+    ChartIndicatorCalculator.calculateKDJ(period: period, datas: this);
   }
 
   /// 計算威廉指標(兼具超買超賣和強弱分界的指標)
-  void calculateWR() {
-    ChartIndicatorCalculator.calculateWR(this);
+  void calculateWR({
+    List<int> periods = const [6, 13],
+  }) {
+    ChartIndicatorCalculator.calculateWR(periods: periods, datas: this);
   }
 }

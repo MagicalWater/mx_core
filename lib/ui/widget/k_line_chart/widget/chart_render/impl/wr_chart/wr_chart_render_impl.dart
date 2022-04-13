@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mx_core/extension/list.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
 
 import '../../wr_chart_render.dart';
@@ -81,23 +82,34 @@ class WRChartRenderImpl extends WRChartRender
   @override
   void paintTopValueText(Canvas canvas, Rect rect) {
     final displayData = dataViewer.getLongPressData() ?? dataViewer.datas.last;
-    final wrData = displayData.indicatorData.wr;
+    final wrData = displayData.indicatorData.wr?.wr;
 
-    if (wrData == null) {
+    if (wrData == null || wrData.isEmpty) {
       return;
     }
 
     final textStyle = TextStyle(fontSize: sizes.indexTip);
 
-    final spans = <TextSpan>[
-      TextSpan(
-        text: "WR(14): ${dataViewer.priceFormatter(wrData.r)}    ",
-        style: textStyle.copyWith(color: colors.rColor),
-      ),
-    ];
+    final spanTexts = <TextSpan>[];
+
+    final wrSpan = dataViewer.indicatorSetting.wrSetting.periods
+        .indexMap((e, i) {
+          final value = wrData[e];
+          if (value == null || value == 0) {
+            return null;
+          }
+          return TextSpan(
+            text: 'WR($e):${dataViewer.priceFormatter(value)}    ',
+            style: textStyle.copyWith(color: colors.wrLine[i]),
+          );
+        })
+        .whereType<TextSpan>()
+        .toList();
+
+    spanTexts.addAll(wrSpan);
 
     final textPainter = TextPainter(
-      text: TextSpan(children: spans),
+      text: TextSpan(children: spanTexts),
       textDirection: TextDirection.ltr,
     );
     textPainter.layout();

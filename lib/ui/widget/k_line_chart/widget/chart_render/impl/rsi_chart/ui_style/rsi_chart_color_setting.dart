@@ -5,15 +5,19 @@ class RSIChartColorSetting {
   /// 背景顏色
   final Color background;
 
-  /// RSI顏色
-  final Color rsiColor;
+  /// rsi各週期顏色, 將會依照週期排序
+  final List<Color> rsiLine;
 
   /// 右側數值顏色
   final Color rightValueText;
 
   const RSIChartColorSetting({
     this.background = const Color(0xff1e2129),
-    this.rsiColor = const Color(0xffb47731),
+    this.rsiLine = const [
+      Color(0xffb47731),
+      Color(0xffae33ba),
+      Color(0xff59d0d0),
+    ],
     this.rightValueText = const Color(0xff60738E),
   });
 }

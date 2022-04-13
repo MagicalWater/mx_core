@@ -5,17 +5,21 @@ import 'package:flutter/material.dart';
 import 'wr_chart_render_value_mixin.dart';
 
 mixin WRChartRenderPaintMixin on WRChartValueMixin {
-  /// 繪製dif/dea線
+  /// 繪製wr線
   void paintWRChart(Canvas canvas, Rect rect) {
     linePaint.strokeWidth = sizes.lineWidth;
 
-    final wrData = dataViewer.datas.map((e) => e.indicatorData.wr);
+    final wrData = dataViewer.datas.map((e) => e.indicatorData.wr?.wr);
+    final periods = dataViewer.indicatorSetting.wrSetting.periods;
 
-    // 繪rsi線
-    final rList = wrData.map((e) => e?.r).toList();
-    final rPath = _getDisplayLinePath(rList, curve: false);
-    linePaint.color = colors.rColor;
-    canvas.drawPath(rPath, linePaint);
+    var index = 0;
+    for (final element in periods) {
+      final wrList = wrData.map((e) => e?[element]).toList();
+      final linePath = _getDisplayLinePath(wrList, curve: false);
+      linePaint.color = colors.wrLine[index];
+      canvas.drawPath(linePath, linePaint);
+      index++;
+    }
   }
 
   /// 取得顯示在螢幕上的路線Path

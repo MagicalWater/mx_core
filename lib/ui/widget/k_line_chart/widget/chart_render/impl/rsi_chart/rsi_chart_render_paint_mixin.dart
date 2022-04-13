@@ -5,17 +5,21 @@ import 'package:flutter/material.dart';
 import 'rsi_chart_render_value_mixin.dart';
 
 mixin RSIChartRenderPaintMixin on RSIChartValueMixin {
-  /// 繪製dif/dea線
+  /// 繪製rsi線
   void paintRSIChart(Canvas canvas, Rect rect) {
     linePaint.strokeWidth = sizes.lineWidth;
 
-    final rsiData = dataViewer.datas.map((e) => e.indicatorData.rsi);
+    final rsiData = dataViewer.datas.map((e) => e.indicatorData.rsi?.rsi);
+    final periods = dataViewer.indicatorSetting.rsiSetting.periods;
 
-    // 繪rsi線
-    final rsiList = rsiData.map((e) => e?.rsi).toList();
-    final rsiPath = _getDisplayLinePath(rsiList, curve: false);
-    linePaint.color = colors.rsiColor;
-    canvas.drawPath(rsiPath, linePaint);
+    var index = 0;
+    for (final element in periods) {
+      final rsiList = rsiData.map((e) => e?[element]).toList();
+      final linePath = _getDisplayLinePath(rsiList, curve: false);
+      linePaint.color = colors.rsiLine[index];
+      canvas.drawPath(linePath, linePaint);
+      index++;
+    }
   }
 
   /// 取得顯示在螢幕上的路線Path

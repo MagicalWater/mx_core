@@ -2,30 +2,14 @@ import 'dart:math';
 
 import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
-import 'indicator/indicator_kdj.dart';
-import 'indicator/indicator_rsi.dart';
-import 'indicator/indicator_wr.dart';
-
 /// 圖表技術指標計算
 class ChartIndicatorCalculator {
-  /// 計算所有技術指標
-  /// [maPeriods] - 收盤均線週期
-  /// [bollPeriod] - boll線週期
-  static calculateAllIndicator(
-    List<KLineData> datas, {
-    List<int> maPeriods = const [5, 10, 20],
-    int bollPeriod = 20,
-  }) {
-    calculateMA(maPeriods, datas);
-    calculateBOLL(bollPeriod, datas);
-    calculateMACD(datas);
-    calculateKDJ(datas);
-    calculateRSI(datas);
-    calculateWR(datas);
-  }
-
   /// 計算收盤價均線
-  static calculateMA(List<int> periods, List<KLineData> datas) {
+  /// [period] - 週期, 默認為[5, 10, 20]
+  static calculateMA({
+    List<int> periods = const [5, 10, 20],
+    required List<KLineData> datas,
+  }) {
     var periodMaValue = List<double>.generate(periods.length, (index) => 0);
 
     for (var i = 0; i < datas.length; i++) {
@@ -53,7 +37,11 @@ class ChartIndicatorCalculator {
   }
 
   /// 計算boll線
-  static void calculateBOLL(int period, List<KLineData> datas) {
+  /// [period] - 週期, 默認為20
+  static void calculateBOLL({
+    int period = 20,
+    required List<KLineData> datas,
+  }) {
     for (var i = 0; i < datas.length; i++) {
       final data = datas[i];
       // 先檢查是否有均線
@@ -82,72 +70,127 @@ class ChartIndicatorCalculator {
   }
 
   /// 計算指數平滑異同移動平均線
-  static void calculateMACD(List<KLineData> datas) {
-    double ema12 = 0;
-    double ema26 = 0;
+  /// 使用兩條不同速度的ema線算出差離值(dif)
+  /// 對差離值再進行一次移動平均線的計算
+  /// [shortPeriod] - 週期較短的ema週期, 默認為12
+  /// [longPeriod] - 週期較長的ema週期, 默認為26
+  /// [difPeriod] - 差離值計算平均線的週期, 默認為9
+  static void calculateMACD({
+    int shortPeriod = 12,
+    int longPeriod = 26,
+    int difPeriod = 9,
+    required List<KLineData> datas,
+  }) {
+    double emaShort = 0;
+    double emaLong = 0;
+
+    // 差離值(快線)
     double dif = 0;
+
+    // 慢線
     double dea = 0;
+
+    // macd數值(柱狀圖)
     double macd = 0;
 
     for (var i = 0; i < datas.length; i++) {
       final data = datas[i];
       final close = data.close;
       if (i == 0) {
-        ema12 = close;
-        ema26 = close;
+        emaShort = close;
+        emaLong = close;
       } else {
-        // EMA（12） = 前一日EMA（12） X 11/13 + 今日收盘价 X 2/13
-        ema12 = ema12 * 11 / 13 + close * 2 / 13;
-        // EMA（26） = 前一日EMA（26） X 25/27 + 今日收盘价 X 2/27
-        ema26 = ema26 * 25 / 27 + close * 2 / 27;
+        // EMA(n)=(前一日EMA(n) × (n-1)+今日收盤價 × 2) ÷ (n+1)
+        emaShort =
+            (emaShort * (shortPeriod - 1) + close * 2) / (shortPeriod + 1);
+        // EMA(m)=(前一日EMA(m) × (m-1)+今日收盤價 × 2) ÷ (m+1)
+        emaLong = (emaLong * (longPeriod - 1) + close * 2) / (longPeriod + 1);
       }
-      // DIF = EMA（12） - EMA（26） 。
-      // 今日DEA = （前一日DEA X 8/10 + 今日DIF X 2/10）
-      // 用（DIF-DEA）*2即为MACD柱状图。
-      dif = ema12 - ema26;
-      dea = dea * 8 / 10 + dif * 2 / 10;
+      // DIF=EMA(n)－EMA(m)
+      dif = emaShort - emaLong;
+
+      // DEA(k)=(前一日DEA x (k-1)/(k+1) + 今日DIF x 2/(k+1))
+      dea = dea * (difPeriod - 1) / (difPeriod + 1) + dif * 2 / (difPeriod + 1);
+
+      // MACD(k)=(今日DIF - 今日DEA) x 2
       macd = (dif - dea) * 2;
 
       data.indicatorData.macd = IndicatorMACD(
         dea: dea,
         dif: dif,
         macd: macd,
-        ema12: ema12,
-        ema26: ema26,
+        emaShort: emaShort,
+        emaLong: emaLong,
       );
     }
   }
 
   /// 計算相對強弱指標
-  static void calculateRSI(List<KLineData> datas) {
+  /// RSI (Relative Strength Index)
+  /// [periods] - 週期, 默認為 [6, 12, 24]
+  static void calculateRSI({
+    List<int> periods = const [6, 12, 24],
+    required List<KLineData> datas,
+  }) {
     double rsi;
-    double rsiABSEma = 0;
-    double rsiMaxEma = 0;
+    var periodAbsEmaValue = List<double>.generate(periods.length, (index) => 0);
+    var periodMaxEmaValue = List<double>.generate(periods.length, (index) => 0);
 
     for (var i = 1; i < datas.length; i++) {
+      final indicator = IndicatorRSI();
       final data = datas[i];
-      final closePrice = data.close;
-      final rmax = max(0, closePrice - datas[i - 1].close);
-      final rAbs = (closePrice - datas[i - 1].close).abs();
+      final close = data.close;
+      final rMax = max(0, close - datas[i - 1].close);
+      final rAbs = (close - datas[i - 1].close).abs();
 
-      rsiMaxEma = (rmax + (14 - 1) * rsiMaxEma) / 14;
-      rsiABSEma = (rAbs + (14 - 1) * rsiABSEma) / 14;
-      if (i < 13 || rsiABSEma == 0) {
-        rsi = 0;
-      } else {
-        rsi = (rsiMaxEma / rsiABSEma) * 100;
+      for (var j = 0; j < periods.length; j++) {
+        final period = periods[j];
+        var rsiMaxEma = periodMaxEmaValue[j];
+        var rsiAbsEma = periodAbsEmaValue[j];
+
+        periodMaxEmaValue[j] = (rMax + (period - 1) * rsiMaxEma) / period;
+        periodAbsEmaValue[j] = (rAbs + (period - 1) * rsiAbsEma) / period;
+
+        rsiMaxEma = periodMaxEmaValue[j];
+        rsiAbsEma = periodAbsEmaValue[j];
+
+        if (i < period || rsiAbsEma == 0) {
+          rsi = 0;
+        } else {
+          rsi = (rsiMaxEma / rsiAbsEma) * 100;
+        }
+
+        indicator.rsi[period] = rsi;
       }
 
-      data.indicatorData.rsi = IndicatorRSI(
-        rsi: rsi,
-        rsiABSEma: rsiABSEma,
-        rsiMaxEma: rsiMaxEma,
-      );
+      data.indicatorData.rsi = indicator;
     }
   }
 
   /// 計算隨機指標
-  static void calculateKDJ(List<KLineData> datas) {
+  /// 計算說明
+  /// 在計算KDJ指標前，得先計算出「未成熟隨機值RSV」
+  /// 就是一段期間內最終日收盤價減去期間內最低價的差額，佔當期內最高價與最低價差額的比例，再乘以100，而這個時間大多以9天為計算期。
+  /// RSV = ((收盤價 - 週期內最低價) / (週期內最高價 - 週期內最低價)) * 100
+  ///
+  /// 接著可以計算K值
+  /// K = ((2/3) * (前日K值)) + ((1/3) * RSV)
+  ///
+  /// 再由K值計算D值
+  /// D = ((2/3) * (前日D值)) + ((1/3) * K)
+  ///
+  /// 如果沒有前一日的K值與D值, 則分別可用50替代
+  /// 其中(2/3)與(1/3)為平滑因數, 可以人為選定, 但目前市面上已約定俗成為(2/3)與(1/3)
+  /// 沒有特別需要改變的需要
+  ///
+  /// 最終計算出J值
+  /// J = (3 * D) - (2 * K)
+  ///
+  /// [period] - 週期, 默認為9
+  static void calculateKDJ({
+    int period = 9,
+    required List<KLineData> datas,
+  }) {
     double k = 0;
     double d = 0;
 
@@ -158,60 +201,75 @@ class ChartIndicatorCalculator {
       if (startIndex < 0) {
         startIndex = 0;
       }
-      var max14 = -double.maxFinite;
-      var min14 = double.maxFinite;
+      var maxPrice = -double.maxFinite;
+      var minPrice = double.maxFinite;
       for (var index = startIndex; index <= i; index++) {
-        max14 = max(max14, datas[index].high);
-        min14 = min(min14, datas[index].low);
+        maxPrice = max(maxPrice, datas[index].high);
+        minPrice = min(minPrice, datas[index].low);
       }
 
       double rsv;
-      if (max14 == min14) {
+      if (maxPrice == minPrice) {
         rsv = 0;
       } else {
-        rsv = 100 * (closePrice - min14) / (max14 - min14);
+        rsv = ((closePrice - minPrice) / (maxPrice - minPrice)) * 100;
       }
 
       if (i == 0) {
+        // 第一日沒有K值與D值, 因此賦值50
         k = 50;
         d = 50;
       } else {
-        k = (rsv + 2 * k) / 3;
-        d = (k + 2 * d) / 3;
+        k = ((2 / 3) * k) + ((1 / 3) * rsv);
+        d = ((2 / 3) * d) + ((1 / 3) * k);
       }
 
-      if (i == 13 || i == 14) {
+      if (i == period - 1 || i == period) {
         data.indicatorData.kdj = IndicatorKDJ(k: k, d: 0, j: 0);
       } else if (i > 14) {
-        data.indicatorData.kdj = IndicatorKDJ(k: k, d: d, j: 3 * k - 2 * d);
+        final j = (3 * d) - (2 * k);
+        data.indicatorData.kdj = IndicatorKDJ(k: k, d: d, j: j);
       }
     }
   }
 
   /// 計算威廉指標(兼具超買超賣和強弱分界的指標)
-  /// WR(N) = 100 * [ HIGH(N)-C ] / [ HIGH(N)-LOW(N) ]
-  static void calculateWR(List<KLineData> datas) {
+  /// 計算說明
+  /// WR = (週期內最高價 – 收盤價) / (週期內最高價 – 週期內最低價) * 100
+  ///
+  /// [periods] - 週期, 默認為[6, 13]
+  static void calculateWR({
+    List<int> periods = const [6, 13],
+    required List<KLineData> datas,
+  }) {
     for (var i = 0; i < datas.length; i++) {
-      final data = datas[i];
-      int startIndex = i - 14;
-      if (startIndex < 0) {
-        startIndex = 0;
-      }
-      var max14 = -double.maxFinite;
-      var min14 = double.maxFinite;
-      for (var index = startIndex; index <= i; index++) {
-        max14 = max(max14, datas[index].high);
-        min14 = min(min14, datas[index].low);
-      }
+      final indicator = IndicatorWR();
 
-      if (i >= 14) {
-        final double r;
-        if ((max14 - min14) == 0) {
-          r = 0;
-        } else {
-          r = 100 * (max14 - datas[i].close) / (max14 - min14);
+      final data = datas[i];
+
+      for (var j = 0; j < periods.length; j++) {
+        final period = periods[j];
+        int startIndex = i - period;
+        if (startIndex < 0) {
+          startIndex = 0;
         }
-        data.indicatorData.wr = IndicatorWR(r: r);
+        var maxPrice = -double.maxFinite;
+        var minPrice = double.maxFinite;
+        for (var index = startIndex; index <= i; index++) {
+          maxPrice = max(maxPrice, datas[index].high);
+          minPrice = min(minPrice, datas[index].low);
+        }
+
+        if (i >= period) {
+          final double wr;
+          if ((maxPrice - minPrice) == 0) {
+            wr = 0;
+          } else {
+            wr = 100 * (maxPrice - datas[i].close) / (maxPrice - minPrice);
+          }
+          indicator.wr[period] = wr;
+          data.indicatorData.wr = indicator;
+        }
       }
     }
   }

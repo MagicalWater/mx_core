@@ -92,7 +92,6 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
             colorSetting: KDJChartColorSetting(),
             sizeSetting: KDJChartSizeSetting(),
           ),
-          maPeriods: [5, 10, 20],
           priceFormatter: (price) => price.toStringAsFixed(2),
           volumeFormatter: (volume) {
             if (volume > 10000 && volume < 999999) {

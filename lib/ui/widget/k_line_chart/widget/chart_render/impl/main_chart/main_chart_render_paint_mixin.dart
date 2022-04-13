@@ -47,13 +47,15 @@ mixin MainChartRenderPaintMixin on MainChartValueMixin {
     linePaint.strokeWidth = sizes.lineWidth;
 
     final maData = dataViewer.datas.map((e) => e.indicatorData.ma?.ma);
-    final periods = dataViewer.maPeriods;
+    final periods = dataViewer.indicatorSetting.maSetting.periods;
 
+    var index = 0;
     for (final element in periods) {
       final maList = maData.map((e) => e?[element]).toList();
       final linePath = _getDisplayLinePath(maList, curve: false);
-      linePaint.color = colors.maLine[element]!;
+      linePaint.color = colors.maLine[index];
       canvas.drawPath(linePath, linePaint);
+      index++;
     }
   }
 

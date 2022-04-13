@@ -79,7 +79,7 @@ class ChartPainterImpl extends ChartPainter
   final String Function(DateTime dateTime) xAxisDateTimeFormatter;
 
   @override
-  final List<int> maPeriods;
+  final IndicatorSetting indicatorSetting;
 
   @override
   double? get longPressY =>
@@ -102,7 +102,7 @@ class ChartPainterImpl extends ChartPainter
     required this.rsiChartUiStyle,
     required this.wrChartUiStyle,
     required this.kdjChartUiStyle,
-    required this.maPeriods,
+    required this.indicatorSetting,
     required this.priceFormatter,
     required this.volumeFormatter,
     required this.xAxisDateTimeFormatter,

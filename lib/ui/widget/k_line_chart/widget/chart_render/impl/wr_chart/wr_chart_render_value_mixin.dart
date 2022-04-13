@@ -1,5 +1,6 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
 import '../../wr_chart_render.dart';
 
@@ -40,19 +41,22 @@ mixin WRChartValueMixin on WRChartRender {
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
-      final wrData = data.indicatorData.wr;
+      final wrData = data.indicatorData.wr?.wr;
 
-      if (wrData == null) {
+      if (wrData == null || wrData.isEmpty) {
         continue;
       }
 
-      final value = wrData.r;
-      if (maxValue <= value) {
-        maxValue = value;
+      final values = wrData.values;
+      final maxReduce = values.reduce(max);
+      final minReduce = values.reduce(min);
+
+      if (maxValue <= maxReduce) {
+        maxValue = maxReduce;
       }
 
-      if (minValue >= value) {
-        minValue = value;
+      if (minValue >= minReduce) {
+        minValue = minReduce;
       }
     }
 

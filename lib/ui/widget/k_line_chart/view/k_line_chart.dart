@@ -99,8 +99,8 @@ class KLineChart extends StatefulWidget {
   /// 技術分析圖表顯示
   final IndicatorChartState indicatorChartState;
 
-  /// ma週期
-  final List<int> maPeriods;
+  /// 技術指標設定
+  final IndicatorSetting indicatorSetting;
 
   /// x軸時間格式化
   final String Function(DateTime dateTime) xAxisDateTimeFormatter;
@@ -146,7 +146,7 @@ class KLineChart extends StatefulWidget {
     this.rsiChartUiStyle = const RSIChartUiStyle(),
     this.wrChartUiStyle = const WRChartUiStyle(),
     this.kdjChartUiStyle = const KDJChartUiStyle(),
-    this.maPeriods = const [5, 10, 20],
+    this.indicatorSetting = const IndicatorSetting(),
     this.tooltipPrefix = const TooltipPrefix(),
     this.tooltipUiStyle = const KLineDataTooltipUiStyle(),
     this.tooltipBuilder,
@@ -287,7 +287,6 @@ class _KLineChartState extends State<KLineChart>
       onTouchCancel: chartGesture.onTouchCancel,
       isAllowPointerMove: (move) {
         final touchStatus = chartGesture.getTouchPointerStatus(move.pointer);
-
         switch (touchStatus) {
           case TouchStatus.none:
             return GestureDisposition.rejected;
@@ -322,7 +321,7 @@ class _KLineChartState extends State<KLineChart>
                 rsiChartUiStyle: widget.rsiChartUiStyle,
                 wrChartUiStyle: widget.wrChartUiStyle,
                 kdjChartUiStyle: widget.kdjChartUiStyle,
-                maPeriods: widget.maPeriods,
+                indicatorSetting: widget.indicatorSetting,
                 priceFormatter: widget.priceFormatter,
                 volumeFormatter:
                     widget.volumeFormatter ?? _defaultVolumeFormatter,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mx_core/extension/list.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
 
 import '../../rsi_chart_render.dart';
@@ -81,23 +82,34 @@ class RSIChartRenderImpl extends RSIChartRender
   @override
   void paintTopValueText(Canvas canvas, Rect rect) {
     final displayData = dataViewer.getLongPressData() ?? dataViewer.datas.last;
-    final rsiData = displayData.indicatorData.rsi;
+    final rsiData = displayData.indicatorData.rsi?.rsi;
 
-    if (rsiData == null) {
+    if (rsiData == null || rsiData.isEmpty) {
       return;
     }
 
     final textStyle = TextStyle(fontSize: sizes.indexTip);
 
-    final spans = <TextSpan>[
-      TextSpan(
-        text: "RSI(14): ${dataViewer.priceFormatter(rsiData.rsi)}    ",
-        style: textStyle.copyWith(color: colors.rsiColor),
-      ),
-    ];
+    final spanTexts = <TextSpan>[];
+
+    final rsiSpan = dataViewer.indicatorSetting.rsiSetting.periods
+        .indexMap((e, i) {
+          final value = rsiData[e];
+          if (value == null || value == 0) {
+            return null;
+          }
+          return TextSpan(
+            text: 'RSI($e):${dataViewer.priceFormatter(value)}    ',
+            style: textStyle.copyWith(color: colors.rsiLine[i]),
+          );
+        })
+        .whereType<TextSpan>()
+        .toList();
+
+    spanTexts.addAll(rsiSpan);
 
     final textPainter = TextPainter(
-      text: TextSpan(children: spans),
+      text: TextSpan(children: spanTexts),
       textDirection: TextDirection.ltr,
     );
     textPainter.layout();

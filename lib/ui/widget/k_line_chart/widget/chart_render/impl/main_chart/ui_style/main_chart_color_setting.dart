@@ -5,9 +5,8 @@ class MainChartColorSetting {
   /// 背景顏色
   final Color background;
 
-  /// ma各週期顏色
-  /// key代表週期
-  final Map<int, Color> maLine;
+  /// ma各週期顏色, 依照週期長短排序
+  final List<Color> maLine;
 
   /// boll指標顏色
   final Color bollUp;
@@ -60,12 +59,12 @@ class MainChartColorSetting {
 
   const MainChartColorSetting({
     this.background = const Color(0xff1e2129),
-    this.maLine = const {
-      5: Color(0xffb47731),
-      10: Color(0xffae33ba),
-      20: Color(0xff59d0d0),
-      30: Color(0xff59d0d0),
-    },
+    this.maLine = const [
+      Color(0xffb47731),
+      Color(0xffae33ba),
+      Color(0xff59d0d0),
+      Color(0xff59d0d0),
+    ],
     this.upColor = const Color(0xff26a39d),
     this.downColor = const Color(0xffd55c5a),
     this.timeLine = const Color(0xff4C86CD),

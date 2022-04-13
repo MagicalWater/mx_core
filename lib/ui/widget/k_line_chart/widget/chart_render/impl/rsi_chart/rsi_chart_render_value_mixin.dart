@@ -1,5 +1,6 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:mx_core/ui/widget/k_line_chart/model/model.dart';
 
 import '../../rsi_chart_render.dart';
 
@@ -40,19 +41,22 @@ mixin RSIChartValueMixin on RSIChartRender {
     // 遍歷取得最大最小值, 以及擁有最大最小值的資料index
     for (var i = dataViewer.startDataIndex; i <= dataViewer.endDataIndex; i++) {
       final data = dataViewer.datas[i];
-      final rsiData = data.indicatorData.rsi;
+      final rsiData = data.indicatorData.rsi?.rsi;
 
-      if (rsiData == null) {
+      if (rsiData == null || rsiData.isEmpty) {
         continue;
       }
 
-      final value = rsiData.rsi;
-      if (maxValue <= value) {
-        maxValue = value;
+      final values = rsiData.values;
+      final maxReduce = values.reduce(max);
+      final minReduce = values.reduce(min);
+
+      if (maxValue <= maxReduce) {
+        maxValue = maxReduce;
       }
 
-      if (minValue >= value) {
-        minValue = value;
+      if (minValue >= minReduce) {
+        minValue = minReduce;
       }
     }
 

@@ -48,7 +48,7 @@ class MainChartSizeSetting {
   final double realTimePriceFlash;
 
   const MainChartSizeSetting({
-    this.indexTip = 12,
+    this.indexTip = 11,
     this.lineWidth = 1.3,
     this.candleWidth = 7,
     this.candleLineWidth = 1.3,

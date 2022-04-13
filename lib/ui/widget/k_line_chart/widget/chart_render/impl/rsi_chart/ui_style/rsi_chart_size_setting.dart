@@ -15,7 +15,7 @@ class RSIChartSizeSetting {
   final double bottomPadding;
 
   const RSIChartSizeSetting({
-    this.indexTip = 12,
+    this.indexTip = 11,
     this.lineWidth = 1.3,
     this.rightValueText = 10,
     this.topPadding = 18,

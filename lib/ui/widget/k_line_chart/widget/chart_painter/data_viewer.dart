@@ -55,8 +55,8 @@ abstract class DataViewer {
   /// 技術指標圖表
   abstract final IndicatorChartState indicatorChartState;
 
-  /// ma(均線)週期
-  abstract final List<int> maPeriods;
+  /// 技術指標設定
+  abstract final IndicatorSetting indicatorSetting;
 
   /// 價格格式化
   abstract final String Function(num price) priceFormatter;

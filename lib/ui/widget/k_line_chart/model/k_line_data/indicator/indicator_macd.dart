@@ -3,14 +3,14 @@ class IndicatorMACD {
   final double dea;
   final double dif;
   final double macd;
-  final double ema12;
-  final double ema26;
+  final double emaShort;
+  final double emaLong;
 
   IndicatorMACD({
     required this.dea,
     required this.dif,
     required this.macd,
-    required this.ema12,
-    required this.ema26,
+    required this.emaShort,
+    required this.emaLong,
   });
 }

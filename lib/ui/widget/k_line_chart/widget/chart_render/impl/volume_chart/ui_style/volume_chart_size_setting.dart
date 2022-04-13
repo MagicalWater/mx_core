@@ -17,7 +17,7 @@ class VolumeChartSizeSetting {
   final double bottomPadding;
 
   const VolumeChartSizeSetting({
-    this.indexTip = 12,
+    this.indexTip = 11,
     this.barWidth = 7,
     this.rightMaxValueText = 10,
     this.topPadding = 15,

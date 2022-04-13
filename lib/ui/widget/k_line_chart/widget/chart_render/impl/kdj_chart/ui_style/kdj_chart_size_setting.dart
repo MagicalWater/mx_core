@@ -18,7 +18,7 @@ class KDJChartSizeSetting {
   final double bottomPadding;
 
   const KDJChartSizeSetting({
-    this.indexTip = 12,
+    this.indexTip = 11,
     this.barWidth = 7,
     this.lineWidth = 1.3,
     this.rightValueText = 10,

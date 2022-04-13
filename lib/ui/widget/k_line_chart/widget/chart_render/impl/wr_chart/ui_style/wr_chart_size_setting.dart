@@ -15,7 +15,7 @@ class WRChartSizeSetting {
   final double bottomPadding;
 
   const WRChartSizeSetting({
-    this.indexTip = 12,
+    this.indexTip = 11,
     this.lineWidth = 1.3,
     this.rightValueText = 10,
     this.topPadding = 18,

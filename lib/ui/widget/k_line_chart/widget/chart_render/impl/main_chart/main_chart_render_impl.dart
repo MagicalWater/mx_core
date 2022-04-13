@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mx_core/extension/list.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_value_mixin.dart';
 
@@ -72,16 +73,16 @@ class MainChartRenderImpl extends MainChartRender
     // 檢查是否需要顯示ma資訊
     if (isShowMa) {
       final maTextStyle = TextStyle(fontSize: sizes.indexTip);
-      final maSpan = dataViewer.maPeriods
-          .map((e) {
+      final maSpan = dataViewer.indicatorSetting.maSetting.periods
+          .indexMap((e, i) {
             final value = maData?[e];
             if (value == null || value == 0) {
               return null;
             }
             return TextSpan(
-              text: 'MA$e:${dataViewer.priceFormatter(value)}    ',
+              text: 'MA($e):${dataViewer.priceFormatter(value)}    ',
               style: maTextStyle.copyWith(
-                color: colors.maLine[e],
+                color: colors.maLine[i],
               ),
             );
           })
