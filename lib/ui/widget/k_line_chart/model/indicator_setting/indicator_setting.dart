@@ -19,4 +19,22 @@ class IndicatorSetting {
     this.rsiSetting = const RsiSetting(),
     this.wrSetting = const WrSetting(),
   });
+
+  IndicatorSetting copyWith({
+    MaSetting? maSetting,
+    BollSetting? bollSetting,
+    KdjSetting? kdjSetting,
+    MacdSetting? macdSetting,
+    RsiSetting? rsiSetting,
+    WrSetting? wrSetting,
+  }) {
+    return IndicatorSetting(
+      maSetting: maSetting ?? this.maSetting,
+      bollSetting: bollSetting ?? this.bollSetting,
+      kdjSetting: kdjSetting ?? this.kdjSetting,
+      macdSetting: macdSetting ?? this.macdSetting,
+      rsiSetting: rsiSetting ?? this.rsiSetting,
+      wrSetting: wrSetting ?? this.wrSetting,
+    );
+  }
 }
