@@ -84,7 +84,10 @@ extension IndicatorCalculateExtension on List<KLineData> {
     IndicatorSetting indicatorSetting = const IndicatorSetting(),
   }) {
     calculateMA(periods: indicatorSetting.maSetting.periods);
-    calculateBOLL(period: indicatorSetting.bollSetting.period);
+    calculateBOLL(
+      period: indicatorSetting.bollSetting.period,
+      bandwidth: indicatorSetting.bollSetting.bandwidth,
+    );
     calculateMACD(
       shortPeriod: indicatorSetting.macdSetting.shortPeriod,
       longPeriod: indicatorSetting.macdSetting.longPeriod,
