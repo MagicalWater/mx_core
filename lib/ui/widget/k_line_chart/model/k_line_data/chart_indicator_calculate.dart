@@ -38,8 +38,10 @@ class ChartIndicatorCalculator {
 
   /// 計算boll線
   /// [period] - 週期, 默認為20
+  /// [bandwidth] - 帶寬
   static void calculateBOLL({
     int period = 20,
+    int bandwidth = 2,
     required List<KLineData> datas,
   }) {
     for (var i = 0; i < datas.length; i++) {
@@ -61,8 +63,8 @@ class ChartIndicatorCalculator {
         md = md / (period - 1);
         md = sqrt(md);
         mb = indicatorMaValue;
-        up = mb + 2.0 * md;
-        dn = mb - 2.0 * md;
+        up = mb + bandwidth * md;
+        dn = mb - bandwidth * md;
 
         data.indicatorData.boll = IndicatorBOLL(mb: mb, up: up, dn: dn);
       }

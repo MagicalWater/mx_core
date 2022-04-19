@@ -105,8 +105,13 @@ extension IndicatorCalculateExtension on List<KLineData> {
   /// 計算boll線
   void calculateBOLL({
     int period = 20,
+    int bandwidth = 2,
   }) {
-    ChartIndicatorCalculator.calculateBOLL(period: period, datas: this);
+    ChartIndicatorCalculator.calculateBOLL(
+      period: period,
+      bandwidth: bandwidth,
+      datas: this,
+    );
   }
 
   /// 計算指數平滑異同移動平均線
