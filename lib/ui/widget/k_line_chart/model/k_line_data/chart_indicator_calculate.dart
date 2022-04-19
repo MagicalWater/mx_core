@@ -176,21 +176,25 @@ class ChartIndicatorCalculator {
   /// RSV = ((收盤價 - 週期內最低價) / (週期內最高價 - 週期內最低價)) * 100
   ///
   /// 接著可以計算K值
-  /// K = ((2/3) * (前日K值)) + ((1/3) * RSV)
+  /// K = (((K時間週期-1)/K值時間週期1) * (前日K值)) + ((1/K值時間週期) * RSV)
   ///
   /// 再由K值計算D值
-  /// D = ((2/3) * (前日D值)) + ((1/3) * K)
+  /// D = (((D值時間週期-1)/D值時間週期) * (前日D值)) + ((1/D值時間週期) * K)
   ///
   /// 如果沒有前一日的K值與D值, 則分別可用50替代
-  /// 其中(2/3)與(1/3)為平滑因數, 可以人為選定, 但目前市面上已約定俗成為(2/3)與(1/3)
+  /// 其中((時間週期-1)/時間週期)與(1/時間週期)為平滑因數, 可以人為選定, 但目前市面上已約定俗成
   /// 沒有特別需要改變的需要
   ///
-  /// 最終計算出J值
-  /// J = (3 * D) - (2 * K)
+  /// 最終計算出J值(大多為 3K - 2D, 部分使用 2D-3K, 其實只是翻轉了J值, 沒太多用途)
+  /// J = (3 * K) - (2 * D)
   ///
-  /// [period] - 週期, 默認為9
+  /// [period] - 計算RSV的週期(週期內最低/最高)
+  /// [maPeriod1] - K值移動平均時間週期
+  /// [maPeriod2] - D值移動平均時間週期
   static void calculateKDJ({
     int period = 9,
+    int maPeriod1 = 3,
+    int maPeriod2 = 3,
     required List<KLineData> datas,
   }) {
     double k = 0;
@@ -222,14 +226,14 @@ class ChartIndicatorCalculator {
         k = 50;
         d = 50;
       } else {
-        k = ((2 / 3) * k) + ((1 / 3) * rsv);
-        d = ((2 / 3) * d) + ((1 / 3) * k);
+        k = (((maPeriod1 - 1) / maPeriod1) * k) + ((1 / maPeriod1) * rsv);
+        d = (((maPeriod2 - 1) / maPeriod2) * d) + ((1 / maPeriod2) * k);
       }
 
       if (i == period - 1 || i == period) {
         data.indicatorData.kdj = IndicatorKDJ(k: k, d: 0, j: 0);
       } else if (i > 14) {
-        final j = (3 * d) - (2 * k);
+        final j = (3 * k) - (2 * d);
         data.indicatorData.kdj = IndicatorKDJ(k: k, d: d, j: j);
       }
     }

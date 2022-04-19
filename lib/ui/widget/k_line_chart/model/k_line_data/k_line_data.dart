@@ -94,7 +94,11 @@ extension IndicatorCalculateExtension on List<KLineData> {
       difPeriod: indicatorSetting.macdSetting.difPeriod,
     );
     calculateRSI(periods: indicatorSetting.rsiSetting.periods);
-    calculateKDJ(period: indicatorSetting.kdjSetting.period);
+    calculateKDJ(
+      period: indicatorSetting.kdjSetting.period,
+      maPeriod1: indicatorSetting.kdjSetting.maPeriod1,
+      maPeriod2: indicatorSetting.kdjSetting.maPeriod2,
+    );
     calculateWR(periods: indicatorSetting.wrSetting.periods);
   }
 
@@ -141,8 +145,15 @@ extension IndicatorCalculateExtension on List<KLineData> {
   /// 計算隨機指標
   void calculateKDJ({
     int period = 9,
+    int maPeriod1 = 3,
+    int maPeriod2 = 3,
   }) {
-    ChartIndicatorCalculator.calculateKDJ(period: period, datas: this);
+    ChartIndicatorCalculator.calculateKDJ(
+      period: period,
+      maPeriod1: maPeriod1,
+      maPeriod2: maPeriod2,
+      datas: this,
+    );
   }
 
   /// 計算威廉指標(兼具超買超賣和強弱分界的指標)
