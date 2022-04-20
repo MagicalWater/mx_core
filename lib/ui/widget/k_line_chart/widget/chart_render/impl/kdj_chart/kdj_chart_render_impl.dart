@@ -86,26 +86,31 @@ class KDJChartRenderImpl extends KDJChartRender
       return;
     }
 
+    final indicatorSetting = dataViewer.indicatorSetting;
+    final period = indicatorSetting.kdjSetting.period;
+    final maPeriod1 = indicatorSetting.kdjSetting.maPeriod1;
+    final maPeriod2 = indicatorSetting.kdjSetting.maPeriod2;
+
     final textStyle = TextStyle(fontSize: sizes.indexTip);
 
     final spans = <TextSpan>[
       TextSpan(
-        text: "KDJ(14,1,3)    ",
+        text: 'KDJ($period,$maPeriod1,$maPeriod2)  ',
         style: textStyle.copyWith(color: colors.kdjTip),
       ),
       if (kdjData.k != 0)
         TextSpan(
-          text: "K:${dataViewer.priceFormatter(kdjData.k)}    ",
+          text: 'K:${dataViewer.priceFormatter(kdjData.k)}  ',
           style: textStyle.copyWith(color: colors.kColor),
         ),
       if (kdjData.d != 0)
         TextSpan(
-          text: "D:${dataViewer.priceFormatter(kdjData.d)}    ",
+          text: 'D:${dataViewer.priceFormatter(kdjData.d)}  ',
           style: textStyle.copyWith(color: colors.dColor),
         ),
       if (kdjData.k != 0)
         TextSpan(
-          text: "J:${dataViewer.priceFormatter(kdjData.j)}    ",
+          text: 'J:${dataViewer.priceFormatter(kdjData.j)}  ',
           style: textStyle.copyWith(color: colors.jColor),
         ),
     ];

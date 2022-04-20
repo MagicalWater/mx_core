@@ -99,7 +99,7 @@ class RSIChartRenderImpl extends RSIChartRender
             return null;
           }
           return TextSpan(
-            text: 'RSI($e):${dataViewer.priceFormatter(value)}    ',
+            text: 'RSI($e):${dataViewer.priceFormatter(value)}  ',
             style: textStyle.copyWith(color: colors.rsiLine[i]),
           );
         })

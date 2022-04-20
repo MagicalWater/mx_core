@@ -80,7 +80,7 @@ class MainChartRenderImpl extends MainChartRender
               return null;
             }
             return TextSpan(
-              text: 'MA($e):${dataViewer.priceFormatter(value)}    ',
+              text: 'MA($e):${dataViewer.priceFormatter(value)}  ',
               style: maTextStyle.copyWith(
                 color: colors.maLine[i],
               ),
@@ -98,15 +98,15 @@ class MainChartRenderImpl extends MainChartRender
 
       final bollSpan = [
         TextSpan(
-          text: 'BOLL:${dataViewer.priceFormatter(bollData.mb)}    ',
+          text: 'BOLL:${dataViewer.priceFormatter(bollData.mb)}  ',
           style: bollTextStyle.copyWith(color: colors.bollMb),
         ),
         TextSpan(
-          text: 'UP:${dataViewer.priceFormatter(bollData.up)}    ',
+          text: 'UP:${dataViewer.priceFormatter(bollData.up)}  ',
           style: bollTextStyle.copyWith(color: colors.bollUp),
         ),
         TextSpan(
-          text: 'LB:${dataViewer.priceFormatter(bollData.dn)}    ',
+          text: 'LB:${dataViewer.priceFormatter(bollData.dn)}  ',
           style: bollTextStyle.copyWith(color: colors.bollDn),
         ),
       ];

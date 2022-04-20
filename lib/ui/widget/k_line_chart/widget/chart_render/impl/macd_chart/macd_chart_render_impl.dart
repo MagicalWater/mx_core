@@ -91,21 +91,26 @@ class MACDChartRenderImpl extends MACDChartRender
 
     final textStyle = TextStyle(fontSize: sizes.indexTip);
 
+    final indicatorSetting = dataViewer.indicatorSetting;
+    final difPeriod = indicatorSetting.macdSetting.difPeriod;
+    final shortPeriod = indicatorSetting.macdSetting.shortPeriod;
+    final longPeriod = indicatorSetting.macdSetting.longPeriod;
+
     final spans = <TextSpan>[
       TextSpan(
-        text: 'MACD(12,26,9)    ',
+        text: 'MACD($shortPeriod,$longPeriod,$difPeriod)  ',
         style: textStyle.copyWith(color: colors.statisticsTip),
       ),
       TextSpan(
-        text: 'MACD:${dataViewer.priceFormatter(macdData.macd)}    ',
+        text: 'MACD:${dataViewer.priceFormatter(macdData.macd)}  ',
         style: textStyle.copyWith(color: colors.macdTip),
       ),
       TextSpan(
-        text: 'DIF:${dataViewer.priceFormatter(macdData.dif)}    ',
+        text: 'DIF:${dataViewer.priceFormatter(macdData.dif)}  ',
         style: textStyle.copyWith(color: colors.difColor),
       ),
       TextSpan(
-        text: 'DEA:${dataViewer.priceFormatter(macdData.dea)}    ',
+        text: 'DEA:${dataViewer.priceFormatter(macdData.dea)}  ',
         style: textStyle.copyWith(color: colors.deaColor),
       ),
     ];

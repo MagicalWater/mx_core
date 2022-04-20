@@ -99,7 +99,7 @@ class WRChartRenderImpl extends WRChartRender
             return null;
           }
           return TextSpan(
-            text: 'WR($e):${dataViewer.priceFormatter(value)}    ',
+            text: 'WR($e):${dataViewer.priceFormatter(value)}  ',
             style: textStyle.copyWith(color: colors.wrLine[i]),
           );
         })
