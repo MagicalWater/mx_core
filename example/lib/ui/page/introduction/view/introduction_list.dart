@@ -14,7 +14,9 @@ class IntroductionList extends StatelessWidget {
           child: Container(
             child: SingleChildScrollView(
               child: Wrap(
-                children: state.pageRoutes.map((e) => _pageButton(e)).toList(),
+                children: state.pageRoutes
+                    .map((e) => _pageButton(context, e))
+                    .toList(),
               ),
             ),
           ),
@@ -24,6 +26,7 @@ class IntroductionList extends StatelessWidget {
   }
 
   Widget _pageButton(
+    BuildContext context,
     PageInfo pageInfo,
   ) {
     return AnimatedComb(
@@ -58,13 +61,23 @@ class IntroductionList extends StatelessWidget {
       onTap: () {
         var i = 0;
         assert(i == 0);
-        _handleIntroductionTap(pageInfo.page);
+        _handleIntroductionTap(context, pageInfo.page);
       },
     );
   }
 
-  void _handleIntroductionTap(String page) {
+  void _handleIntroductionTap(BuildContext context, String page) {
     print('點跳跳: $page');
-    appRouter.pushPage(page);
+    // appRouter.pushPage(page);
+    // return;
+    appRouter.pushPage(
+      page,
+      builder: (
+        Widget child,
+        String name,
+      ) {
+        return CubeRoutePart1(child: child);
+      },
+    );
   }
 }

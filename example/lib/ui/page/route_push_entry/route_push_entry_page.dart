@@ -43,7 +43,15 @@ class _RoutePushEntryPageState extends State<RoutePushEntryPage> {
             children: <Widget>[
               TopDesc(content: content),
               _routeButton("跳轉大頁面", () {
-                appRouter.pushPage(Pages.routePushSecond);
+                appRouter.pushPage(
+                  Pages.routePushSecond,
+                  builder: (
+                    Widget child,
+                    String name,
+                  ) {
+                    return CubeRoutePart2(child: child);
+                  },
+                );
               }),
               _routeButton("跨頁面跳轉子頁面", () {
                 appRouter.pushPage(Pages.routePushSub3);

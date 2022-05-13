@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:mx_core/mx_core.dart';
+import 'package:vector_math/vector_math_64.dart' as v;
 
 class Rotation3DPage extends StatefulWidget {
   final RouteOption option;
@@ -13,37 +14,40 @@ class Rotation3DPage extends StatefulWidget {
 
 class _Rotation3DPageState extends State<Rotation3DPage>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  PageController _pageController = PageController(initialPage: 1);
+  final numberOfTexts = 4;
+  PageController _pageController = PageController(initialPage: 0);
   double animationRotationValue = 0;
   double screenWidth = 0;
 
   @override
   void initState() {
+    // final mm = Matrix4.identity();
+    // mm.setTranslationRaw(x, y, z)
+    // v.Vector4.identity()
     super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    );
     _pageController.addListener(() {
-      if (_pageController.page == 0) {
-        // 循环滚动
-        _pageController.jumpToPage(4);
-      }
-      if (_pageController.page == 5) {
-        // 循环滚动
-        _pageController.jumpToPage(1);
-      }
-      double offset = _pageController.offset / screenWidth * 0.25;
+      // if (_pageController.page == 0) {
+      //   // 循环滚动
+      //   print('循環4');
+      //   _pageController.jumpToPage(4);
+      // }
+      // if (_pageController.page == 5) {
+      //   // 循环滚动
+      //   print('循環1');
+      //   _pageController.jumpToPage(1);
+      // }
+      double offset = _pageController.offset / screenWidth;
+      print('offset = ${offset}');
       setState(() {
-        animationRotationValue = offset * math.pi * 2;
+        // animationRotationValue = offset * math.pi * 2;
+        animationRotationValue = offset;
       });
     });
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    // _animationController.dispose();
     super.dispose();
   }
 
@@ -51,7 +55,6 @@ class _Rotation3DPageState extends State<Rotation3DPage>
 
   @override
   Widget build(BuildContext context) {
-    final numberOfTexts = 4;
     final size = MediaQuery.of(context).size;
     screenWidth = size.width;
     return Scaffold(
@@ -65,35 +68,41 @@ class _Rotation3DPageState extends State<Rotation3DPage>
                 child: Stack(
                   alignment: Alignment.center,
                   children: List.generate(
-                    numberOfTexts,
+                    2,
                     (index) {
-                      return AnimatedBuilder(
-                        animation: _animationController,
+                      // 與當前顯示元件的距離
+                      final distance = animationRotationValue - index;
+
+                      // 每個列表之間的距離
+                      final oneStep = math.pi / 2;
+
+                      final rotationY = distance * oneStep;
+
+                      return Transform(
+                        alignment: Alignment.center,
+                        transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.001)
+                          ..rotateY(rotationY)
+                          ..translate(0.0, 0.0, -50),
                         child: Container(
-                          height: 300,
-                          width: 200,
+                          height: 200,
+                          width: 100,
                           alignment: Alignment.center,
-                          child: Transform(
-                            /// 翻转页面
-                            transform: Matrix4.identity()
-                              ..setEntry(3, 2, 0.001)
-                              ..translate(20.0)
-                              ..rotateY(math.pi),
-                            child: Text(
-                              "$index",
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                          child: Text(
+                            index.toString(),
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             gradient: LinearGradient(
                               colors: [
-                                Colors.transparent,
-                                Colors.blue.withOpacity(0.9),
-                                Colors.transparent
+                                index == 0 ? Colors.blueAccent : Colors.greenAccent,
+                                index == 0 ? Colors.blueAccent : Colors.greenAccent,
+                                index == 0 ? Colors.blueAccent : Colors.greenAccent,
                               ],
                               begin: Alignment.bottomCenter,
                               end: Alignment.topCenter,
@@ -101,25 +110,6 @@ class _Rotation3DPageState extends State<Rotation3DPage>
                             ),
                           ),
                         ),
-                        builder: (context, child) {
-                          double rotation =
-                              2 * math.pi * index / numberOfTexts +
-                                  math.pi / 2 +
-                                  animationRotationValue;
-                          // if (isOnLeft(rotation)) {
-                          //   rotation = -rotation +
-                          //       2 * animationRotationValue -
-                          //       math.pi * 2 / numberOfTexts;
-                          // }
-                          return Transform(
-                            alignment: Alignment.center,
-                            transform: Matrix4.identity()
-                              ..setEntry(3, 2, 0.001)
-                              ..rotateY(rotation)
-                              ..translate(.0, 0.0, 150.0),
-                            child: child,
-                          );
-                        },
                       );
                     },
                   ),
@@ -128,7 +118,7 @@ class _Rotation3DPageState extends State<Rotation3DPage>
             ),
             Positioned.fill(
                 child: PageView.builder(
-                    itemCount: numberOfTexts + 2,
+                    itemCount: numberOfTexts,
                     controller: _pageController,
                     itemBuilder: (context, index) {
                       return Container();
