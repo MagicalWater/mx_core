@@ -76,7 +76,10 @@ class IntroductionList extends StatelessWidget {
         Widget child,
         String name,
       ) {
-        return CubeRoutePart1(child: child);
+        return CubeRoutePart1(
+          child: child,
+          settings: RouteSettings(name: name),
+        );
       },
     );
   }

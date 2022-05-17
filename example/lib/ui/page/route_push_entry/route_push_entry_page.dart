@@ -49,7 +49,10 @@ class _RoutePushEntryPageState extends State<RoutePushEntryPage> {
                     Widget child,
                     String name,
                   ) {
-                    return CubeRoutePart2(child: child);
+                    return CubeRoutePart2(
+                      child: child,
+                      settings: RouteSettings(name: name),
+                    );
                   },
                 );
               }),

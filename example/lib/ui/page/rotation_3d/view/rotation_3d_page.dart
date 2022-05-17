@@ -83,6 +83,7 @@ class _Rotation3DPageState extends State<Rotation3DPage>
                         transform: Matrix4.identity()
                           ..setEntry(3, 2, 0.001)
                           ..rotateY(rotationY)
+                          ..scale(0.5 , 0.5)
                           ..translate(0.0, 0.0, -50),
                         child: Container(
                           height: 200,

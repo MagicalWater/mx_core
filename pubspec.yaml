@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 6.6.5+1
+version: 6.6.6+1
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -40,7 +40,7 @@ dependencies:
   sqflite: ^2.0.0+4
 
   # android 的返回按鈕攔截
-  back_button_interceptor: ^5.0.1
+  back_button_interceptor: 5.0.2
 
   # 列表組件
   flutter_easyrefresh: ^2.2.1
