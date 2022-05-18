@@ -18,19 +18,19 @@ class IntroductionPage extends StatefulWidget {
 class _IntroductionPageState extends State<IntroductionPage> {
   @override
   void initState() {
-    ExRequestBuilder().exApi(
-      'aa',
-      'bb',
-      'cc',
-      'dd',
-      // 'aaa',
-      MultipartFile.fromString('a'),
-      opId: null,
-    ).connect().then((value) {
-      print('連接成功');
-    }).catchError((error) {
-      print('連接失敗');
-    });
+    // ExRequestBuilder().exApi(
+    //   'aa',
+    //   'bb',
+    //   'cc',
+    //   'dd',
+    //   // 'aaa',
+    //   MultipartFile.fromString('a'),
+    //   opId: null,
+    // ).connect().then((value) {
+    //   print('連接成功');
+    // }).catchError((error) {
+    //   print('連接失敗');
+    // });
     super.initState();
   }
 

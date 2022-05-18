@@ -16,7 +16,7 @@ enum ApiMethodType { get, post, delete, put, download }
 enum ApiParamType { queryParam, header, path, body }
 
 /// Api 變數的類型
-enum ApiFieldType { object, list }
+enum ApiFieldType { nonNull, nullable }
 
 /// 傳入 Method 的 ConstantReader (annotation)
 /// 從將 meta 取得 Api 的 Method
@@ -54,11 +54,12 @@ ApiParamType toApiParam(ConstantReader annotation) {
 /// 返回這個參數的 field type, 預設是 string
 ApiFieldType getFieldType(ParameterElement element) {
   var name = element.type.getDisplayString(withNullability: true);
+  // print('獲取: $name, ${element.type.nullabilitySuffix}');
 //  print("打印類型名稱 ${element.type.runtimeType}, ${element.type}, $name");
-  if (name == 'List') {
-    return ApiFieldType.list;
+  if (name[name.length-1] == '?') {
+    return ApiFieldType.nullable;
   } else {
-    return ApiFieldType.object;
+    return ApiFieldType.nonNull;
   }
 }
 

@@ -39,27 +39,19 @@ class QueryParamBuilder extends ParamContentBuilder<QueryParamContent> {
 
     var key = content.key;
     var field = content.fieldName;
+    final isNullable = content.fieldType == ApiFieldType.nullable;
 
     // 假如是可選, 則需要在開頭結尾加入
     // if ($field != null) {  }
-    if (!isRequired) {
+    if (isNullable) {
       text += "if ($field != null) {\n";
     }
 
-    switch (content.fieldType) {
-      case ApiFieldType.object:
-        text += """
+    text += """
           content.addQueryParam("$key", value: $field);
           """;
-        break;
-      case ApiFieldType.list:
-        text += """
-          content.addQueryParam("$key", value: $field);
-          """;
-        break;
-    }
 
-    if (!isRequired) {
+    if (isNullable) {
       text += "}";
     }
 

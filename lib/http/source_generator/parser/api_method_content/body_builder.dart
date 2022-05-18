@@ -50,10 +50,11 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
 
     var key = content.key;
     var field = content.fieldName;
+    final isNullable = content.fieldType == ApiFieldType.nullable;
 
     // 假如是可選, 則需要在開頭結尾加入
     // if ($field != null) {  }
-    if (!isRequired) {
+    if (isNullable) {
       text += "if ($field != null) {\n";
     }
 
@@ -61,25 +62,16 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
     var keyText = '';
     if (key != null) {
       keyText = "key: \"$key\",";
-      switch (content.fieldType) {
-        case ApiFieldType.object:
-          text += """
+      text += """
           content.addBody(${keyText}value: $field,);
           """;
-          break;
-        case ApiFieldType.list:
-          text += """
-          content.addBody(${keyText}value: $field,);
-          """;
-          break;
-      }
     } else {
       text += """
       content.setBody(raw: $field);
       """;
     }
 
-    if (!isRequired) {
+    if (isNullable) {
       text += "}";
     }
 
@@ -90,13 +82,9 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
 class BodyContent {
   String? key;
   String fieldName;
-
-  // String filename;
-  // String filepath;
-
   ApiFieldType fieldType;
 
   BodyContent.keyValue(this.key, this.fieldName, this.fieldType);
 
-  BodyContent.raw(this.fieldName) : fieldType = ApiFieldType.object;
+  BodyContent.raw(this.fieldName) : fieldType = ApiFieldType.nonNull;
 }

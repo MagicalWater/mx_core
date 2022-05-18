@@ -162,12 +162,12 @@ class ApiClassParser extends ApiParser {
       builder: contentBuilder,
       urlPath: path,
       params: requiredParam,
-      isRequired: true,
+      isRequiredRange: true,
     );
     _addParamToContentBuilder(
       builder: contentBuilder,
       params: optionalParam,
-      isRequired: false,
+      isRequiredRange: false,
     );
 
     return code_builder.Method((b) {
@@ -227,7 +227,7 @@ class ApiClassParser extends ApiParser {
       builder.addQueryParam(
         key: k,
         constantValue: v,
-        fieldType: ApiFieldType.object,
+        fieldType: ApiFieldType.nonNull,
       );
     });
   }
@@ -240,7 +240,7 @@ class ApiClassParser extends ApiParser {
       builder.addHeader(
         key: k,
         constantValue: v,
-        fieldType: ApiFieldType.object,
+        fieldType: ApiFieldType.nonNull,
       );
     });
   }
@@ -253,21 +253,22 @@ class ApiClassParser extends ApiParser {
         builder.addBody(
           key: k,
           constantValue: v,
-          fieldType: ApiFieldType.object,
+          fieldType: ApiFieldType.nonNull,
         );
       });
     } else if (body is String) {
       // 是 raw string
-      builder.addBody(constantValue: body, fieldType: ApiFieldType.object);
+      builder.addBody(constantValue: body, fieldType: ApiFieldType.nonNull);
     }
   }
 
   /// 添加參數設定到 [HttpContentBuilder]
+  /// [isRequiredRange] - 是否為必填區塊的參數
   void _addParamToContentBuilder({
     required HttpContentBuilder builder,
     String? urlPath,
     required List<ParameterElement> params,
-    required bool isRequired,
+    required bool isRequiredRange,
   }) {
     // 遍歷所有的參數, 依據參數的類型, 加入到對應的 Builder
     for (var e in params) {
@@ -287,7 +288,7 @@ class ApiClassParser extends ApiParser {
         case ApiParamType.queryParam:
           var key = paramAnnotation.peek('name')!.stringValue;
           builder.addQueryParam(
-            required: isRequired,
+            required: isRequiredRange,
             key: key,
             fieldName: fieldName,
             fieldType: fieldType,
@@ -296,7 +297,7 @@ class ApiClassParser extends ApiParser {
         case ApiParamType.header:
           var key = paramAnnotation.peek('name')!.stringValue;
           builder.addHeader(
-            required: isRequired,
+            required: isRequiredRange,
             key: key,
             fieldName: fieldName,
             fieldType: fieldType,
@@ -304,7 +305,7 @@ class ApiClassParser extends ApiParser {
           break;
         case ApiParamType.path:
           // path 不能放在可選
-          if (isRequired) {
+          if (isRequiredRange) {
             var key = paramAnnotation.peek('name')!.stringValue;
             // 將路徑裡面的 {variable} 做替換
             urlPath = urlPath!.replaceAll("{$key}", "\$$fieldName");
@@ -316,7 +317,7 @@ class ApiClassParser extends ApiParser {
           var key = paramAnnotation.peek('name')?.stringValue;
           // 添加到body
           builder.addBody(
-            required: isRequired,
+            required: isRequiredRange,
             key: key,
             fieldName: fieldName,
             fieldType: fieldType,
