@@ -33,7 +33,7 @@ class InitBuilder implements Builder {
     }
 
     var text =
-        "var content = generator.generate('$path', method: ${getMethodText()}";
+        "final content = generator.generate('$path', method: ${getMethodText()}";
 
     if (host != null) {
       text += ", host: \"$host\"";

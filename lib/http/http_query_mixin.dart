@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:meta/meta.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 import 'source_generator/annotation.dart';
 
@@ -53,14 +54,14 @@ class HttpContentMixin {
       case HttpBodyType.raw:
         // 當 _rawBody 無值, 且 _keyValueBody 有值
         // 將 _keyValueBody 轉換為 _rawBody
-        // 轉換過程將會移除 FileInfo
+        // 轉換過程將會移除 MultipartFile
         if (_rawBody.isEmpty && _keyValueBody.isNotEmpty) {
           print("body 的類型為 $bodyType, 但 rawBody 參數為空, 嘗試從 鍵值對應 轉換");
 
           // 先移除第二層是 FileInfo 的參數
           _keyValueBody = _keyValueBody.map((k, v) {
             if (v is List) {
-              v.removeWhere((e) => e is FileInfo);
+              v.removeWhere((e) => e is MultipartFile);
             }
             return MapEntry(k, v);
           });
@@ -69,7 +70,7 @@ class HttpContentMixin {
           _keyValueBody.removeWhere((k, v) {
             if (v is List && v.isEmpty) {
               return true;
-            } else if (v is FileInfo) {
+            } else if (v is MultipartFile) {
               return true;
             }
             return false;
@@ -97,13 +98,13 @@ class HttpContentMixin {
   }
 
   /// 直接設定param, 會替代掉原有的
-  void setQueryParams(Map<String, dynamic>? iterable) {
+  void setQueryParams(Map<String, dynamic> iterable) {
     _queryParams.clear();
-    iterable?.forEach((k, v) => addQueryParam(k, value: v));
+    iterable.forEach((k, v) => addQueryParam(k, value: v));
   }
 
-  void addQueryParams(Map<String, dynamic>? iterable) {
-    iterable?.forEach((key, value) {
+  void addQueryParams(Map<String, dynamic> iterable) {
+    iterable.forEach((key, value) {
       addQueryParam(key, value: value);
     });
   }
@@ -114,15 +115,14 @@ class HttpContentMixin {
 
   /// 直接設定 body, 將會清空當前的 body
   /// 重新設置新值
+  /// [raw] - 純字串內容
+  /// [keyValue] - 鍵值對應內容, 若需要帶入檔案則value帶入[MultipartFile]
   void setBody({Map<String, dynamic>? keyValue, String? raw}) {
     _keyValueBody.clear();
     _rawBody = '';
     if (keyValue != null) {
       keyValue.forEach((k, v) {
-        addBody(
-          key: k,
-          value: v,
-        );
+        addBody(key: k, value: v);
       });
     } else if (raw != null) {
       _rawBody = raw;
@@ -139,40 +139,28 @@ class HttpContentMixin {
     return _rawBody;
   }
 
-  /// 加入 body
-  /// 當 [key], [value] 都有值, 或者 [key], [raw] 都有值, 則直接加入鍵值對應
-  /// 當 [key], [filename], [filepath] 都有值, 代表要加入鍵值對應
-  /// 當 [key] 等於 null, [raw] 有值, 則直接加入 raw, 並且
-  /// raw 則是直接加入 content
+  /// 加入鍵值body, 若是需要設定rawBody, 則改用[setBody]方法
+  /// [key] - 鍵值key
+  /// [value] - 對應內容, 若為檔案則帶入[MultipartFile]
   void addBody({
-    String? key,
-    dynamic value,
-    String? filename,
-    String? filepath,
+    required String key,
+    required dynamic value,
   }) {
-    if (key != null && value != null) {
-      // 添加鍵值對應
-      _addPair(key, value: value, target: _keyValueBody);
-    } else if (key != null && filename != null && filepath != null) {
-      // 將 file 加入鍵值對應
-      _addPair(
-        key,
-        value: FileInfo(filename: filename, filepath: filepath),
-        target: _keyValueBody,
-      );
-    }
+    // 添加鍵值對應
+    _addPair(key, value: value, target: _keyValueBody);
   }
 
   /// 純粹的 key value pair
-  void addBodys({Map<String, dynamic>? iterable}) {
-    iterable?.forEach((k, v) {
+  /// [iterable] - 鍵值對應內容, 若需要帶入檔案則value帶入[MultipartFile]
+  void addBodys(Map<String, dynamic> iterable) {
+    iterable.forEach((k, v) {
       addBody(key: k, value: v);
     });
   }
 
   /// 添加複數個抬頭
-  void addHeaders(Map<String, dynamic>? iterable) {
-    iterable?.forEach((key, value) {
+  void addHeaders(Map<String, dynamic> iterable) {
+    iterable.forEach((key, value) {
       addHeader(key, value: value);
     });
   }
@@ -180,14 +168,14 @@ class HttpContentMixin {
   /// 添加參數
   /// 若是添加陣列到字串的參數, 則原先的字串會變為陣列並且加入新陣列
   /// 若是添加字串到陣列的參數, 則原因的陣列會添加一個新元素
-  void addQueryParam(String key, {@required dynamic value}) {
+  void addQueryParam(String key, {required dynamic value}) {
     _addPair(key, value: value, target: _queryParams);
   }
 
   /// 添加抬頭
   /// 若是添加陣列到字串的參數, 則原先的字串會變為陣列並且加入新陣列
   /// 若是添加字串到陣列的參數, 則原因的陣列會添加一個新元素
-  void addHeader(String key, {@required dynamic value}) {
+  void addHeader(String key, {required dynamic value}) {
     _addPair(key, value: value, target: headers);
   }
 

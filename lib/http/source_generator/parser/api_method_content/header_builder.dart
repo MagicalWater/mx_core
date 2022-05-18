@@ -19,7 +19,7 @@ class HeaderBuilder extends ParamContentBuilder<HeaderContent> {
 
     // 遍歷所有需要賦予變數值的常數
     constant.forEach((k, v) {
-      text += 'var $k = "$v";';
+      text += 'const $k = "$v";';
     });
 
     // 遍歷必填設置 content
@@ -48,23 +48,15 @@ class HeaderBuilder extends ParamContentBuilder<HeaderContent> {
     }
 
     switch (content.fieldType) {
-      case ApiFieldType.string:
-        text += """
-          content.addHeader("$key", value: "\$$field");
-          """;
-        break;
-      case ApiFieldType.listString:
-//        text += """
-//          $field.forEach((e) => content.addHeader(\"$key\", value: e));
-//          """;
+      case ApiFieldType.object:
         text += """
           content.addHeader("$key", value: $field);
           """;
         break;
-      case ApiFieldType.file:
-      // header 不能添加檔案, 所以不處理, 也不會進到此處
-      case ApiFieldType.listFileInfo:
-        // header 不能添加檔案, 所以不處理, 也不會進到此處
+      case ApiFieldType.list:
+        text += """
+          content.addHeader("$key", value: $field);
+          """;
         break;
     }
 

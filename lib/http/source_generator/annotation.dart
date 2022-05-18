@@ -158,17 +158,6 @@ class Body {
   const Body([this.name]);
 }
 
-/// 非 annotation, 用此代表傳入的類型為檔案
-class FileInfo {
-  final String filepath;
-  final String filename;
-
-  const FileInfo({
-    required this.filename,
-    required this.filepath,
-  });
-}
-
 class HttpContentType {
   final String _value;
 

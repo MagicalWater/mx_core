@@ -32,6 +32,7 @@ class HttpContentGenerator with HttpContentMixin {
     if (usedHost == null) {
       throw '錯誤: host 必須設定';
     }
+    print('這是: $defaultScheme');
     var content = HttpContent.comb(
       usedScheme,
       usedHost,

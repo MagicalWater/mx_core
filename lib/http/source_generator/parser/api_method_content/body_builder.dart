@@ -15,7 +15,7 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
     return BodyContent.keyValue(key, fieldName, fieldType);
   }
 
-  void setBodyType(HttpBodyType type) {
+  void setBodyType(HttpBodyType? type) {
     bodyType = type;
   }
 
@@ -30,7 +30,7 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
 
     // 遍歷所有需要賦予變數值的常數
     constant.forEach((k, v) {
-      text += 'var $k = "$v";';
+      text += 'const $k = "$v";';
     });
 
     // 遍歷必填設置 content
@@ -62,34 +62,20 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
     if (key != null) {
       keyText = "key: \"$key\",";
       switch (content.fieldType) {
-        case ApiFieldType.string:
-          text += """
-          content.addBody(${keyText}value: "\$$field",);
-          """;
-          break;
-        case ApiFieldType.file:
-          text += """
-          content.addBody(${keyText}filename: "\${$field.filename}", filepath: "\${$field.filepath}",);
-          """;
-          break;
-        case ApiFieldType.listString:
+        case ApiFieldType.object:
           text += """
           content.addBody(${keyText}value: $field,);
           """;
           break;
-        case ApiFieldType.listFileInfo:
-          // body 目前不支持添加陣列檔案
-//          text += """
-//          $field.forEach((e) => content.addBody(${keyText}filename: \"\${e.filename}\", filepath: \"\${e.filepath}\",));
-//          """;
-//          text += """
-//          content.addBody(${keyText}filename: \"\${$field.filename}\", filepath: \"\${$field.filepath}\",);
-//          """;
+        case ApiFieldType.list:
+          text += """
+          content.addBody(${keyText}value: $field,);
+          """;
           break;
       }
     } else {
       text += """
-      content.setBody(raw: "\$$field");
+      content.setBody(raw: $field);
       """;
     }
 
@@ -112,5 +98,5 @@ class BodyContent {
 
   BodyContent.keyValue(this.key, this.fieldName, this.fieldType);
 
-  BodyContent.raw(this.fieldName) : fieldType = ApiFieldType.string;
+  BodyContent.raw(this.fieldName) : fieldType = ApiFieldType.object;
 }

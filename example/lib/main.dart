@@ -37,7 +37,7 @@ void main() {
       ),
     );
     return PreferredSize(
-      preferredSize: Size.fromHeight(
+      preferredSize: const Size.fromHeight(
         kToolbarHeight,
       ),
       child: AppBar(

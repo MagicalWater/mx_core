@@ -1,95 +1,72 @@
 import 'dart:io';
 
 import 'package:mx_core/http/http.dart';
-import 'package:mx_core/http/http_content_generator.dart';
 
 ///子httpContent的建構類
 abstract class RequestBuilderBase {
   HttpContentGenerator generator = HttpContentGenerator();
 
-  /// 預設 host
-  String host(String client) {
-    return client;
+  RequestBuilderBase() {
+    init();
   }
 
+  /// 預設 host
+  String host();
+
   /// 預設 scheme
-  String scheme(String client) {
-    return client;
-  }
+  String scheme();
 
   /// 預設 body
   /// 可帶入 純字串 或 key value pair
-  dynamic body(dynamic client) {
-    return client;
-  }
+  dynamic body() => null;
 
-  int? port(int? client) {
-    return client;
-  }
+  int? port() => null;
 
   /// 預設 contentType
-  HttpContentType? contentType(HttpContentType? client) {
-    return client;
-  }
+  HttpContentType? contentType() => null;
 
   /// 預設 bodyType
-  HttpBodyType? bodyType(HttpBodyType? client) {
-    return client;
-  }
+  HttpBodyType? bodyType() => null;
 
   /// 預設 qp
-  Map<String, String>? queryParams(Map<String, String>? client) {
-    return client;
-  }
+  Map<String, String>? queryParams() => null;
 
   /// 預設 header
-  Map<String, String>? headers(Map<String, String>? client) {
-    return client;
-  }
+  Map<String, String>? headers() => null;
 
   ///設置http產生器的默認屬性
-  void setDefault({
-    required String clientScheme,
-    required String clientHost,
-    Map<String, String>? clientQueryParams,
-    Map<String, String>? clientHeaders,
-    dynamic clientBody,
-    HttpBodyType? clientBodyType,
-    HttpContentType? clientContentType,
-    int? clientPort,
-  }) {
+  void init() {
     generator.clear();
-    generator.defaultScheme = scheme(clientScheme);
-    generator.defaultHost = host(clientHost);
-    generator.addQueryParams(queryParams(clientQueryParams));
-    generator.addHeaders(headers(clientHeaders));
-    var bodyData = body(clientBody);
+    generator.defaultScheme = scheme();
+    generator.defaultHost = host();
+    final param = queryParams();
+    if (param != null) {
+      generator.addQueryParams(param);
+    }
+    final header = headers();
+    if (header != null) {
+      generator.addHeaders(header);
+    }
+    final bodyData = body();
     if (bodyData != null) {
       if (bodyData is String) {
-        generator.addBody();
+        generator.setBody(raw: bodyData);
       } else if (bodyData is Map<String, dynamic>) {
-        bodyData.forEach((k, v) {
-          if (v is FileInfo) {
-            generator.addBody(
-                key: k, filename: v.filename, filepath: v.filepath);
-          } else {
-            generator.addBody(key: k, value: v);
-          }
-        });
+        generator.setBody(keyValue: bodyData);
       }
     }
-    var contentT = contentType(clientContentType);
-    if (contentT != null) {
-      generator.setContentType(ContentType.parse(contentT.value));
+    final contentTypeValue = contentType();
+    if (contentTypeValue != null) {
+      generator.setContentType(ContentType.parse(contentTypeValue.value));
     }
-    var bodyT = bodyType(clientBodyType);
-    if (bodyT != null) {
-      generator.bodyType = bodyT;
+    final bodyTypeValue = bodyType();
+    if (bodyTypeValue != null) {
+      generator.bodyType = bodyTypeValue;
     }
 
-    var portT = port(clientPort);
-    if (portT != null) {
-      generator.port = portT;
+    final portValue = port();
+    if (portValue != null) {
+      generator.port = portValue;
     }
   }
 }

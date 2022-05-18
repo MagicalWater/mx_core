@@ -34,8 +34,9 @@ class ApiClassParser extends ApiParser {
         ..methods.addAll(methods)
         ..extend = code_builder.refer(
             "RequestBuilderBase", 'package:mx_core/mx_core.dart')
-        ..implements = ListBuilder(
-            [code_builder.refer(interfaceName, 'package:mx_core/mx_core.dart')]);
+        ..implements = ListBuilder([
+          code_builder.refer(interfaceName, 'package:mx_core/mx_core.dart')
+        ]);
     });
   }
 
@@ -105,7 +106,7 @@ class ApiClassParser extends ApiParser {
       // 因此在經過上方的if else判斷後, bodyType 必定有值
 
       // 將 bodyType 設置到 builder
-      contentBuilder.setBodyType(bodyType!);
+      contentBuilder.setBodyType(bodyType);
     }
 
     // 常數 header
@@ -184,7 +185,8 @@ class ApiClassParser extends ApiParser {
 
   /// 將參數轉換為 codeBuilder 添加方法參數的型態
   List<code_builder.Parameter> _convertToCodeBuilderParam(
-      List<ParameterElement> element) {
+    List<ParameterElement> element,
+  ) {
     return element.map((e) {
       return code_builder.Parameter((p) {
         List<String> paramAnnotation = [];
@@ -198,11 +200,14 @@ class ApiClassParser extends ApiParser {
             .map((f) => code_builder.CodeExpression(code_builder.Code(f)))
             .toList();
 
+        // print('取得類型名稱: ${e.type.getDisplayString(withNullability: true)}');
         p
           ..annotations.addAll(paramAnnotationCode)
-          ..type = code_builder.refer('${e.type.getDisplayString(withNullability: false)}?')
+          ..type =
+              code_builder.refer(e.type.getDisplayString(withNullability: true))
           ..name = e.name
           ..named = e.isNamed
+          ..required = false
           ..defaultTo = e.defaultValueCode == null
               ? null
               : code_builder.Code(e.defaultValueCode!);
@@ -218,7 +223,7 @@ class ApiClassParser extends ApiParser {
       builder.addQueryParam(
         key: k,
         constantValue: v,
-        fieldType: ApiFieldType.string,
+        fieldType: ApiFieldType.object,
       );
     });
   }
@@ -231,7 +236,7 @@ class ApiClassParser extends ApiParser {
       builder.addHeader(
         key: k,
         constantValue: v,
-        fieldType: ApiFieldType.string,
+        fieldType: ApiFieldType.object,
       );
     });
   }
@@ -244,12 +249,12 @@ class ApiClassParser extends ApiParser {
         builder.addBody(
           key: k,
           constantValue: v,
-          fieldType: ApiFieldType.string,
+          fieldType: ApiFieldType.object,
         );
       });
     } else if (body is String) {
       // 是 raw string
-      builder.addBody(constantValue: body, fieldType: ApiFieldType.string);
+      builder.addBody(constantValue: body, fieldType: ApiFieldType.object);
     }
   }
 

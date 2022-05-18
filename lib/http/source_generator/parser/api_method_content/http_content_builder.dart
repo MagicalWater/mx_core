@@ -36,7 +36,7 @@ class HttpContentBuilder implements Builder {
   }
 
   /// 設置 bodyType
-  void setBodyType(HttpBodyType type) {
+  void setBodyType(HttpBodyType? type) {
     body.setBodyType(type);
   }
 

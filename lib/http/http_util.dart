@@ -384,24 +384,24 @@ class HttpUtil {
       switch (bodyType) {
         case HttpBodyType.formData:
           // formData 可以帶 File, 所以要做對 dio 的轉換
-          bodyData = (bodyData as Map<String, dynamic>).map((k, v) {
-            if (v is FileInfo) {
-              return MapEntry(k,
-                  MultipartFile.fromFileSync(v.filepath, filename: v.filename));
-            } else if (v is List) {
-              var mapValue = v.map((e) {
-                if (e is FileInfo) {
-                  return MultipartFile.fromFileSync(e.filepath,
-                      filename: e.filename);
-                } else {
-                  return e;
-                }
-              }).toList();
-              return MapEntry(k, mapValue);
-            } else {
-              return MapEntry(k, v);
-            }
-          });
+          // bodyData = (bodyData as Map<String, dynamic>).map((k, v) {
+          //   if (v is FileInfo) {
+          //     return MapEntry(k,
+          //         MultipartFile.fromFileSync(v.filepath, filename: v.filename));
+          //   } else if (v is List) {
+          //     var mapValue = v.map((e) {
+          //       if (e is FileInfo) {
+          //         return MultipartFile.fromFileSync(e.filepath,
+          //             filename: e.filename);
+          //       } else {
+          //         return e;
+          //       }
+          //     }).toList();
+          //     return MapEntry(k, mapValue);
+          //   } else {
+          //     return MapEntry(k, v);
+          //   }
+          // });
           bodyData = FormData.fromMap(bodyData);
           break;
         case HttpBodyType.formUrlencoded:

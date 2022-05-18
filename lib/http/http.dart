@@ -1,5 +1,5 @@
 export 'package:dio/dio.dart'
-    show Interceptor, RequestOptions, Response, DioError;
+    show Interceptor, RequestOptions, Response, DioError, MultipartFile;
 export 'package:mx_core/http/http_util.dart';
 
 export 'http_content.dart';

@@ -18,7 +18,7 @@ class QueryParamBuilder extends ParamContentBuilder<QueryParamContent> {
 
     // 遍歷所有需要賦予變數值的常數
     constant.forEach((k, v) {
-      text += 'var $k = "$v";';
+      text += 'const $k = "$v";';
     });
 
     // 遍歷必填設置 content
@@ -47,20 +47,15 @@ class QueryParamBuilder extends ParamContentBuilder<QueryParamContent> {
     }
 
     switch (content.fieldType) {
-      case ApiFieldType.string:
-        text += """
-          content.addQueryParam("$key", value: "\$$field");
-          """;
-        break;
-      case ApiFieldType.listString:
+      case ApiFieldType.object:
         text += """
           content.addQueryParam("$key", value: $field);
           """;
         break;
-      case ApiFieldType.file:
-      // query param 不能添加檔案, 所以不處理, 也不會進到此處
-      case ApiFieldType.listFileInfo:
-        // query param 不能添加檔案, 所以不處理, 也不會進到此處
+      case ApiFieldType.list:
+        text += """
+          content.addQueryParam("$key", value: $field);
+          """;
         break;
     }
 
