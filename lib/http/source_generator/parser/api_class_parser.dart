@@ -50,13 +50,14 @@ class ApiClassParser extends ApiParser {
     // 首先取得 meta data
     var methodAnnotation = getApiMethodAnnotation(element);
 
-    // 取得 method 裡面必選的參數
-    var requiredParam = element.parameters
-        .where((e) => e.isRequiredPositional || e.isRequiredNamed)
-        .toList();
+    // 取得 method 裡面必選的參數(擁有名稱的必選參數不在此處)
+    var requiredParam =
+        element.parameters.where((e) => e.isRequiredPositional).toList();
 
-    // 取得 method 裡面可選的參數
-    var optionalParam = element.parameters.where((e) => e.isOptional).toList();
+    // 取得 method 裡面可選或者擁有名稱的參數
+    var optionalParam = element.parameters
+        .where((e) => e.isOptional || e.isRequiredNamed)
+        .toList();
 
     // 取得以及設置初始化參數
     // 取得 meta data 使用的類型
@@ -175,8 +176,10 @@ class ApiClassParser extends ApiParser {
           const code_builder.CodeExpression(code_builder.Code('override')),
         ])
         ..name = methodName
-        ..requiredParameters.addAll(_convertToCodeBuilderParam(requiredParam))
-        ..optionalParameters.addAll(_convertToCodeBuilderParam(optionalParam))
+        ..requiredParameters
+            .addAll(_convertToCodeBuilderParam(requiredParam, false))
+        ..optionalParameters
+            .addAll(_convertToCodeBuilderParam(optionalParam, true))
         ..body = code_builder.Code(contentBuilder.build())
         ..returns =
             code_builder.refer('HttpContent', 'package:mx_core/mx_core.dart');
@@ -186,14 +189,15 @@ class ApiClassParser extends ApiParser {
   /// 將參數轉換為 codeBuilder 添加方法參數的型態
   List<code_builder.Parameter> _convertToCodeBuilderParam(
     List<ParameterElement> element,
+    bool isOptional,
   ) {
     return element.map((e) {
       return code_builder.Parameter((p) {
         List<String> paramAnnotation = [];
-        if (e.metadata.any((m) => m.isRequired)) {
-          // 如果此參數是必選, 則需要加入 required 的 annotation
-          paramAnnotation.add('required');
-        }
+        // if (e.metadata.any((m) => m.isRequired)) {
+        //   // 如果此參數是必選, 則需要加入 required 的 annotation
+        //   paramAnnotation.add('required');
+        // }
 
         // 將 annotation 轉換為 codeExpression
         List<code_builder.CodeExpression> paramAnnotationCode = paramAnnotation
@@ -207,7 +211,7 @@ class ApiClassParser extends ApiParser {
               code_builder.refer(e.type.getDisplayString(withNullability: true))
           ..name = e.name
           ..named = e.isNamed
-          ..required = false
+          ..required = isOptional ? e.isRequired : false
           ..defaultTo = e.defaultValueCode == null
               ? null
               : code_builder.Code(e.defaultValueCode!);

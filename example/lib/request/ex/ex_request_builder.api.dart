@@ -11,7 +11,7 @@ abstract class ExRequestApi extends RequestBuilderBase
   @override
   HttpContent exApi(String titlePath, String aId, String bToken, String cBody,
       MultipartFile dBodyFile,
-      {@required String? opId,
+      {required String? opId,
       String? opToken,
       String? opBody,
       MultipartFile? opBodyFile}) {

@@ -1,6 +1,5 @@
 import 'dart:io' show ContentType;
 
-import 'package:flutter/foundation.dart';
 import 'package:mx_core/mx_core.dart';
 
 part 'ex_request_builder.api.dart';
@@ -31,7 +30,7 @@ abstract class ExRequestInterface {
     @Body('body') String cBody,
     // @Body() String rawBody,
     @Body('bodyF') MultipartFile dBodyFile, {
-    @required @Param('opId') String? opId,
+    @Param('opId') required String? opId,
     @Header('tokenOp') String? opToken,
     @Body('bodyOp') String? opBody,
     @Body('bodyFOp') MultipartFile? opBodyFile,
