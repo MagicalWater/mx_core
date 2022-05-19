@@ -27,8 +27,12 @@ abstract class ExRequestInterface {
     @Path('titlePath') String titlePath, {
     @Param('opId') required String? opId,
     @Param('opId2') required List<String> opId2,
+    @Param('opId3') required List<AA> opId3,
+    @Body() AA? opId4,
   });
 }
+
+class AA {}
 
 class ExRequestBuilder extends ExRequestApi {
   @override

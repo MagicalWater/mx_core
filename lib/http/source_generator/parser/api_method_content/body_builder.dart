@@ -67,7 +67,7 @@ class BodyBuilder extends ParamContentBuilder<BodyContent> {
           """;
     } else {
       text += """
-      content.setBody(raw: $field);
+      content.setBody(raw: $field.toString());
       """;
     }
 
