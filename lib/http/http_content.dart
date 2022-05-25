@@ -74,8 +74,11 @@ class HttpContent with HttpContentMixin {
 
   /// 使用此 http_content 發起 request
   /// [onReceiveProgress] 為下載進度監聽, 只在 [method] 為 [HttpMethod.download] 時有效
-  Future<ServerResponse> connect({ProgressCallback? onReceiveProgress}) =>
-      HttpUtil().connect(
+  Future<ServerResponse> connect(
+    HttpUtil util, {
+    ProgressCallback? onReceiveProgress,
+  }) =>
+      util.connect(
         this,
         onReceiveProgress: onReceiveProgress,
       );

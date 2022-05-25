@@ -12,23 +12,20 @@ import 'http_value.dart';
 import 'server_response.dart';
 import 'source_generator/annotation.dart';
 
+export 'package:dio/dio.dart';
+
 typedef ProgressCallback = void Function(int count, int total);
 
 class HttpUtil {
-  static final _singleton = HttpUtil._internal();
-
-  factory HttpUtil() => _singleton;
-
-  HttpUtil._internal() {
-    setTimeout(1000 * 10);
+  HttpUtil() {
     //默認返回純文字數據, 否則dio抓到json之後會把雙引號去掉變成假json
-    _dio.options.responseType = ResponseType.plain;
+    dio.options.responseType = ResponseType.plain;
 
     recordResponseCallback = (response) => _writeResponseToFile(response);
 
     CookieJar cookieJar = CookieJar();
     _cookieManager = CookieManager(cookieJar);
-    _dio.interceptors.add(_cookieManager);
+    dio.interceptors.add(_cookieManager);
   }
 
   /// 設置代理
@@ -39,8 +36,8 @@ class HttpUtil {
   bool Function(X509Certificate cert, String host, int port)?
       _badCertificateCallback;
 
-  /// 第三方lib
-  final Dio _dio = Dio();
+  /// 核心調用的dio, 此處開放外部直接調用也是為了防止有些特殊功能的設置
+  final Dio dio = Dio();
 
   /// cookie 管理器
   late CookieManager _cookieManager;
@@ -49,10 +46,10 @@ class HttpUtil {
   Future<void> Function(ServerResponse response)? recordResponseCallback;
 
   /// 連線 timeout 時間
-  int get connectTimeout => _dio.options.connectTimeout;
+  int get connectTimeout => dio.options.connectTimeout;
 
   /// 設置 timeout
-  void setTimeout(int value) => _dio.options.connectTimeout = value;
+  void setTimeout(int value) => dio.options.connectTimeout = value;
 
   /// 設定代理
   void setProxy(String ip, int port) {
@@ -85,11 +82,11 @@ class HttpUtil {
         _proxyPort == null &&
         _badCertificateCallback == null) {
       // 不需要設置代理, 也不需要設置證書信任
-      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           null;
     } else {
       // 需要設置代理或者證書信任
-      (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
           (client) {
         if (_proxyIp != null && _proxyIp!.isNotEmpty && _proxyPort != null) {
           client.findProxy = (uri) {
@@ -99,6 +96,7 @@ class HttpUtil {
         if (_badCertificateCallback != null) {
           client.badCertificateCallback = _badCertificateCallback;
         }
+        return null;
       };
     }
   }
@@ -122,7 +120,7 @@ class HttpUtil {
   ///
   /// * 可使用 [error.response] 取得 [Response], 在按照上方的方式取得 cookie
   void addInterceptor(InterceptorsWrapper interceptor) {
-    _dio.interceptors.add(interceptor);
+    dio.interceptors.add(interceptor);
   }
 
   Future<ServerResponse> get(
@@ -132,7 +130,7 @@ class HttpUtil {
     ContentType? contentType,
   }) {
     print("[GET請求]: $url, query: $queryParams");
-    Future<Response<dynamic>> request = _dio.get(
+    Future<Response<dynamic>> request = dio.get(
       url,
       queryParameters: queryParams,
       options: Options(headers: headers, contentType: contentType?.value),
@@ -152,7 +150,7 @@ class HttpUtil {
     ContentType? contentType,
   }) {
     print("[GET請求]: $uri");
-    Future<Response<dynamic>> request = _dio.getUri(
+    Future<Response<dynamic>> request = dio.getUri(
       uri,
       options: Options(
         headers: headers,
@@ -176,7 +174,7 @@ class HttpUtil {
     ContentType? contentType,
   }) {
     print("[POST請求]: $url, body: $bodyData");
-    Future<Response<dynamic>> request = _dio.post(
+    Future<Response<dynamic>> request = dio.post(
       url,
       data: bodyData,
       queryParameters: queryParams,
@@ -201,7 +199,7 @@ class HttpUtil {
   }) {
     print("[PUT請求]: $url, body: $bodyData");
 
-    Future<Response<dynamic>> request = _dio.put(
+    Future<Response<dynamic>> request = dio.put(
       url,
       data: bodyData,
       queryParameters: queryParams,
@@ -225,7 +223,7 @@ class HttpUtil {
     ContentType? contentType,
   }) {
     print("[DELETE請求]: $url, body: $bodyData");
-    Future<Response<dynamic>> request = _dio.delete(
+    Future<Response<dynamic>> request = dio.delete(
       url,
       data: bodyData,
       queryParameters: queryParams,
@@ -250,7 +248,7 @@ class HttpUtil {
     ContentType? contentType,
     ProgressCallback? onReceiveProgress,
   }) {
-    Future<Response<dynamic>> request = _dio.download(
+    Future<Response<dynamic>> request = dio.download(
       url,
       savePath,
       data: bodyData,

@@ -1,4 +1,5 @@
-import 'package:dio/dio.dart';
+import 'dart:ui';
+
 import 'package:flutter/gestures.dart';
 
 class MultiTouchDrag extends Drag {

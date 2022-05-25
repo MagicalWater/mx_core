@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 6.6.7+4
+version: 6.7.0+1
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -13,7 +13,7 @@ dependencies:
   rxdart: ^0.27.2
 
   # 網路請求庫
-  dio: 4.0.0
+  dio: 4.0.6
 
   # 解析圖片
   image: ^3.0.7
