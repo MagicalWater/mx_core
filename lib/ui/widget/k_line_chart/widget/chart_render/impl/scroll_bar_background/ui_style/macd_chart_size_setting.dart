@@ -1,26 +1,28 @@
-import 'dart:ui';
-
 /// 主圖表的尺寸相關設定
-class VolumeChartSizeSetting {
+class MACDChartSizeSetting {
   /// 左上角的各指標提示
   final double indexTip;
 
-  /// volume的長條圖柱子寬度
+  /// macd的長條圖柱子寬度
   final double barWidth;
 
-  /// 右側最大值數值
+  /// 指標線(dif/dea)寬度
+  final double lineWidth;
+
+  /// 右側數值
   /// 圖表右側的數值說明
-  final double rightMaxValueText;
+  final double rightValueText;
 
   /// 圖表上方/下方padding
   final double topPadding;
   final double bottomPadding;
 
-  const VolumeChartSizeSetting({
+  const MACDChartSizeSetting({
     this.indexTip = 11,
     this.barWidth = 7,
-    this.rightMaxValueText = 12,
-    this.topPadding = 15,
+    this.lineWidth = 1.3,
+    this.rightValueText = 10,
+    this.topPadding = 18,
     this.bottomPadding = 4,
   });
 }

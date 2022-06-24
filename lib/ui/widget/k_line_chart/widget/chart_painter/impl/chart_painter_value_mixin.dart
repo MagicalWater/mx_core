@@ -50,7 +50,8 @@ mixin ChartPainterValueMixin on ChartPainter {
 
     // 取得視圖中第一筆以及最後一筆顯示的資料
     startDisplayX = realXToDisplayX(0);
-    endDisplayX = realXToDisplayX(size.width);
+    endDisplayX =
+        realXToDisplayX(size.width - chartUiStyle.sizeSetting.rightSpace);
     startDataIndex = displayXToDataIndex(startDisplayX);
     endDataIndex = displayXToDataIndex(endDisplayX);
 

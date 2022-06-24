@@ -9,11 +9,15 @@ import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/rsi_char
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/wr_chart_render_impl.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/macd_chart_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart';
+import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/scroll_bar_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
 
 mixin ChartPainterPaintMixin on ChartPainter {
   /// 交叉豎線畫筆
   final _crossLinePaint = Paint()..isAntiAlias = true;
+
+  /// 右方數值軸分隔線畫筆
+  final _rightValueLinePaint = Paint()..isAntiAlias = true;
 
   /// 下方時間軸畫筆
   final _bottomTimePaint = Paint()..isAntiAlias = true;
@@ -31,6 +35,17 @@ mixin ChartPainterPaintMixin on ChartPainter {
     final ChartRender render = MainChartRenderImpl(
       dataViewer: this,
       pricePositionGetter: pricePositionGetter,
+    );
+    render.paint(canvas, rect);
+  }
+
+  /// 繪製拖拉高度比例bar的背景
+  void paintScrollBarBackground({
+    required Canvas canvas,
+    required Rect rect,
+  }) {
+    final ChartRender render = ScrollBarBackgroundRenderImpl(
+      dataViewer: this,
     );
     render.paint(canvas, rect);
   }
@@ -179,7 +194,22 @@ mixin ChartPainterPaintMixin on ChartPainter {
     );
   }
 
-  /// 繪製時間軸
+  /// 繪製數值軸(y軸)
+  void paintValueAxisLine(Canvas canvas, Rect rect) {
+    final colors = chartUiStyle.colorSetting;
+    final sizes = chartUiStyle.sizeSetting;
+    _rightValueLinePaint.color = colors.rightValueLine;
+    _rightValueLinePaint.strokeWidth = sizes.rightValueLine;
+
+    // 繪製上方橫格線
+    canvas.drawLine(
+      Offset(rect.left, rect.top),
+      Offset(rect.left, rect.bottom),
+      _rightValueLinePaint,
+    );
+  }
+
+  /// 繪製時間軸(x軸)
   void paintTimeAxis(Canvas canvas, Rect rect) {
     final sizes = chartUiStyle.sizeSetting;
     final colors = chartUiStyle.colorSetting;

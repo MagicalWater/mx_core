@@ -8,6 +8,7 @@ import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/rsi_char
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/wr_chart/ui_style/wr_chart_ui_style.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/main_chart_render.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/volume_chart_render.dart';
+
 import '../chart_painter.dart';
 import 'chart_painter_value_mixin.dart';
 
@@ -88,6 +89,12 @@ class ChartPainterImpl extends ChartPainter
   /// 價格標示y軸位置獲取
   PricePositionGetter? pricePositionGetter;
 
+  /// 高度分配結果
+  void Function(ChartHeightCampute<Rect> compute)? onRect;
+
+  /// 主圖表的高度偏移
+  final double mainChartHeightOffset;
+
   ChartPainterImpl({
     required this.datas,
     required ChartGesture chartGesture,
@@ -109,6 +116,8 @@ class ChartPainterImpl extends ChartPainter
     required ValueChanged<DrawContentInfo>? onDrawInfo,
     required ValueChanged<LongPressData?>? onLongPressData,
     this.pricePositionGetter,
+    this.onRect,
+    this.mainChartHeightOffset = 0,
   }) : super(
           chartGesture: chartGesture,
           onDrawInfo: onDrawInfo,
@@ -134,9 +143,19 @@ class ChartPainterImpl extends ChartPainter
           totalHeight: size.height,
           volumeChartState: volumeChartState,
           indicatorChartState: indicatorChartState,
+          mainChartHeightOffset: mainChartHeightOffset,
         )
         .toRect(size);
-    // print('繪製: $mainRect, $volumeHeight, $indicatorHeight, size = $size');
+
+    // 數值軸
+    final rightValueRect = Rect.fromLTWH(
+      size.width - chartUiStyle.sizeSetting.rightSpace,
+      0,
+      chartUiStyle.sizeSetting.rightSpace,
+      size.height - chartUiStyle.heightRatioSetting.bottomTimeFixed,
+    );
+
+    onRect?.call(computeRect);
 
     // 繪製主圖
     paintMainChart(
@@ -153,6 +172,14 @@ class ChartPainterImpl extends ChartPainter
 
     // 繪製時間軸
     paintTimeAxis(canvas, computeRect.bottomTime);
+
+    paintScrollBarBackground(
+      canvas: canvas,
+      rect: computeRect.scrollBar,
+    );
+
+    // 繪製數值軸
+    paintValueAxisLine(canvas, rightValueRect);
 
     if (datas.isEmpty) {
       return;

@@ -4,7 +4,6 @@ import 'package:mx_core/ui/widget/k_line_chart/widget/chart_painter/data_viewer.
 import 'package:mx_core/ui/widget/k_line_chart/widget/chart_render/impl/main_chart/main_chart_render_value_mixin.dart';
 
 import '../../../../k_line_chart.dart';
-import '../../main_chart_render.dart';
 import 'main_chart_render_paint_mixin.dart';
 
 export 'ui_style/main_chart_ui_style.dart';
@@ -186,94 +185,44 @@ class MainChartRenderImpl extends MainChartRender
   /// 繪製實時線
   @override
   void paintRealTimeLine(Canvas canvas, Rect rect) {
-    // final lastData = dataViewer.datas.last;
-    // final realTimeValue = lastData.close;
-
-    // 右側顯示的實時數值
-    // final rightValueSpan = TextSpan(
-    //   text: dataViewer.priceFormatter(realTimeValue),
-    //   style: TextStyle(
-    //     fontSize: sizes.realTimeLineValue,
-    //     color: colors.realTimeRightValue,
-    //   ),
-    // );
-    // final valuePainter = TextPainter(
-    //   text: rightValueSpan,
-    //   textDirection: TextDirection.ltr,
-    // );
-    // valuePainter.layout();
-
-    // 取得實時線的y軸位置
-    // 之所以不用final, 是因為當在右側空間不可容納實時數值時
-    // 可能會有超出上下限的情況, 此時需要調整至最高/最低
-    // var y = valueToRealY(realTimeValue);
-
+    // 取得最新一筆資料的中間x軸位置
     final dataX = dataViewer.dataIndexToRealX(dataViewer.datas.length - 1);
 
+    // 最新一筆的資料是否仍在顯示中
+    bool isNewerDisplay =
+        dataViewer.endDataIndex == dataViewer.datas.length - 1;
+
     // 取得右側可以用來顯示的剩餘空間
-    double rightRemainingSpace;
+    double rightRemainingSpace = dataViewer.chartUiStyle.sizeSetting.rightSpace;
 
+    // 折線圖需要考慮到中間的寬度
     if (isShowLineIndex) {
-      // 折線圖
-      rightRemainingSpace = rect.width - dataX;
-    } else {
-      // 蠟燭圖, 需要再加上一半的蠟燭寬度
-      rightRemainingSpace = rect.width - (dataX + (dataWidthScaled / 2));
+      final dataRemainSpace = rect.width - dataX;
+      if (dataRemainSpace > rightRemainingSpace) {
+        rightRemainingSpace = dataRemainSpace;
+      } else if (dataRemainSpace < rightRemainingSpace) {
+        // 折線圖因為只有中間一點
+        // 所以當dataRemainSpace < rightRemainingSpace代表最新一筆資料已經不可見
+        isNewerDisplay = false;
+      }
     }
+    // if (isShowLineIndex) {
+    //   // 折線圖
+    //   rightRemainingSpace = rect.width - dataX;
+    // } else {
+    //   // 蠟燭圖, 需要再加上一半的蠟燭寬度
+    //   rightRemainingSpace = rect.width - (dataX + (dataWidthScaled / 2));
+    // }
 
-    if (rightRemainingSpace <= 0) {
-      rightRemainingSpace = 0;
-    }
+    // if (rightRemainingSpace <= 0) {
+    //   rightRemainingSpace = 0;
+    // }
 
     pricePositionGetter?.call(
       rightRemainingSpace,
+      isNewerDisplay,
       valueToRealYWithClamp,
     );
-
-    //
-    // // if (!isLine) x += mPointWidth / 2;
-    //
-    // if (valuePainter.width < rightRemainingSpace) {
-    //   // 右側空間可容納實時數值
-    //
-    //   var startX = dataX;
-    //   if (isShowKLine) {
-    //     startX += candleWidthScaled / 2;
-    //   }
-    //
-    //   // 繪製右側的實時線
-    //   paintRealTimeLineAtRight(
-    //     canvas: canvas,
-    //     rect: rect,
-    //     startX: startX,
-    //     valuePainter: valuePainter,
-    //     y: y,
-    //   );
-    //
-    //   // 將最右側的實時價格位置打出去
-    //   pricePosition?.call(Offset(startX, y));
-    //
-    //   // 全局最新實時價格處於不可見
-    //   globalRealTimePriceY?.call(null);
-    // } else {
-    //   // 右側不可容納實時數值
-    //
-    //   // y軸不可超過最大最小值
-    //   y = y.clamp(minY, maxY);
-    //
-    //   // 繪製跨越整個畫布的實時線
-    //   paintRealTimeLineAtGlobal(
-    //     canvas: canvas,
-    //     rect: rect,
-    //     y: y,
-    //   );
-    //
-    //   // 右側最新實時價格處於不可見位置
-    //   rightRealPriceOffset?.call(null);
-    //
-    //   // 將全局最新實時價格y軸位置打出去
-    //   globalRealTimePriceY?.call(y);
-    // }
   }
 
   double valueToRealYWithClamp(double value) {

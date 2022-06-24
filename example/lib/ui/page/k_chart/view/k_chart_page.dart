@@ -59,7 +59,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
           mainChartIndicatorState: state.mainChartIndicatorState,
           volumeChartState: state.volumeChartState,
           indicatorChartState: state.indicatorChartState,
-          chartUiStyle: KLineChartUiStyle(
+          chartUiStyle: const KLineChartUiStyle(
             colorSetting: ChartColorSetting(),
             sizeSetting: ChartSizeSetting(),
             heightRatioSetting: ChartHeightRatioSetting(
@@ -68,27 +68,27 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
               indicatorFixed: 80,
             ),
           ),
-          mainChartUiStyle: MainChartUiStyle(
+          mainChartUiStyle: const MainChartUiStyle(
             colorSetting: MainChartColorSetting(),
             sizeSetting: MainChartSizeSetting(),
           ),
-          volumeChartUiStyle: VolumeChartUiStyle(
+          volumeChartUiStyle: const VolumeChartUiStyle(
             colorSetting: VolumeChartColorSetting(),
             sizeSetting: VolumeChartSizeSetting(),
           ),
-          macdChartUiStyle: MACDChartUiStyle(
+          macdChartUiStyle: const MACDChartUiStyle(
             colorSetting: MACDChartColorSetting(),
             sizeSetting: MACDChartSizeSetting(),
           ),
-          rsiChartUiStyle: RSIChartUiStyle(
+          rsiChartUiStyle: const RSIChartUiStyle(
             colorSetting: RSIChartColorSetting(),
             sizeSetting: RSIChartSizeSetting(),
           ),
-          wrChartUiStyle: WRChartUiStyle(
+          wrChartUiStyle: const WRChartUiStyle(
             colorSetting: WRChartColorSetting(),
             sizeSetting: WRChartSizeSetting(),
           ),
-          kdjChartUiStyle: KDJChartUiStyle(
+          kdjChartUiStyle: const KDJChartUiStyle(
             colorSetting: KDJChartColorSetting(),
             sizeSetting: KDJChartSizeSetting(),
           ),
@@ -114,20 +114,22 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
               longPressData: longPressData,
             );
           },
-          priceTagBuilder: (context, position) {
-            return Stack(
-              children: [
-                CustomPriceLineTag(
-                  gridColumns: ChartSizeSetting().gridColumns,
-                  price: state.datas.last.close,
-                  position: position,
-                  priceFormatter: (value) => value.toStringAsFixed(2),
-                  tag: '現價',
-                  onTapGlobalTag: () {},
-                ),
-              ],
-            );
-          },
+          // priceTagBuilder: (context, position) {
+          //   return Stack(
+          //     children: [
+          //       CustomPriceLineTag(
+          //         gridColumns: const ChartSizeSetting().gridColumns,
+          //         price: state.datas.last.close,
+          //         position: position,
+          //         priceFormatter: (value) => value.toStringAsFixed(2),
+          //         tag: '現價',
+          //         onTapGlobalTag: () {
+          //           print('點點');
+          //         },
+          //       ),
+          //     ],
+          //   );
+          // },
         );
       }
     }
@@ -145,7 +147,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
                 Container(
                   width: double.infinity,
                   child: AnimatedSize(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     curve: Curves.fastOutSlowIn,
                     child: _content(state),
                     alignment: Alignment.topCenter,
@@ -156,11 +158,11 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
                     width: double.infinity,
                     height: 450,
                     alignment: Alignment.center,
-                    child: CircularProgressIndicator(),
+                    child: const CircularProgressIndicator(),
                   ),
               ]),
               _buttons(context, state),
-              SizedBox(height: 500),
+              const SizedBox(height: 500),
             ],
           );
         },

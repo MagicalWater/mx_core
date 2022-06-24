@@ -52,7 +52,7 @@ class MainChartSizeSetting {
     this.lineWidth = 1.3,
     this.candleWidth = 7,
     this.candleLineWidth = 1.3,
-    this.rightValueText = 10,
+    this.rightValueText = 12,
     this.realTimeLineValue = 10,
     this.realTimeDashWidth = 10,
     this.realTimeDashSpace = 5,

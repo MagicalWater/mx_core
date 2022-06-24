@@ -28,7 +28,7 @@ abstract class MainChartRender extends ChartRender
     canvas.clipRect(Rect.fromLTRB(
       rect.left,
       rect.top + sizes.topPadding,
-      rect.right,
+      rect.right - dataViewer.chartUiStyle.sizeSetting.rightSpace,
       rect.bottom - sizes.bottomPadding,
     ));
     paintChart(canvas, rect);

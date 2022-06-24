@@ -1,8 +1,10 @@
 /// 價格標示y軸位置獲取
-/// [rightSpace] - 最新價格距離最右側的距離, 0代表最新價格不可見
+/// [rightSpace] - 最新價格距離最右側的距離
+/// [isNewerDisplay] - 最新的一筆資料是否顯示中
 /// [valueToY] - 傳入price, 轉化成對應的y軸
 typedef PricePositionGetter = void Function(
   double rightSpace,
+  bool isNewerDisplay,
   double Function(double price) valueToY,
 );
 
@@ -13,6 +15,9 @@ class PricePosition {
 
   /// 最新一筆的價格
   final double? lastPrice;
+
+  /// 最新的一筆資料是否顯示中
+  final bool isNewerDisplay;
 
   /// 對應[PricePositionGetter]的[rightSpace]
   final double rightSpace;
@@ -25,5 +30,6 @@ class PricePosition {
     required this.rightSpace,
     required this.valueToY,
     required this.lastPrice,
+    required this.isNewerDisplay,
   });
 }

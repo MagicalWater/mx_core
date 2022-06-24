@@ -20,4 +20,14 @@ class KLineChartUiStyle {
       indicatorRatio: 0.15,
     ),
   });
+
+  KLineChartUiStyle copyWith({
+    ChartHeightRatioSetting? heightRatioSetting,
+  }) {
+    return KLineChartUiStyle(
+      sizeSetting: sizeSetting,
+      heightRatioSetting: heightRatioSetting ?? this.heightRatioSetting,
+      colorSetting: colorSetting,
+    );
+  }
 }

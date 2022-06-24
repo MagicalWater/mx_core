@@ -30,7 +30,7 @@ class PriceTagLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (position.rightSpace < _rightSidePriceWidth()) {
+    if (!position.isNewerDisplay) {
       return _global(context);
     } else {
       return _rightSide(context);

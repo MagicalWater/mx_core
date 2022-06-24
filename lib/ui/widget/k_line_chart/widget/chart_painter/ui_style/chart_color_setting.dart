@@ -37,6 +37,16 @@ class ChartColorSetting {
   /// 下方時間軸的背景
   final Color bottomTimeBg;
 
+  /// 主圖表下方的拖曳bar, 一般型態時的顏色
+  final Color dragBar;
+  final Color dragBarDragging;
+
+  /// 拖曳bar的拖曳狀態箭頭顏色
+  final Color dragBarTriangle;
+
+  /// 右方數值軸的線條
+  final Color rightValueLine;
+
   const ChartColorSetting({
     this.grid = const Color(0xff2c303e),
     this.longPressVerticalLine = Colors.white12,
@@ -50,5 +60,9 @@ class ChartColorSetting {
     this.longPressTimeBorder = const Color(0xff6C7A86),
     this.bottomTimeText = const Color(0xff60738E),
     this.bottomTimeBg = const Color(0xff1e2129),
+    this.dragBar = const Color(0xff3d6086),
+    this.dragBarDragging = const Color(0xff3d6086),
+    this.dragBarTriangle = const Color(0xffb1bfd0),
+    this.rightValueLine = const Color(0xff3d6086),
   });
 }

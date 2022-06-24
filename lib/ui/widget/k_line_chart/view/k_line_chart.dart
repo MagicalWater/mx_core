@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:mx_core/route_page/page_route_mixin.dart';
@@ -9,26 +10,27 @@ import 'package:mx_core/ui/widget/k_line_chart/widget/price_tag_line.dart';
 import 'package:mx_core/ui/widget/k_line_chart/widget/touch_gesture_dector/touch_gesture_dector.dart';
 import 'package:mx_core/ui/widget/position_layout.dart';
 import 'package:mx_core/util/date_util.dart';
-import '../widget/chart_painter/chart_painter.dart';
-import '../widget/chart_render/main_chart_render.dart';
-import '../widget/chart_render/volume_chart_render.dart';
-import '../widget/chart_render/macd_chart_render.dart';
-import '../widget/chart_render/rsi_chart_render.dart';
-import '../widget/chart_render/kdj_chart_render.dart';
-import '../widget/chart_render/wr_chart_render.dart';
-import '../widget/k_line_data_tooltip/k_line_data_tooltip.dart';
-import '../model/model.dart';
-import 'package:collection/collection.dart';
 
+import '../model/model.dart';
+import '../widget/chart_painter/chart_painter.dart';
+import '../widget/chart_render/kdj_chart_render.dart';
+import '../widget/chart_render/macd_chart_render.dart';
+import '../widget/chart_render/main_chart_render.dart';
+import '../widget/chart_render/rsi_chart_render.dart';
+import '../widget/chart_render/volume_chart_render.dart';
+import '../widget/chart_render/wr_chart_render.dart';
+import '../widget/height_rate_drag_bar.dart';
+import '../widget/k_line_data_tooltip/k_line_data_tooltip.dart';
+
+export '../model/model.dart';
 export '../widget/chart_painter/chart_painter.dart';
-export '../widget/chart_render/main_chart_render.dart';
-export '../widget/chart_render/volume_chart_render.dart';
-export '../widget/chart_render/macd_chart_render.dart';
-export '../widget/chart_render/rsi_chart_render.dart';
 export '../widget/chart_render/kdj_chart_render.dart';
+export '../widget/chart_render/macd_chart_render.dart';
+export '../widget/chart_render/main_chart_render.dart';
+export '../widget/chart_render/rsi_chart_render.dart';
+export '../widget/chart_render/volume_chart_render.dart';
 export '../widget/chart_render/wr_chart_render.dart';
 export '../widget/k_line_data_tooltip/k_line_data_tooltip.dart';
-export '../model/model.dart';
 
 part '../model/k_line_chart_controller.dart';
 
@@ -62,6 +64,8 @@ typedef PriceTagBuilder = Widget Function(
 /// 6. 點擊實時線的價格箭頭可彈跳至圖表最右側
 /// 7. 初始資料未滿一頁時, 會自動觸發一次加載更多
 /// 8. 圖表高度若皆為固定值, 則外部不需將高度設死
+/// 9. 主圖表新增高度比例分配的拖曳bar
+/// 10. 圖表不覆蓋到右方的數值軸, 在數值軸的左方加入分隔線
 class KLineChart extends StatefulWidget {
   /// 圖表資料
   final List<KLineData> datas;
@@ -132,6 +136,9 @@ class KLineChart extends StatefulWidget {
   /// 長按時, 觸發震動回饋
   final bool longPressVibrate;
 
+  /// 主圖表下方的拖拉bar元件構建
+  final Widget Function(BuildContext context, bool isLongPress)? dragBarBuilder;
+
   const KLineChart({
     Key? key,
     required this.datas,
@@ -157,6 +164,7 @@ class KLineChart extends StatefulWidget {
     this.controller,
     this.priceTagBuilder,
     this.longPressVibrate = true,
+    this.dragBarBuilder,
   }) : super(key: key);
 
   /// 預設x軸時間格式化
@@ -207,12 +215,26 @@ class _KLineChartState extends State<KLineChart>
   /// 長按的資料串流
   late final Stream<LongPressData?> _longPressDataStream;
 
+  /// scroll bar 的 rect
+  final _scrollBarRectStreamController = StreamController<Rect>();
+
+  /// scroll bar 的 rect 串流
+  late final Stream<Rect> _scrollBarRectStream;
+
+  /// 主圖表的高度偏移
+  double mainChartHeightOffset = 0;
+
+  /// 高度拖移由於是取得與原始位置的偏移, 而非每次移動的距離
+  /// 因此在滑動開始前要先將當前原本的偏移存起來
+  double oriMainChartHeightOffset = 0;
+
   @override
   void initState() {
     realTimePrice = widget.datas.lastOrNull?.close;
 
     _pricePositionStream = _pricePositionStreamController.stream.distinct();
     _longPressDataStream = _longPressDataStreamController.stream.distinct();
+    _scrollBarRectStream = _scrollBarRectStreamController.stream.distinct();
 
     // 慣性滑動控制器
     final controller = AnimationController(
@@ -256,6 +278,8 @@ class _KLineChartState extends State<KLineChart>
   void dispose() {
     chartGesture.dispose();
     _pricePositionStreamController.close();
+    _longPressDataStreamController.close();
+    _scrollBarRectStreamController.close();
     widget.controller?._bind = null;
     super.dispose();
   }
@@ -301,6 +325,7 @@ class _KLineChartState extends State<KLineChart>
           case TouchStatus.longPress:
             return GestureDisposition.accepted;
         }
+        return null;
       },
       child: Stack(
         children: <Widget>[
@@ -326,6 +351,7 @@ class _KLineChartState extends State<KLineChart>
                 volumeFormatter:
                     widget.volumeFormatter ?? _defaultVolumeFormatter,
                 xAxisDateTimeFormatter: widget.xAxisDateTimeFormatter,
+                mainChartHeightOffset: mainChartHeightOffset,
                 onDrawInfo: (info) {
                   chartGesture.setDrawInfo(info);
                   if (info.maxScrollX == 0) {
@@ -344,14 +370,18 @@ class _KLineChartState extends State<KLineChart>
                   longPressIndex = data?.index;
                   _longPressDataStreamController.add(data);
                 },
-                pricePositionGetter: (rightSpace, valueToY) {
+                pricePositionGetter: (rightSpace, isNewerDisplay, valueToY) {
                   final position = PricePosition(
                     canvasWidth: chartGesture.drawContentInfo!.canvasWidth,
                     rightSpace: rightSpace,
                     valueToY: valueToY,
                     lastPrice: realTimePrice,
+                    isNewerDisplay: isNewerDisplay,
                   );
                   _pricePositionStreamController.add(position);
+                },
+                onRect: (compute) {
+                  _scrollBarRectStreamController.add(compute.scrollBar);
                 },
               ),
             ),
@@ -362,6 +392,9 @@ class _KLineChartState extends State<KLineChart>
 
           // 長按時顯示的詳細資訊彈窗
           _tooltip(),
+
+          // 高度比例拖曳bar
+          _heightRatioScrollBar(),
         ],
       ),
     );
@@ -383,6 +416,36 @@ class _KLineChartState extends State<KLineChart>
                 uiStyle: widget.tooltipUiStyle,
                 tooltipPrefix: widget.tooltipPrefix,
               );
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  /// 高度分配拖拉bar
+  Widget _heightRatioScrollBar() {
+    return StreamBuilder<Rect>(
+      stream: _scrollBarRectStream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final rect = snapshot.data!;
+
+          // 最外層需要包裹在一樣的高度下, 否則實際點擊區塊會出問題
+          return SizedBox(
+            height: chartHeight,
+            child: HeightRatioDragBar(
+              rect: rect,
+              chartUiStyle: widget.chartUiStyle,
+              onDragStart: () {
+                oriMainChartHeightOffset = mainChartHeightOffset;
+              },
+              onDragUpdate: (offset) {
+                mainChartHeightOffset = oriMainChartHeightOffset + offset;
+                setState(() {});
+              },
+              builder: widget.dragBarBuilder,
+            ),
+          );
         }
         return const SizedBox.shrink();
       },
@@ -425,7 +488,7 @@ class _KLineChartState extends State<KLineChart>
         widget.mainChartUiStyle.colorSetting.realTimeRightPointFlash;
     final isLineIndex = widget.mainChartState == MainChartState.lineIndex;
 
-    final isPointShow = isLineIndex && position.rightSpace > 0;
+    final isPointShow = isLineIndex && position.isNewerDisplay;
     if (!isPointShow) {
       return const SizedBox.shrink();
     }

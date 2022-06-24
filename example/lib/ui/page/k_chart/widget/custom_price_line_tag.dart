@@ -113,7 +113,7 @@ class CustomPriceLineTag extends StatelessWidget {
   /// 最左側的文字標示
   Widget _leftTag(BuildContext context) {
     if (tag == null) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     return Container(
       color: themeColor,

@@ -16,7 +16,15 @@ abstract class KDJChartRender extends ChartRender implements ChartComponentRende
     initValue(rect);
     paintBackground(canvas, rect);
     paintGrid(canvas, rect);
+    canvas.save();
+    canvas.clipRect(Rect.fromLTRB(
+      rect.left,
+      rect.top,
+      rect.right - dataViewer.chartUiStyle.sizeSetting.rightSpace,
+      rect.bottom,
+    ));
     paintChart(canvas, rect);
+    canvas.restore();
     paintRightValueText(canvas, rect);
     if (dataViewer.datas.isEmpty) {
       return;

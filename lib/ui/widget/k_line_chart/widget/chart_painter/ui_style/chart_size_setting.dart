@@ -32,6 +32,12 @@ class ChartSizeSetting {
   /// 下方時間軸的文字大小
   final double bottomTimeText;
 
+  /// 主圖表的拖曳bar線條高度
+  final double dragBarLineHeight;
+
+  /// 右方數值軸的分隔線寬度
+  final double rightValueLine;
+
   const ChartSizeSetting({
     this.dataWidth = 8,
     this.gridRows = 3,
@@ -46,5 +52,7 @@ class ChartSizeSetting {
     this.longPressTimeBorderVerticalPadding = 2,
     this.longPressTimeBorderHorizontalPadding = 12,
     this.bottomTimeText = 10,
+    this.dragBarLineHeight = 1,
+    this.rightValueLine = 1,
   });
 }
