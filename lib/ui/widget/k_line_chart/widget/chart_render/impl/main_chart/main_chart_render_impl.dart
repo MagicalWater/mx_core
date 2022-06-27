@@ -30,13 +30,14 @@ class MainChartRenderImpl extends MainChartRender
   void paintGrid(Canvas canvas, Rect rect) {
     final chartUiStyle = dataViewer.chartUiStyle;
     gripPaint.color = chartUiStyle.colorSetting.grid;
-    final gridRows = chartUiStyle.sizeSetting.gridRows;
     final gridColumns = chartUiStyle.sizeSetting.gridColumns;
     final topPadding = sizes.topPadding;
     final bottomPadding = sizes.bottomPadding;
+    final contentHeight = rect.height - topPadding - bottomPadding;
+    final gridRows = chartUiStyle.sizeSetting.getRealRows(contentHeight);
 
     // 每一列的高度
-    final rowHeight = (rect.height - topPadding - bottomPadding) / gridRows;
+    final rowHeight = contentHeight / gridRows;
 
     // 每一行寬度
     final columnWidth = rect.width / gridColumns;
@@ -126,10 +127,11 @@ class MainChartRenderImpl extends MainChartRender
   @override
   void paintRightValueText(Canvas canvas, Rect rect) {
     final chartUiStyle = dataViewer.chartUiStyle;
-    final gridRows = chartUiStyle.sizeSetting.gridRows;
     final topPadding = sizes.topPadding;
     final bottomPadding = sizes.bottomPadding;
-    final rowHeight = (rect.height - topPadding - bottomPadding) / gridRows;
+    final contentHeight = rect.height - topPadding - bottomPadding;
+    final gridRows = chartUiStyle.sizeSetting.getRealRows(contentHeight);
+    final rowHeight = contentHeight / gridRows;
 
     final textStyle = TextStyle(
       fontSize: sizes.rightValueText,

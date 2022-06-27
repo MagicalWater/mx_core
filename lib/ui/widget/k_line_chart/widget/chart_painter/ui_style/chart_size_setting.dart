@@ -6,6 +6,10 @@ class ChartSizeSetting {
   /// 背景格線數量
   final int gridRows, gridColumns;
 
+  /// 由於圖表是否拖曳更改比例的, 此表示可以容許的最大最小網格高度
+  /// 可為空, 代表一切皆可
+  final double? minGridHeight, maxGridHeight;
+
   /// 長按時顯示的十字交叉線豎線寬度
   final double longPressVerticalLineWidth;
 
@@ -42,6 +46,8 @@ class ChartSizeSetting {
     this.dataWidth = 8,
     this.gridRows = 3,
     this.gridColumns = 4,
+    this.minGridHeight = 60,
+    this.maxGridHeight = 100,
     this.rightSpace = 70,
     this.longPressVerticalLineWidth = 8,
     this.longPressHorizontalLineHeight = 0.2,
@@ -55,4 +61,31 @@ class ChartSizeSetting {
     this.dragBarLineHeight = 1,
     this.rightValueLine = 1,
   });
+
+  /// 取得應該設置的列數
+  /// 因為原先[gridRows]的高度可能會超出[minGridHeight]~[maxGridHeight]的範圍
+  /// 因此在此帶入高度, 回傳具體應該設置的rows數量
+  int getRealRows(double height) {
+    if (minGridHeight != null && maxGridHeight != null) {
+      // 計算可以擁有的row數量上下限
+      final maxRows = (height / minGridHeight!).floor();
+      final minRows = (height / maxGridHeight!).ceil();
+
+      // 有可能會出現maxRows比mixRows還小的情況
+      // 例如 height / minGridHeight = 1.7, height / maxGridHeight = 1.4
+      // 因此需要做取捨, 當出現這種情況, 則以minRows為主
+      if (maxRows < minRows) {
+        return minRows;
+      }
+      return gridRows.clamp(minRows, maxRows);
+    } else if (minGridHeight != null) {
+      final maxRows = (height / minGridHeight!).floor();
+      return gridRows > maxRows ? maxRows : gridRows;
+    } else if (maxGridHeight != null) {
+      final minRows = (height / maxGridHeight!).ceil();
+      return gridRows < minRows ? minRows : gridRows;
+    } else {
+      return gridRows;
+    }
+  }
 }

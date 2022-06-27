@@ -24,13 +24,16 @@ abstract class MainChartRender extends ChartRender
     initValue(rect);
     paintBackground(canvas, rect);
     paintGrid(canvas, rect);
-    canvas.save();
-    canvas.clipRect(Rect.fromLTRB(
+
+    // 可以繪製圖表資料的區塊
+    final chartRect = Rect.fromLTRB(
       rect.left,
       rect.top + sizes.topPadding,
       rect.right - dataViewer.chartUiStyle.sizeSetting.rightSpace,
       rect.bottom - sizes.bottomPadding,
-    ));
+    );
+    canvas.save();
+    canvas.clipRect(chartRect);
     paintChart(canvas, rect);
     canvas.restore();
     paintRightValueText(canvas, rect);
@@ -38,7 +41,17 @@ abstract class MainChartRender extends ChartRender
       return;
     }
     paintTopValueText(canvas, rect);
+    // 可以繪製最大最小值的區塊
+    final mixVaxValueRect = Rect.fromLTRB(
+      rect.left,
+      rect.top,
+      rect.right - dataViewer.chartUiStyle.sizeSetting.rightSpace,
+      rect.bottom,
+    );
+    canvas.save();
+    canvas.clipRect(mixVaxValueRect);
     paintMaxMinValue(canvas, rect);
+    canvas.restore();
     paintRealTimeLine(canvas, rect);
     paintLongPressHorizontalLineAndValue(canvas, rect);
     paintLongPressHorizontalLineAndValue(canvas, rect);
