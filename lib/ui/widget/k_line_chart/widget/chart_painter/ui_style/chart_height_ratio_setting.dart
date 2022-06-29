@@ -138,7 +138,7 @@ class ChartHeightRatioSetting {
     // 最終main的偏移高度差距
     final double lastMainOffsetY;
 
-    if (mainHeight != 0) {
+    if (mainHeight != 0 && (volumeHeight != 0 || indicatorHeight != 0)) {
       mainHeight += mainChartHeightOffset;
 
       final maxLimit = remainTotalHeight * mainMaxOffsetRatio;

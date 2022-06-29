@@ -54,7 +54,6 @@ abstract class MainChartRender extends ChartRender
     canvas.restore();
     paintRealTimeLine(canvas, rect);
     paintLongPressHorizontalLineAndValue(canvas, rect);
-    paintLongPressHorizontalLineAndValue(canvas, rect);
   }
 
   /// 繪製實時線

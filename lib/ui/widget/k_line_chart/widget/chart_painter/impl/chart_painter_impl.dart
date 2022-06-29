@@ -186,7 +186,7 @@ class ChartPainterImpl extends ChartPainter
     }
 
     // 繪製長按豎線
-    paintLongPressVerticalLine(canvas, size);
+    paintLongPressCrossLine(canvas, size, computeRect.main);
 
     // 繪製長按時間
     paintLongPressTime(canvas, computeRect.bottomTime);

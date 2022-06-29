@@ -169,7 +169,7 @@ class KLineChart extends StatefulWidget {
 
   /// 預設x軸時間格式化
   static String _defaultXAxisDateFormatter(DateTime dateTime) {
-    return DateUtil.getDateStr(dateTime, format: 'MM-dd mm:ss');
+    return DateUtil.getDateStr(dateTime, format: 'MM-dd HH:mm');
   }
 
   /// 預設價格格式化
@@ -444,6 +444,8 @@ class _KLineChartState extends State<KLineChart>
                 setState(() {});
               },
               builder: widget.dragBarBuilder,
+              enable: widget.volumeChartState != VolumeChartState.none ||
+                  widget.indicatorChartState != IndicatorChartState.none,
             ),
           );
         }
@@ -529,6 +531,7 @@ class _KLineChartState extends State<KLineChart>
       position: position,
       uiStyle: widget.mainChartUiStyle,
       priceFormatter: widget.priceFormatter,
+      globalTagOffsetX: widget.chartUiStyle.sizeSetting.rightSpace,
       onTapGlobalTag: () async {
         _vibrate();
         scrollToRight(animated: true);

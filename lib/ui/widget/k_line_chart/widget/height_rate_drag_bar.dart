@@ -5,6 +5,8 @@ import 'package:mx_core/mx_core.dart';
 class HeightRatioDragBar extends StatefulWidget {
   final KLineChartUiStyle chartUiStyle;
 
+  final bool enable;
+
   final Rect rect;
 
   /// 拖曳開始
@@ -21,6 +23,7 @@ class HeightRatioDragBar extends StatefulWidget {
     required this.builder,
     required this.rect,
     required this.chartUiStyle,
+    this.enable = true,
     this.onDragStart,
     this.onDragUpdate,
   }) : super(key: key);
@@ -40,22 +43,30 @@ class _HeightRatioDragBarState extends State<HeightRatioDragBar> {
       anchorPoint: Alignment.centerLeft,
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onLongPressStart: (details) {
-          isLongPressNow = true;
-          setState(() {});
-          widget.onDragStart?.call();
-        },
-        onLongPressMoveUpdate: (details) {
-          widget.onDragUpdate?.call(details.offsetFromOrigin.dy);
-        },
-        onLongPressCancel: () {
-          isLongPressNow = false;
-          setState(() {});
-        },
-        onLongPressEnd: (details) {
-          isLongPressNow = false;
-          setState(() {});
-        },
+        onLongPressStart: widget.enable
+            ? (details) {
+                isLongPressNow = true;
+                setState(() {});
+                widget.onDragStart?.call();
+              }
+            : null,
+        onLongPressMoveUpdate: widget.enable
+            ? (details) {
+                widget.onDragUpdate?.call(details.offsetFromOrigin.dy);
+              }
+            : null,
+        onLongPressCancel: widget.enable
+            ? () {
+                isLongPressNow = false;
+                setState(() {});
+              }
+            : null,
+        onLongPressEnd: widget.enable
+            ? (details) {
+                isLongPressNow = false;
+                setState(() {});
+              }
+            : null,
         child: SizedBox(
           width: widget.rect.width - widget.chartUiStyle.sizeSetting.rightSpace,
           height: widget.rect.height,

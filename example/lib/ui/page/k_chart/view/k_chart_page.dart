@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mx_core/mx_core.dart';
 import 'package:mx_core_example/repository/chart_repository.dart';
 import 'package:mx_core_example/ui/page/k_chart/bloc/k_chart_bloc.dart';
-import 'package:mx_core_example/ui/page/k_chart/widget/custom_price_line_tag.dart';
 import 'package:mx_core_example/ui/widget/base_app_bar.dart';
 
 class KChartPage extends StatefulWidget {
@@ -104,7 +103,7 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
             return volume.toStringAsFixed(2);
           },
           xAxisDateTimeFormatter: (dateTime) => dateTime.getDateStr(
-            format: 'MM-dd mm:ss',
+            format: 'MM-dd HH:mm',
           ),
           onLoadMore: (value) {
             print('加載更多: $value');
@@ -201,6 +200,15 @@ class _KChartPageState extends State<KChartPage> with TickerProviderStateMixin {
           "k線",
           onPressed: () {
             bloc().add(KChartMainStateEvent(state: MainChartState.kLine));
+          },
+        ),
+        button(
+          "買賣量",
+          onPressed: () {
+            bloc().add(KChartVolumeChartStateEvent(
+                state: state.volumeChartState == VolumeChartState.none
+                    ? VolumeChartState.volume
+                    : VolumeChartState.none));
           },
         ),
         button(

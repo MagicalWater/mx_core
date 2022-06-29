@@ -34,13 +34,14 @@ class MainChartRenderImpl extends MainChartRender
     final topPadding = sizes.topPadding;
     final bottomPadding = sizes.bottomPadding;
     final contentHeight = rect.height - topPadding - bottomPadding;
+    final contentWidth = rect.width - chartUiStyle.sizeSetting.rightSpace;
     final gridRows = chartUiStyle.sizeSetting.getRealRows(contentHeight);
 
     // 每一列的高度
     final rowHeight = contentHeight / gridRows;
 
     // 每一行寬度
-    final columnWidth = rect.width / gridColumns;
+    final columnWidth = contentWidth / gridColumns;
 
     // 畫橫線
     for (int i = 0; i <= gridRows; i++) {

@@ -139,7 +139,8 @@ mixin ChartPainterValueMixin on ChartPainter {
       return null;
     }
     final displayX = realXToDisplayX(chartGesture.longPressX);
-    final index = displayXToDataIndex(displayX);
+    var index = displayXToDataIndex(displayX);
+    index = index.clamp(startDataIndex, endDataIndex);
     _longPressDataIndex = index >= datas.length ? datas.length - 1 : index;
     return _longPressDataIndex;
   }

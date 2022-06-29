@@ -7,6 +7,8 @@ import 'global_real_tim_price_tag/global_real_time_price_tag.dart';
 class PriceTagLine extends StatelessWidget {
   final int gridColumns;
 
+  final double? globalTagOffsetX;
+
   final String Function(num price) priceFormatter;
 
   final MainChartUiStyle uiStyle;
@@ -25,6 +27,7 @@ class PriceTagLine extends StatelessWidget {
     required this.position,
     required this.uiStyle,
     required this.priceFormatter,
+    this.globalTagOffsetX,
     this.onTapGlobalTag,
   }) : super(key: key);
 
@@ -49,13 +52,16 @@ class PriceTagLine extends StatelessWidget {
             color: uiStyle.colorSetting.realTimeLine,
           ),
         ),
-        PositionLayout(
-          xRatio: (gridColumns - 1) / gridColumns,
-          yFixed: position.valueToY(price),
-          child: GlobalRealTimePriceTag(
-            price: priceFormatter(price),
-            uiStyle: uiStyle,
-            onTap: onTapGlobalTag,
+        Padding(
+          padding: EdgeInsets.only(right: globalTagOffsetX ?? 0),
+          child: PositionLayout(
+            xRatio: (gridColumns - 1) / gridColumns,
+            yFixed: position.valueToY(price),
+            child: GlobalRealTimePriceTag(
+              price: priceFormatter(price),
+              uiStyle: uiStyle,
+              onTap: onTapGlobalTag,
+            ),
           ),
         ),
       ],

@@ -25,6 +25,8 @@ mixin ChartPainterPaintMixin on ChartPainter {
   /// 下方長按時間軸畫筆
   final _longPressTimePaint = Paint()..isAntiAlias = true;
 
+  late final MainChartRender _mainChartRender;
+
   /// 繪製主圖表
   /// [pricePositionGetter] - 價格標示y軸位置獲取
   void paintMainChart({
@@ -32,11 +34,11 @@ mixin ChartPainterPaintMixin on ChartPainter {
     required Rect rect,
     PricePositionGetter? pricePositionGetter,
   }) {
-    final ChartRender render = MainChartRenderImpl(
+    _mainChartRender = MainChartRenderImpl(
       dataViewer: this,
       pricePositionGetter: pricePositionGetter,
     );
-    render.paint(canvas, rect);
+    _mainChartRender.paint(canvas, rect);
   }
 
   /// 繪製拖拉高度比例bar的背景
@@ -85,8 +87,8 @@ mixin ChartPainterPaintMixin on ChartPainter {
     render?.paint(canvas, rect);
   }
 
-  /// 繪製長按豎線
-  void paintLongPressVerticalLine(Canvas canvas, Size size) {
+  /// 繪製長按交錯線
+  void paintLongPressCrossLine(Canvas canvas, Size size, Rect mainChartRect) {
     // 取得長案的資料index
     final index = getLongPressDataIndex();
     if (index == null) {
@@ -103,6 +105,8 @@ mixin ChartPainterPaintMixin on ChartPainter {
       Offset(x, size.height - chartUiStyle.heightRatioSetting.bottomTimeFixed),
       _crossLinePaint,
     );
+
+    _mainChartRender.paintLongPressHorizontalLineAndValue(canvas, mainChartRect);
   }
 
   /// 繪製長按時間
@@ -225,7 +229,8 @@ mixin ChartPainterPaintMixin on ChartPainter {
       _bottomTimePaint..color = colors.grid,
     );
 
-    final columnWidth = rect.width / sizes.gridColumns;
+    final contentWidth = rect.width - chartUiStyle.sizeSetting.rightSpace;
+    final columnWidth = contentWidth / sizes.gridColumns;
     final timeTextStyle = TextStyle(
       color: colors.bottomTimeText,
       fontSize: sizes.bottomTimeText,

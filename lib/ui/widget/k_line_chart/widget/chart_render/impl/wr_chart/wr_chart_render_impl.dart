@@ -32,9 +32,10 @@ class WRChartRenderImpl extends WRChartRender
     final chartUiStyle = dataViewer.chartUiStyle;
     gripPaint.color = chartUiStyle.colorSetting.grid;
     final gridColumns = chartUiStyle.sizeSetting.gridColumns;
-    final columnSpace = rect.width / gridColumns;
+    final contentWidth = rect.width - chartUiStyle.sizeSetting.rightSpace;
+    final columnWidth = contentWidth / gridColumns;
     for (int i = 0; i <= gridColumns; i++) {
-      final x = columnSpace * i;
+      final x = columnWidth * i;
       canvas.drawLine(
         Offset(x, rect.top),
         Offset(x, rect.bottom),
