@@ -221,12 +221,10 @@ AppBar $appBarHeight
 
   /// 將 [_screenDataBinding] 綁定到 [WidgetsBinding]
   static void _bindScreenData() {
-    if (WidgetsBinding.instance == null) {
-      WidgetsFlutterBinding.ensureInitialized();
-    }
     if (!_isScreenDataBind) {
+      WidgetsFlutterBinding.ensureInitialized();
       _isScreenDataBind = true;
-      WidgetsBinding.instance?.addObserver(_screenDataBinding);
+      WidgetsBinding.instance.addObserver(_screenDataBinding);
     }
   }
 }

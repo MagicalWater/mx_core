@@ -348,7 +348,7 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
     // 因此在此處使用下一針再進行佔位圖像動態回退
     if (!kReleaseMode && boundary.debugNeedsPaint) {
       final completer = Completer();
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         if (mounted) {
           _executeChangeAnimation(
             isPush: isPush,

@@ -152,7 +152,7 @@ class _CoordinateLayoutState extends State<CoordinateLayout> {
       isDataDifference: isDataDifference,
       lastFillWidth: widget.lastFillWidth,
       onUpdate: (allHeight) {
-        WidgetsBinding.instance!.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           isDataDifference = false;
           flowHeight = allHeight;
           setState(() {});

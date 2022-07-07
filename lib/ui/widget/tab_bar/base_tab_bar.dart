@@ -152,7 +152,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
           // print('總共: $totalSize');
           this.totalSize = totalSize;
           syncIndicator();
-          WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             if (needScrollCenter &&
                 (tabScrollController?.position.maxScrollExtent ?? 0) > 0) {
               // print('自動轉移: ${tabScrollController != null} => ${tabRectMap[currentIndex].left}');

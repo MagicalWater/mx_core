@@ -61,7 +61,7 @@ class KeyboardMediaQueryState extends State<KeyboardMediaQuery> {
 
   /// 鍵盤狀態改變後呼叫 widget 進行刷新
   void update() {
-    WidgetsBinding.instance!
+    WidgetsBinding.instance
         .addPostFrameCallback((Duration _) => setState(() {}));
   }
 }

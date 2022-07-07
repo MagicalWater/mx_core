@@ -424,7 +424,7 @@ class _RefreshViewState extends State<RefreshView> {
 
     // 在下一幀之後, 直接推移一個非常非常小的距離
     // 目的只為觸發 NotificationListener 監聽 scrollView 的 size
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) {
         return;
       }
@@ -433,7 +433,7 @@ class _RefreshViewState extends State<RefreshView> {
       if (scrollController.hasClients) {
         scrollController.jumpTo(scrollController.offset - 0.0000001);
       } else {
-        WidgetsBinding.instance!.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
           if (scrollController.hasClients) {
             scrollController.jumpTo(scrollController.offset - 0.0000001);
           }

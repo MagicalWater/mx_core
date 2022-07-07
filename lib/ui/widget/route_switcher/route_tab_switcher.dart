@@ -237,7 +237,7 @@ class _RouteTabSwitcherState extends State<RouteTabSwitcher>
     }
 
     if (!kReleaseMode && boundary.debugNeedsPaint) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         if (mounted) {
           _executeChangeAnimation(datas);
         }

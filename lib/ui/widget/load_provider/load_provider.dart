@@ -399,14 +399,10 @@ class LoadController {
 
 /// 等待元件渲染
 Future<void> _waitWidgetRender() async {
-  var waitRender = Completer<void>();
-  var bindingIns = WidgetsBinding.instance;
-  if (bindingIns == null) {
+  final waitRender = Completer<void>();
+  final bindingIns = WidgetsBinding.instance;
+  bindingIns.addPostFrameCallback((Duration timeStamp) {
     waitRender.complete(null);
-  } else {
-    bindingIns.addPostFrameCallback((Duration timeStamp) {
-      waitRender.complete(null);
-    });
-  }
+  });
   return waitRender.future;
 }

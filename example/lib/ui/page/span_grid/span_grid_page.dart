@@ -28,7 +28,7 @@ class _SpanGridPageState extends State<SpanGridPage>
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       urlStreamController.add(imageUrl);
     });
 

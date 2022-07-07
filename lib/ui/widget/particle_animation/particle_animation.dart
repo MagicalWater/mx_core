@@ -56,7 +56,7 @@ class _ParticleAnimationState extends State<ParticleAnimation>
       });
 
     if (widget.auto) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) => startAnimation());
+      WidgetsBinding.instance.addPostFrameCallback((_) => startAnimation());
     }
     super.initState();
   }
