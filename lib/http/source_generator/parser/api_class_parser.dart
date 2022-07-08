@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart' as code_builder;
+import 'package:collection/collection.dart';
 
 import '../annotation.dart';
 import '../element_parser.dart';
@@ -86,19 +87,19 @@ class ApiClassParser extends ApiParser {
     var bodyTypePeek = methodAnnotation.peek('bodyType');
     if (bodyTypePeek != null) {
       var dartObj = bodyTypePeek.objectValue;
+      final name = dartObj.getField('_name')?.toStringValue();
+      final formDataString = HttpBodyType.formData.toString().split('.').last;
+      final formUrlencodedString =
+          HttpBodyType.formUrlencoded.toString().split('.').last;
+      final rawStrng = HttpBodyType.raw.toString().split('.').last;
       // enum 判斷的方式只能透過 getField.split('.') 進行判斷
-      if (dartObj.getField(HttpBodyType.formData.toString().split('.').last) !=
-          null) {
+      if (name == formDataString) {
         // 類型是 formDara
         bodyType = HttpBodyType.formData;
-      } else if (dartObj.getField(
-              HttpBodyType.formUrlencoded.toString().split('.').last) !=
-          null) {
+      } else if (name == formUrlencodedString) {
         // 類型是 formUrlencoded
         bodyType = HttpBodyType.formUrlencoded;
-      } else if (dartObj
-              .getField(HttpBodyType.raw.toString().split('.').last) !=
-          null) {
+      } else if (name == rawStrng) {
         // 類型為 raw
         bodyType = HttpBodyType.raw;
       }
