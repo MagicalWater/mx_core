@@ -107,6 +107,9 @@ class AppRouter implements AppRouterBase, RoutePageBase {
     return pageHistory.last.route;
   }
 
+  /// 路由監聽, 請將此參數加入MaterialApp.navigatorObservers
+  final _MxCoreRouteObservable observable = _MxCoreRouteObservable._();
+
   /// 頁面詳細跳轉
   final BehaviorSubject<String> _pageDetailSubject = BehaviorSubject();
 
@@ -524,11 +527,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
     var navigatorState = navigatorIns;
 
     // 檢查回退檢測是否已加入
-    var routeNavigatorObservable = navigatorState.widget.observers
-        .whereType<MxCoreRouteObservable>()
-        .first;
-
-    routeNavigatorObservable._onDetectPop ??= (name) {
+    observable._onDetectPop ??= (name) {
       if (isNeedBlockOnceSystemPopDetect) {
         // 阻擋一次頁面返回請求
         isNeedBlockOnceSystemPopDetect = false;
@@ -711,12 +710,12 @@ class AppRouter implements AppRouterBase, RoutePageBase {
   }
 }
 
-class MxCoreRouteObservable extends NavigatorObserver {
+class _MxCoreRouteObservable extends NavigatorObserver {
   /// 回退檢測觸發
   ValueCallback<String?>? _onDetectPop;
   ValueCallback<String?>? _onDetectPush;
 
-  MxCoreRouteObservable();
+  _MxCoreRouteObservable._();
 
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {

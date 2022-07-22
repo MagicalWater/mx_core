@@ -72,7 +72,7 @@ class App extends StatelessWidget {
           builder: BotToastInit(),
           navigatorObservers: [
             BotToastNavigatorObserver(),
-            MxCoreRouteObservable(),
+            appRouter.observable,
           ],
           debugShowCheckedModeBanner: false,
           onGenerateTitle: (context) {
