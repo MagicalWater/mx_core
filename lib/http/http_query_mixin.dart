@@ -66,11 +66,9 @@ class HttpContentMixin {
             return MapEntry(k, v);
           });
 
-          // 接著移除第一層為空, 或為 FileInfo 的參數
+          // 接著移除為 FileInfo 的參數
           _keyValueBody.removeWhere((k, v) {
-            if (v is List && v.isEmpty) {
-              return true;
-            } else if (v is MultipartFile) {
+            if (v is MultipartFile) {
               return true;
             }
             return false;
