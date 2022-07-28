@@ -30,6 +30,20 @@ mixin GestureDistributionMixin on ChartGesture
   /// 初始scale distance
   late double _initSclaeDistance;
 
+  /// 長按狀態是否可被拖拉繼承
+  /// 是 -> 抬起時不標示為長按抬起
+  ///      有新手勢在按下並拖拉, 且無其他正在點擊中的手勢, 將會繼承長按的資訊
+  bool keepLongPressWhenTouchUp = true;
+
+  /// 當前是否處於繼承長按狀態
+  bool _isNowInheritLongPress = false;
+
+  /// 繼承長按狀態的觸摸時間
+  DateTime? _inheritLongPressStartTime;
+
+  /// 延遲加入繼承長按的時間
+  Duration inheritLongPressDelay = const Duration(milliseconds: 100);
+
   /// 取得當前縮放的全局焦點
   _PointerPosition get _currentScaleFocalPoint {
     final pointers = activePointer.values.toList();
@@ -97,6 +111,14 @@ mixin GestureDistributionMixin on ChartGesture
       ));
     } else if (isScale || isLongPress) {
       // 正在縮放/長按中, 禁止其餘觸摸
+      if (keepLongPressWhenTouchUp && activePointer.isEmpty) {
+        // 表示有需要繼承的長按手勢
+        _isNowInheritLongPress = true;
+        activePointer[pointer] = _PointerPosition.fromDragStart(details);
+        _initDragPoint = details.globalPosition;
+        _inheritLongPressStartTime = DateTime.now();
+      }
+
       return;
     } else {
       // 目前無任何手勢, 啟動拖拉
@@ -133,6 +155,10 @@ mixin GestureDistributionMixin on ChartGesture
       onDragUpdate(details);
     } else if (isLongPress) {
       // 當前為長按狀態, 發出長按拖拉更新
+      if (_isNowInheritLongPress && DateTime.now().difference(_inheritLongPressStartTime!) < inheritLongPressDelay) {
+        return;
+      }
+
       final prePointer = activePointer[pointer]!;
       activePointer[pointer] = _PointerPosition.fromDragUpdate(details);
       onLongPressMoveUpdate(LongPressMoveUpdateDetails(
@@ -170,12 +196,37 @@ mixin GestureDistributionMixin on ChartGesture
       onDragEnd(details);
     } else if (isLongPress) {
       final position = activePointer[pointer]!;
-      isLongPress = false;
-      onLongPressEnd(LongPressEndDetails(
-        globalPosition: position.global,
-        localPosition: position.local,
-        velocity: details.velocity,
-      ));
+
+      // 檢查此長按是否為繼承的行為
+      if (_isNowInheritLongPress) {
+        // 檢查時間
+        final duration = DateTime.now().difference(_inheritLongPressStartTime!);
+        // 時間是否符合取消範圍
+        final isDurationCancel = duration < _longPressDetect;
+
+        // 檢查距離
+        final distance = (position.global - _initDragPoint).distance;
+        final isDistanceCancel = distance < _cancelLongPressTimerDistance;
+
+        if (isDurationCancel && isDistanceCancel) {
+          _isNowInheritLongPress = false;
+          isLongPress = false;
+          onLongPressEnd(LongPressEndDetails(
+            globalPosition: position.global,
+            localPosition: position.local,
+            velocity: details.velocity,
+          ));
+        }
+      } else {
+        if (!keepLongPressWhenTouchUp) {
+          isLongPress = false;
+          onLongPressEnd(LongPressEndDetails(
+            globalPosition: position.global,
+            localPosition: position.local,
+            velocity: details.velocity,
+          ));
+        }
+      }
     } else if (isScale) {
       isScale = false;
       isDrag = true;
@@ -197,6 +248,7 @@ mixin GestureDistributionMixin on ChartGesture
       _cancelLongPressTimer();
       onDragCancel();
     } else if (isLongPress) {
+      _isNowInheritLongPress = false;
       isLongPress = false;
       onLongPressCancel();
     } else if (isScale) {
