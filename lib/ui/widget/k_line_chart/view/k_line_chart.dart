@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:flutter/services.dart';
 import 'package:mx_core/route_page/page_route_mixin.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/chart_gesture.dart';
 import 'package:mx_core/ui/widget/k_line_chart/chart_gesture/impl/chart_gesture_impl.dart';
@@ -541,12 +543,36 @@ class _KLineChartState extends State<KLineChart>
 
   /// 發出震動
   void _vibrate() async {
-    if (widget.longPressVibrate) {
+    if (!widget.longPressVibrate) {
       return;
     }
-    bool canVibrate = await Vibrate.canVibrate;
-    if (canVibrate) {
-      Vibrate.feedback(FeedbackType.light);
+    if (Platform.isIOS) {
+      // 此方法在android上失效
+      await HapticFeedback.mediumImpact();
+    } else if (Platform.isAndroid) {
+      await HapticFeedback.mediumImpact();
+
+      // 此套件在ios上失效
+      // final hasVibrator = await Vibration.hasVibrator() ?? false;
+      // final hasAmplitudeControl =
+      //     await Vibration.hasAmplitudeControl() ?? false;
+      // final hasCustomVibrationsSupport =
+      //     await Vibration.hasCustomVibrationsSupport() ?? false;
+      // if (hasVibrator) {
+      //   if (hasAmplitudeControl && hasCustomVibrationsSupport) {
+      //     print('震動1');
+      //     await Vibration.vibrate(duration: 10, amplitude: 255);
+      //   } else if (hasCustomVibrationsSupport) {
+      //     print('震動2');
+      //     await Vibration.vibrate(pattern: [0, 5], intensities: [255]);
+      //   } else if (hasAmplitudeControl) {
+      //     print('震動3');
+      //     await Vibration.vibrate(amplitude: 255);
+      //   } else {
+      //     print('震動4');
+      //     await Vibration.vibrate();
+      //   }
+      // }
     }
   }
 
