@@ -7,7 +7,7 @@ part 'ex_request_builder.api.dart';
 @Api()
 abstract class ExRequestInterface {
   @Post(
-    'ex/aa',
+    'ex/{titlePath}{check}',
     headers: {
       'titleHKey': 'titleHValue',
     },
@@ -24,15 +24,21 @@ abstract class ExRequestInterface {
     port: 8881,
   )
   HttpContent exApi(
-    @Path('titlePath') String titlePath, {
+    @Path('titlePath') String titlePath,
+    @Param('id') String? aId,
+    @Header('toke¥n') String bToken,
+    @Body('body') String cBody,
+    // @Body() String rawBody,
+    @Body('bodyF') MultipartFile dBodyFile, {
+    @Path('check') String? check,
     @Param('opId') required String? opId,
+    @Header('tokenOp') String? opToken,
+    @Body('bodyOp') String? opBody,
+    @Body('bodyFOp') MultipartFile? opBodyFile,
+    // @Body() String? optRawBody,
     @Param('opId2') required List<String> opId2,
-    @Param('opId3') required List<AA> opId3,
-    @Body() AA? opId4,
   });
 }
-
-class AA {}
 
 class ExRequestBuilder extends ExRequestApi {
   @override

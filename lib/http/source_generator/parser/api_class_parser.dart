@@ -1,7 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart' as code_builder;
-import 'package:collection/collection.dart';
 
 import '../annotation.dart';
 import '../element_parser.dart';
@@ -159,14 +158,15 @@ class ApiClassParser extends ApiParser {
     _addConstantBody(builder: contentBuilder, body: constantBody);
 
     // 添加必選/可選參數到 content Builder
-    _addParamToContentBuilder(
+    path = _addParamToContentBuilder(
       builder: contentBuilder,
       urlPath: path,
       params: requiredParam,
       isRequiredRange: true,
     );
-    _addParamToContentBuilder(
+    path = _addParamToContentBuilder(
       builder: contentBuilder,
+      urlPath: path,
       params: optionalParam,
       isRequiredRange: false,
     );
@@ -265,12 +265,15 @@ class ApiClassParser extends ApiParser {
 
   /// 添加參數設定到 [HttpContentBuilder]
   /// [isRequiredRange] - 是否為必填區塊的參數
-  void _addParamToContentBuilder({
+  /// 回傳新的urlPath (無論是否有變更都回傳)
+  String _addParamToContentBuilder({
     required HttpContentBuilder builder,
-    String? urlPath,
+    required String urlPath,
     required List<ParameterElement> params,
     required bool isRequiredRange,
   }) {
+    String currentPath = urlPath;
+
     // 遍歷所有的參數, 依據參數的類型, 加入到對應的 Builder
     for (var e in params) {
       // 取得參數的 meta data
@@ -305,12 +308,15 @@ class ApiClassParser extends ApiParser {
           );
           break;
         case ApiParamType.path:
-          // path 不能放在可選
-          if (isRequiredRange) {
+          // 將路徑裡面的 {variable} 做替換
+          if (isRequiredRange && fieldType == ApiFieldType.nonNull) {
             var key = paramAnnotation.peek('name')!.stringValue;
-            // 將路徑裡面的 {variable} 做替換
-            urlPath = urlPath!.replaceAll("{$key}", "\$$fieldName");
-            builder.settingInit(path: urlPath);
+            currentPath = currentPath!.replaceAll("{$key}", "\$$fieldName");
+            builder.settingInit(path: currentPath);
+          } else {
+            var key = paramAnnotation.peek('name')!.stringValue;
+            currentPath = currentPath!.replaceAll("{$key}", "\${$fieldName ?? ''}");
+            builder.settingInit(path: currentPath);
           }
           break;
         case ApiParamType.body:
@@ -326,5 +332,7 @@ class ApiClassParser extends ApiParser {
           break;
       }
     }
+
+    return currentPath;
   }
 }
