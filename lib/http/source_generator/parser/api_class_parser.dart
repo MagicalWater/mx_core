@@ -309,13 +309,13 @@ class ApiClassParser extends ApiParser {
           break;
         case ApiParamType.path:
           // 將路徑裡面的 {variable} 做替換
-          if (isRequiredRange && fieldType == ApiFieldType.nonNull) {
+          if (fieldType == ApiFieldType.nonNull) {
             var key = paramAnnotation.peek('name')!.stringValue;
-            currentPath = currentPath!.replaceAll("{$key}", "\$$fieldName");
+            currentPath = currentPath.replaceAll("{$key}", "\$$fieldName");
             builder.settingInit(path: currentPath);
           } else {
             var key = paramAnnotation.peek('name')!.stringValue;
-            currentPath = currentPath!.replaceAll("{$key}", "\${$fieldName ?? ''}");
+            currentPath = currentPath.replaceAll("{$key}", "\${$fieldName ?? ''}");
             builder.settingInit(path: currentPath);
           }
           break;

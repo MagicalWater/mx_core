@@ -30,7 +30,7 @@ abstract class ExRequestInterface {
     @Body('body') String cBody,
     // @Body() String rawBody,
     @Body('bodyF') MultipartFile dBodyFile, {
-    @Path('check') String? check,
+    @Path('check') required String check,
     @Param('opId') required String? opId,
     @Header('tokenOp') String? opToken,
     @Body('bodyOp') String? opBody,

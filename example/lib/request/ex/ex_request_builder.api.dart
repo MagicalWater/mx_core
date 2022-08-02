@@ -11,13 +11,13 @@ abstract class ExRequestApi extends RequestBuilderBase
   @override
   HttpContent exApi(String titlePath, String? aId, String bToken, String cBody,
       MultipartFile dBodyFile,
-      {String? check,
+      {required String check,
       required String? opId,
       String? opToken,
       String? opBody,
       MultipartFile? opBodyFile,
       required List<String> opId2}) {
-    final content = generator.generate('ex/$titlePath${check ?? ''}',
+    final content = generator.generate('ex/$titlePath$check',
         method: HttpMethod.post,
         port: 8881,
         contentType: ContentType.parse("application/x-www-form-urlencoded"));
