@@ -507,7 +507,7 @@ class _RefreshViewState extends State<RefreshView> {
             var metrics = notification.metrics;
             _firstTrigger = false;
             // 底部, 觸發加載更多
-            if (metrics.maxScrollExtent == 0) {
+            if (metrics.maxScrollExtent == 0 && widget.onLoad != null) {
 //                print("觸發加載更多");
               var state = const RefreshState.loading(
                 type: RefreshType.loadMore,
