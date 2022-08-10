@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 6.9.5+3
+version: 6.9.6+1
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -29,9 +29,6 @@ dependencies:
 
   # 輕量級資料儲存
   shared_preferences: ^2.0.7
-
-  # 本地通知
-  flutter_local_notifications: ^8.2.0
 
   # 時間/數字格式化
   intl: ^0.17.0
