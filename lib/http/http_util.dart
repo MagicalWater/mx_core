@@ -48,6 +48,12 @@ class HttpUtil {
   /// 連線 timeout 時間
   int get connectTimeout => dio.options.connectTimeout;
 
+  /// 是否打印請求資料
+  bool printLog = true;
+
+  /// 是否打印請求錯誤資料
+  bool printErrorLog = true;
+
   /// 設置 timeout
   void setTimeout(int value) => dio.options.connectTimeout = value;
 
@@ -129,7 +135,9 @@ class HttpUtil {
     Map<String, dynamic> headers = const {},
     ContentType? contentType,
   }) {
-    print("[GET請求]: $url, query: $queryParams");
+    if (printLog) {
+      print("[GET請求]: $url, query: $queryParams");
+    }
     Future<Response<dynamic>> request = dio.get(
       url,
       queryParameters: queryParams,
@@ -149,7 +157,9 @@ class HttpUtil {
     Map<String, dynamic> headers = const {},
     ContentType? contentType,
   }) {
-    print("[GET請求]: $uri");
+    if (printLog) {
+      print("[GET請求]: $uri");
+    }
     Future<Response<dynamic>> request = dio.getUri(
       uri,
       options: Options(
@@ -173,7 +183,9 @@ class HttpUtil {
     dynamic bodyData,
     ContentType? contentType,
   }) {
-    print("[POST請求]: $url, body: $bodyData");
+    if (printLog) {
+      print("[POST請求]: $url, body: $bodyData");
+    }
     Future<Response<dynamic>> request = dio.post(
       url,
       data: bodyData,
@@ -197,7 +209,9 @@ class HttpUtil {
     dynamic bodyData,
     ContentType? contentType,
   }) {
-    print("[PUT請求]: $url, body: $bodyData");
+    if (printLog) {
+      print("[PUT請求]: $url, body: $bodyData");
+    }
 
     Future<Response<dynamic>> request = dio.put(
       url,
@@ -222,7 +236,9 @@ class HttpUtil {
     dynamic bodyData,
     ContentType? contentType,
   }) {
-    print("[DELETE請求]: $url, body: $bodyData");
+    if (printLog) {
+      print("[DELETE請求]: $url, body: $bodyData");
+    }
     Future<Response<dynamic>> request = dio.delete(
       url,
       data: bodyData,
@@ -367,7 +383,9 @@ class HttpUtil {
           onReceiveProgress: onReceiveProgress,
         );
       default:
-        print("未知 reuqest method: {${content.method}}, 自動採用 get");
+        if (printLog) {
+          print("未知 reuqest method: {${content.method}}, 自動採用 get");
+        }
         return get(
           content.url,
           queryParams: content.queryParams,
@@ -422,13 +440,15 @@ class HttpUtil {
     dynamic body,
     HttpMethod method,
   ) {
-    print('====== 請求錯誤 ======');
-    print('url: $url');
-    print('標頭: $headers');
-    print('參數: $queryParams');
-    print('Body: $body');
-    print('錯誤: $error');
-    print('=====================');
+    if (printErrorLog) {
+      print('====== 請求錯誤 ======');
+      print('url: $url');
+      print('標頭: $headers');
+      print('參數: $queryParams');
+      print('Body: $body');
+      print('錯誤: $error');
+      print('=====================');
+    }
     return HttpError(
       request: error.requestOptions,
       error: error.error,
