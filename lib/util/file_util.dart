@@ -32,7 +32,7 @@ class FileUtil {
     required String content,
   }) async {
     var file = await (await _getFile(name)).create(recursive: true);
-    print("寫入檔案: ${file.path}");
+    // print("寫入檔案: ${file.path}");
     return await (file).writeAsString(content);
   }
 
@@ -43,7 +43,7 @@ class FileUtil {
     var isFileExist = await exists(name: name);
     if (isFileExist) {
       var file = await _getFile(name);
-      print("刪除檔案: ${file.path}");
+      // print("刪除檔案: ${file.path}");
       await (file).delete(recursive: true);
     }
     return null;
