@@ -69,12 +69,12 @@ class _PollLoop {
     }
 
     while (!_isEnd) {
-      print("開始輪詢");
+      // print("開始輪詢");
       isPolling = true;
       await onPoll();
       isPolling = false;
       var waitDuration = interval();
-      print('輪詢結束 - 等待 $waitDuration');
+      // print('輪詢結束 - 等待 $waitDuration');
       if (!_isEnd) {
         await Future.delayed(waitDuration);
       }
