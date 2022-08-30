@@ -42,6 +42,9 @@ class HttpUtil {
   /// cookie 管理器
   late CookieManager _cookieManager;
 
+  /// cookie 管理器
+  CookieManager get cookieManager => _cookieManager;
+
   /// 取得 response 後, 將呼叫此方法將變數存入本地
   Future<void> Function(ServerResponse response)? recordResponseCallback;
 
