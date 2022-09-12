@@ -229,7 +229,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
       }
     }
 
-    print('跑馬燈長度: ${showWidget.length}');
+    // print('跑馬燈長度: ${showWidget.length}');
   }
 
   /// 初始化滾動設置
