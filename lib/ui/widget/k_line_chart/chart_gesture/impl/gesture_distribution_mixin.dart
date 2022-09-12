@@ -155,7 +155,9 @@ mixin GestureDistributionMixin on ChartGesture
       onDragUpdate(details);
     } else if (isLongPress) {
       // 當前為長按狀態, 發出長按拖拉更新
-      if (_isNowInheritLongPress && DateTime.now().difference(_inheritLongPressStartTime!) < inheritLongPressDelay) {
+      if (_isNowInheritLongPress &&
+          DateTime.now().difference(_inheritLongPressStartTime!) <
+              inheritLongPressDelay) {
         return;
       }
 
@@ -238,6 +240,7 @@ mixin GestureDistributionMixin on ChartGesture
     activePointer.remove(pointer);
   }
 
+  /// 取消觸摸(當觸摸後沒有任何位移, 則會呼叫此)
   @override
   void onTouchCancel(int pointer) {
     if (!activePointer.containsKey(pointer)) {
@@ -248,9 +251,17 @@ mixin GestureDistributionMixin on ChartGesture
       _cancelLongPressTimer();
       onDragCancel();
     } else if (isLongPress) {
-      _isNowInheritLongPress = false;
-      isLongPress = false;
-      onLongPressCancel();
+      // 檢查此長按是否為繼承的行為
+      if (_isNowInheritLongPress) {
+        _isNowInheritLongPress = false;
+        isLongPress = false;
+        onLongPressCancel();
+      } else {
+        if (!keepLongPressWhenTouchUp) {
+          isLongPress = false;
+          onLongPressCancel();
+        }
+      }
     } else if (isScale) {
       isScale = false;
       onScaleCancel();

@@ -8,5 +8,6 @@ abstract class TapGesture {
 
   void onTouchUp(int pointer, DragEndDetails details);
 
+  /// 取消觸摸(當觸摸後沒有任何位移, 則會呼叫此)
   void onTouchCancel(int pointer);
 }
