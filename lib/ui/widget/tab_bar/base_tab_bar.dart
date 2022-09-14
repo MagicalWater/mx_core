@@ -226,49 +226,79 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
     // print('rect = ${tabRectMap}, curr = $currentIndex');
 
     if (indexOffset != null && indexOffset != currentIndex) {
-      var indexShow = indexOffset!.floor();
+      final indexShow = indexOffset!.floor();
       if (indexShow == indexOffset) {
         // 滑動中, 但位於第 indexShow 個tab正中間, 不需要計算偏移
-        var showRect = tabRectMap[indexShow]!;
-        indicatorStart = showRect.left.divide(totalSize.width);
-        indicatorEnd = showRect.right.divide(totalSize.width);
+        final showRect = tabRectMap[indexShow];
+
+        if (showRect == null) {
+          print('AbstractTabWidget: 無法獲取到 $indexShow 的區塊位置');
+          indicatorStart = 0;
+          indicatorEnd = 0;
+        } else {
+          indicatorStart = showRect.left.divide(totalSize.width);
+          indicatorEnd = showRect.right.divide(totalSize.width);
+        }
       } else if (indexOffset! > currentIndex) {
         // 往前滑動, 需要計算偏移
 
-        var showRect = tabRectMap[indexShow]!;
+        final showRect = tabRectMap[indexShow];
         // print('往後偏移');
         // 往下一個偏移
-        var nextRect = tabRectMap[indexShow + 1]!;
+        final nextRect = tabRectMap[indexShow + 1];
 
-        // 計算依照偏移百分比計算
-        var percent = indexOffset! - indexShow;
+        if (showRect == null || nextRect == null) {
+          print(
+              'AbstractTabWidget: 無法獲取到 $indexShow or ${indexShow + 1} 的區塊位置');
+          indicatorStart = 0;
+          indicatorEnd = 0;
+        } else {
+          // 計算依照偏移百分比計算
+          var percent = indexOffset! - indexShow;
 
-        var leftOffset =
-            nextRect.left.subtract(showRect.left).multiply(percent);
-        var rightOffset =
-            nextRect.right.subtract(showRect.right).multiply(percent);
+          var leftOffset =
+              nextRect.left.subtract(showRect.left).multiply(percent);
+          var rightOffset =
+              nextRect.right.subtract(showRect.right).multiply(percent);
 
-        indicatorStart = showRect.left.add(leftOffset).divide(totalSize.width);
-        indicatorEnd = showRect.right.add(rightOffset).divide(totalSize.width);
+          indicatorStart =
+              showRect.left.add(leftOffset).divide(totalSize.width);
+          indicatorEnd =
+              showRect.right.add(rightOffset).divide(totalSize.width);
+        }
       } else if (indexOffset! < currentIndex) {
         // 往後滑動, 需要計算偏移
-        var showRect = tabRectMap[indexShow + 1]!;
-        var preRect = tabRectMap[indexShow]!;
+        final showRect = tabRectMap[indexShow + 1];
+        final preRect = tabRectMap[indexShow];
 
-        // 計算依照偏移百分比計算
-        var percent = indexOffset! - indexShow;
+        if (showRect == null || preRect == null) {
+          print(
+              'AbstractTabWidget: 無法獲取到 ${indexShow + 1} or $indexShow 的區塊位置');
+          indicatorStart = 0;
+          indicatorEnd = 0;
+        } else {
+          // 計算依照偏移百分比計算
+          final percent = indexOffset! - indexShow;
 
-        var leftOffset = showRect.left.subtract(preRect.left).multiply(percent);
-        var rightOffset =
-            showRect.right.subtract(preRect.right).multiply(percent);
+          final leftOffset =
+              showRect.left.subtract(preRect.left).multiply(percent);
+          final rightOffset =
+              showRect.right.subtract(preRect.right).multiply(percent);
 
-        indicatorStart = preRect.left.add(leftOffset).divide(totalSize.width);
-        indicatorEnd = preRect.right.add(rightOffset).divide(totalSize.width);
+          indicatorStart = preRect.left.add(leftOffset).divide(totalSize.width);
+          indicatorEnd = preRect.right.add(rightOffset).divide(totalSize.width);
+        }
       }
     } else {
-      var showRect = tabRectMap[currentIndex]!;
-      indicatorStart = showRect.left.divide(totalSize.width);
-      indicatorEnd = showRect.right.divide(totalSize.width);
+      final showRect = tabRectMap[currentIndex];
+      print('AbstractTabWidget: 無法獲取到 $currentIndex 的區塊位置');
+      if (showRect == null) {
+        indicatorStart = 0;
+        indicatorEnd = 0;
+      } else {
+        indicatorStart = showRect.left.divide(totalSize.width);
+        indicatorEnd = showRect.right.divide(totalSize.width);
+      }
     }
   }
 
