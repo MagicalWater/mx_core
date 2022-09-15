@@ -15,17 +15,30 @@ class TabBarPage extends StatefulWidget {
 }
 
 class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
-  var currentIndex = 15;
+  var currentIndex = 0;
   late TabController tabController;
 
   @override
   void initState() {
     tabController = TabController(
       initialIndex: currentIndex,
-      length: 20,
+      length: 5,
       vsync: this,
     );
+
+    Future.delayed(const Duration(seconds: 5)).then((value) {
+      initTabController();
+      setState((){});
+    });
     super.initState();
+  }
+
+  void initTabController() {
+    tabController = TabController(
+      initialIndex: 0,
+      length: 3,
+      vsync: this,
+    );
   }
 
   List<String> _tabsTitle() {
@@ -76,7 +89,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       controller: tabController,
       tabBuilder: TextTabBuilder(
         texts: _tabsTitle(),
-        textAnimationDuration: Duration(milliseconds: 700),
+        textAnimationDuration: const Duration(milliseconds: 700),
         tabDecoration: (index, selected) {
           if (selected) {
             return BoxDecoration(
@@ -109,16 +122,15 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       ),
       indicator: TabIndicator(
           color: Colors.yellow, placeColor: Colors.grey, height: 3),
-      tabWidth: TabWidth.shrinkWrap(),
+      tabWidth: const TabWidth.shrinkWrap(),
       scrollable: true,
       tabHeight: 40.scaleA,
-      gapBuilder: (context, index) => Container(width: 10.scaleW),
-      header: Container(
-        width: 20.scaleW,
-      ),
-      footer: Container(
-        width: 20.scaleW,
-      ),
+      // header: Container(
+      //   width: 20.scaleW,
+      // ),
+      // footer: Container(
+      //   width: 20.scaleW,
+      // ),
     );
   }
 
@@ -137,14 +149,14 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         },
         tabTextStyle: (index, selected) {
           if (selected) {
-            return TextStyle(color: Colors.black, fontSize: 12);
+            return const TextStyle(color: Colors.black, fontSize: 12);
           } else {
-            return TextStyle(color: Colors.grey, fontSize: 12);
+            return const TextStyle(color: Colors.grey, fontSize: 12);
           }
         },
         // actions: ['1'],
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        margin: EdgeInsets.only(left: 10, right: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.only(left: 10, right: 10),
       ),
       gapBuilder: (context, index) {
         if (index == tabController.length - 1) {
@@ -152,7 +164,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         }
         return Container(width: 10);
       },
-      tabWidth: TabWidth.shrinkWrap(),
+      tabWidth: const TabWidth.shrinkWrap(),
       tabHeight: 40,
       scrollable: false,
       header: Container(
@@ -197,7 +209,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
                     color: isSelect ? Colors.black : Colors.grey,
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_back,
                   size: 20,
                 ),
@@ -212,7 +224,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
             );
           }
           return AnimatedSwitcher(
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             child: Container(
               key: ValueKey('$index$isSelect'),
               // padding: EdgeInsets.symmetric(horizontal: 20),
@@ -222,7 +234,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
           );
         },
         actionBuilder: (context, index) {
-          return Text(
+          return const Text(
             '1',
             style: TextStyle(
               color: Colors.black,
@@ -238,8 +250,8 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
             return BoxDecoration(color: Colors.green.withAlpha(100));
           }
         },
-        margin: EdgeInsets.only(left: 10, right: 10),
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        margin: const EdgeInsets.only(left: 10, right: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
       ),
       gapBuilder: (context, index) {
         if (index == tabController.length - 1) {
@@ -247,7 +259,7 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         }
         return Container(width: 10);
       },
-      tabWidth: TabWidth.shrinkWrap(),
+      tabWidth: const TabWidth.shrinkWrap(),
       tabHeight: 40,
       scrollable: false,
       indicator: TabIndicator(

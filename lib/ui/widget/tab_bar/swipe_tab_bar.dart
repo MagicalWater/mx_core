@@ -120,6 +120,8 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
     bindController(widget.controller);
     if (_tabController == null) {
       currentIndex = widget.currentIndex!;
+    } else {
+      currentIndex = _tabController!.index;
     }
     super.didUpdateWidget(oldWidget);
   }

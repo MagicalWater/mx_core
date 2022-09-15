@@ -223,7 +223,10 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
       }
       return;
     }
-    // print('rect = ${tabRectMap}, curr = $currentIndex');
+    // print('offset = $indexOffset, ${indexOffset?.floor()}, curr = $currentIndex');
+
+    // 指示器需要更新的位置
+    double? indStart, indEnd;
 
     if (indexOffset != null && indexOffset != currentIndex) {
       final indexShow = indexOffset!.floor();
@@ -232,12 +235,10 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
         final showRect = tabRectMap[indexShow];
 
         if (showRect == null) {
-          print('AbstractTabWidget: 無法獲取到 $indexShow 的區塊位置');
-          indicatorStart = 0;
-          indicatorEnd = 0;
+          print('AbstractTabWidget(0): 無法獲取到 $indexShow 的區塊位置');
         } else {
-          indicatorStart = showRect.left.divide(totalSize.width);
-          indicatorEnd = showRect.right.divide(totalSize.width);
+          indStart = showRect.left.divide(totalSize.width);
+          indEnd = showRect.right.divide(totalSize.width);
         }
       } else if (indexOffset! > currentIndex) {
         // 往前滑動, 需要計算偏移
@@ -249,21 +250,18 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
 
         if (showRect == null || nextRect == null) {
           print(
-              'AbstractTabWidget: 無法獲取到 $indexShow or ${indexShow + 1} 的區塊位置');
-          indicatorStart = 0;
-          indicatorEnd = 0;
+              'AbstractTabWidget(1): 無法獲取到 $indexShow or ${indexShow + 1} 的區塊位置');
         } else {
           // 計算依照偏移百分比計算
-          var percent = indexOffset! - indexShow;
-
-          var leftOffset =
+          final percent = indexOffset! - indexShow;
+          final leftOffset =
               nextRect.left.subtract(showRect.left).multiply(percent);
-          var rightOffset =
+          final rightOffset =
               nextRect.right.subtract(showRect.right).multiply(percent);
 
-          indicatorStart =
+          indStart =
               showRect.left.add(leftOffset).divide(totalSize.width);
-          indicatorEnd =
+          indEnd =
               showRect.right.add(rightOffset).divide(totalSize.width);
         }
       } else if (indexOffset! < currentIndex) {
@@ -273,9 +271,7 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
 
         if (showRect == null || preRect == null) {
           print(
-              'AbstractTabWidget: 無法獲取到 ${indexShow + 1} or $indexShow 的區塊位置');
-          indicatorStart = 0;
-          indicatorEnd = 0;
+              'AbstractTabWidget(2): 無法獲取到 ${indexShow + 1} or $indexShow 的區塊位置');
         } else {
           // 計算依照偏移百分比計算
           final percent = indexOffset! - indexShow;
@@ -285,21 +281,29 @@ mixin TabBarMixin<T extends AbstractTabWidget> on State<T> {
           final rightOffset =
               showRect.right.subtract(preRect.right).multiply(percent);
 
-          indicatorStart = preRect.left.add(leftOffset).divide(totalSize.width);
-          indicatorEnd = preRect.right.add(rightOffset).divide(totalSize.width);
+          indStart = preRect.left.add(leftOffset).divide(totalSize.width);
+          indEnd = preRect.right.add(rightOffset).divide(totalSize.width);
         }
       }
-    } else {
+    }
+
+    if (indStart == null || indEnd == null) {
+      // 代表當前的offset與當前的index一樣 或 無法取到當前indexOffset對應的tab位置
+      // 此時將以 currentIndex 為主
+
       final showRect = tabRectMap[currentIndex];
-      print('AbstractTabWidget: 無法獲取到 $currentIndex 的區塊位置');
       if (showRect == null) {
-        indicatorStart = 0;
-        indicatorEnd = 0;
+        print('AbstractTabWidget(3): 無法獲取到 $currentIndex 的區塊位置, ${StackTrace.current}');
+        indStart = 0;
+        indEnd = 0;
       } else {
-        indicatorStart = showRect.left.divide(totalSize.width);
-        indicatorEnd = showRect.right.divide(totalSize.width);
+        indStart = showRect.left.divide(totalSize.width);
+        indEnd = showRect.right.divide(totalSize.width);
       }
     }
+
+    indicatorStart = indStart;
+    indicatorEnd = indEnd;
   }
 
   /// 取得每個孩子的index

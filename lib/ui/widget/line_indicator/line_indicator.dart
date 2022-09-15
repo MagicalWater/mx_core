@@ -228,8 +228,8 @@ class _LineIndicatorState extends State<LineIndicator>
     }
 
     if (!widget.appearAnimation) {
-      var isStartAppear = currentStart == 0 || (currentStart == currentEnd);
-      var isEndAppear = currentEnd == 0 || (currentStart == currentEnd);
+      final isStartAppear = currentStart == 0 || (currentStart == currentEnd);
+      final isEndAppear = currentEnd == 0 || (currentStart == currentEnd);
 
       if (isStartAppear && isEndAppear) {
         currentStart = widget.start;
