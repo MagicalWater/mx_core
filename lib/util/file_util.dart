@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:mx_core/http/http_content.dart';
-import 'package:mx_core/http/http_util.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// 文件操作
@@ -66,28 +64,6 @@ class FileUtil {
     } else {
       return null;
     }
-  }
-
-  /// 從網路下載文件
-  static Future<File> writeFromNetwork({
-    required String name,
-    required HttpContent httpContent,
-  }) async {
-    File file;
-    var destination = httpContent.saveInPath;
-    if (destination != null) {
-      file = File(destination);
-    } else {
-      file = await (await _getFile(name)).create(recursive: true);
-      httpContent.saveInPath = file.path;
-    }
-    print("FileUtil - 準備連接取得資料 ${httpContent.url}");
-    final _ = await HttpUtil().connect(httpContent,
-        onReceiveProgress: (count, total) {
-//      print("下載進度: $count / $total");
-    });
-    print("FileUtil - 下載完畢, 存入 $file");
-    return file;
   }
 
   /// 取得緩存總大小

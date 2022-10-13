@@ -2,11 +2,9 @@ import 'router/router.dart';
 import 'util/screen_util.dart';
 
 export 'extension/extension.dart';
-export 'http/http.dart';
 export 'keyboard/keyboard.dart';
 export 'polling/polling.dart';
 export 'popup/popup.dart';
-export 'request/request.dart';
 export 'route_page/route_page.dart';
 export 'router/router.dart';
 export 'storage/storage.dart';

@@ -4,7 +4,6 @@ export 'db_util.dart';
 export 'file_util.dart';
 export 'local_notification_util.dart';
 export 'money_util.dart';
-export 'network_util.dart';
 export 'num_util/num_util.dart';
 export 'screen_util.dart';
 export 'uri_util.dart';
