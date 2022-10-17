@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mx_core/ui/widget/k_line_chart/k_line_chart.dart';
 import 'package:mx_core/util/date_util.dart';
+import 'package:mx_core/util/num_util/num_util.dart';
 
 export 'model/model.dart';
 export 'ui_style/k_line_data_tooltip_ui_style.dart';
@@ -19,6 +20,8 @@ class KLineDataInfoTooltip extends StatelessWidget {
   final String Function(num volume)? volumeFormatter;
 
   KLineData get data => longPressData.data;
+
+  KLineData? get prevData => longPressData.prevData;
 
   KLineDataTooltipColorSetting get colors => uiStyle.colorSetting;
 
@@ -85,8 +88,7 @@ class KLineDataInfoTooltip extends StatelessWidget {
               _close(),
               _high(),
               _low(),
-              _changedValue(),
-              _changedRate(),
+              _changedValueAndRate(),
               _volume(),
             ],
           ),
@@ -130,34 +132,63 @@ class KLineDataInfoTooltip extends StatelessWidget {
     );
   }
 
-  Widget _changedValue() {
-    final changedValue = data.close - data.open;
-    final isUp = changedValue >= 0;
-    var valueText = changedValue.toStringAsFixed(2);
-    if (isUp) {
-      valueText = '+$valueText';
+  Widget _changedValueAndRate() {
+    final prevClose = prevData?.close;
+    if (prevClose == null) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _item(
+            prefix: tooltipPrefix.changeValue,
+            value: '- -',
+            valueColor: colors.valueText,
+          ),
+          _item(
+            prefix: tooltipPrefix.changeRate,
+            value: '- -',
+            valueColor: colors.valueText,
+          ),
+        ],
+      );
+    }
+    final changedValue = data.close - prevClose;
+    Color valueColor, rateColor;
+    if (changedValue > 0) {
+      valueColor = colors.changedValueUp;
+      rateColor = colors.changedRateUp;
+    } else if (changedValue < 0) {
+      valueColor = colors.changedValueDown;
+      rateColor = colors.changedRateDown;
+    } else {
+      valueColor = colors.valueText;
+      rateColor = colors.valueText;
+    }
+    final changedRate = changedValue.divide(changedValue) * 100;
+
+    var changeValueText = priceFormatter(changedRate);
+    var changeRateText = '${changedRate.toStringAsFixed(2)}%';
+
+    if (changedValue >= 0) {
+      changeValueText = '+$changeValueText';
+      changeRateText = '+$changeRateText';
     }
 
-    return _item(
-        prefix: tooltipPrefix.changeValue,
-        value: valueText,
-        valueColor: isUp ? colors.changedValueUp : colors.changedValueDown);
-  }
-
-  Widget _changedRate() {
-    final changedValue = data.close - data.open;
-    final changedRate = changedValue / data.open * 100;
-
-    final isUp = changedValue >= 0;
-    var valueText = priceFormatter(changedRate);
-    if (isUp) {
-      valueText = '+$valueText';
-    }
-
-    return _item(
-      prefix: tooltipPrefix.changeRate,
-      value: valueText,
-      valueColor: isUp ? colors.changedRateUp : colors.changedRateDown,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _item(
+          prefix: tooltipPrefix.changeValue,
+          value: changeValueText,
+          valueColor: valueColor,
+        ),
+        _item(
+          prefix: tooltipPrefix.changeRate,
+          value: changeRateText,
+          valueColor: rateColor,
+        ),
+      ],
     );
   }
 
