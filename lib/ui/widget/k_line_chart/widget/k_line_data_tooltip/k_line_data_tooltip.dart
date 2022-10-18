@@ -164,7 +164,7 @@ class KLineDataInfoTooltip extends StatelessWidget {
       valueColor = colors.valueText;
       rateColor = colors.valueText;
     }
-    final changedRate = changedValue.divide(changedValue) * 100;
+    final changedRate = changedValue.divide(prevClose) * 100;
 
     var changeValueText = priceFormatter(changedRate);
     var changeRateText = '${changedRate.toStringAsFixed(2)}%';
