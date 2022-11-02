@@ -138,6 +138,9 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
   bool sideUpdate1 = false;
   bool sideUpdate2 = false;
 
+  /// 當前展示中的跑馬燈index
+  int? currentMarqueeIndex;
+
   @override
   void initState() {
     mainScrollController = ScrollController(initialScrollOffset: widget.height);
@@ -161,22 +164,12 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
   }
 
   Widget _coverWidget(Widget child, {int? index}) {
-    var conver = Container(
+    return Container(
       color: Colors.transparent,
       height: widget.height,
       alignment: Alignment.centerLeft,
       child: child,
     );
-    if (index != null) {
-      return GestureDetector(
-        onTap: () {
-          widget.onTap?.call(index);
-        },
-        child: conver,
-      );
-    } else {
-      return conver;
-    }
   }
 
   @override
@@ -258,58 +251,67 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      child: SizedBox(
-        height: widget.height,
-        child: SingleChildScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: mainScrollController,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: showWidget.indexMap((e, i) {
-                var controller = itemScrollController[i];
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        final currentIndex = currentMarqueeIndex;
+        if (currentIndex != null) {
+          widget.onTap?.call(currentIndex);
+        }
+      },
+      child: Align(
+        child: SizedBox(
+          height: widget.height,
+          child: SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: mainScrollController,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: showWidget.indexMap((e, i) {
+                  var controller = itemScrollController[i];
 
-                if (widget.fadeSide) {
-                  return ShaderMask(
-                    shaderCallback: (Rect bounds) {
-                      return const LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: <Color>[
-                          Colors.transparent,
-                          Colors.white,
-                          Colors.white,
-                          Colors.transparent,
-                        ],
-                        stops: [0, 0.01, 0.99, 1],
-                      ).createShader(
-                          bounds.shift(Offset(-bounds.left, -bounds.top)));
-                    },
-                    blendMode: BlendMode.dstIn,
-                    child: SingleChildScrollView(
+                  if (widget.fadeSide) {
+                    return ShaderMask(
+                      shaderCallback: (Rect bounds) {
+                        return const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: <Color>[
+                            Colors.transparent,
+                            Colors.white,
+                            Colors.white,
+                            Colors.transparent,
+                          ],
+                          stops: [0, 0.01, 0.99, 1],
+                        ).createShader(
+                            bounds.shift(Offset(-bounds.left, -bounds.top)));
+                      },
+                      blendMode: BlendMode.dstIn,
+                      child: SingleChildScrollView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        controller: controller,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: e,
+                        ),
+                      ),
+                    );
+                  } else {
+                    return SingleChildScrollView(
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       controller: controller,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 4),
-                        child: e,
-                      ),
-                    ),
-                  );
-                } else {
-                  return SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    controller: controller,
-                    child: e,
-                  );
-                }
-              }).toList(),
+                      child: e,
+                    );
+                  }
+                }).toList(),
+              ),
             ),
+            scrollDirection: Axis.vertical,
           ),
-          scrollDirection: Axis.vertical,
         ),
       ),
     );
@@ -373,6 +375,7 @@ class _MarqueeState extends State<Marquee> implements MarqueeController {
       } else {
         // 依序慢慢滾動
         for (int i = scrollStartIndex; i < showWidget.length - 1; i++) {
+          currentMarqueeIndex = i;
           var nextPosition = widget.height * (i + 1);
 
           if (i != 0) {

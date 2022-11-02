@@ -44,8 +44,8 @@ class _MarqueePageState extends State<MarqueePage> {
                 setState(() {});
               },
               child: Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Text(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Text(
                   "直式切換跑馬燈",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
@@ -58,10 +58,9 @@ class _MarqueePageState extends State<MarqueePage> {
                 setState(() {});
               },
               child: Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Text(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Text(
                   "添加跑馬燈",
-                  style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
             ),
@@ -72,8 +71,8 @@ class _MarqueePageState extends State<MarqueePage> {
                 setState(() {});
               },
               child: Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Text(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Text(
                   "變更邊界",
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
@@ -81,18 +80,18 @@ class _MarqueePageState extends State<MarqueePage> {
             ),
             Container(
               height: 60,
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.symmetric(horizontal: 6),
+              margin: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(horizontal: 6),
               decoration: BoxDecoration(
                 color: Colors.brown[700],
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Marquee.text(
                 velocity: 100,
-                style: TextStyle(fontSize: 20, color: Colors.white),
+                style: const TextStyle(fontSize: 20, color: Colors.white),
                 preset: changeSide ? '哈囉哈' : '看屁歐',
                 texts: marqueeList,
-                nextDuration: Duration(seconds: 1),
+                nextDuration: const Duration(seconds: 1),
                 height: 40.scaleA,
                 onCreated: (_) {},
                 onEnd: (times) {
