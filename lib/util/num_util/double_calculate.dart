@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:decimal/decimal.dart';
+
 import 'num_util.dart';
 
 extension DoubleCalculate on double {
@@ -34,7 +36,8 @@ extension DoubleCalculate on double {
   /// (10.0).decimalLength 會得到 0
   /// (10.10).decimalLength 會得到 1
   int get decimalLength {
-    var showString = toString();
+    final convertedNum = Decimal.parse(toString());
+    var showString = convertedNum.toString();
     var pointIndex = showString.indexOf('.');
     if (pointIndex == -1) {
       return 0;
