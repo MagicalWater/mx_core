@@ -25,7 +25,7 @@ mixin ChartPainterPaintMixin on ChartPainter {
   /// 下方長按時間軸畫筆
   final _longPressTimePaint = Paint()..isAntiAlias = true;
 
-  late final MainChartRender _mainChartRender;
+  MainChartRender? _mainChartRender;
 
   /// 繪製主圖表
   /// [pricePositionGetter] - 價格標示y軸位置獲取
@@ -34,11 +34,11 @@ mixin ChartPainterPaintMixin on ChartPainter {
     required Rect rect,
     PricePositionGetter? pricePositionGetter,
   }) {
-    _mainChartRender = MainChartRenderImpl(
+    _mainChartRender ??= MainChartRenderImpl(
       dataViewer: this,
       pricePositionGetter: pricePositionGetter,
     );
-    _mainChartRender.paint(canvas, rect);
+    _mainChartRender?.paint(canvas, rect);
   }
 
   /// 繪製拖拉高度比例bar的背景
@@ -106,7 +106,7 @@ mixin ChartPainterPaintMixin on ChartPainter {
       _crossLinePaint,
     );
 
-    _mainChartRender.paintLongPressHorizontalLineAndValue(canvas, mainChartRect);
+    _mainChartRender?.paintLongPressHorizontalLineAndValue(canvas, mainChartRect);
   }
 
   /// 繪製長按時間
