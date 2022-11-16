@@ -4,30 +4,33 @@ import 'package:decimal/decimal.dart';
 import 'num_util.dart';
 
 extension DoubleCalculate on double {
-  double add(double other) => NumUtil.add(this, other);
+  double add(num other) => NumUtil.add(this, other);
 
-  double subtract(double other) => NumUtil.subtract(this, other);
+  double subtract(num other) => NumUtil.subtract(this, other);
 
-  double multiply(double other) => NumUtil.multiply(this, other);
+  double multiply(num other) => NumUtil.multiply(this, other);
 
-  double divide(double other) => NumUtil.divide(this, other);
+  double divide(num other) => NumUtil.divide(this, other);
 
   /// 四捨五入到固定小數點
   double roundToFixed(int fractionDigits) {
-    var fac = pow(10, fractionDigits).toInt();
-    return (this * fac).round() / fac;
+    final fac = pow(10, fractionDigits).toInt();
+    final multipleFac = fac.multiply(this).round();
+    return multipleFac.divide(fac).toDouble();
   }
 
   /// 無條件捨去到固定小數點
   double floorToFixed(int fractionDigits) {
-    var fac = pow(10, fractionDigits).toInt();
-    return (this * fac).floor() / fac;
+    final fac = pow(10, fractionDigits).toInt();
+    final multipleFac = fac.multiply(this).floor();
+    return multipleFac.divide(fac).toDouble();
   }
 
   /// 無條件進位到固定小數點
   double ceilToFixed(int fractionDigits) {
-    var fac = pow(10, fractionDigits).toInt();
-    return (this * fac).ceil() / fac;
+    final fac = pow(10, fractionDigits).toInt();
+    final multipleFac = fac.multiply(this).ceil();
+    return multipleFac.divide(fac).toDouble();
   }
 
   /// 取得小數點有幾位
