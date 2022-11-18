@@ -8,27 +8,25 @@ class TopDesc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InfoPopup(
-      child: FractionallySizedBox(
-        widthFactor: 1,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xff2b9eda),
-                Color(0xff68c3fb),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            borderRadius: BorderRadius.circular(12),
+    return FractionallySizedBox(
+      widthFactor: 1,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xff2b9eda),
+              Color(0xff68c3fb),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          margin: EdgeInsets.all(12),
-          padding: EdgeInsets.all(12),
-          child: Text(
-            content,
-            style: TextStyle(color: Colors.white, fontSize: 14),
-          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: EdgeInsets.all(12),
+        padding: EdgeInsets.all(12),
+        child: Text(
+          content,
+          style: TextStyle(color: Colors.white, fontSize: 14),
         ),
       ),
     );

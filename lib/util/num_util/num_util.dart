@@ -1,7 +1,10 @@
 import 'package:decimal/decimal.dart';
+import 'package:rational/rational.dart';
 
-export 'num_calculate.dart';
+export 'package:rational/rational.dart';
+
 export 'double_calculate.dart';
+export 'num_calculate.dart';
 
 /// 來源 https://github.com/Sky24n
 /// 原作者 Sky24n
@@ -75,9 +78,18 @@ class NumUtil {
     return Decimal.parse(a) * Decimal.parse(b);
   }
 
-  /// 除
-  static Decimal divideDecStr(String a, String b) {
-    return Decimal.parse(a) / Decimal.parse(b);
+  /// 除(除法可能出現有理數, 因此需要做轉換)
+  static Decimal divideDecStr(
+    String a,
+    String b, {
+    int? scaleOnInfinitePrecision,
+    BigInt Function(Rational rational)? toBigInt,
+  }) {
+    final value = Decimal.parse(a) / Decimal.parse(b);
+    return value.toDecimal(
+      scaleOnInfinitePrecision: scaleOnInfinitePrecision,
+      toBigInt: toBigInt,
+    );
   }
 
   /// 余数

@@ -8,16 +8,16 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  bot_toast: "^4.0.1"
+  bot_toast: ^4.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mx_core:
     path: "../"
-  build_runner: "^2.1.2"
-  flutter_bloc: ^7.3.3
-  equatable: ^2.0.3
-  flutter_lints: "^1.0.0"
+  build_runner: ^2.3.2
+  flutter_bloc: ^8.1.1
+  equatable: ^2.0.5
+  flutter_lints: ^2.0.1
 flutter:
   uses-material-design: true
   assets:
