@@ -7,5 +7,15 @@ extension NumCalculate on num {
 
   num multiply(num other) => NumUtil.multiply(this, other);
 
-  num divide(num other) => NumUtil.divide(this, other);
+  num divide(
+    num other, {
+    int? scaleOnInfinitePrecision = 10,
+    BigInt Function(Rational rational)? toBigInt,
+  }) =>
+      NumUtil.divide(
+        this,
+        other,
+        scaleOnInfinitePrecision: scaleOnInfinitePrecision,
+        toBigInt: toBigInt,
+      );
 }

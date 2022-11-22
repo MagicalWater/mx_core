@@ -30,8 +30,18 @@ class NumUtil {
 
   /// 除 (精确相除,防止精度丢失).
   /// divide (without loosing precision).
-  static double divide(num a, num b) {
-    return divideDec(a, b).toDouble();
+  static double divide(
+    num a,
+    num b, {
+    int? scaleOnInfinitePrecision = 10,
+    BigInt Function(Rational rational)? toBigInt,
+  }) {
+    return divideDec(
+      a,
+      b,
+      scaleOnInfinitePrecision: scaleOnInfinitePrecision,
+      toBigInt: toBigInt,
+    ).toDouble();
   }
 
   /// 加 (精确相加,防止精度丢失).
@@ -54,8 +64,18 @@ class NumUtil {
 
   /// 除 (精确相除,防止精度丢失).
   /// divide (without loosing precision).
-  static Decimal divideDec(num a, num b) {
-    return divideDecStr(a.toString(), b.toString());
+  static Decimal divideDec(
+    num a,
+    num b, {
+    int? scaleOnInfinitePrecision = 10,
+    BigInt Function(Rational rational)? toBigInt,
+  }) {
+    return divideDecStr(
+      a.toString(),
+      b.toString(),
+      scaleOnInfinitePrecision: scaleOnInfinitePrecision,
+      toBigInt: toBigInt,
+    );
   }
 
   /// 余数
@@ -79,10 +99,11 @@ class NumUtil {
   }
 
   /// 除(除法可能出現有理數, 因此需要做轉換)
+  /// [scaleOnInfinitePrecision] - 當除不盡時, 最大計算到小數點幾位
   static Decimal divideDecStr(
     String a,
     String b, {
-    int? scaleOnInfinitePrecision,
+    int? scaleOnInfinitePrecision = 10,
     BigInt Function(Rational rational)? toBigInt,
   }) {
     final value = Decimal.parse(a) / Decimal.parse(b);

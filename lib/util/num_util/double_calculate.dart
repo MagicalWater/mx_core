@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:decimal/decimal.dart';
 
 import 'num_util.dart';
@@ -10,7 +11,17 @@ extension DoubleCalculate on double {
 
   double multiply(num other) => NumUtil.multiply(this, other);
 
-  double divide(num other) => NumUtil.divide(this, other);
+  double divide(
+    num other, {
+    int? scaleOnInfinitePrecision = 10,
+    BigInt Function(Rational rational)? toBigInt,
+  }) =>
+      NumUtil.divide(
+        this,
+        other,
+        scaleOnInfinitePrecision: scaleOnInfinitePrecision,
+        toBigInt: toBigInt,
+      );
 
   /// 四捨五入到固定小數點
   double roundToFixed(int fractionDigits) {
