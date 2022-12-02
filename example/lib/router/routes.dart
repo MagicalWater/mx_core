@@ -86,9 +86,6 @@ class Pages {
   /// 子彈頭渲染
   static const bulletShape = "/bulletShape";
 
-  /// k線圖表
-  static const kChart = "/kChart";
-
   /// 強制置中元件
   static const forceCenterLayout = "/threePointLayout";
 

@@ -8,7 +8,6 @@ import 'package:mx_core_example/ui/page/bullet_shape/bullet_touch.dart';
 import 'package:mx_core_example/ui/page/coordinate_layout/coordinate_layout.dart';
 import 'package:mx_core_example/ui/page/force_center_layout/force_center_layout.dart';
 import 'package:mx_core_example/ui/page/introduction/introduction.dart';
-import 'package:mx_core_example/ui/page/k_chart/k_chart.dart';
 import 'package:mx_core_example/ui/page/lib_ease_refresh/lib_ease_refresh.dart';
 import 'package:mx_core_example/ui/page/line_indicator/line_indicator.dart';
 import 'package:mx_core_example/ui/page/load_provider/load_provider.dart';
@@ -65,7 +64,6 @@ class RouteWidget implements RouteWidgetBase {
     Pages.tabBar,
     Pages.lineIndicator,
     Pages.bulletShape,
-    Pages.kChart,
     Pages.routePushThird,
     Pages.statefulButton,
     Pages.waveProgress,
@@ -191,12 +189,6 @@ class RouteWidget implements RouteWidgetBase {
         return RouterMiddler(
           childBuilder: (context) => BulletShapePage(option),
           routeBuilder: () => BulletShapeRoute(option),
-          key: key,
-        );
-      case Pages.kChart:
-        return RouterMiddler(
-          childBuilder: (context) => KChartPage(option),
-          routeBuilder: () => KChartRoute(option),
           key: key,
         );
       case Pages.routePushThird:

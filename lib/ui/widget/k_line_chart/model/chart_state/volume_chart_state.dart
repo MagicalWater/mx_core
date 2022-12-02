@@ -1,4 +1,0 @@
-enum VolumeChartState {
-  volume,
-  none,
-}
