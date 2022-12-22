@@ -131,7 +131,8 @@ class Screen {
         orientationListener?.call(afterOrientation);
       }
 
-      print('''
+      if (printLog) {
+        print('''
 ════════════ 螢幕資訊 ════════════
 寬高密 $_screenW x $_screenH x $_screenD
 狀態欄 $_statusBarH
@@ -139,6 +140,7 @@ class Screen {
 AppBar $appBarHeight
 ═════════════════════════════════
       ''');
+      }
 
       _isInit = true;
     }
