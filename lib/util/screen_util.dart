@@ -93,7 +93,7 @@ class Screen {
   }
 
   /// 初始化螢幕相關數值
-  static void init() {
+  static void init([bool printLog = true]) {
     // 一般在 runApp 時會呼叫 [WidgetsFlutterBinding.ensureInitialized()]
     // 此方法會進行 WidgetsBinding 的初始化, 並賦予 WidgetsBinding.instance 值
     // 但可以先在 runApp 之前即執行此方法, 讓我們可以先取得 WidgetsBinding
@@ -118,17 +118,17 @@ class Screen {
       _appBarH = kToolbarHeight;
 
       if (_isInit) {
-        var _beforeOrientation = _mediaQueryData.orientation;
+        final beforeOrientation = _mediaQueryData.orientation;
         _mediaQueryData = mediaQuery;
-        var _afterOrientation = _mediaQueryData.orientation;
+        final afterOrientation = _mediaQueryData.orientation;
 
-        if (_beforeOrientation != _afterOrientation) {
-          orientationListener?.call(_afterOrientation);
+        if (beforeOrientation != afterOrientation) {
+          orientationListener?.call(afterOrientation);
         }
       } else {
         _mediaQueryData = mediaQuery;
-        var _afterOrientation = _mediaQueryData.orientation;
-        orientationListener?.call(_afterOrientation);
+        final afterOrientation = _mediaQueryData.orientation;
+        orientationListener?.call(afterOrientation);
       }
 
       print('''
@@ -234,7 +234,7 @@ AppBar $appBarHeight
 class _ScreenBinding with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
-    Screen.init();
+    Screen.init(false);
     super.didChangeMetrics();
   }
 }
