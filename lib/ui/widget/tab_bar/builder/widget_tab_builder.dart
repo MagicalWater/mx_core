@@ -35,7 +35,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
 
   /// 是否需有點擊回饋
   @override
-  final bool enableFeedback;
+  final bool tapColorFeedback;
 
   WidgetTabBuilder({
     required this.tabBuilder,
@@ -46,7 +46,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
     this.padding,
     this.margin,
     this.actionCount = 0,
-    this.enableFeedback = true,
+    this.tapColorFeedback = true,
   }) : assert(tabCount > 0 &&
             ((actionCount > 0 && actionBuilder != null) || actionCount == 0));
 
@@ -113,20 +113,15 @@ class WidgetTabBuilder implements SwipeTabBuilder {
       size: Size(size.width, size.height),
       child: Padding(
         padding: margin ?? EdgeInsets.zero,
-        child: Material(
-          type: MaterialType.transparency,
-          color: Colors.transparent,
-          child: InkWell(
-            enableFeedback: enableFeedback,
-            borderRadius: getBorderRadius(decoration),
-            onTap: onTap,
-            child: Container(
-              width: size.width + 0.5,
-              height: size.height,
-              alignment: Alignment.center,
-              padding: padding,
-              child: actionBuilder!(context, index),
-            ),
+        child: _tappable(
+          borderRadius: getBorderRadius(decoration),
+          onTap: onTap,
+          child: Container(
+            width: size.width + 0.5,
+            height: size.height,
+            alignment: Alignment.center,
+            padding: padding,
+            child: actionBuilder!(context, index),
           ),
         ),
       ),
@@ -174,20 +169,14 @@ class WidgetTabBuilder implements SwipeTabBuilder {
       size: Size(size.width, size.height),
       child: Padding(
         padding: margin ?? EdgeInsets.zero,
-        child: Material(
-          type: MaterialType.transparency,
-          color: Colors.transparent,
-          child: InkWell(
-            enableFeedback: enableFeedback,
-            borderRadius: getBorderRadius(decoration),
-            onTap: onTap,
-            child: Container(
-              padding: padding,
-              width: size.width + 0.5,
-              height: size.height,
-              alignment: Alignment.center,
-              child: tabBuilder(context, index, selected, true),
-            ),
+        child: _tappable(
+          onTap: onTap,
+          child: Container(
+            padding: padding,
+            width: size.width + 0.5,
+            height: size.height,
+            alignment: Alignment.center,
+            child: tabBuilder(context, index, selected, true),
           ),
         ),
       ),
@@ -200,5 +189,29 @@ class WidgetTabBuilder implements SwipeTabBuilder {
           BorderRadius.circular(9999);
     }
     return BorderRadius.zero;
+  }
+
+  Widget _tappable({
+    required Widget child,
+    BorderRadius? borderRadius,
+    VoidCallback? onTap,
+  }) {
+    if (tapColorFeedback) {
+      return Material(
+        type: MaterialType.transparency,
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: borderRadius,
+          onTap: onTap,
+          child: child,
+        ),
+      );
+    } else {
+      return GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: onTap,
+        child: child,
+      );
+    }
   }
 }
