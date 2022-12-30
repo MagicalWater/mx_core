@@ -89,7 +89,7 @@ class SwipeTabBar extends AbstractTabWidget {
   }
 
   @override
-  _SwipeTabBarState createState() => _SwipeTabBarState();
+  State<SwipeTabBar> createState() => _SwipeTabBarState();
 }
 
 class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {

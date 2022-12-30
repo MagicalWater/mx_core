@@ -32,6 +32,9 @@ abstract class SwipeTabBuilder implements _BaseBuilder {
 
   EdgeInsets? get margin;
 
+  /// 是否需有點擊回饋
+  bool get enableFeedback;
+
   Widget buildTabBackground({
     required BuildContext context,
     required bool selected,

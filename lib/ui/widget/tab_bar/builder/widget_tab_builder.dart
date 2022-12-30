@@ -33,6 +33,10 @@ class WidgetTabBuilder implements SwipeTabBuilder {
   @override
   final EdgeInsets? margin;
 
+  /// 是否需有點擊回饋
+  @override
+  final bool enableFeedback;
+
   WidgetTabBuilder({
     required this.tabBuilder,
     required this.tabCount,
@@ -42,6 +46,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
     this.padding,
     this.margin,
     this.actionCount = 0,
+    this.enableFeedback = true,
   }) : assert(tabCount > 0 &&
             ((actionCount > 0 && actionBuilder != null) || actionCount == 0));
 
@@ -112,6 +117,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
           type: MaterialType.transparency,
           color: Colors.transparent,
           child: InkWell(
+            enableFeedback: enableFeedback,
             borderRadius: getBorderRadius(decoration),
             onTap: onTap,
             child: Container(
@@ -172,6 +178,7 @@ class WidgetTabBuilder implements SwipeTabBuilder {
           type: MaterialType.transparency,
           color: Colors.transparent,
           child: InkWell(
+            enableFeedback: enableFeedback,
             borderRadius: getBorderRadius(decoration),
             onTap: onTap,
             child: Container(

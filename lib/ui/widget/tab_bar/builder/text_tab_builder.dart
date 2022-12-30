@@ -34,6 +34,7 @@ class TextTabBuilder extends WidgetTabBuilder {
     Duration textAnimationDuration = const Duration(milliseconds: 300),
     Curve textAnimationCurve = Curves.fastOutSlowIn,
     this.actionTextStyle,
+    bool enableFeedback = true,
   }) : super(
           tabBuilder: (
             BuildContext context,
@@ -78,5 +79,6 @@ class TextTabBuilder extends WidgetTabBuilder {
           margin: margin,
           tabCount: texts.length,
           actionCount: actions?.length ?? 0,
+          enableFeedback: enableFeedback,
         );
 }
