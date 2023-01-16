@@ -38,9 +38,9 @@ enum _LoadMethod {
 }
 
 class LoadProvider extends StatefulWidget {
-  /// 當 [method]為[_LoadMethod.root]時
+  /// 當 [_method]為[_LoadMethod.root]時
   /// 可以透過 [LoadProvider.setRootLoad] 的方式顯示/隱藏
-  final _LoadMethod method;
+  final _LoadMethod _method;
 
   final Widget child;
   final LoadController? controller;
@@ -67,7 +67,7 @@ class LoadProvider extends StatefulWidget {
     this.controller,
     this.tapThrough = false,
     this.builder,
-  })  : method = _LoadMethod.controller,
+  })  : _method = _LoadMethod.controller,
         value = initValue ?? false,
         super(key: key);
 
@@ -77,7 +77,7 @@ class LoadProvider extends StatefulWidget {
     this.style,
     this.tapThrough = false,
     this.builder,
-  })  : method = _LoadMethod.root,
+  })  : _method = _LoadMethod.root,
         controller = null,
         value = false,
         super(key: key);
@@ -89,7 +89,7 @@ class LoadProvider extends StatefulWidget {
     this.style,
     this.tapThrough = false,
     this.builder,
-  })  : method = _LoadMethod.value,
+  })  : _method = _LoadMethod.value,
         controller = null,
         super(key: key);
 
@@ -110,7 +110,7 @@ class LoadProvider extends StatefulWidget {
   }
 
   @override
-  _LoadProviderState createState() => _LoadProviderState();
+  State<LoadProvider> createState() => _LoadProviderState();
 }
 
 class _LoadProviderState extends State<LoadProvider>
@@ -135,7 +135,7 @@ class _LoadProviderState extends State<LoadProvider>
 
     loadStream = _loadStreamController.stream.asBroadcastStream();
 
-    switch (widget.method) {
+    switch (widget._method) {
       case _LoadMethod.controller:
         _currentShow = widget.value;
         break;
@@ -155,7 +155,7 @@ class _LoadProviderState extends State<LoadProvider>
       vsync: this,
     );
 
-    switch (widget.method) {
+    switch (widget._method) {
       case _LoadMethod.controller:
         widget.controller?._bind = this;
         break;
@@ -172,7 +172,7 @@ class _LoadProviderState extends State<LoadProvider>
 
   @override
   void didUpdateWidget(covariant LoadProvider oldWidget) {
-    if (widget.method == _LoadMethod.value && _currentShow != widget.value) {
+    if (widget._method == _LoadMethod.value && _currentShow != widget.value) {
       _currentShow = widget.value;
       // print('變更: $_currentShow');
       if (_currentShow) {
@@ -186,7 +186,7 @@ class _LoadProviderState extends State<LoadProvider>
 
   @override
   Widget build(BuildContext context) {
-    Widget loadBuilder = StreamBuilder<bool>(
+    Widget content = StreamBuilder<bool>(
       initialData: _currentShow,
       stream: loadStream,
       builder: (context, snapshot) {
@@ -195,8 +195,8 @@ class _LoadProviderState extends State<LoadProvider>
           loadAttach = Container(
             color: Colors.transparent,
             alignment: Alignment.center,
-            child: _defaultLoadingBuilder?.call(context, _currentStyle) ??
-                widget.builder?.call(context, _currentStyle) ??
+            child: widget.builder?.call(context, _currentStyle) ??
+                _defaultLoadingBuilder?.call(context, _currentStyle) ??
                 Loading.circle(
                   color: _currentStyle.color,
                   size: _currentStyle.size,
@@ -208,66 +208,60 @@ class _LoadProviderState extends State<LoadProvider>
 
         loadAttach = AnimatedComb.quick(
           alignment: Alignment.center,
-          child: loadAttach,
           sync: _animatedSync,
           scale: Comb.scale(
             begin: Size.zero,
             end: const Size.square(1),
           ),
+          child: loadAttach,
         );
 
         if (_currentStyle.maskColor != null) {
           loadAttach = AnimatedComb.quick(
             alignment: Alignment.center,
-            child: loadAttach,
             color: Comb.color(
               begin: Colors.transparent,
               end: _currentStyle.maskColor ?? Colors.transparent,
             ),
             sync: _animatedSync,
+            child: loadAttach,
           );
-//          stack.add(maskAttach);
         }
 
-//        stack.add(loadAttach);
+        final hasPos = (_showPos != null) && (_showSize != null);
 
-        var hasPos = (_showPos != null) && (_showSize != null);
-
-        return Positioned.fill(
+        final loadingWidget = Positioned.fill(
           left: _showPos?.dx ?? 0,
           top: _showPos?.dy ?? 0,
-          right: hasPos
-              ? (Screen.width - (_showPos!.dx + _showSize!.width))
-              : 0,
-          bottom: hasPos
-              ? (Screen.height - (_showPos!.dy + _showSize!.height))
-              : 0,
-          child: IgnorePointer(
-            ignoring: !_currentShow || widget.tapThrough,
-            child: loadAttach,
-          ),
+          right:
+              hasPos ? (Screen.width - (_showPos!.dx + _showSize!.width)) : 0,
+          bottom:
+              hasPos ? (Screen.height - (_showPos!.dy + _showSize!.height)) : 0,
+          child: loadAttach,
+        );
+
+        final childWidget = IgnorePointer(
+          ignoring: _currentShow && !widget.tapThrough,
+          child: widget.child,
+        );
+
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            childWidget,
+            loadingWidget,
+          ],
         );
       },
     );
 
-    var stackWidget = <Widget>[];
-//    var aa = Positioned.fill(child: Container(color: Colors.green,));
-//    stackWidget.add(aa);
-    stackWidget.add(widget.child);
-    stackWidget.add(loadBuilder);
-
-    var stack = Stack(
-      alignment: Alignment.center,
-      children: stackWidget,
-    );
-
-    if (widget.method == _LoadMethod.root) {
+    if (widget._method == _LoadMethod.root) {
       return Directionality(
         textDirection: TextDirection.ltr,
-        child: stack,
+        child: content,
       );
     } else {
-      return stack;
+      return content;
     }
   }
 
@@ -301,10 +295,12 @@ class _LoadProviderState extends State<LoadProvider>
     }
 
     await Future.delayed(Duration.zero);
-    await _attach(attach);
-    _currentShow = true;
-    _loadStreamController.add(_currentShow);
-    await _animatedSync.toggle(true);
+    if (mounted) {
+      await _attach(attach);
+      _currentShow = true;
+      _loadStreamController.add(_currentShow);
+      await _animatedSync.toggle(true);
+    }
   }
 
   Future<void> hide() async {
@@ -314,7 +310,7 @@ class _LoadProviderState extends State<LoadProvider>
     _loadStreamController.add(_currentShow);
   }
 
-  FutureOr<void> _attach(BuildContext? context) async {
+  Future<void> _attach(BuildContext? context) async {
     if (context == null) {
       _showPos = null;
       _showSize = null;
@@ -325,7 +321,19 @@ class _LoadProviderState extends State<LoadProvider>
     if (selfBox == null || !selfBox.hasSize) {
       print("box 為 null 或尚未有 size, 進行等待");
       await _waitWidgetRender();
-      selfBox = context.findRenderObject() as RenderBox?;
+      if (mounted) {
+        selfBox = context.findRenderObject() as RenderBox?;
+      } else {
+        _showPos = null;
+        _showSize = null;
+        return;
+      }
+    }
+
+    if (!mounted) {
+      _showPos = null;
+      _showSize = null;
+      return;
     }
 
     RenderBox? parentScrollBox = context
