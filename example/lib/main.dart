@@ -88,7 +88,7 @@ class App extends StatelessWidget {
             //   },
             // ),
           ),
-          home: appRouter.getPage(Pages.marquee, entryPoint: true),
+          home: appRouter.getPage(Pages.loadProvider, entryPoint: true),
         ),
       ),
     );

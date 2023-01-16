@@ -237,7 +237,10 @@ class _LoadProviderState extends State<LoadProvider>
               hasPos ? (Screen.width - (_showPos!.dx + _showSize!.width)) : 0,
           bottom:
               hasPos ? (Screen.height - (_showPos!.dy + _showSize!.height)) : 0,
-          child: loadAttach,
+          child: IgnorePointer(
+            ignoring: !_currentShow || widget.tapThrough,
+            child: loadAttach,
+          ),
         );
 
         final childWidget = IgnorePointer(

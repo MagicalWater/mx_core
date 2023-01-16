@@ -61,38 +61,40 @@ class _LoadProviderPageState extends State<LoadProviderPage> {
   }
 
   Widget _withValue() {
-    return LoadProvider.value(
-      value: singleLoadValue,
-      tapThrough: true,
-      style: LoadStyle(
-        maskColor: Colors.blueAccent.withAlpha(100),
-      ),
-      child: MaterialLayer.single(
-        layer: LayerProperties(
-          margin: EdgeInsets.only(left: 20, right: 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            gradient: LinearGradient(
-              colors: [Color(0xff8c6018), Color(0xff8c6018)],
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: LoadProvider.value(
+        value: singleLoadValue,
+        tapThrough: true,
+        style: LoadStyle(
+          maskColor: Colors.blueAccent.withAlpha(100),
+        ),
+        child: MaterialLayer.single(
+          layer: LayerProperties(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              gradient: const LinearGradient(
+                colors: [Color(0xff8c6018), Color(0xff8c6018)],
+              ),
             ),
           ),
-        ),
-        child: Builder(
-          builder: (context) {
-            return Container(
-              height: 100,
-              alignment: Alignment.center,
-              child: Text(
-                "點擊 ${singleLoadValue ? "隱藏" : "顯示"} 讀取元件",
-                style: TextStyle(fontSize: 20, color: Colors.white),
-              ),
-            );
+          child: Builder(
+            builder: (context) {
+              return Container(
+                height: 100,
+                alignment: Alignment.center,
+                child: Text(
+                  "點擊 ${singleLoadValue ? "隱藏" : "顯示"} 讀取元件",
+                  style: const TextStyle(fontSize: 20, color: Colors.white),
+                ),
+              );
+            },
+          ),
+          onTap: () {
+            singleLoadValue = !singleLoadValue;
+            setState(() {});
           },
         ),
-        onTap: () {
-          singleLoadValue = !singleLoadValue;
-          setState(() {});
-        },
       ),
     );
   }
