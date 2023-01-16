@@ -186,7 +186,7 @@ class _LoadProviderState extends State<LoadProvider>
 
   @override
   Widget build(BuildContext context) {
-    Widget content = StreamBuilder<bool>(
+    Widget loadBuilder = StreamBuilder<bool>(
       initialData: _currentShow,
       stream: loadStream,
       builder: (context, snapshot) {
@@ -226,11 +226,14 @@ class _LoadProviderState extends State<LoadProvider>
             sync: _animatedSync,
             child: loadAttach,
           );
+//          stack.add(maskAttach);
         }
+
+//        stack.add(loadAttach);
 
         final hasPos = (_showPos != null) && (_showSize != null);
 
-        final loadingWidget = Positioned.fill(
+        return Positioned.fill(
           left: _showPos?.dx ?? 0,
           top: _showPos?.dy ?? 0,
           right:
@@ -242,29 +245,25 @@ class _LoadProviderState extends State<LoadProvider>
             child: loadAttach,
           ),
         );
-
-        final childWidget = IgnorePointer(
-          ignoring: _currentShow && !widget.tapThrough,
-          child: widget.child,
-        );
-
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            childWidget,
-            loadingWidget,
-          ],
-        );
       },
+    );
+
+    final stackWidget = <Widget>[];
+    stackWidget.add(widget.child);
+    stackWidget.add(loadBuilder);
+
+    final stack = Stack(
+      alignment: Alignment.center,
+      children: stackWidget,
     );
 
     if (widget._method == _LoadMethod.root) {
       return Directionality(
         textDirection: TextDirection.ltr,
-        child: content,
+        child: stack,
       );
     } else {
-      return content;
+      return stack;
     }
   }
 
@@ -313,7 +312,7 @@ class _LoadProviderState extends State<LoadProvider>
     _loadStreamController.add(_currentShow);
   }
 
-  Future<void> _attach(BuildContext? context) async {
+  FutureOr<void> _attach(BuildContext? context) async {
     if (context == null) {
       _showPos = null;
       _showSize = null;
@@ -326,41 +325,34 @@ class _LoadProviderState extends State<LoadProvider>
       await _waitWidgetRender();
       if (mounted) {
         selfBox = context.findRenderObject() as RenderBox?;
-      } else {
-        _showPos = null;
-        _showSize = null;
-        return;
       }
     }
+    RenderBox? parentScrollBox;
 
-    if (!mounted) {
-      _showPos = null;
-      _showSize = null;
-      return;
+    if (mounted) {
+      parentScrollBox = context
+          .findAncestorStateOfType<ScrollableState>()
+          ?.context
+          .findRenderObject()! as RenderBox?;
     }
-
-    RenderBox? parentScrollBox = context
-        .findAncestorStateOfType<ScrollableState>()
-        ?.context
-        .findRenderObject()! as RenderBox?;
 
     var selfPos = selfBox!.localToGlobal(Offset.zero);
     var selfSize = selfBox.size;
 //  print("檢測 兒子 size = $selfSize, pos = $selfPos");
 
     if (parentScrollBox != null) {
-      var parentPos = parentScrollBox.localToGlobal(Offset.zero);
-      var parentSize = parentScrollBox.size;
+      final parentPos = parentScrollBox.localToGlobal(Offset.zero);
+      final parentSize = parentScrollBox.size;
 
-      var left = max(selfPos.dx, parentPos.dx);
-      var top = max(selfPos.dy, parentPos.dy);
+      final left = max(selfPos.dx, parentPos.dx);
+      final top = max(selfPos.dy, parentPos.dy);
 
-      var right = min(
+      final right = min(
         selfPos.dx + selfSize.width,
         parentPos.dx + parentSize.width,
       );
 
-      var bottom = min(
+      final bottom = min(
         selfPos.dy + selfSize.height,
         parentPos.dy + parentSize.height,
       );
