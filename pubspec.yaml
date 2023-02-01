@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 7.1.1+1
+version: 7.1.1+2
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -66,8 +66,15 @@ flutter:
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
-    androidPackage: com.water.mx_core
-    pluginClass: MxCorePlugin
+    platforms:
+      android:
+        package: com.water.mx_core
+        pluginClass: MxCorePlugin
+      ios:
+        pluginClass: MxCorePlugin
+      web:
+        pluginClass: MxCoreWeb
+        fileName: mx_core_web.dart
 
   # To add assets to your plugin package, add an assets section, like this:
   #  assets:
