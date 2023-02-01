@@ -68,11 +68,11 @@ class Pages {
   /// 波浪進度條
   static const waveProgress = "/waveProgress";
 
-  /// 刷新元件 refreshView
-  static const refreshView = "/refreshView";
-
-  /// 介紹第三方庫 flutter_easyrefresh
-  static const libEaseRefresh = "/libEaseRefresh";
+  // /// 刷新元件 refreshView
+  // static const refreshView = "/refreshView";
+  //
+  // /// 介紹第三方庫 flutter_easyrefresh
+  // static const libEaseRefresh = "/libEaseRefresh";
 
   /// SpanGrid
   static const spanGrid = "/spanGrid";

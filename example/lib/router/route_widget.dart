@@ -67,8 +67,8 @@ class RouteWidget implements RouteWidgetBase {
     Pages.routePushThird,
     Pages.statefulButton,
     Pages.waveProgress,
-    Pages.refreshView,
-    Pages.libEaseRefresh,
+    // Pages.refreshView,
+    // Pages.libEaseRefresh,
     Pages.routePushSub1,
     Pages.routePushSub2,
     Pages.routePushSub3,
@@ -209,18 +209,18 @@ class RouteWidget implements RouteWidgetBase {
           routeBuilder: () => WaveProgressRoute(option),
           key: key,
         );
-      case Pages.refreshView:
-        return RouterMiddler(
-          childBuilder: (context) => RefreshViewPage(option),
-          routeBuilder: () => RefreshViewRoute(option),
-          key: key,
-        );
-      case Pages.libEaseRefresh:
-        return RouterMiddler(
-          childBuilder: (context) => LibEaseRefreshPage(option),
-          routeBuilder: () => LibEaseRefreshRoute(option),
-          key: key,
-        );
+      // case Pages.refreshView:
+      //   return RouterMiddler(
+      //     childBuilder: (context) => RefreshViewPage(option),
+      //     routeBuilder: () => RefreshViewRoute(option),
+      //     key: key,
+      //   );
+      // case Pages.libEaseRefresh:
+      //   return RouterMiddler(
+      //     childBuilder: (context) => LibEaseRefreshPage(option),
+      //     routeBuilder: () => LibEaseRefreshRoute(option),
+      //     key: key,
+      //   );
       case Pages.routePushSub1:
         return RouterMiddler(
           childBuilder: (context) => RoutePushSub1Page(option),

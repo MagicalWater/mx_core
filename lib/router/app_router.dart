@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/router/router.dart';
 import 'package:mx_core/ui/widget/navigator_provider.dart';
-import 'package:mx_core/util/util.dart';
 import 'package:rxdart/rxdart.dart';
 
 MixinRouteBuilder? _defaultRouteBuilder;
@@ -108,6 +107,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
   }
 
   /// 路由監聽, 請將此參數加入MaterialApp.navigatorObservers
+  // ignore: library_private_types_in_public_api
   final _MxCoreRouteObservable observable = _MxCoreRouteObservable._();
 
   /// 頁面詳細跳轉
@@ -624,8 +624,8 @@ class AppRouter implements AppRouterBase, RoutePageBase {
         (element) => RouteCompute.isAncestorRoute(element.route));
 
     if (endIndex != -1) {
-      var _sub = _subPageListener.sublist(0, endIndex);
-      var startIndex = _sub.lastIndexWhere(
+      var sub = _subPageListener.sublist(0, endIndex);
+      var startIndex = sub.lastIndexWhere(
           (element) => RouteCompute.isAncestorRoute(element.route));
 
       if (startIndex != -1 &&
@@ -712,8 +712,8 @@ class AppRouter implements AppRouterBase, RoutePageBase {
 
 class _MxCoreRouteObservable extends NavigatorObserver {
   /// 回退檢測觸發
-  ValueCallback<String?>? _onDetectPop;
-  ValueCallback<String?>? _onDetectPush;
+  ValueChanged<String?>? _onDetectPop;
+  ValueChanged<String?>? _onDetectPush;
 
   _MxCoreRouteObservable._();
 

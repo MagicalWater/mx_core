@@ -31,7 +31,7 @@ class IntroductionInitial extends IntroductionState {
           PageInfo(Pages.routePushEntry, "頁面跳轉機制"),
           PageInfo(Pages.statefulButton, "有讀取狀態的按鈕"),
           PageInfo(Pages.waveProgress, "波浪進度條"),
-          PageInfo(Pages.refreshView, "刷新元件"),
-          PageInfo(Pages.libEaseRefresh, "第三方庫: 列表元件 flutter_easyrefresh"),
+          // PageInfo(Pages.refreshView, "刷新元件"),
+          // PageInfo(Pages.libEaseRefresh, "第三方庫: 列表元件 flutter_easyrefresh"),
         ]);
 }
