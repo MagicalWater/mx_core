@@ -8,7 +8,9 @@ const String _firstInstallKey = '_isAppFirstInstallKey';
 class SecureStorage {
   SecureStorage._();
 
-  static const _storage = FlutterSecureStorage();
+  static const _storage = FlutterSecureStorage(
+    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+  );
 
   /// 再重新安裝app時, 將所有的儲存資料重置
   /// 檢查方式 -
