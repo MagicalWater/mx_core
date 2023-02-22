@@ -441,32 +441,67 @@ class AppRouter implements AppRouterBase, RoutePageBase {
   }) {
     print("頁面返回");
     var navigator = navigatorIns;
-    if (popUntil != null) {
-      // 需要返回多個頁面
-      navigator.popUntil((rt) {
-        // 匿名路由將會直接跳過
-        var name = rt.settings.name;
-        if (name == '/') {
-          name = _entryPointRouteAlias;
-        }
-        var isKeep = popUntil(name);
-        if (!isKeep) {
-          _removeLastPage();
-        }
-        return isKeep;
-      });
-      _pageSubject.add(_pageSubject.value);
-      _researchCurrentDetailPage();
-      return true;
-    } else {
-      // 返回單個頁面, 將
-      _removeLastPage();
-      _pageSubject.add(_pageSubject.value);
-      _researchCurrentDetailPage();
-      isNeedBlockOnceSystemPopDetect = true;
-      navigator.pop(result);
-      return true;
-    }
+
+    bool isPop = false;
+    final popImpl = popUntil ??
+        (route) {
+          if (isPop) {
+            return true;
+          } else {
+            isPop = true;
+            return false;
+          }
+        };
+
+    // 需要返回多個頁面
+    navigator.popUntil((rt) {
+      // 匿名路由將會直接跳過
+      var name = rt.settings.name;
+      if (name == null) {
+        // 無名彈窗一率移除
+        return false;
+      } else if (name == '/') {
+        name = _entryPointRouteAlias;
+      }
+      var isKeep = popImpl(name);
+      if (!isKeep) {
+        _removeLastPage();
+      }
+      return isKeep;
+    });
+    _pageSubject.add(_pageSubject.value);
+    _researchCurrentDetailPage();
+    return true;
+
+    // if (popUntil != null) {
+    //   // 需要返回多個頁面
+    //   navigator.popUntil((rt) {
+    //     // 匿名路由將會直接跳過
+    //     var name = rt.settings.name;
+    //     if (name == null) {
+    //       // 無名彈窗一率移除
+    //       return false;
+    //     } else if (name == '/') {
+    //       name = _entryPointRouteAlias;
+    //     }
+    //     var isKeep = popUntil(name);
+    //     if (!isKeep) {
+    //       _removeLastPage();
+    //     }
+    //     return isKeep;
+    //   });
+    //   _pageSubject.add(_pageSubject.value);
+    //   _researchCurrentDetailPage();
+    //   return true;
+    // } else {
+    //   // 返回單個頁面, 將
+    //   _removeLastPage();
+    //   _pageSubject.add(_pageSubject.value);
+    //   _researchCurrentDetailPage();
+    //   isNeedBlockOnceSystemPopDetect = true;
+    //   navigator.pop(result);
+    //   return true;
+    // }
   }
 
   @override
@@ -526,6 +561,25 @@ class AppRouter implements AppRouterBase, RoutePageBase {
 
     var navigatorState = navigatorIns;
 
+    final bool Function(String? route)? popImpl;
+    if (removeUntil == null) {
+      if (replaceCurrent) {
+        bool isPop = false;
+        popImpl = (route) {
+          if (isPop) {
+            return true;
+          } else {
+            isPop = true;
+            return false;
+          }
+        };
+      } else {
+        popImpl = null;
+      }
+    } else {
+      popImpl = removeUntil;
+    }
+
     // 檢查回退檢測是否已加入
     observable._onDetectPop ??= (name) {
       if (isNeedBlockOnceSystemPopDetect) {
@@ -559,17 +613,19 @@ class AppRouter implements AppRouterBase, RoutePageBase {
       query: query,
     );
 
-    if (removeUntil != null) {
+    if (popImpl != null) {
       _pageSubject.value.add(routeData);
       _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
 
       var result = await navigatorState.pushAndRemoveUntil(pageRoute(), (rt) {
         var name = rt.settings.name;
-        if (name == '/') {
+        if (name == null) {
+          return false;
+        } else if (name == '/') {
           name = _entryPointRouteAlias;
         }
-        var isKeep = removeUntil(name);
+        final isKeep = popImpl!(name);
         print(
             '$name 是否保留 - $isKeep, 歷史: $pageHistory, ${pageHistory.map((e) => e.route)}');
 
@@ -583,19 +639,53 @@ class AppRouter implements AppRouterBase, RoutePageBase {
       });
 
       return result;
-    } else if (replaceCurrent) {
-      _removeLastPage();
-      _pageSubject.value.add(routeData);
-      _pageSubject.add(_pageSubject.value);
-      _pageDetailSubject.add(pageHistory.last.route);
-      return await navigatorState.pushReplacement(pageRoute());
     } else {
-//      print("添加到歷史: ${routeData.route}");
+      //      print("添加到歷史: ${routeData.route}");
       _pageSubject.value.add(routeData);
       _pageSubject.add(_pageSubject.value);
       _pageDetailSubject.add(pageHistory.last.route);
       return navigatorState.push(pageRoute());
     }
+
+//     if (removeUntil != null) {
+//       _pageSubject.value.add(routeData);
+//       _pageSubject.add(_pageSubject.value);
+//       _pageDetailSubject.add(pageHistory.last.route);
+//
+//       var result = await navigatorState.pushAndRemoveUntil(pageRoute(), (rt) {
+//         var name = rt.settings.name;
+//         if (name == null) {
+//           return false;
+//         } else if (name == '/') {
+//           name = _entryPointRouteAlias;
+//         }
+//         final isKeep = removeUntil(name);
+//         print(
+//             '$name 是否保留 - $isKeep, 歷史: $pageHistory, ${pageHistory.map((e) => e.route)}');
+//
+//         // 倒數第二個大頁面routeData
+// //        var lastSecondRoute = _pageHistory[_pageHistory.length - 2];
+//         if (!isKeep) {
+//           // 刪除最後一個大頁面
+//           _removeLastSecondPage();
+//         }
+//         return isKeep;
+//       });
+//
+//       return result;
+//     } else if (replaceCurrent) {
+//       _removeLastPage();
+//       _pageSubject.value.add(routeData);
+//       _pageSubject.add(_pageSubject.value);
+//       _pageDetailSubject.add(pageHistory.last.route);
+//       return await navigatorState.pushReplacement(pageRoute());
+//     } else {
+// //      print("添加到歷史: ${routeData.route}");
+//       _pageSubject.value.add(routeData);
+//       _pageSubject.add(_pageSubject.value);
+//       _pageDetailSubject.add(pageHistory.last.route);
+//       return navigatorState.push(pageRoute());
+//     }
   }
 
   /// 自歷史紀錄刪除大頁面

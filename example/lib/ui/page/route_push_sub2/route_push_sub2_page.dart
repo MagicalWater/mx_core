@@ -41,9 +41,19 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page>
             style: TextStyle(color: Colors.white, fontSize: 25),
           ),
           _buildButton("切換子頁面 A/B", () {
-            route.toNextSubPage();
+            // route.toNextSubPage();
 //              counter++;
 //              setState(() {});
+          bool aa = true;
+            Navigator.of(context).popUntil((route) {
+              print('回退 => ${route.settings.name}');
+              if (aa) {
+                aa = false;
+                return false;
+              } else {
+                return true;
+              }
+            });
           }),
           Expanded(
             child: RouteStackSwitcher(
