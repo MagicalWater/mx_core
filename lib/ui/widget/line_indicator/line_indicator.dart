@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mx_core/util/num_util/num_util.dart';
 
 import 'model/model.dart';
+
 export 'model/model.dart';
 
 part 'line_painter.dart';
@@ -99,7 +100,7 @@ class LineIndicator extends StatefulWidget {
         super(key: key);
 
   @override
-  _LineIndicatorState createState() => _LineIndicatorState();
+  State<LineIndicator> createState() => _LineIndicatorState();
 }
 
 class _LineIndicatorState extends State<LineIndicator>
@@ -126,6 +127,9 @@ class _LineIndicatorState extends State<LineIndicator>
 
   List<_PlacePainter> placePainter = [];
 
+  /// 是否強制重繪
+  bool forceRepaint = false;
+
   @override
   void initState() {
     _controller = AnimationController(
@@ -147,7 +151,8 @@ class _LineIndicatorState extends State<LineIndicator>
     if (decorationAnimEnable && decorationAnim != null) {
       currentDecoration = decorationAnim!.value;
       painter?.dispose();
-      painter = currentDecoration.createBoxPainter(() => setState(() {}));
+      forceRepaint = false;
+      painter = currentDecoration.createBoxPainter(_painterOnChanged);
     }
     setState(() {});
   }
@@ -166,51 +171,51 @@ class _LineIndicatorState extends State<LineIndicator>
     super.didUpdateWidget(oldWidget);
   }
 
-  void syncShow(LineIndicator widget) {
-    // 同步 widget.places 與 placePainter 的數量
-    void _syncPlacePainter() {
-      var places = widget.places ?? [];
-      if (places.isEmpty) {
-        releaseAllPlacePainter();
-        return;
-      }
+  /// 同步place painter
+  void _syncPlacePainter() {
+    final places = widget.places ?? [];
+    if (places.isEmpty) {
+      releaseAllPlacePainter();
+      return;
+    }
 
-      for (var i = 0; i < places.length; i++) {
-        var newPlace = widget.places![i];
-        var placeDecoration =
-            newPlace.decoration ?? BoxDecoration(color: newPlace.color);
-        if (placePainter.length > i) {
-          var painterPair = placePainter[i];
-          if (painterPair.decoration != placeDecoration) {
-            painterPair.painter.dispose();
-            painterPair.decoration = placeDecoration;
-            painterPair.painter = painterPair.decoration.createBoxPainter(() {
-              setState(() {});
-            });
-          }
-
-          painterPair.start = newPlace.start;
-          painterPair.end = newPlace.end;
-          painterPair.placeUp = newPlace.placeUp;
-        } else {
-          var painter = _PlacePainter(
-            decoration: placeDecoration,
-            painter: placeDecoration.createBoxPainter(() {
-              setState(() {});
-            }),
-            start: newPlace.start,
-            end: newPlace.end,
-            placeUp: newPlace.placeUp,
-          );
-          placePainter.add(painter);
+    for (var i = 0; i < places.length; i++) {
+      final newPlace = widget.places![i];
+      final placeDecoration =
+          newPlace.decoration ?? BoxDecoration(color: newPlace.color);
+      if (placePainter.length > i) {
+        var painterPair = placePainter[i];
+        if (painterPair.decoration != placeDecoration) {
+          painterPair.painter.dispose();
+          painterPair.decoration = placeDecoration;
+          forceRepaint = true;
+          painterPair.painter =
+              painterPair.decoration.createBoxPainter(_painterOnChanged);
         }
-      }
 
-      if (placePainter.length > places.length) {
-        placePainter.removeLast().painter.dispose();
+        painterPair.start = newPlace.start;
+        painterPair.end = newPlace.end;
+        painterPair.placeUp = newPlace.placeUp;
+      } else {
+        forceRepaint = true;
+        final painter = _PlacePainter(
+          decoration: placeDecoration,
+          painter: placeDecoration.createBoxPainter(_painterOnChanged),
+          start: newPlace.start,
+          end: newPlace.end,
+          placeUp: newPlace.placeUp,
+        );
+        placePainter.add(painter);
       }
     }
 
+    if (placePainter.length > places.length) {
+      placePainter.removeLast().painter.dispose();
+    }
+  }
+
+  void syncShow(LineIndicator widget) {
+    // 同步 widget.places 與 placePainter 的數量
     _syncPlacePainter();
 
     startAnimEnable = false;
@@ -235,7 +240,10 @@ class _LineIndicatorState extends State<LineIndicator>
         currentStart = widget.start;
         currentEnd = widget.end;
         currentDecoration = newDecoration;
-        painter ??= currentDecoration.createBoxPainter(() => setState(() {}));
+        if (painter == null) {
+          forceRepaint = false;
+          painter = currentDecoration.createBoxPainter(_painterOnChanged);
+        }
         return;
       }
     }
@@ -244,11 +252,15 @@ class _LineIndicatorState extends State<LineIndicator>
       currentStart = widget.start;
       currentEnd = widget.end;
       currentDecoration = newDecoration;
-      painter ??= currentDecoration.createBoxPainter(() => setState(() {}));
+      if (painter == null) {
+        forceRepaint = false;
+        painter = currentDecoration.createBoxPainter(_painterOnChanged);
+      }
       return;
     }
 
     if (isDecorationDifference) {
+      // decoration不同, 需要重置
       decorationAnimEnable = true;
       if (decorationTween != null) {
         decorationTween!.begin = currentDecoration;
@@ -265,7 +277,10 @@ class _LineIndicatorState extends State<LineIndicator>
       }
     }
 
-    painter ??= currentDecoration.createBoxPainter(() => setState(() {}));
+    if (painter == null) {
+      forceRepaint = false;
+      painter = currentDecoration.createBoxPainter(_painterOnChanged);
+    }
 
     if (currentStart != widget.start) {
       startAnimEnable = true;
@@ -313,8 +328,18 @@ class _LineIndicatorState extends State<LineIndicator>
     }
   }
 
+  void _painterOnChanged() {
+    forceRepaint = true;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    final needRepaint = forceRepaint;
+    if (forceRepaint) {
+      // 消耗掉此次的強制重繪
+      forceRepaint = false;
+    }
     return SizedBox(
       width: widget.direction == Axis.vertical ? widget.size : null,
       height: widget.direction == Axis.horizontal ? widget.size : null,
@@ -330,8 +355,8 @@ class _LineIndicatorState extends State<LineIndicator>
           painter: painter!,
           placePainters: placePainter,
           dashStyle: widget.dashStyle,
+          forceRepaint: needRepaint,
         ),
-        child: Container(),
       ),
     );
   }

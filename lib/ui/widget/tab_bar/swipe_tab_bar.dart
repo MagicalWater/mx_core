@@ -197,6 +197,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
       // print('站位: ${places.map((e) => '${e.start} ~ ${e.end}').toList()}');
 
+      // print('是否擁有dec => ${widget.indicator!.decoration != null}, 是否擁有color => ${widget.indicator!.color != null}');
       var lineIndicator = Container(
         decoration: indicatorBg,
         child: LineIndicator(

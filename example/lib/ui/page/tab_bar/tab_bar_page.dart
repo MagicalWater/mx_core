@@ -26,10 +26,10 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
       vsync: this,
     );
 
-    Future.delayed(const Duration(seconds: 5)).then((value) {
-      initTabController();
-      setState((){});
-    });
+    // Future.delayed(const Duration(seconds: 5)).then((value) {
+    //   initTabController();
+    //   setState(() {});
+    // });
     super.initState();
   }
 
@@ -121,7 +121,18 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         padding: EdgeInsets.symmetric(horizontal: 20.scaleA),
       ),
       indicator: TabIndicator(
-          color: Colors.yellow, placeColor: Colors.grey, height: 3),
+        // decoration: const BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage(
+        //       'assets/images/ic_union.png',
+        //       package: 'mx_core'
+        //     ),
+        //   ),
+        // ),
+        // color: Colors.grey,
+        // placeColor: Colors.grey,
+        height: 10,
+      ),
       tabWidth: const TabWidth.shrinkWrap(),
       scrollable: true,
       tabHeight: 40.scaleA,

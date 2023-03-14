@@ -10,6 +10,7 @@ class _LinePainter extends CustomPainter {
   final EdgeInsets padding;
   final Alignment alignment;
   final DashStyle? dashStyle;
+  final bool forceRepaint;
 
   BoxPainter painter;
 
@@ -23,6 +24,7 @@ class _LinePainter extends CustomPainter {
     required this.alignment,
     required this.painter,
     required this.placePainters,
+    this.forceRepaint = false,
     this.dashStyle,
     this.lineSize,
     this.maxLength,
@@ -30,8 +32,8 @@ class _LinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var bgPlace = placePainters.where((element) => !element.placeUp).toList();
-    var fgPlace = placePainters.where((element) => element.placeUp).toList();
+    final bgPlace = placePainters.where((element) => !element.placeUp).toList();
+    final fgPlace = placePainters.where((element) => element.placeUp).toList();
 
     // print('背景: ${bgPlace.length}, 前景: ${fgPlace.length}');
 
@@ -84,12 +86,12 @@ class _LinePainter extends CustomPainter {
     final length = endPos - startPos;
 
     if (maxLength != null && maxLength! < length) {
-      var halfLength = NumUtil.divide(maxLength!, 2);
+      final halfLength = NumUtil.divide(maxLength!, 2);
 
-      var minPos = startPos + halfLength;
-      var maxPos = endPos - halfLength;
-      var rect = Rect.fromLTRB(0, minPos, size.width, maxPos);
-      var startOffset = alignment.withinRect(rect);
+      final minPos = startPos + halfLength;
+      final maxPos = endPos - halfLength;
+      final rect = Rect.fromLTRB(0, minPos, size.width, maxPos);
+      final startOffset = alignment.withinRect(rect);
 
       startPos = startOffset.dy - halfLength;
       endPos = startPos + maxLength!;
@@ -188,6 +190,9 @@ class _LinePainter extends CustomPainter {
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     if (oldDelegate is _LinePainter) {
+      if (!oldDelegate.forceRepaint && forceRepaint) {
+        return true;
+      }
       return painter != oldDelegate.painter ||
           start != oldDelegate.start ||
           end != oldDelegate.end;
