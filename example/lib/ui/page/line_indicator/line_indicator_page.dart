@@ -36,7 +36,7 @@ class _LineIndicatorPageState extends State<LineIndicatorPage> {
           alignment: Alignment.center,
           child: Column(
             children: [
-              Text('線條指示'),
+              const Text('線條指示'),
               Expanded(
                 child: LineIndicator(
                   color: lineColor,
@@ -45,8 +45,8 @@ class _LineIndicatorPageState extends State<LineIndicatorPage> {
                   size: 10.scaleA,
                   direction: Axis.horizontal,
                   alignment: Alignment.topRight,
-                  duration: Duration(seconds: 5),
-                  decoration: BoxDecoration(
+                  duration: const Duration(seconds: 5),
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         Colors.black,
@@ -71,7 +71,7 @@ class _LineIndicatorPageState extends State<LineIndicatorPage> {
                       placeUp: true,
                     ),
                   ],
-                  dashStyle: DashStyle(
+                  dashStyle: const DashStyle(
                     20, 12,
                   ),
                 ),

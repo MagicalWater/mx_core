@@ -357,6 +357,9 @@ class _LineIndicatorState extends State<LineIndicator>
           dashStyle: widget.dashStyle,
           forceRepaint: needRepaint,
         ),
+
+        // 必須給一個child, 否則底下的size不會自動延伸, 而是會為空
+        child: Container(),
       ),
     );
   }
