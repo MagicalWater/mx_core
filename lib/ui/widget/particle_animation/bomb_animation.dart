@@ -41,7 +41,7 @@ class BombAnimation extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BombAnimationState createState() => _BombAnimationState();
+  State<BombAnimation> createState() => _BombAnimationState();
 }
 
 class _BombAnimationState extends State<BombAnimation> {
@@ -64,6 +64,12 @@ class _BombAnimationState extends State<BombAnimation> {
     } else {
       return AnimatedComb.quick(
         type: AnimatedType.tap,
+        scale: Comb.scale(
+          end: const Size.square(0.8),
+          curve: Curves.bounceOut,
+          duration: 200,
+        ),
+        onTap: () => showParticlePopup(),
         child: RepaintBoundary(
           key: boundaryKey,
           child: SizedBox(
@@ -72,12 +78,6 @@ class _BombAnimationState extends State<BombAnimation> {
             child: widget.child,
           ),
         ),
-        scale: Comb.scale(
-          end: const Size.square(0.8),
-          curve: Curves.bounceOut,
-          duration: 200,
-        ),
-        onTap: () => showParticlePopup(),
       );
     }
   }
@@ -102,6 +102,10 @@ class _BombAnimationState extends State<BombAnimation> {
     isBoomOut = true;
 
     print('基礎左上角: $offset');
+
+    if (!mounted) {
+      return;
+    }
 
     var screenSize = MediaQuery.of(context).size;
     var activeRect = Rect.fromLTWH(
@@ -145,11 +149,19 @@ class _BombAnimationState extends State<BombAnimation> {
     );
 
     return rect.map((e) {
-      var color =
-          toArgb(image.getPixelSafe(e.center.dx.toInt(), e.center.dy.toInt()));
+      final pixel = image.getPixelSafe(
+        e.center.dx.toInt(),
+        e.center.dy.toInt(),
+      );
+      final color = pixel.convert();
       return buildParticle(
         radius: rect[0].width / 2,
-        color: color,
+        color: Color.fromARGB(
+          color.a.toInt(),
+          color.r.toInt(),
+          color.g.toInt(),
+          color.b.toInt(),
+        ),
         x: e.center.dx,
         y: e.center.dy,
       );
