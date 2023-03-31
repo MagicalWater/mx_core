@@ -8,6 +8,7 @@ class _PopupLayout extends ModalRoute {
 
   _PopupLayout({
     required this.child,
+    super.settings,
   });
 
   /// 背景顏色

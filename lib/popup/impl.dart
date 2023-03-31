@@ -55,6 +55,7 @@ class Popup {
     List<Comb>? animated = const [],
     void Function(PopupController<NavigatorState> controller)? onTapSpace,
     void Function(PopupController<NavigatorState> controller)? onTapBack,
+    RouteSettings? routeSettings,
   }) {
     if (animated?.isEmpty == true) {
       animated = [
@@ -90,6 +91,7 @@ class Popup {
     );
 
     var layout = _PopupLayout(
+      settings: routeSettings,
       child: Material(
         type: MaterialType.transparency,
         child: GestureDetector(
