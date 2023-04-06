@@ -13,13 +13,13 @@ dependencies:
   rxdart: ^0.27.7
 
   # 網路請求庫
-  dio: 4.0.6
+  dio: ">=4.0.6 <6.0.0"
 
   # 解析圖片
   image: ^4.0.15
 
   # dio 的 cookie 管理
-  dio_cookie_manager: 2.0.0
+  dio_cookie_manager: ^2.0.0
 
   # 搭配 dio, 讓 dio 會自動帶入 cookie
   cookie_jar: 3.0.1
@@ -31,7 +31,7 @@ dependencies:
   shared_preferences: ^2.0.15
 
   # 時間/數字格式化
-  intl: ^0.17.0
+  intl: ">=0.17.0 <0.19.0"
 
   # SQLite 數據庫
   sqflite: ^2.2.0+3
@@ -46,13 +46,13 @@ dependencies:
 
   rational: ^2.2.0
 
-  flutter_secure_storage: ^6.0.0
+  flutter_secure_storage: ">=6.0.0 <9.0.0"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: "^2.3.2"
-  flutter_lints: "^2.0.1"
+  build_runner: ^2.3.2
+  flutter_lints: ^2.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspecf
