@@ -411,18 +411,21 @@ class AppRouter implements AppRouterBase, RoutePageBase {
   /// [subRoute] - 跳轉到此大頁面底下的這個子頁面
   /// [popUtil] - pop 直到返回true
   /// [result] - 要返回給前頁面的結果, 當 [popUtil] 為空時有效
+  /// [builder] - router構建
   @override
   Future<dynamic> popAndPushPage<T>(
     String route, {
     Map<String, dynamic>? query,
     bool Function(String? route)? popUntil,
     Object? result,
+    MixinRouteBuilder<T>? builder,
   }) {
     print("頁面返回並跳頁, 首先頁面返回");
     popPage(popUntil: popUntil, result: result);
     return pushPage(
       route,
       query: query,
+      builder: builder,
     );
   }
 
