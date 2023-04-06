@@ -5,8 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image/image.dart' as img;
-import 'package:mx_core/popup/impl.dart';
-import 'package:mx_core/popup/option.dart';
+import 'package:mx_core/popup/popup.dart';
 import 'package:mx_core/ui/widget/animated_comb/animated_comb.dart';
 
 import 'particle/particle.dart';

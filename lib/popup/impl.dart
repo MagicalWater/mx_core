@@ -10,7 +10,8 @@ import 'package:mx_core/ui/widget/navigator_provider.dart';
 import 'package:mx_core/util/screen_util.dart';
 
 import 'arrow_style.dart';
-import 'option.dart';
+import 'layout_option.dart';
+import 'route_option.dart';
 
 part 'controller.dart';
 
@@ -56,6 +57,7 @@ class Popup {
     void Function(PopupController<NavigatorState> controller)? onTapSpace,
     void Function(PopupController<NavigatorState> controller)? onTapBack,
     RouteSettings? routeSettings,
+    PopupRouteOption routeOption = const PopupRouteOption(),
   }) {
     if (animated?.isEmpty == true) {
       animated = [
@@ -92,6 +94,13 @@ class Popup {
 
     var layout = _PopupLayout(
       settings: routeSettings,
+      maintainState: routeOption.maintainState,
+      opaque: routeOption.opaque,
+      barrierColor: routeOption.barrierColor,
+      barrierDismissible: routeOption.barrierDismissible,
+      barrierLabel: routeOption.barrierLabel,
+      fullscreenDialog: routeOption.fullscreenDialog,
+      allowSnapshotting: routeOption.allowSnapshotting,
       child: Material(
         type: MaterialType.transparency,
         child: GestureDetector(
@@ -116,13 +125,15 @@ class Popup {
                 return false;
               },
               child: Container(
-                padding: option?.getOverlayPadding(child is ShiftAnimation),
+                padding:
+                    option?.getOverlayPadding(child is ShiftAnimation),
                 child: animated != null
                     ? AnimatedComb(
-                        alignment: option?.alignment ?? FractionalOffset.center,
-                        child: childGesture,
+                        alignment:
+                            option?.alignment ?? FractionalOffset.center,
                         sync: childSync,
                         animatedList: animated,
+                        child: childGesture,
                       )
                     : childGesture,
               ),
@@ -213,9 +224,9 @@ class Popup {
                         ? AnimatedComb(
                             alignment:
                                 option?.alignment ?? FractionalOffset.center,
-                            child: childGesture,
                             sync: childSync,
                             animatedList: animated,
+                            child: childGesture,
                           )
                         : childGesture,
                   ),
@@ -343,7 +354,6 @@ class Popup {
                     maxHeight: maxRect.height,
                   ),
                   child: ArrowContainer(
-                    child: child,
                     shiftRootPercent: widgetOffset?.arrowLeafPercent ??
                         style.arrowTargetPercent,
                     shiftLeafPercent: widgetOffset?.arrowLeafPercent ??
@@ -359,6 +369,7 @@ class Popup {
                     arrowRootSize: style.arrowRootSize,
                     direction: _getArrowDirection(style.direction),
                     onSized: (size) => childSizeStreamController.add(size),
+                    child: child,
                   ),
                 ),
               ),
@@ -425,7 +436,7 @@ class Popup {
     required AxisDirection direction,
     required double arrowLeafPercent,
   }) {
-    _WidgetOffset _widgetOffset = _WidgetOffset(
+    final widgetOffset = _WidgetOffset(
       offset: Offset.zero,
       arrowLeafPercent: arrowLeafPercent,
     );
@@ -439,13 +450,13 @@ class Popup {
           // 上方超出邊界, 需要修正
 //        print("上方超出邊界, 需要修正");
           dy = maxRect.top;
-          _widgetOffset.arrowLeafPercent =
+          widgetOffset.arrowLeafPercent =
               (alignmentPoint.y - dy) / widgetSize.height;
         } else if (dy + widgetSize.height > maxRect.bottom) {
           // 下方超出邊界, 需要修正
 //        print("下方超出邊界, 需要修正");
           dy = maxRect.bottom - widgetSize.height;
-          _widgetOffset.arrowLeafPercent =
+          widgetOffset.arrowLeafPercent =
               (alignmentPoint.y - dy) / widgetSize.height;
         }
         break;
@@ -456,13 +467,13 @@ class Popup {
           // 左邊超出邊界, 需要修正
 //        print("左邊超出邊界, 需要修正");
           dx = maxRect.left;
-          _widgetOffset.arrowLeafPercent =
+          widgetOffset.arrowLeafPercent =
               (alignmentPoint.x - dx) / widgetSize.width;
         } else if (dx + widgetSize.width > maxRect.right) {
           // 右邊超出邊界, 需要修正
 //        print("右邊超出邊界, 需要修正");
           dx = Screen.width - widgetSize.width;
-          _widgetOffset.arrowLeafPercent =
+          widgetOffset.arrowLeafPercent =
               (alignmentPoint.x - dx) / widgetSize.width;
         }
         break;
@@ -473,13 +484,13 @@ class Popup {
           // 上方超出邊界, 需要修正
 //        print("上方超出邊界, 需要修正");
           dy = maxRect.top;
-          _widgetOffset.arrowLeafPercent =
+          widgetOffset.arrowLeafPercent =
               (alignmentPoint.y - maxRect.top) / widgetSize.height;
         } else if (dy + widgetSize.height > maxRect.bottom) {
           // 下方超出邊界, 需要修正
 //        print("下方超出邊界, 需要修正");
           dy = maxRect.bottom - widgetSize.height;
-          _widgetOffset.arrowLeafPercent =
+          widgetOffset.arrowLeafPercent =
               (alignmentPoint.y - dy) / widgetSize.height;
         }
         break;
@@ -490,18 +501,18 @@ class Popup {
           // 左邊超出邊界, 需要修正
 //        print("左邊超出邊界, 需要修正");
           dx = maxRect.left;
-          _widgetOffset.arrowLeafPercent = alignmentPoint.x / widgetSize.width;
+          widgetOffset.arrowLeafPercent = alignmentPoint.x / widgetSize.width;
         } else if (dx + widgetSize.width > maxRect.right) {
           // 右邊超出邊界, 需要修正
 //        print("右邊超出邊界, 需要修正");
           dx = maxRect.right - widgetSize.width;
-          _widgetOffset.arrowLeafPercent =
+          widgetOffset.arrowLeafPercent =
               (alignmentPoint.x - dx) / widgetSize.width;
         }
         break;
     }
-    _widgetOffset.offset = Offset(dx, dy);
-    return _widgetOffset;
+    widgetOffset.offset = Offset(dx, dy);
+    return widgetOffset;
   }
 
   /// 取得元件最大可以放置的 rect
