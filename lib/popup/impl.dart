@@ -99,8 +99,6 @@ class Popup {
       barrierColor: routeOption.barrierColor,
       barrierDismissible: routeOption.barrierDismissible,
       barrierLabel: routeOption.barrierLabel,
-      fullscreenDialog: routeOption.fullscreenDialog,
-      allowSnapshotting: routeOption.allowSnapshotting,
       child: Material(
         type: MaterialType.transparency,
         child: GestureDetector(

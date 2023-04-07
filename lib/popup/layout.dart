@@ -3,7 +3,7 @@ part of 'impl.dart';
 /// 浮出視窗, 實現原理同樣是 Overlay, 在這邊藉由 route 達成效果
 /// 參考: https://www.coderblog.in/2019/04/how-to-create-popup-window-in-flutter/
 /// 修改者: Water
-class _PopupLayout extends PageRoute {
+class _PopupLayout extends ModalRoute {
   final Widget child;
 
   _PopupLayout({
@@ -14,8 +14,6 @@ class _PopupLayout extends PageRoute {
     this.barrierColor = const Color(0x00ffffff),
     this.barrierDismissible = false,
     this.barrierLabel,
-    super.fullscreenDialog,
-    super.allowSnapshotting = true,
   });
 
   /// 背景顏色

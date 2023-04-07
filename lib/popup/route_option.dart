@@ -6,8 +6,6 @@ class PopupRouteOption {
   final Color barrierColor;
   final bool barrierDismissible;
   final String? barrierLabel;
-  final bool fullscreenDialog;
-  final bool allowSnapshotting;
 
   const PopupRouteOption({
     this.maintainState = false,
@@ -15,7 +13,5 @@ class PopupRouteOption {
     this.barrierColor = const Color(0x00ffffff),
     this.barrierDismissible = false,
     this.barrierLabel,
-    this.fullscreenDialog = false,
-    this.allowSnapshotting = true,
   });
 }
