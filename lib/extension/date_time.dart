@@ -1,9 +1,17 @@
 extension BoundExtension on DateTime {
   DateTime get dayStart {
-    return DateTime(year, month, day, 0, 0, 0);
+    if (isUtc) {
+      return DateTime.utc(year, month, day);
+    } else {
+      return DateTime(year, month, day);
+    }
   }
 
   DateTime get dayEnd {
-    return DateTime(year, month, day, 23, 59, 59);
+    if (isUtc) {
+      return DateTime.utc(year, month, day, 23, 59, 59);
+    } else {
+      return DateTime(year, month, day, 23, 59, 59);
+    }
   }
 }
