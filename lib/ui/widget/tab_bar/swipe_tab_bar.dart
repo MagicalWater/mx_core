@@ -27,6 +27,10 @@ class SwipeTabBar extends AbstractTabWidget {
   /// 點選tab後自動置中, 當[scrollable]為true時有效
   final bool autoScrollCenter;
 
+  /// 當[scrollable]為true時有效
+  /// 決定tab物理特性的元件
+  final ScrollPhysics? physics;
+
   SwipeTabBar({
     Key? key,
     required this.tabBuilder,
@@ -41,6 +45,7 @@ class SwipeTabBar extends AbstractTabWidget {
     this.gapBuilder,
     this.header,
     this.footer,
+    this.physics,
     this.onTabTap,
     this.onActionTap,
   })  : assert(currentIndex != null || controller != null),
@@ -334,6 +339,7 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
 
     if (widget.scrollable) {
       tabStack = SingleChildScrollView(
+        physics: widget.physics,
         controller: tabScrollController,
         scrollDirection: Axis.horizontal,
         child: tabStack,
