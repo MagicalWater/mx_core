@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 7.1.6+5
+version: 7.1.6+6
 homepage: https://github.com/MagicalWater
 
 environment:

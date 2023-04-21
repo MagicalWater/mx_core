@@ -72,6 +72,7 @@ class SwipeTabBar extends AbstractTabWidget {
     IndexedWidgetBuilder? gapBuilder,
     Widget? header,
     Widget? footer,
+    ScrollPhysics? physics,
     void Function(int preIndex, int index)? onTabTap,
     ValueChanged<int>? onActionTap,
   }) {
@@ -88,6 +89,7 @@ class SwipeTabBar extends AbstractTabWidget {
       indicator: indicator,
       header: header,
       footer: footer,
+      physics: physics,
       onTabTap: onTabTap,
       onActionTap: onActionTap,
     );
