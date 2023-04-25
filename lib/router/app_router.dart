@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mx_core/router/router.dart';
 import 'package:mx_core/ui/widget/navigator_provider.dart';
-import 'package:mx_core/util/util.dart';
 import 'package:rxdart/rxdart.dart';
 
 MixinRouteBuilder? _defaultRouteBuilder;
@@ -36,7 +35,7 @@ class _SubPageHandler {
   late void Function(String route) _forceModifyPageDetail;
 
   late bool Function(RouteData data) _isHandleRoute;
-  late bool Function(RouteData data, {bool Function(String route)? popUntil})
+  late void Function(RouteData data, {bool Function(String route)? popUntil})
       _dispatchSubPage;
   late String? Function({bool Function(String route)? popUntil}) _popSubPage;
 
@@ -51,7 +50,7 @@ class _SubPageHandler {
 
   bool isHandleRoute(RouteData data) => _isHandleRoute(data);
 
-  bool dispatchSubPage(RouteData data,
+  void dispatchSubPage(RouteData data,
           {required bool Function(String route)? popUntil}) =>
       _dispatchSubPage(data, popUntil: popUntil);
 
@@ -108,7 +107,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
   }
 
   /// 路由監聽, 請將此參數加入MaterialApp.navigatorObservers
-  final _MxCoreRouteObservable observable = _MxCoreRouteObservable._();
+  final observable = _MxCoreRouteObservable._();
 
   /// 頁面詳細跳轉
   final BehaviorSubject<String> _pageDetailSubject = BehaviorSubject();
@@ -279,7 +278,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
   void registerSubPageListener({
     required PageInterface page,
     required bool Function(RouteData data) isHandleRoute,
-    required bool Function(RouteData data,
+    required void Function(RouteData data,
             {bool Function(String route)? popUntil})
         dispatchSubPage,
     required void Function(String route) forceModifyPageDetail,
@@ -334,7 +333,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
       // 發起跳轉大頁面, 在進行子頁面的跳轉
       var ancestorRoute = RouteCompute.getAncestorRoute(route);
 
-//      print("大頁面不同, 先跳轉大頁面: $ancestorRoute");
+//      print大頁面不同(", 先跳轉大頁面: $ancestorRoute");
 
       _pushPage(
         ancestorRoute,
@@ -352,6 +351,7 @@ class AppRouter implements AppRouterBase, RoutePageBase {
       // print(
       //     '當前擁有的頁面監聽: ${_subPageListener.map((e) => e.route)}, 當前大頁面: $currentPage');
 
+      // 尋找可以處理分發的監聽
       while (findParent != null && findListener == null) {
         findParent = RouteCompute.getParentRoute(findParent);
         findListener = currentRangeListener
@@ -359,10 +359,14 @@ class AppRouter implements AppRouterBase, RoutePageBase {
       }
 
       if (findListener != null) {
-        var nextRoute =
-            RouteCompute.getNextRoute(parent: findParent!, sub: route)!;
+        print('尋找子頁面路由監聽: ${findListener.page.hashCode}');
 
-        // 取得 [e.route] 到 route 的下一個 route
+        // 取得確認需要分發的子路由
+        var nextRoute = RouteCompute.getNextRoute(
+          parent: findParent!,
+          sub: route,
+        )!;
+
         var routeData = RouteData(
           nextRoute,
           targetSubRoute: route,
@@ -371,28 +375,30 @@ class AppRouter implements AppRouterBase, RoutePageBase {
 
         routeData.forceNew = forceNew;
 
+        // 檢查此路由是否可以進行分發
         var isHandle = findListener.isHandleRoute(routeData);
         if (!isHandle) {
           print('$findParent 拒絕此次跳轉page請求: $route');
         } else {
+          // 可以進行分發, 加入subject
           _pageDetailSubject.add(nextRoute);
-          findListener.dispatchSubPage(
-            routeData,
-            popUntil: popUntil,
-          );
-          var lastShowPage = nextRoute;
 
-          var findInnerListener = currentRangeListener
-              .lastWhereOrNull((element) => element.route == currentDetailPage);
-          while (findInnerListener != null) {
-            if (findInnerListener.history.isNotEmpty) {
-              lastShowPage = findInnerListener.history.last.route;
-              findInnerListener = currentRangeListener
-                  .lastWhereOrNull((element) => element.route == lastShowPage);
-            } else {
-              break;
-            }
-          }
+          // 開始分發
+          findListener.dispatchSubPage(routeData, popUntil: popUntil);
+
+          // var lastShowPage = nextRoute;
+          //
+          // var findInnerListener = currentRangeListener
+          //     .lastWhereOrNull((element) => element.route == currentDetailPage);
+          // while (findInnerListener != null) {
+          //   if (findInnerListener.history.isNotEmpty) {
+          //     lastShowPage = findInnerListener.history.last.route;
+          //     findInnerListener = currentRangeListener
+          //         .lastWhereOrNull((element) => element.route == lastShowPage);
+          //   } else {
+          //     break;
+          //   }
+          // }
         }
         return isHandle;
       } else {
@@ -400,6 +406,11 @@ class AppRouter implements AppRouterBase, RoutePageBase {
         return false;
       }
     }
+  }
+
+  // 快速設置子頁面資訊(由PageRouter自行分發, 不需要再轉送)
+  void syncSubRouteInfo(RouteData data) {
+    _pageDetailSubject.add(data.route);
   }
 
   static void setDefaultRoute<T>(MixinRouteBuilder<T> builder) {
@@ -805,8 +816,8 @@ class AppRouter implements AppRouterBase, RoutePageBase {
 
 class _MxCoreRouteObservable extends NavigatorObserver {
   /// 回退檢測觸發
-  ValueCallback<String?>? _onDetectPop;
-  ValueCallback<String?>? _onDetectPush;
+  void Function(String? route)? _onDetectPop;
+  void Function(String? route)? _onDetectPush;
 
   _MxCoreRouteObservable._();
 

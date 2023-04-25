@@ -72,15 +72,15 @@ class IntroductionList extends StatelessWidget {
     // return;
     appRouter.pushPage(
       page,
-      builder: (
-        Widget child,
-        String name,
-      ) {
-        return CubeRoutePart1(
-          child: child,
-          settings: RouteSettings(name: name),
-        );
-      },
+      // builder: (
+      //   Widget child,
+      //   String name,
+      // ) {
+      //   return CubeRoutePart1(
+      //     child: child,
+      //     settings: RouteSettings(name: name),
+      //   );
+      // },
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mx_core/mx_core.dart';
 
@@ -64,6 +65,11 @@ class RouteStackSwitcher extends StatefulWidget {
   /// 轉場動畫貯列排序
   final StackConfig stackConfig;
 
+  /// 初始路由
+  final RouteData? initRoute;
+
+  final bool debug;
+
   const RouteStackSwitcher._({
     required this.onPopHandler,
     required this.stream,
@@ -73,6 +79,7 @@ class RouteStackSwitcher extends StatefulWidget {
     required this.alignment,
     required this.stackConfig,
     required this.animateEnabled,
+    this.initRoute,
     this.popDirection = AxisDirection.right,
     this.animatedShadow,
     this.emptyWidget,
@@ -82,6 +89,7 @@ class RouteStackSwitcher extends StatefulWidget {
     this.scaleOut,
     this.opacityOut,
     this.translateOut,
+    this.debug = false,
   });
 
   factory RouteStackSwitcher({
@@ -94,6 +102,7 @@ class RouteStackSwitcher extends StatefulWidget {
     StackConfig stackConfig = const StackConfig(),
     bool swipePopEnabled = false,
     bool animateEnabled = true,
+    RouteData? initRoute,
     BoxShadow? animatedShadow = const BoxShadow(
       color: Colors.black26,
       blurRadius: 5,
@@ -106,6 +115,8 @@ class RouteStackSwitcher extends StatefulWidget {
     double? scaleOut,
     double? opacityOut,
     Offset? translateOut,
+    ValueChanged<List<RouteData>>? onRouteListen,
+    bool debug = false,
   }) {
     if (scaleOut == null && scaleIn != null) {
       scaleOut = scaleIn;
@@ -118,8 +129,8 @@ class RouteStackSwitcher extends StatefulWidget {
     }
 
     assert(
-    !swipePopEnabled || (swipePopEnabled && onPopHandler != null),
-    'RouteStackSwitcher: 當開啟滑動彈出頁面時, 必須帶入onPopHandler自訂動作',
+      !swipePopEnabled || (swipePopEnabled && onPopHandler != null),
+      'RouteStackSwitcher: 當開啟滑動彈出頁面時, 必須帶入onPopHandler自訂動作',
     );
 
     return RouteStackSwitcher._(
@@ -138,13 +149,15 @@ class RouteStackSwitcher extends StatefulWidget {
       triggerSwipeDistance: triggerSwipeDistance,
       alignment: alignment,
       stackConfig: stackConfig,
+      initRoute: initRoute,
       animateEnabled: animateEnabled,
       animatedShadow: animatedShadow,
+      debug: debug,
     );
   }
 
   @override
-  _RouteStackSwitcherState createState() => _RouteStackSwitcherState();
+  State<RouteStackSwitcher> createState() => _RouteStackSwitcherState();
 }
 
 class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
@@ -156,9 +169,23 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
   /// 當前顯示的路由歷史
   List<RouteData> routes = [];
 
+  late bool isFirstEvent;
+
   @override
   void initState() {
+    isFirstEvent = widget.initRoute != null;
+
     routeSubscription = widget.stream.listen((event) {
+      if (isFirstEvent) {
+        isFirstEvent = false;
+        if (event.length == 1 && event.first == widget.initRoute) {
+          if (widget.debug) {
+            print('RouteStackSwitcher 忽略預設子頁面route事件: ${widget.initRoute?.route}');
+          }
+          return;
+        }
+      }
+      
       // 比對路由, 檢查跳轉方式
       if (event.isNotEmpty) {
         final lastRoute = event.last;
@@ -192,6 +219,9 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
         controller.pop(popUntil: (tag, index) => false);
       }
       routes = List.from(event);
+      // if (widget.debug) {
+      //   print('轉換路由: ${routes.map((e) => e.route)}');
+      // }
       // print('RouteStackSwitcher: ${event.map((e) => e.route)}');
     });
     super.initState();
@@ -244,6 +274,7 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
       onPopHandler: widget.onPopHandler,
       duration: widget.duration,
       swipePopEnabled: widget.swipePopEnabled,
+      initTag: widget.initRoute,
       triggerSwipeDistance: widget.triggerSwipeDistance,
       alignment: widget.alignment,
       stackConfig: widget.stackConfig,
@@ -257,6 +288,7 @@ class _RouteStackSwitcherState extends State<RouteStackSwitcher> {
       scaleOut: widget.scaleOut,
       opacityOut: widget.opacityOut,
       translateOut: widget.translateOut,
+      debug: widget.debug,
     );
   }
 }

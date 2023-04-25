@@ -82,6 +82,8 @@ class WidgetSwitcher<T> extends StatefulWidget {
   /// 轉場動畫貯列排序
   final StackConfig stackConfig;
 
+  final bool debug;
+
   const WidgetSwitcher._({
     required this.controller,
     required this.builder,
@@ -103,6 +105,7 @@ class WidgetSwitcher<T> extends StatefulWidget {
     this.scaleOut,
     this.opacityOut,
     this.translateOut,
+    this.debug = false,
   });
 
   factory WidgetSwitcher({
@@ -130,6 +133,7 @@ class WidgetSwitcher<T> extends StatefulWidget {
     double? scaleOut,
     double? opacityOut,
     Offset? translateOut,
+    bool debug = false,
   }) {
     if (scaleOut == null && scaleIn != null) {
       scaleOut = scaleIn;
@@ -166,11 +170,12 @@ class WidgetSwitcher<T> extends StatefulWidget {
       stackConfig: stackConfig,
       animateEnabled: animateEnabled,
       animatedShadow: animatedShadow,
+      debug: debug,
     );
   }
 
   @override
-  _WidgetSwitcherState<T> createState() => _WidgetSwitcherState<T>();
+  State<WidgetSwitcher<T>> createState() => _WidgetSwitcherState<T>();
 }
 
 class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
@@ -275,7 +280,7 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
     _updateAnimationParam();
 
     if (widget.initTag != null) {
-      tagStacks.add(widget.initTag!);
+      tagStacks.add(widget.initTag);
       _syncWidgetStack();
     }
 
@@ -892,8 +897,8 @@ class _WidgetSwitcherState<T> extends State<WidgetSwitcher<T>>
             child: Opacity(
               opacity: pageOpacity ?? 1,
               child: RepaintBoundary(
-                child: pageWidget,
                 key: cacheKey[i],
+                child: pageWidget,
               ),
             ),
           ),

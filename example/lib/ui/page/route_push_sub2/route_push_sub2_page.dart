@@ -3,6 +3,12 @@ import 'package:mx_core/mx_core.dart';
 
 import 'route_push_sub2_route.dart';
 
+DateTime? targetB1;
+DateTime? endB;
+DateTime? centerB;
+DateTime? routeB;
+DateTime? startB;
+
 class RoutePushSub2Page extends StatefulWidget {
   final RouteOption option;
 
@@ -20,6 +26,8 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page>
   late RoutePushSub2Route route;
   int counter = 0;
 
+  Future<bool>? waitF;
+
   @override
   void initState() {
     route = context.pageRoute()!;
@@ -28,6 +36,8 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page>
 
   @override
   Widget build(BuildContext context) {
+    centerB = DateTime.now();
+    print('跳轉B轉中間延遲時間: ${centerB!.difference(startB!)}');
     super.build(context);
     return Container(
       color: Colors.redAccent,
@@ -41,23 +51,54 @@ class _RoutePushSub2PageState extends State<RoutePushSub2Page>
             style: TextStyle(color: Colors.white, fontSize: 25),
           ),
           _buildButton("切換子頁面 A/B", () {
-            // route.toNextSubPage();
+            route.toNextSubPage();
 //              counter++;
 //              setState(() {});
-          bool aa = true;
-            Navigator.of(context).popUntil((route) {
-              print('回退 => ${route.settings.name}');
-              if (aa) {
-                aa = false;
-                return false;
-              } else {
-                return true;
-              }
-            });
+//             bool aa = true;
+//             Navigator.of(context).popUntil((route) {
+//               print('回退 => ${route.settings.name}');
+//               if (aa) {
+//                 aa = false;
+//                 return false;
+//               } else {
+//                 return true;
+//               }
+//             });
           }),
+          // Expanded(
+          //   child: FutureBuilder<bool>(
+          //     future: waitF ??= Future.delayed(const Duration(milliseconds: 0))
+          //         .then((value) => true),
+          //     builder: (context, value) {
+          //       print('數值: ${value.data}');
+          //       if (value.hasData) {
+          //         return Container(
+          //           width: double.infinity,
+          //           height: double.infinity,
+          //           decoration: BoxDecoration(color: Colors.amberAccent),
+          //         );
+          //       } else {
+          //         return Container();
+          //       }
+          //     },
+          //   ),
+          // ),
           Expanded(
             child: RouteStackSwitcher(
+              initRoute: route.initSubPage,
               stream: route.subPageHistoryStream,
+              animateEnabled: false,
+              duration: Duration.zero,
+              debug: true,
+              emptyWidget: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.green,
+              ),
+              onRouteListen: (routeList) {
+                routeB = DateTime.now();
+                print('跳轉B轉路由延遲時間: ${routeB!.difference(startB!)}');
+              },
             ),
           ),
         ],

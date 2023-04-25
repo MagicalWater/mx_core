@@ -4,6 +4,8 @@ import 'package:mx_core_example/router/routes.dart';
 import 'package:mx_core_example/ui/widget/base_app_bar.dart';
 import 'package:mx_core_example/ui/widget/top_desc.dart';
 
+import '../route_push_sub2/route_push_sub2_page.dart';
+
 class RoutePushEntryPage extends StatefulWidget {
   final RouteOption option;
 
@@ -60,6 +62,7 @@ class _RoutePushEntryPageState extends State<RoutePushEntryPage> {
                 appRouter.pushPage(Pages.routePushSub3);
               }),
               _routeButton("跨頁跳轉隔代子頁面", () {
+                startB = DateTime.now();
                 appRouter.pushPage(Pages.routePushSubB);
               }),
             ],

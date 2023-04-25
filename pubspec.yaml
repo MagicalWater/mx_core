@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 7.1.6+6
+version: 7.2.0+1
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -12,17 +12,8 @@ dependencies:
 
   rxdart: ^0.27.7
 
-  # 網路請求庫
-  dio: 4.0.6
-
   # 解析圖片
   image: ^4.0.15
-
-  # dio 的 cookie 管理
-  dio_cookie_manager: 2.0.0
-
-  # 搭配 dio, 讓 dio 會自動帶入 cookie
-  cookie_jar: 3.0.1
 
   # 本地文件
   path_provider: ^2.0.14
@@ -32,9 +23,6 @@ dependencies:
 
   # 時間/數字格式化
   intl: ^0.17.0
-
-  # SQLite 數據庫
-  sqflite: ^2.2.0+3
 
   # android 的返回按鈕攔截
   back_button_interceptor: 6.0.2
@@ -46,7 +34,9 @@ dependencies:
 
   rational: ^2.2.0
 
-  flutter_secure_storage: ^6.0.0
+  flutter_secure_storage: ^8.0.0
+
+  collection: ^1.17.0
 
 dev_dependencies:
   flutter_test:

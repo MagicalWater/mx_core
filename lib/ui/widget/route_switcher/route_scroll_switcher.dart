@@ -24,6 +24,10 @@ class RouteScrollSwitcher extends StatefulWidget {
 
   final ScrollPhysics? physics;
 
+  final RouteData? initRoute;
+
+  final bool debug;
+
   const RouteScrollSwitcher._({
     required this.routes,
     required this.stream,
@@ -32,6 +36,8 @@ class RouteScrollSwitcher extends StatefulWidget {
     required this.animateEnabled,
     this.emptyWidget,
     this.physics,
+    this.initRoute,
+    this.debug = false,
   });
 
   factory RouteScrollSwitcher({
@@ -42,6 +48,8 @@ class RouteScrollSwitcher extends StatefulWidget {
     Curve curve = Curves.ease,
     bool animateEnabled = true,
     ScrollPhysics? physics,
+    RouteData? initRoute,
+    bool debug = false,
   }) {
     return RouteScrollSwitcher._(
       routes: routes,
@@ -51,11 +59,13 @@ class RouteScrollSwitcher extends StatefulWidget {
       curve: curve,
       animateEnabled: animateEnabled,
       physics: physics,
+      initRoute: initRoute,
+      debug: debug,
     );
   }
 
   @override
-  _RouteScrollSwitcherState createState() => _RouteScrollSwitcherState();
+  State<RouteScrollSwitcher> createState() => _RouteScrollSwitcherState();
 }
 
 class _RouteScrollSwitcherState extends State<RouteScrollSwitcher> {
@@ -72,9 +82,27 @@ class _RouteScrollSwitcherState extends State<RouteScrollSwitcher> {
   /// 使用者切換的忽略
   int? userIgnore;
 
+  late bool isFirstEvent;
+
   @override
   void initState() {
+    isFirstEvent = widget.initRoute != null;
+    if (widget.initRoute != null) {
+      // 同步初始路由
+      _syncData([widget.initRoute!]);
+    }
+
     _subscription = widget.stream.listen((event) {
+      if (isFirstEvent) {
+        isFirstEvent = false;
+        if (event.length == 1 && event.first == widget.initRoute) {
+          if (widget.debug) {
+            print(
+                'RouteScrollSwitcher 忽略預設子頁面route事件: ${widget.initRoute?.route}');
+          }
+          return;
+        }
+      }
       _syncData(event);
     });
     super.initState();
@@ -145,7 +173,6 @@ class _RouteScrollSwitcherState extends State<RouteScrollSwitcher> {
       return const SizedBox.shrink();
     }
     return PageView(
-      children: _showChildren!.map((e) => e.call(context)).toList(),
       controller: _pageController,
       physics: widget.physics,
       onPageChanged: (index) {
@@ -160,6 +187,7 @@ class _RouteScrollSwitcherState extends State<RouteScrollSwitcher> {
         userIgnore = index;
         appRouter.forceModifyPageDetail(widget.routes[index]);
       },
+      children: _showChildren!.map((e) => e.call(context)).toList(),
     );
   }
 

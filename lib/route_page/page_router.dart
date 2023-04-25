@@ -66,6 +66,9 @@ abstract class PageRouter implements PageInterface {
 
   bool _isInit = false;
 
+  /// 初始子頁面
+  RouteData? initSubPage;
+
   /// 此頁面的預設子頁面
   RouteData? defaultSubPage() => null;
 
@@ -140,22 +143,36 @@ abstract class PageRouter implements PageInterface {
       forceModifyPageDetail: _forceModifyPageDetail,
     );
 
-    print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
-    if (option.nextRoute != null && option is RouteData) {
-      // 需要再往下進行跳轉頁面
-      var data = option as RouteData;
+    final nextRoute = option.nextRoute;
 
-      appRouter.pushPage(
-        data.targetSubRoute!,
-        query: data.query,
+    print("檢查是否需要自動跳轉子頁面: ${option.route}, ${option.targetSubRoute}");
+    if (nextRoute != null) {
+      final routeData = RouteData(
+        nextRoute,
+        targetSubRoute: option.targetSubRoute!,
+        query: option.query,
       );
+
+      // 需要再往下進行跳轉頁面
+      print('需要往下跳轉: ${option.nextRoute}, 目標: ${option.targetSubRoute}');
+
+      if (_isHandleRoute(routeData)) {
+        appRouter.syncSubRouteInfo(routeData);
+        initSubPage = routeData;
+        _dispatchSubPage(routeData);
+      } else {
+        print('拒絕初始子頁面跳轉請求: $nextRoute');
+      }
     } else if (defaultRoute != null) {
       print('跳轉預設子頁面: ${defaultRoute.route}');
-      // 需要跳轉預設子頁面
-      appRouter.pushPage(
-        defaultRoute.route,
-        query: defaultRoute.query,
-      );
+
+      if (_isHandleRoute(defaultRoute)) {
+        appRouter.syncSubRouteInfo(defaultRoute);
+        initSubPage = defaultRoute;
+        _dispatchSubPage(defaultRoute);
+      } else {
+        print('拒絕初始預設子頁面跳轉請求: ${defaultRoute.route}');
+      }
     }
   }
 
@@ -164,25 +181,20 @@ abstract class PageRouter implements PageInterface {
   }
 
   /// 子頁面跳轉分發
-  bool _dispatchSubPage(
+  void _dispatchSubPage(
     RouteData data, {
     bool Function(String route)? popUntil,
   }) {
-    if (_isHandleRoute(data)) {
-      // 在此確認是否處理此子頁面的跳轉
-//      print('接收跳轉請求: ${data.route}');
-      switch (historyShow) {
-        case HistoryShow.stack:
-          _stackDispatchPage(data, popUntil: popUntil);
-          break;
-        case HistoryShow.tab:
-          _tabDispatchPage(data, popUntil: popUntil);
-          break;
-      }
-
-      return true;
+    switch (historyShow) {
+      case HistoryShow.stack:
+        print('stack分發');
+        _stackDispatchPage(data, popUntil: popUntil);
+        break;
+      case HistoryShow.tab:
+        print('tab分發');
+        _tabDispatchPage(data, popUntil: popUntil);
+        break;
     }
-    return false;
   }
 
   /// 堆疊式分發頁面

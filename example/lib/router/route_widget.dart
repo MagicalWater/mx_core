@@ -32,6 +32,8 @@ import 'package:mx_core_example/ui/page/timer/timer.dart';
 import 'package:mx_core_example/ui/page/wave_progress/wave_progress.dart';
 import 'package:mx_core_example/ui/page/widget_switcher/widget_switcher.dart';
 
+import '../ui/page/route_push_sub_b1/route_push_sub_b1.dart';
+import '../ui/page/route_push_sub_b2/route_push_sub_b2.dart';
 import 'routes.dart';
 
 /// 儲存所有 route 對應的 page widget
@@ -74,6 +76,8 @@ class RouteWidget implements RouteWidgetBase {
     Pages.routePushSub3,
     Pages.routePushSubA,
     Pages.routePushSubB,
+    Pages.routePushSubB1,
+    Pages.routePushSubB2,
     Pages.forceCenterLayout,
     Pages.widgetSwitcher,
     Pages.rotation3D,
@@ -249,6 +253,18 @@ class RouteWidget implements RouteWidgetBase {
         return RouterMiddler(
           childBuilder: (context) => RoutePushSubBPage(option),
           routeBuilder: () => RoutePushSubBRoute(option),
+          key: key,
+        );
+      case Pages.routePushSubB1:
+        return RouterMiddler(
+          childBuilder: (context) => RoutePushSubB1Page(option),
+          routeBuilder: () => RoutePushSubB1Route(option),
+          key: key,
+        );
+      case Pages.routePushSubB2:
+        return RouterMiddler(
+          childBuilder: (context) => RoutePushSubB2Page(option),
+          routeBuilder: () => RoutePushSubB2Route(option),
           key: key,
         );
       case Pages.forceCenterLayout:

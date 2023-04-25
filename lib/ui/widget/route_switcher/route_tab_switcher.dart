@@ -17,6 +17,8 @@ class RouteTabSwitcher extends StatefulWidget {
   final List<String> routes;
   final Stream<List<RouteData>> stream;
 
+  final RouteData? initRoute;
+
   /// 當尚未有 route 傳入時, 所顯示的空元件
   /// 默認為 Container()
   final Widget? emptyWidget;
@@ -56,6 +58,8 @@ class RouteTabSwitcher extends StatefulWidget {
   /// 轉場動畫貯列排序
   final StackConfig stackConfig;
 
+  final bool debug;
+
   const RouteTabSwitcher._({
     required this.routes,
     required this.stream,
@@ -64,6 +68,7 @@ class RouteTabSwitcher extends StatefulWidget {
     required this.alignment,
     required this.stackConfig,
     required this.animateEnabled,
+    this.initRoute,
     this.animatedShadow,
     this.emptyWidget,
     this.scaleIn,
@@ -72,6 +77,7 @@ class RouteTabSwitcher extends StatefulWidget {
     this.scaleOut,
     this.opacityOut,
     this.translateOut,
+    this.debug = false,
   });
 
   factory RouteTabSwitcher({
@@ -88,12 +94,14 @@ class RouteTabSwitcher extends StatefulWidget {
     Curve curve = Curves.ease,
     Alignment alignment = Alignment.center,
     StackConfig stackConfig = const StackConfig(),
+    RouteData? initRoute,
     bool animateEnabled = true,
     BoxShadow animatedShadow = const BoxShadow(
       color: Colors.black26,
       blurRadius: 5,
       spreadRadius: 0,
     ),
+    bool debug = false,
   }) {
     if (scaleOut == null && scaleIn != null) {
       scaleOut = scaleIn;
@@ -118,13 +126,15 @@ class RouteTabSwitcher extends StatefulWidget {
       curve: curve,
       alignment: alignment,
       stackConfig: stackConfig,
+      initRoute: initRoute,
       animateEnabled: animateEnabled,
       animatedShadow: animatedShadow,
+      debug: debug,
     );
   }
 
   @override
-  _RouteTabSwitcherState createState() => _RouteTabSwitcherState();
+  State<RouteTabSwitcher> createState() => _RouteTabSwitcherState();
 }
 
 class _RouteTabSwitcherState extends State<RouteTabSwitcher>
@@ -149,6 +159,8 @@ class _RouteTabSwitcherState extends State<RouteTabSwitcher>
 
   /// route 路由監聽
   StreamSubscription? _subscription;
+
+  late bool isFirstEvent;
 
   @override
   void initState() {
@@ -176,7 +188,26 @@ class _RouteTabSwitcherState extends State<RouteTabSwitcher>
     // 更新動畫設定
     _updateAnimationParam();
 
+    isFirstEvent = widget.initRoute != null;
+
+    if (widget.initRoute != null) {
+      // 同步設置初始路由
+      _syncAnimationPush(!widget.initRoute!.isPop);
+      _syncWidgetList([widget.initRoute!]);
+    }
+
     _subscription = widget.stream.listen((event) {
+      if (isFirstEvent) {
+        isFirstEvent = false;
+        if (event.length == 1 && event.first == widget.initRoute) {
+          if (widget.debug) {
+            print(
+                'RouteTabSwitcher 忽略預設子頁面route事件: ${widget.initRoute?.route}');
+          }
+          return;
+        }
+      }
+
       if (widget.animateEnabled && switchAnimation.haveTransition) {
         _executeChangeAnimation(event);
       } else {
@@ -185,6 +216,7 @@ class _RouteTabSwitcherState extends State<RouteTabSwitcher>
         setState(() {});
       }
     });
+
     super.initState();
   }
 
@@ -347,7 +379,6 @@ class _RouteTabSwitcherState extends State<RouteTabSwitcher>
   /// 當有佔位截圖時, 代表元件處於動畫中
   /// 將[widgetList]封裝成元件, 並且套入效果
   Widget _applyEffectToWidgetList(StackSort sortConfig) {
-
     // 檢查是否有偏移效果, 決定是否在佔位截圖加入陰影效果
     BoxDecoration? boxShadow;
     if (widget.animatedShadow != null &&
@@ -389,7 +420,6 @@ class _RouteTabSwitcherState extends State<RouteTabSwitcher>
   /// 當有佔位截圖時, 代表元件處於動畫中
   /// 將佔位截圖封裝成元件, 並且套入效果
   Widget _applyEffectToTransitionImage(StackSort sortConfig) {
-
     // 檢查是否有偏移效果, 決定是否在佔位截圖加入陰影效果
     BoxDecoration? boxShadow;
     if (widget.animatedShadow != null &&

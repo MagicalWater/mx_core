@@ -56,6 +56,12 @@ class Pages {
   /// 路由頁面跳轉 第二大頁面 => 子頁面2 => 子頁面b
   static const routePushSubB = "$routePushSub2/routePushSubB";
 
+  /// 路由頁面跳轉 第二大頁面 => 子頁面2 => 子頁面b => 子頁面b1
+  static const routePushSubB1 = "$routePushSubB/routePushSubB1";
+
+  /// 路由頁面跳轉 第二大頁面 => 子頁面2 => 子頁面b => 子頁面b2
+  static const routePushSubB2 = "$routePushSubB/routePushSubB2";
+
   /// 路由頁面跳轉 第二大頁面 => 子頁面3
   static const routePushSub3 = "$routePushSecond/routePushSub3";
 
