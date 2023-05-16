@@ -2,7 +2,7 @@ name: mx_core_example
 description: Demonstrates how to use the mx_core plugin.
 publish_to: none
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ">=2.19.0 <3.0.0"
 dependencies:
   flutter:
     sdk: flutter

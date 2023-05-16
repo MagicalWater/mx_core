@@ -41,7 +41,6 @@ void main() {
         kToolbarHeight,
       ),
       child: AppBar(
-        brightness: Brightness.light,
         leading: leading,
         title: titleWidget,
         iconTheme: IconThemeData(
