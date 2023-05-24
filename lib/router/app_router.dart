@@ -601,8 +601,8 @@ class AppRouter implements AppRouterBase, RoutePageBase {
         isNeedBlockOnceSystemPopDetect = false;
         return;
       }
-      var lastPage = pageHistory.last;
-      if (lastPage.route == name) {
+      var lastPage = pageHistory.lastOrNull;
+      if (lastPage?.route == name) {
         print('刪除最後: ${pageHistory.map((e) => e.route)}');
         _removeLastPage();
         _pageSubject.add(_pageSubject.value);
