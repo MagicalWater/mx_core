@@ -123,12 +123,10 @@ class Popup {
                 return false;
               },
               child: Container(
-                padding:
-                    option?.getOverlayPadding(child is ShiftAnimation),
+                padding: option?.getOverlayPadding(child is ShiftAnimation),
                 child: animated != null
                     ? AnimatedComb(
-                        alignment:
-                            option?.alignment ?? FractionalOffset.center,
+                        alignment: option?.alignment ?? FractionalOffset.center,
                         sync: childSync,
                         animatedList: animated,
                         child: childGesture,
@@ -152,6 +150,8 @@ class Popup {
   /// [animated] - 顯示動畫, 空陣列將使用預設動畫 [Comb.scale], 若不需要動畫則帶入 null
   /// [onTapSpace] - 點擊空白處回調, 只有在 [hitRule] 等於 [HitRule.intercept] 時有效
   /// [onTapBack] - 點擊返回鍵, 默認將會關閉彈窗
+  /// [below] - 在此彈窗之下
+  /// [above] - 在此彈窗之上
   static PopupController<OverlayEntry?> showOverlay({
     required PopupWidgetBuilder<OverlayEntry?> builder,
     PopupOption? option,
@@ -159,6 +159,8 @@ class Popup {
     List<Comb>? animated = const [],
     void Function(PopupController<OverlayEntry?> controller)? onTapSpace,
     void Function(PopupController<OverlayEntry?> controller)? onTapBack,
+    OverlayEntry? below,
+    OverlayEntry? above,
   }) {
     if (animated?.isEmpty == true) {
       animated = [
@@ -235,7 +237,7 @@ class Popup {
         );
       },
     );
-    navigatorIns.overlay!.insert(entry);
+    navigatorIns.overlay!.insert(entry, below: below, above: above);
     controller
       ..registerController(backgroundSync)
       ..registerController(childSync)
@@ -250,6 +252,8 @@ class Popup {
     ArrowPopupStyle style = const ArrowPopupStyle(),
     Color? maskColor,
     void Function(PopupController<OverlayEntry?> controller)? onTapSpace,
+    OverlayEntry? below,
+    OverlayEntry? above,
   }) {
     // 先取得要 attach 到的 widget context
     var attachRect = _getRect(context);
@@ -375,6 +379,8 @@ class Popup {
           },
         );
       },
+      below: below,
+      above: above,
     );
 
     popupController.registerRemoveEventCallback(
