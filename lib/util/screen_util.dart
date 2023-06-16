@@ -247,5 +247,7 @@ extension ScreenScale on num {
 
   double get scaleW => Screen.scaleW(toDouble());
 
+  double get scaleH => Screen.scaleH(toDouble());
+
   double get scaleSp => Screen.scaleSp(toDouble());
 }
