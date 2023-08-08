@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 8.0.0+1
+version: 8.0.0+2
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -12,17 +12,8 @@ dependencies:
 
   rxdart: ^0.27.7
 
-  # 網路請求庫
-  dio: 4.0.6
-
   # 解析圖片
   image: ^3.2.2
-
-  # dio 的 cookie 管理
-  dio_cookie_manager: 2.0.0
-
-  # 搭配 dio, 讓 dio 會自動帶入 cookie
-  cookie_jar: 3.0.1
 
   # 本地文件
   path_provider: ^2.0.11
@@ -31,7 +22,7 @@ dependencies:
   shared_preferences: ^2.0.15
 
   # 時間/數字格式化
-  intl: ^0.17.0
+  intl: ^0.18.0
 
   # SQLite 數據庫
 #  sqflite: ^2.2.0+3

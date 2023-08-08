@@ -1,7 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mx_core/mx_core.dart';
 
 import 'router/route_widget.dart';
@@ -41,7 +39,6 @@ void main() {
         kToolbarHeight,
       ),
       child: AppBar(
-        brightness: Brightness.light,
         leading: leading,
         title: titleWidget,
         iconTheme: IconThemeData(
