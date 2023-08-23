@@ -120,7 +120,7 @@ class SpanFlex extends RenderFlex {
   }
 
   T findParentRenderObject<T extends RenderBox>() {
-    AbstractNode? parentBox = parent;
+    RenderObject? parentBox = parent;
     while (parentBox != null && parentBox is! T) {
       parentBox = parentBox.parent!;
     }
