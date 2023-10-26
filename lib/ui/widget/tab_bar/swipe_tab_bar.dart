@@ -250,8 +250,10 @@ class _SwipeTabBarState extends State<SwipeTabBar> with TabBarMixin {
                 height: tabHeight + topHeight + bottomHeight,
                 child: Container(
                   height: tabHeight,
-                  padding:
-                      EdgeInsets.only(top: topHeight, bottom: bottomHeight),
+                  padding: EdgeInsets.only(
+                    top: topHeight,
+                    bottom: bottomHeight,
+                  ),
                   child: componentTabRow(
                     selectTab: (context, index) {
                       return widget.tabBuilder.buildTabBackground(

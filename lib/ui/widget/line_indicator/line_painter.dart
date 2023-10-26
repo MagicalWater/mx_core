@@ -77,7 +77,7 @@ class _LinePainter extends CustomPainter {
     endPos -= padding.bottom;
 
     startX = padding.left;
-    lineWidth = lineWidth - padding.left + padding.right;
+    lineWidth = lineWidth - padding.left - padding.right;
 
     if (startPos >= endPos) {
       return;
@@ -137,7 +137,7 @@ class _LinePainter extends CustomPainter {
     startPos += padding.left;
     endPos -= padding.right;
     startY = padding.top;
-    lineWidth = lineWidth - padding.top + padding.bottom;
+    lineWidth = lineWidth - padding.top - padding.bottom;
 
     if (startPos >= endPos) {
       return;

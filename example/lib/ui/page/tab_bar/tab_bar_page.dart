@@ -75,9 +75,9 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: baseAppBar("TabBar"),
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.white,
       body: Container(
-        color: Colors.black,
+        color: Colors.yellow,
         width: double.infinity,
         child: test(),
       ),
@@ -93,16 +93,28 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
         tabDecoration: (index, selected) {
           if (selected) {
             return BoxDecoration(
-              color: Colors.transparent,
-              // border: Border.all(color: Colors.yellow),
-              borderRadius: BorderRadius.circular(6.scaleA),
-            );
+                color: Colors.blueAccent,
+                // border: Border.all(color: Colors.yellow),
+                borderRadius: BorderRadius.circular(6.scaleA),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(1),
+                    offset: const Offset(0, 4),
+                    blurRadius: 4,
+                  ),
+                ]);
           } else {
             return BoxDecoration(
-              color: Colors.transparent,
-              // border: Border.all(color: Colors.white),
-              borderRadius: BorderRadius.circular(6.scaleA),
-            );
+                color: Colors.transparent,
+                // border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(6.scaleA),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(1),
+                    offset: const Offset(0, 4),
+                    blurRadius: 4,
+                  ),
+                ]);
           }
         },
         tabTextStyle: (index, selected) {
@@ -114,11 +126,16 @@ class _TabBarPageState extends State<TabBarPage> with TickerProviderStateMixin {
           } else {
             return TextStyle(
               color: Colors.grey,
-              fontSize: 10.scaleA,
+              fontSize: 14.scaleA,
             );
           }
         },
         padding: EdgeInsets.symmetric(horizontal: 20.scaleA),
+        margin: EdgeInsets.only(
+          left: 10,
+          right: 10,
+          // bottom: 20
+        ),
       ),
       indicator: TabIndicator(
         // decoration: const BoxDecoration(

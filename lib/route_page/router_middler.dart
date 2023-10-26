@@ -21,6 +21,7 @@ class RouterMiddler<T extends PageRouter> extends StatefulWidget {
     required this.routeBuilder,
   }) : super(key: key);
 
+  // ignore: library_private_types_in_public_api
   final _RouterBuilder<T> routeBuilder;
   final WidgetBuilder childBuilder;
 

@@ -32,7 +32,7 @@ abstract class PageRouter implements PageInterface {
 
   /// 當前子頁面的 index 串流
   Stream<int?> get subPageIndexStream => subPageHistoryStream.map((data) {
-        var currentRoute = data.lastOrNull?.route;
+        final currentRoute = data.lastOrNull?.route;
         if (currentRoute != null) {
           var index = subPages().indexOf(currentRoute);
           if (index == -1) {

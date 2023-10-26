@@ -121,12 +121,13 @@ class _ArrowPopupPageState extends State<ArrowPopupPage> {
               arrowSize: 10,
               backgroundColor: Colors.transparent,
               arrowSide: ArrowSide.line,
-              gradient: LinearGradient(
-                colors: [
-                  Colors.indigo,
-                  Colors.blueAccent,
-                ],
-              ),
+              // gradient: LinearGradient(
+              //   colors: [
+              //     Colors.indigo,
+              //     Colors.blueAccent,
+              //   ],
+              // ),
+              color: Colors.green,
               popupScale: popupScale,
               strokeGradient: LinearGradient(
                 colors: [
