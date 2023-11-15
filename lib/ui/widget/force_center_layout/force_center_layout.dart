@@ -178,14 +178,15 @@ class ForceCenterBox extends RenderBox
           centerChild.layout(constraints.loosen(), parentUsesSize: true);
 
           // 再將剩餘的空間分配給兩端
-          final remainingWidth = constraints.maxWidth - centerChild.size.width;
+          final remainingWidth = max(
+            constraints.maxWidth - centerChild.size.width,
+            0.0,
+          );
 
           // 兩端約束
-          final leafConstraints = constraints
-              .copyWith(
+          final leafConstraints = constraints.loosen().copyWith(
                 maxWidth: remainingWidth / 2,
-              )
-              .loosen();
+              );
 
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
           trailingChild?.layout(leafConstraints, parentUsesSize: true);
@@ -193,11 +194,9 @@ class ForceCenterBox extends RenderBox
           break;
         case SpaceUsedPriority.bothEndsFirst:
           // 先將空間平均配給兩端, 以最長的為主
-          final leafConstraints = constraints
-              .copyWith(
+          final leafConstraints = constraints.loosen().copyWith(
                 maxWidth: constraints.maxWidth / 2,
-              )
-              .loosen();
+              );
 
           // 兩端佈局
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
@@ -209,14 +208,15 @@ class ForceCenterBox extends RenderBox
           );
 
           // 剩餘空間寬度
-          final remainingWidth = constraints.maxWidth - (maxLeafWidth * 2);
+          final remainingWidth = max(
+            constraints.maxWidth - (maxLeafWidth * 2),
+            0.0,
+          );
 
           // 中間約束
-          final mainConstraints = constraints
-              .copyWith(
+          final mainConstraints = constraints.loosen().copyWith(
                 maxWidth: remainingWidth,
-              )
-              .loosen();
+              );
 
           centerChild.layout(mainConstraints, parentUsesSize: true);
 
@@ -317,15 +317,15 @@ class ForceCenterBox extends RenderBox
           centerChild.layout(constraints.loosen(), parentUsesSize: true);
 
           // 再將剩餘的空間分配給兩端
-          final remainingHeight =
-              constraints.maxHeight - centerChild.size.height;
+          final remainingHeight = max(
+            constraints.maxHeight - centerChild.size.height,
+            0.0,
+          );
 
           // 兩端約束
-          final leafConstraints = constraints
-              .copyWith(
+          final leafConstraints = constraints.loosen().copyWith(
                 maxHeight: remainingHeight / 2,
-              )
-              .loosen();
+              );
 
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
           trailingChild?.layout(leafConstraints, parentUsesSize: true);
@@ -333,11 +333,9 @@ class ForceCenterBox extends RenderBox
           break;
         case SpaceUsedPriority.bothEndsFirst:
           // 先將空間平均配給兩端, 以最長的為主
-          final leafConstraints = constraints
-              .copyWith(
+          final leafConstraints = constraints.loosen().copyWith(
                 maxHeight: constraints.maxHeight / 2,
-              )
-              .loosen();
+              );
 
           // 兩端佈局
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
@@ -349,14 +347,15 @@ class ForceCenterBox extends RenderBox
           );
 
           // 剩餘空間寬度
-          final remainingHeight = constraints.maxHeight - (maxLeafHeight * 2);
+          final remainingHeight = max(
+            constraints.maxHeight - (maxLeafHeight * 2),
+            0.0,
+          );
 
           // 中間約束
-          final mainConstraints = constraints
-              .copyWith(
+          final mainConstraints = constraints.loosen().copyWith(
                 maxHeight: remainingHeight,
-              )
-              .loosen();
+              );
 
           centerChild.layout(mainConstraints, parentUsesSize: true);
 
