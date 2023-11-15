@@ -193,9 +193,11 @@ class ForceCenterBox extends RenderBox
           break;
         case SpaceUsedPriority.bothEndsFirst:
           // 先將空間平均配給兩端, 以最長的為主
-          final leafConstraints = constraints.copyWith(
-            maxWidth: constraints.maxWidth / 2,
-          );
+          final leafConstraints = constraints
+              .copyWith(
+                maxWidth: constraints.maxWidth / 2,
+              )
+              .loosen();
 
           // 兩端佈局
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
@@ -331,9 +333,11 @@ class ForceCenterBox extends RenderBox
           break;
         case SpaceUsedPriority.bothEndsFirst:
           // 先將空間平均配給兩端, 以最長的為主
-          final leafConstraints = constraints.copyWith(
-            maxHeight: constraints.maxHeight / 2,
-          );
+          final leafConstraints = constraints
+              .copyWith(
+                maxHeight: constraints.maxHeight / 2,
+              )
+              .loosen();
 
           // 兩端佈局
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
