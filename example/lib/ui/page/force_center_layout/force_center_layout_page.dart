@@ -110,18 +110,24 @@ class _ForceCenterLayoutPageState extends State<ForceCenterLayoutPage> {
             SizedBox(
               height: barHeight,
               child: ForceCenterLayout(
-                leading: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      width: 20,
-                      height: 40,
-                      color: Colors.yellow,
+                leading: FractionallySizedBox(
+                  widthFactor: 1,
+                  child: Container(
+                    color: Colors.red,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 20,
+                          height: 40,
+                          color: Colors.yellow,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-                center: Text(
+                center: const Text(
                   'context',
                   style: TextStyle(
                     fontSize: 16,
@@ -140,9 +146,6 @@ class _ForceCenterLayoutPageState extends State<ForceCenterLayoutPage> {
                   ],
                 ),
                 spaceUsedPriority: SpaceUsedPriority.bothEndsFirst,
-                gapSpace: 10,
-                mainShrinkWrap: false,
-                crossShrinkWrap: false,
                 crossAxisAlignment: CrossAxisAlignment.center,
               ),
             ),
