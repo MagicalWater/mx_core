@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,9 +20,11 @@ class AssistTouchPage extends StatefulWidget {
 }
 
 class _AssistTouchPageState extends State<AssistTouchPage> {
-  var style = TextStyle(
+  var style = const TextStyle(
     color: Colors.white,
   );
+
+  final controller = AssistTouchController();
 
   Color get randomColor {
     return Color.fromARGB(
@@ -48,10 +51,17 @@ class _AssistTouchPageState extends State<AssistTouchPage> {
           color: Colors.white,
           title: state.title,
           child: SafeArea(
-            child: Stack(
-              children: <Widget>[
-                TopDesc(content: state.content),
-                _item(),
+            child: Column(
+              children: [
+                Spacer(),
+                Container(
+                  width: double.infinity,
+                  height: 300,
+                  color: Colors.blueAccent,
+                  child: Stack(
+                    children: <Widget>[
+                      TopDesc(content: state.content),
+                      _item(),
 //            RaisedButton(
 //              onPressed: () {
 //                Popup.showOverlay(
@@ -64,6 +74,9 @@ class _AssistTouchPageState extends State<AssistTouchPage> {
 //              },
 //              child: Text('點我跳輔助按鈕'),
 //            ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -74,36 +87,20 @@ class _AssistTouchPageState extends State<AssistTouchPage> {
 
   Widget _item() {
     return AssistTouch(
-      initOffset: Offset(0, 200),
+      controller: controller,
+      initOffset: const Offset(0, 200),
       maskColor: Colors.black,
       maskOpacity: 0.2,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color(0xfffcd098),
-            Color(0xfff85f62),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        shape: BoxShape.circle,
-      ),
-      child: Align(
-        child: Text(
-          "主按鈕",
-          style: TextStyle(color: Colors.black, fontSize: 12),
-        ),
-      ),
       rotateAction: false,
       size: 100,
       actionSize: 50,
       boardRadius: 150,
       expandRadius: 100,
-      animationDuration: Duration(milliseconds: 500),
+      animationDuration: const Duration(milliseconds: 500),
       boardBuilder: (BuildContext context, double progress) {
         return Container(
           decoration: BoxDecoration(
-            color: Color(0xfff85f62).withAlpha(50),
+            color: const Color(0xfff85f62).withAlpha(50),
             shape: BoxShape.circle,
           ),
           width: 400 * progress,
@@ -111,83 +108,132 @@ class _AssistTouchPageState extends State<AssistTouchPage> {
         );
       },
       actions: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xffcca068),
-                Color(0xff8c6018),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+        GestureDetector(
+          onTap: () {
+            BotToast.showText(text: '點擊按鈕1');
+            controller.toggleExpand();
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xffcca068),
+                  Color(0xff8c6018),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              shape: BoxShape.circle,
             ),
-            shape: BoxShape.circle,
-          ),
-          child: Align(
-            child: Text(
-              "按鈕1",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xffcca068),
-                Color(0xff8c6018),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-            shape: BoxShape.circle,
-          ),
-          child: Align(
-            child: Text(
-              "按鈕2",
-              style: TextStyle(color: Colors.white),
+            child: const Align(
+              child: Text(
+                "按鈕1",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xffcca068),
-                Color(0xff8c6018),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+        GestureDetector(
+          onTap: () {
+            BotToast.showText(text: '點擊按鈕2');
+            controller.toggleExpand();
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xffcca068),
+                  Color(0xff8c6018),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              shape: BoxShape.circle,
             ),
-            shape: BoxShape.circle,
-          ),
-          child: Align(
-            child: Text(
-              "按鈕3",
-              style: TextStyle(color: Colors.white),
+            child: const Align(
+              child: Text(
+                "按鈕2",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color(0xffcca068),
-                Color(0xff8c6018),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+        GestureDetector(
+          onTap: () {
+            BotToast.showText(text: '點擊按鈕3');
+            controller.toggleExpand();
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xffcca068),
+                  Color(0xff8c6018),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              shape: BoxShape.circle,
             ),
-            shape: BoxShape.circle,
+            child: const Align(
+              child: Text(
+                "按鈕3",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ),
-          child: Align(
-            child: Text(
-              "按鈕4",
-              style: TextStyle(color: Colors.white),
+        ),
+        GestureDetector(
+          onTap: () {
+            BotToast.showText(text: '點擊按鈕4');
+            controller.toggleExpand();
+          },
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xffcca068),
+                  Color(0xff8c6018),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+              shape: BoxShape.circle,
+            ),
+            child: const Align(
+              child: Text(
+                "按鈕4",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
       ],
+      child: GestureDetector(
+        onTap: () {
+          BotToast.showText(text: '點擊主按鈕');
+          controller.toggleExpand();
+        },
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xfffcd098),
+                Color(0xfff85f62),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            shape: BoxShape.circle,
+          ),
+          child: const Align(
+            child: Text(
+              "主按鈕",
+              style: TextStyle(color: Colors.black, fontSize: 12),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

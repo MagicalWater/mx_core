@@ -34,8 +34,8 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   mx_core: 2b4b870172a916fe755a81f835ec0d71f16b24b4
-  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
-  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 

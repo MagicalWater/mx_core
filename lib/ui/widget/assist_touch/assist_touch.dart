@@ -1,14 +1,13 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mx_core/mx_core.dart';
 import 'package:vector_math/vector_math.dart' as vector;
-
-import '../material_layer.dart';
 
 part 'circle_range.dart';
 
 part 'side_detect.dart';
+
+part 'controller.dart';
 
 typedef ExpandProgressBuilder = Widget? Function(
   BuildContext context,
@@ -17,9 +16,6 @@ typedef ExpandProgressBuilder = Widget? Function(
 
 /// 輔助按鈕, 類似於ios小白點
 class AssistTouch extends StatefulWidget {
-  /// 主按鈕外框
-  final Decoration? decoration;
-
   /// 主按鈕的 child
   final Widget child;
 
@@ -63,13 +59,14 @@ class AssistTouch extends StatefulWidget {
   /// 面板元件構建類
   final ExpandProgressBuilder? boardBuilder;
 
+  final AssistTouchController? controller;
+
   const AssistTouch({
     Key? key,
     required this.initOffset,
     required this.child,
     this.maskColor = Colors.transparent,
     this.maskOpacity = 1,
-    this.decoration,
     this.rotateAction = false,
     this.animationDuration = const Duration(milliseconds: 200),
     this.sideSpace = 50,
@@ -80,11 +77,12 @@ class AssistTouch extends StatefulWidget {
     this.draggable = true,
     this.actions = const [],
     this.boardBuilder,
+    this.controller,
   })  : actionSize = actionSize ?? size,
         super(key: key);
 
   @override
-  _AssistTouchState createState() => _AssistTouchState();
+  State<AssistTouch> createState() => _AssistTouchState();
 }
 
 class _AssistTouchState extends State<AssistTouch>
@@ -132,12 +130,27 @@ class _AssistTouchState extends State<AssistTouch>
 
     // 初始化動畫控制器
     initController();
+
+    // 綁定控制器
+    widget.controller?._bind = this;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant AssistTouch oldWidget) {
+    if (oldWidget.controller != widget.controller) {
+      // 綁定控制器
+      widget.controller?._bind = this;
+      // 舊的解版
+      oldWidget.controller?._bind = null;
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
   void dispose() {
     animationController.dispose();
+    widget.controller?.dispose();
     super.dispose();
   }
 
@@ -171,35 +184,30 @@ class _AssistTouchState extends State<AssistTouch>
   }
 
   /// 切換展開狀態
-  void toggleExpand() {
+  /// [expand] - 是否展開, 若無賦予值, 則會按照當前是否展開來切換
+  Future<void> toggleExpand({bool? expand}) {
     // 更新展開範圍
     updateExpandRange(context);
 
     // 切換展開狀態
-    isExpand = !isExpand;
+    if (expand != null) {
+      isExpand = expand;
+    } else {
+      isExpand = !isExpand;
+    }
 
     // 同步展開狀態動畫
-    syncExpandAnimation();
+    return syncExpandAnimation();
   }
 
   /// 主按鈕元件
   Widget buildMainButton() {
     Widget widgetChain = Opacity(
       opacity: 0.8,
-      child: MaterialLayer.single(
-        layer: LayerProperties(
-          width: widget.size,
-          height: widget.size,
-          decoration: widget.decoration,
-        ),
-        // 加入 AbsorbPointer 防止子元件抓走點擊事件
-        child: AbsorbPointer(
-          child: widget.child,
-        ),
-        onTap: () {
-          // 點擊主按鈕
-          toggleExpand();
-        },
+      child: SizedBox(
+        width: widget.size,
+        height: widget.size,
+        child: widget.child,
       ),
     );
 
@@ -207,14 +215,12 @@ class _AssistTouchState extends State<AssistTouch>
     // 將主按鈕加入 Draggable 元件裡面達到可拖動效果
     if (!isExpand && widget.draggable) {
       widgetChain = Draggable(
-        child: widgetChain,
         childWhenDragging: Container(),
         feedback: Opacity(
           opacity: 0.5,
-          child: Container(
+          child: SizedBox(
             width: widget.size,
             height: widget.size,
-            decoration: widget.decoration,
             child: widget.child,
           ),
         ),
@@ -237,6 +243,7 @@ class _AssistTouchState extends State<AssistTouch>
           var willOffset = getLastOffset(context, fromOffset);
           startTranslateAnimation(from: fromOffset, to: willOffset);
         },
+        child: widgetChain,
       );
     }
 
@@ -270,17 +277,12 @@ class _AssistTouchState extends State<AssistTouch>
         child: FractionallySizedBox(
           widthFactor: 1,
           heightFactor: 1,
-          child: Opacity(
-            opacity: currentOpacity,
-            child: Container(
-              color: widget.maskColor,
-            ),
+          child: Container(
+            color: widget.maskColor.withOpacity(currentOpacity),
           ),
         ),
         onTap: () {
-          print("點擊遮罩, 收起");
-          isExpand = !isExpand;
-          syncExpandAnimation();
+          toggleExpand(expand: false);
         },
       );
       return maskWidget;
@@ -387,7 +389,7 @@ class _AssistTouchState extends State<AssistTouch>
   }
 
   /// 點擊主按鈕之後, 需要做的展開/收縮動畫
-  void syncExpandAnimation() {
+  Future<void> syncExpandAnimation() {
     double begin = actionAnimation.value;
     mainDragAnimation.removeListener(mainDragAnimationListener);
     actionAnimation.removeListener(actionExpandAnimationListener);
@@ -396,7 +398,7 @@ class _AssistTouchState extends State<AssistTouch>
     animationController.reset();
     actionTween.begin = begin;
     actionTween.end = end;
-    animationController.forward();
+    return animationController.forward();
   }
 
   /// 當偏移位置會造成主按鈕超出邊界時, 需要進行位移修正
