@@ -59,7 +59,12 @@ class AssistTouch extends StatefulWidget {
   /// 面板元件構建類
   final ExpandProgressBuilder? boardBuilder;
 
+  /// 控制器
   final AssistTouchController? controller;
+
+  /// 展開時, 點擊空白處的回調 (點擊遮罩)
+  /// 沒有帶值將會使用預設 (預設為將按鈕縮起)
+  final VoidCallback? onTapSpace;
 
   const AssistTouch({
     Key? key,
@@ -78,6 +83,7 @@ class AssistTouch extends StatefulWidget {
     this.actions = const [],
     this.boardBuilder,
     this.controller,
+    this.onTapSpace,
   })  : actionSize = actionSize ?? size,
         super(key: key);
 
@@ -274,6 +280,10 @@ class _AssistTouchState extends State<AssistTouch>
       currentOpacity = currentOpacity.clamp(0.0, 1.0);
 
       Widget maskWidget = GestureDetector(
+        onTap: widget.onTapSpace ?? () {
+          // 點擊遮罩時, 預設為縮起
+          toggleExpand(expand: false);
+        },
         child: FractionallySizedBox(
           widthFactor: 1,
           heightFactor: 1,
@@ -281,9 +291,6 @@ class _AssistTouchState extends State<AssistTouch>
             color: widget.maskColor.withOpacity(currentOpacity),
           ),
         ),
-        onTap: () {
-          toggleExpand(expand: false);
-        },
       );
       return maskWidget;
     }

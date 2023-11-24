@@ -97,6 +97,10 @@ class _AssistTouchPageState extends State<AssistTouchPage> {
       boardRadius: 150,
       expandRadius: 100,
       animationDuration: const Duration(milliseconds: 500),
+      onTapSpace: () {
+        print('點擊遮罩');
+        controller.toggleExpand();
+      },
       boardBuilder: (BuildContext context, double progress) {
         return Container(
           decoration: BoxDecoration(
