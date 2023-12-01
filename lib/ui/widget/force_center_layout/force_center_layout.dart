@@ -21,6 +21,13 @@ class ForceCenterLayout extends MultiChildRenderObjectWidget {
   final Widget center;
   final Widget? trailing;
 
+  /// 三個元件在允許空間內的對齊
+  /// 當方向為橫向時, y軸的位置無效(設定y軸位置使用[crossAxisAlignment])
+  /// 當方向為縱向時, x軸的位置無效(設定x軸位置使用[crossAxisAlignment])
+  final Alignment leadingAlignment;
+  final Alignment centerAlignment;
+  final Alignment trailingAlignment;
+
   /// 當空間不足以讓三個元件同時平鋪時
   /// 需要有優先順序, 默認為中間優先
   final SpaceUsedPriority spaceUsedPriority;
@@ -55,10 +62,13 @@ class ForceCenterLayout extends MultiChildRenderObjectWidget {
     this.gapSpace = 0,
     this.mainShrinkWrap = false,
     this.crossShrinkWrap = false,
+    this.leadingAlignment = Alignment.topLeft,
+    this.centerAlignment = Alignment.center,
+    this.trailingAlignment = Alignment.bottomRight,
   }) : super(
-          key: key,
-          children: [leading, center, trailing].whereNotNull().toList(),
-        );
+    key: key,
+    children: [leading, center, trailing].whereNotNull().toList(),
+  );
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -69,6 +79,9 @@ class ForceCenterLayout extends MultiChildRenderObjectWidget {
       spaceUsedPriority: spaceUsedPriority,
       direction: direction,
       crossAxisAlignment: crossAxisAlignment,
+      leadingAlignment: leadingAlignment,
+      centerAlignment: centerAlignment,
+      trailingAlignment: trailingAlignment,
     );
   }
 
@@ -81,7 +94,10 @@ class ForceCenterLayout extends MultiChildRenderObjectWidget {
       ..trailing = trailing
       ..spaceUsedPriority = spaceUsedPriority
       ..direction = direction
-      ..crossAxisAlignment = crossAxisAlignment;
+      ..crossAxisAlignment = crossAxisAlignment
+      ..leadingAlignment = leadingAlignment
+      ..centerAlignment = centerAlignment
+      ..trailingAlignment = trailingAlignment;
   }
 }
 
@@ -106,6 +122,11 @@ class ForceCenterBox extends RenderBox
   /// [direction]為[Axis.vertical]時, 代表是針對水平方向的對齊
   CrossAxisAlignment crossAxisAlignment;
 
+  /// 三個元件在允許空間內的對齊
+  Alignment leadingAlignment;
+  Alignment centerAlignment;
+  Alignment trailingAlignment;
+
   ForceCenterBox({
     this.leading,
     required this.center,
@@ -113,6 +134,9 @@ class ForceCenterBox extends RenderBox
     required this.spaceUsedPriority,
     required this.direction,
     required this.crossAxisAlignment,
+    this.leadingAlignment = Alignment.topLeft,
+    this.centerAlignment = Alignment.center,
+    this.trailingAlignment = Alignment.bottomRight,
   });
 
   @override
@@ -173,8 +197,8 @@ class ForceCenterBox extends RenderBox
       // 依照優先序
       switch (spaceUsedPriority) {
         case SpaceUsedPriority.centerFirst:
-          // 先將所有空間開放給置中元件
-          // 中間佈局
+        // 先將所有空間開放給置中元件
+        // 中間佈局
           centerChild.layout(constraints.loosen(), parentUsesSize: true);
 
           // 再將剩餘的空間分配給兩端
@@ -185,18 +209,18 @@ class ForceCenterBox extends RenderBox
 
           // 兩端約束
           final leafConstraints = constraints.loosen().copyWith(
-                maxWidth: remainingWidth / 2,
-              );
+            maxWidth: remainingWidth / 2,
+          );
 
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
           trailingChild?.layout(leafConstraints, parentUsesSize: true);
 
           break;
         case SpaceUsedPriority.bothEndsFirst:
-          // 先將空間平均配給兩端, 以最長的為主
+        // 先將空間平均配給兩端, 以最長的為主
           final leafConstraints = constraints.loosen().copyWith(
-                maxWidth: constraints.maxWidth / 2,
-              );
+            maxWidth: constraints.maxWidth / 2,
+          );
 
           // 兩端佈局
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
@@ -215,8 +239,8 @@ class ForceCenterBox extends RenderBox
 
           // 中間約束
           final mainConstraints = constraints.loosen().copyWith(
-                maxWidth: remainingWidth,
-              );
+            maxWidth: remainingWidth,
+          );
 
           centerChild.layout(mainConstraints, parentUsesSize: true);
 
@@ -241,10 +265,6 @@ class ForceCenterBox extends RenderBox
     final mainWidth = centerChild.size.width;
     final maxWidth = leafWidth * 2 + mainWidth;
 
-    const leadingX = 0.0;
-    final centerX = leafWidth;
-    final trailingX = centerX + mainWidth;
-
     // 根據 [crossAxisAlignment] 對齊方式取得真正的y
     double getPosY(RenderBox child) {
       switch (crossAxisAlignment) {
@@ -259,19 +279,38 @@ class ForceCenterBox extends RenderBox
       }
     }
 
+    double getPosX(Rect rect, RenderBox child, Alignment alignment) {
+      // 先取得剩餘可活動的x軸空間
+      final remainingWidth = rect.width - child.size.width;
+      final remainingRect = Rect.fromLTWH(
+        rect.left,
+        rect.top,
+        remainingWidth,
+        rect.height,
+      );
+      return alignment.withinRect(remainingRect).dx;
+    }
+
     if (leadingChild != null) {
+      final rect = Rect.fromLTWH(0.0, 0.0, leafWidth, maxHeight);
+      final leadingX = getPosX(rect, leadingChild, leadingAlignment);
       (leadingChild.parentData as _ForceCenterParentData).offset = Offset(
         leadingX,
         getPosY(leadingChild),
       );
     }
 
+    final centerRect = Rect.fromLTWH(leafWidth, 0.0, mainWidth, maxHeight);
+    final centerX = getPosX(centerRect, centerChild, centerAlignment);
     (centerChild.parentData as _ForceCenterParentData).offset = Offset(
       centerX,
       getPosY(centerChild),
     );
 
     if (trailingChild != null) {
+      final rect =
+      Rect.fromLTWH(leafWidth + mainWidth, 0.0, leafWidth, maxHeight);
+      final trailingX = getPosX(rect, trailingChild, trailingAlignment);
       (trailingChild.parentData as _ForceCenterParentData).offset = Offset(
         trailingX,
         getPosY(trailingChild),
@@ -312,8 +351,8 @@ class ForceCenterBox extends RenderBox
       // 依照優先序
       switch (spaceUsedPriority) {
         case SpaceUsedPriority.centerFirst:
-          // 先將所有空間開放給置中元件
-          // 中間佈局
+        // 先將所有空間開放給置中元件
+        // 中間佈局
           centerChild.layout(constraints.loosen(), parentUsesSize: true);
 
           // 再將剩餘的空間分配給兩端
@@ -324,18 +363,18 @@ class ForceCenterBox extends RenderBox
 
           // 兩端約束
           final leafConstraints = constraints.loosen().copyWith(
-                maxHeight: remainingHeight / 2,
-              );
+            maxHeight: remainingHeight / 2,
+          );
 
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
           trailingChild?.layout(leafConstraints, parentUsesSize: true);
 
           break;
         case SpaceUsedPriority.bothEndsFirst:
-          // 先將空間平均配給兩端, 以最長的為主
+        // 先將空間平均配給兩端, 以最長的為主
           final leafConstraints = constraints.loosen().copyWith(
-                maxHeight: constraints.maxHeight / 2,
-              );
+            maxHeight: constraints.maxHeight / 2,
+          );
 
           // 兩端佈局
           leadingChild?.layout(leafConstraints, parentUsesSize: true);
@@ -354,8 +393,8 @@ class ForceCenterBox extends RenderBox
 
           // 中間約束
           final mainConstraints = constraints.loosen().copyWith(
-                maxHeight: remainingHeight,
-              );
+            maxHeight: remainingHeight,
+          );
 
           centerChild.layout(mainConstraints, parentUsesSize: true);
 
@@ -380,10 +419,6 @@ class ForceCenterBox extends RenderBox
     final mainHeight = centerChild.size.height;
     final maxHeight = leafHeight * 2 + mainHeight;
 
-    const leadingY = 0.0;
-    final centerY = leafHeight;
-    final trailingY = centerY + mainHeight;
-
     // 根據 [crossAxisAlignment] 對齊方式取得真正的y
     double getPosX(RenderBox child) {
       switch (crossAxisAlignment) {
@@ -398,19 +433,38 @@ class ForceCenterBox extends RenderBox
       }
     }
 
+    double getPosY(Rect rect, RenderBox child, Alignment alignment) {
+      // 先取得剩餘可活動的y軸空間
+      final remainingHeight = rect.height - child.size.height;
+      final remainingRect = Rect.fromLTWH(
+        rect.left,
+        rect.top,
+        rect.width,
+        remainingHeight,
+      );
+      return alignment.withinRect(remainingRect).dy;
+    }
+
     if (leadingChild != null) {
+      final rect = Rect.fromLTWH(0.0, 0.0, maxWidth, leafHeight);
+      final leadingY = getPosY(rect, leadingChild, leadingAlignment);
       (leadingChild.parentData as _ForceCenterParentData).offset = Offset(
         getPosX(leadingChild),
         leadingY,
       );
     }
 
+    final centerRect = Rect.fromLTWH(0.0, leafHeight, maxWidth, mainHeight);
+    final centerY = getPosY(centerRect, centerChild, centerAlignment);
     (centerChild.parentData as _ForceCenterParentData).offset = Offset(
       getPosX(centerChild),
       centerY,
     );
 
     if (trailingChild != null) {
+      final rect =
+      Rect.fromLTWH(0.0, leafHeight + mainHeight, maxWidth, leafHeight);
+      final trailingY = getPosY(rect, trailingChild, trailingAlignment);
       (trailingChild.parentData as _ForceCenterParentData).offset = Offset(
         getPosX(trailingChild),
         trailingY,

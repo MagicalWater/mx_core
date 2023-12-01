@@ -145,6 +145,7 @@ class _ForceCenterLayoutPageState extends State<ForceCenterLayoutPage> {
                     ),
                   ],
                 ),
+                trailingAlignment: Alignment(-1, 0.0),
                 spaceUsedPriority: SpaceUsedPriority.bothEndsFirst,
                 crossAxisAlignment: CrossAxisAlignment.center,
               ),
