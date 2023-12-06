@@ -30,3 +30,4 @@ export 'tab_bar/tab_bar.dart';
 export 'timer/timer.dart';
 export 'wave_progress/wave_progress.dart';
 export 'force_center_layout/force_center_layout.dart';
+export 'point_paint.dart';

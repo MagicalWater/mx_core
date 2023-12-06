@@ -101,6 +101,9 @@ class Pages {
   /// 3D旋轉特效
   static const rotation3D = "/rotation3D";
 
+  /// 百分比路徑元件
+  static const pointPaint = "/pointPaint";
+
   Pages._();
 }
 
