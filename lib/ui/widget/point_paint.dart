@@ -9,27 +9,30 @@ class PointPaint extends StatelessWidget {
   final Color strokeColor;
   final double strokeWidth;
   final Color fillColor;
+  final bool closePath;
 
   const PointPaint.builder({
     super.key,
     this.width,
     this.height,
     required this.pointBuilder,
-    required this.strokeColor,
+    this.strokeColor = Colors.black,
     this.strokeWidth = 1,
-    required this.fillColor,
-    required this.child,
+    this.fillColor = Colors.transparent,
+    this.closePath = true,
+    this.child,
   });
 
   factory PointPaint({
     required List<List<Offset>> points,
-    required Color strokeColor,
-    required double strokeWidth,
-    required Color fillColor,
+    Color strokeColor = Colors.black,
+    double strokeWidth = 1,
+    Color fillColor = Colors.transparent,
     double? width,
     double? height,
     bool fixed = false,
     Widget? child,
+    bool closePath = true,
   }) {
     return PointPaint.builder(
       pointBuilder: (size) {
@@ -75,6 +78,7 @@ class PointPaint extends StatelessWidget {
       strokeColor: strokeColor,
       strokeWidth: strokeWidth,
       fillColor: fillColor,
+      closePath: closePath,
       child: child,
     );
   }
@@ -89,6 +93,7 @@ class PointPaint extends StatelessWidget {
           strokeColor: strokeColor,
           strokeWidth: strokeWidth,
           fillColor: fillColor,
+          closePath: closePath,
         ),
       );
     } else {
@@ -102,6 +107,7 @@ class PointPaint extends StatelessWidget {
                 strokeColor: strokeColor,
                 strokeWidth: strokeWidth,
                 fillColor: fillColor,
+                closePath: closePath,
               ),
             ),
           ),
@@ -116,14 +122,16 @@ class PointPainter extends CustomPainter {
   final Color strokeColor;
   final double strokeWidth;
   final Color fillColor;
+  final bool closePath;
   final List<List<Offset>> Function(Size size) pointBuilder;
 
   PointPainter({
     super.repaint,
     required this.pointBuilder,
-    required this.strokeColor,
+    this.strokeColor = Colors.black,
     this.strokeWidth = 1,
-    required this.fillColor,
+    this.fillColor = Colors.transparent,
+    this.closePath = true,
   });
 
   @override
@@ -159,7 +167,9 @@ class PointPainter extends CustomPainter {
           path.lineTo(element.dx, element.dy);
         }
       }
-      path.close();
+      if (closePath) {
+        path.close();
+      }
     }
     return path;
   }
