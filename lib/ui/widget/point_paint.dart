@@ -101,13 +101,16 @@ class PointPaint extends StatelessWidget {
         children: [
           child!,
           Positioned.fill(
-            child: CustomPaint(
-              painter: PointPainter(
-                pointBuilder: pointBuilder,
-                strokeColor: strokeColor,
-                strokeWidth: strokeWidth,
-                fillColor: fillColor,
-                closePath: closePath,
+            child: IgnorePointer(
+              ignoring: true,
+              child: CustomPaint(
+                painter: PointPainter(
+                  pointBuilder: pointBuilder,
+                  strokeColor: strokeColor,
+                  strokeWidth: strokeWidth,
+                  fillColor: fillColor,
+                  closePath: closePath,
+                ),
               ),
             ),
           ),
