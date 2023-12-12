@@ -113,8 +113,9 @@ class TimerCore {
 
     // 依照當前狀態判斷是否需要重置剩餘時間
     // [TimerStatus.complete] - 重置
+    // [TimerStatus.stop] - 重置
     // [TimerStatus.pause] - 接續
-    if (_status == TimerStatus.complete) {
+    if (_status == TimerStatus.complete || _status == TimerStatus.stop) {
       print("重置倒數時間: $_totalTime");
       // 需要重置剩餘時間
       _remainingTime = _totalTime;
@@ -156,6 +157,14 @@ class TimerCore {
     _endTicker();
     _endRemainingTimer();
     _status = TimerStatus.pause;
+    _sendTickEvent();
+  }
+
+  /// 停止倒數計時
+  void stop() {
+    _endTicker();
+    _endRemainingTimer();
+    _status = TimerStatus.stop;
     _sendTickEvent();
   }
 
@@ -218,6 +227,9 @@ enum TimerStatus {
 
   /// 暫停中
   pause,
+
+  /// 停止
+  stop,
 
   /// 完成
   complete,

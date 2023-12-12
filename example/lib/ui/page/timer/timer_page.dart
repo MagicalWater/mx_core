@@ -7,16 +7,16 @@ import 'package:mx_core_example/ui/widget/top_desc.dart';
 class TimerPage extends StatefulWidget {
   final RouteOption option;
 
-  TimerPage(this.option) : super();
+  const TimerPage(this.option, {super.key});
 
   @override
-  _TimerPageState createState() => _TimerPageState();
+  State<TimerPage> createState() => _TimerPageState();
 }
 
 class _TimerPageState extends State<TimerPage> {
   var timerCore = TimerCore(
-    totalTime: Duration(seconds: 10),
-    tickInterval: Duration(milliseconds: 1000),
+    totalTime: const Duration(seconds: 10),
+    tickInterval: const Duration(milliseconds: 1000),
   );
 
   var title = "倒數計時";
@@ -48,7 +48,7 @@ class _TimerPageState extends State<TimerPage> {
   Widget _timer() {
     return TimerBuilder(
       autoStart: false,
-      time: Duration(seconds: 10),
+      time: const Duration(seconds: 10),
       timerCore: timerCore,
       builder: (
         BuildContext context,
@@ -61,51 +61,37 @@ class _TimerPageState extends State<TimerPage> {
         switch (status) {
           case TimerStatus.standby:
             text = "點擊開始倒數";
-            begin = Color(0xffcca068);
-            end = Color(0xff8c6018);
+            begin = const Color(0xffcca068);
+            end = const Color(0xff8c6018);
             break;
           case TimerStatus.active:
             text = "${time.inSeconds} 秒, 點擊暫停";
-            begin = Color(0xffcc6633);
-            end = Color(0xffaa4411);
+            begin = const Color(0xffcc6633);
+            end = const Color(0xffaa4411);
             break;
           case TimerStatus.pause:
             text = "暫停中, 點擊繼續倒數";
-            begin = Color(0xff999999);
-            end = Color(0xff777777);
+            begin = const Color(0xff999999);
+            end = const Color(0xff777777);
+            break;
+          case TimerStatus.stop:
+            text = "已停止, 點擊重新倒數";
+            begin = const Color(0xffcca068);
+            end = const Color(0xff8c6018);
             break;
           case TimerStatus.complete:
             text = "完成, 點擊重新倒數";
-            begin = Color(0xffcca068);
-            end = Color(0xff8c6018);
+            begin = const Color(0xffcca068);
+            end = const Color(0xff8c6018);
+            break;
         }
 
         return AnimatedComb(
           type: AnimatedType.tap,
           duration: 500,
-          child: Container(
-            margin: EdgeInsets.all(20),
-            height: 80,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    begin,
-                    end,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-                borderRadius: BorderRadius.circular(20)),
-            child: Align(
-              child: Text(
-                text,
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-          ),
           animatedList: [
             Comb.scale(
-              end: Size.square(0.8),
+              end: const Size.square(0.8),
               curve: Curves.bounceOut,
             ),
           ],
@@ -123,8 +109,31 @@ class _TimerPageState extends State<TimerPage> {
               case TimerStatus.complete:
                 timerCore.start();
                 break;
+              case TimerStatus.stop:
+                timerCore.start();
+                break;
             }
           },
+          child: Container(
+            margin: const EdgeInsets.all(20),
+            height: 80,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    begin,
+                    end,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+                borderRadius: BorderRadius.circular(20)),
+            child: Align(
+              child: Text(
+                text,
+                style: const TextStyle(color: Colors.white, fontSize: 20),
+              ),
+            ),
+          ),
         );
       },
     );
