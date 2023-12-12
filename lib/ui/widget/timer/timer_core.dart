@@ -100,7 +100,7 @@ class TimerCore {
 
   /// 開始倒數計時
   void start() {
-    print("開始倒數計時");
+    // print("開始倒數計時");
 
     // 當前狀態正在倒數時, 不做任何反應
     if (_status == TimerStatus.active) {
@@ -116,7 +116,7 @@ class TimerCore {
     // [TimerStatus.stop] - 重置
     // [TimerStatus.pause] - 接續
     if (_status == TimerStatus.complete || _status == TimerStatus.stop) {
-      print("重置倒數時間: $_totalTime");
+      // print("重置倒數時間: $_totalTime");
       // 需要重置剩餘時間
       _remainingTime = _totalTime;
     }
@@ -127,7 +127,7 @@ class TimerCore {
     // 檢查剩餘時間是否大於 [tickInterval]
     // 若不大於, 則直接呼叫 [startRemainingTimer] 啟動最後計時
     if (_remainingTime < _tickInterval) {
-      print("剩餘時間小於 tick, 啟動最後倒數計時");
+      // print("剩餘時間小於 tick, 啟動最後倒數計時");
       _startRemainingTimer();
       return;
     }
