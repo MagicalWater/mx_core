@@ -97,7 +97,7 @@ class PopupOption {
       bottom: Screen.height - confirmRect.bottom,
     );
 
-    print('padding = $p');
+    // print('padding = $p');
     return p;
   }
 
