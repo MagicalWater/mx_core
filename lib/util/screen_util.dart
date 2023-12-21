@@ -173,6 +173,16 @@ AppBar $appBarHeight
     return size * _screenW / _designW;
   }
 
+  /// 返回根據寬高縮放倍數較大的那邊的尺寸
+  static double scaleMax(double size, [BuildContext? context]) {
+    return max(scaleW(size, context), scaleH(size));
+  }
+
+  /// 返回根據寬高縮放倍數較小的那邊的尺寸
+  static double scaleMin(double size, [BuildContext? context]) {
+    return min(scaleW(size, context), scaleH(size));
+  }
+
   /// 返回根據螢幕面積適配尺寸再依據tag乘上縮放係數
   static double scaleA(double size, [String? tag]) {
     final scaling = _getAreaScalingCoefficient(tag);
@@ -243,6 +253,10 @@ class _ScreenBinding with WidgetsBindingObserver {
 
 /// 快速擴展
 extension ScreenScale on num {
+  double get scaleMin => Screen.scaleMin(toDouble());
+
+  double get scaleMax => Screen.scaleMax(toDouble());
+
   double get scaleA => Screen.scaleA(toDouble());
 
   double get scaleW => Screen.scaleW(toDouble());
