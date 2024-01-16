@@ -21,6 +21,8 @@ mixin RectProviderMixin<T extends StatefulWidget> on State<T> {
   /// 延遲多久取得 rect, 一般延遲越久越準確
   Duration delayGetRect() => const Duration(milliseconds: 300);
 
+  bool _isDispose = false;
+
   @override
   void didUpdateWidget(T oldWidget) {
     _rectDetect();
@@ -50,8 +52,37 @@ mixin RectProviderMixin<T extends StatefulWidget> on State<T> {
 
   @override
   void dispose() {
+    _isDispose = true;
     _rectController.close();
     super.dispose();
+  }
+
+  /// 取得元件的rect
+  /// 若 [delay] 不為 null, 則會進行等待一定時間後再進行 rect 的獲取
+  /// 因此會需要等待
+  FutureOr<Rect?> getWidgetRect(
+    BuildContext context, {
+    Duration? delay,
+  }) async {
+    Rect? rect;
+    if (delay != null) {
+      await Future.delayed(delay);
+    }
+
+    RenderBox? renderObject;
+    do {
+      if (context.mounted && !_isDispose) {
+        renderObject = context.findRenderObject() as RenderBox?;
+      }
+      await Future.delayed(delay ?? const Duration(milliseconds: 50));
+    } while (renderObject == null && !_isDispose);
+
+    if (renderObject != null && renderObject.attached && renderObject.hasSize) {
+      Size size = renderObject.paintBounds.size;
+      var vector3 = renderObject.getTransformTo(null).getTranslation();
+      rect = Rect.fromLTWH(vector3.x, vector3.y, size.width, size.height);
+    }
+    return rect;
   }
 }
 
@@ -65,7 +96,8 @@ class RectProvider extends StatefulWidget {
 
   final Duration? delayGetRect;
 
-  const RectProvider({Key? key,
+  const RectProvider({
+    Key? key,
     required this.child,
     this.onCreated,
     this.onRect,
@@ -108,24 +140,4 @@ class _RectProviderState extends State<RectProvider>
     subscription?.cancel();
     super.dispose();
   }
-}
-
-/// 取得元件的rect
-/// 若 [delay] 不為 null, 則會進行等待一定時間後再進行 rect 的獲取
-/// 因此會需要等待
-FutureOr<Rect?> getWidgetRect(
-  BuildContext context, {
-  Duration? delay,
-}) async {
-  Rect? rect;
-  if (delay != null) {
-    await Future.delayed(delay);
-  }
-  var renderObject = context.findRenderObject() as RenderBox?;
-  if (renderObject != null && renderObject.attached && renderObject.hasSize) {
-    Size size = renderObject.paintBounds.size;
-    var vector3 = renderObject.getTransformTo(null).getTranslation();
-    rect = Rect.fromLTWH(vector3.x, vector3.y, size.width, size.height);
-  }
-  return rect;
 }
