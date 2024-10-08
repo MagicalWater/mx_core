@@ -1,50 +1,51 @@
 name: mx_core
 description: 通用基底
-version: 7.3.4+1
+version: 7.4.0+1
 homepage: https://github.com/MagicalWater
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ^3.5.3
+  flutter: '>=3.24.3'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  rxdart: ^0.27.7
+  rxdart: ^0.28.0
 
   # 解析圖片
-  image: ^4.0.15
+  image: ^4.2.0
 
   # 本地文件
-  path_provider: ^2.0.14
+  path_provider: ^2.1.4
 
   # 輕量級資料儲存
-  shared_preferences: ^2.0.15
+  shared_preferences: ^2.3.2
 
   # 時間/數字格式化
-  intl: ^0.18.0
+  intl: ^0.19.0
 
   # android 的返回按鈕攔截
-  back_button_interceptor: 6.0.2
+  back_button_interceptor: 7.0.3
 
   # 列表組件
-  flutter_easyrefresh: ^2.2.1
+  flutter_easyrefresh: ^2.2.2
 
-  decimal: ^2.3.0
+  decimal: ^3.0.2
 
-  rational: ^2.2.0
+  rational: ^2.2.3
 
-  flutter_secure_storage: 9.0.0
+  flutter_secure_storage: 9.2.2
 
-  collection: ^1.17.0
+  collection: ^1.18.0
 
   vector_math: ^2.1.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: "^2.3.2"
-  flutter_lints: "^2.0.1"
+  build_runner: "^2.4.13"
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspecf
