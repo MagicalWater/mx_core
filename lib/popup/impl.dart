@@ -256,7 +256,7 @@ class Popup {
     OverlayEntry? above,
   }) {
     // 先取得要 attach 到的 widget context
-    var attachRect = _getRect(context);
+    final attachRect = _getRect(context);
 
     // 初始化螢幕資訊, 防止在此之前沒有初始化過
     Screen.init();
@@ -265,7 +265,7 @@ class Popup {
     if (attachRect == Rect.zero) return null;
 
     // 取得對其的點
-    var alignmentPoint = _getAlignmentPoint(
+    final alignmentPoint = _getAlignmentPoint(
       attachRect,
       style.alignment,
       style.offset,
@@ -273,17 +273,18 @@ class Popup {
 //    print("取得對齊點: ${alignmentPoint}");
 
     // 根據元件對齊的點取得相對全螢幕的錨點
-    var anchorOffset = FractionalOffset(
+    final anchorOffset = FractionalOffset(
       alignmentPoint.x / Screen.width,
       alignmentPoint.y / Screen.height,
     );
 
     // 取得可以裝載彈出視窗的最大範圍
-    Rect maxRect = _getWidgetMaxRect(
-      attachRect,
-      style.safeArea,
-      style.direction,
-      alignmentPoint,
+    final maxRect = _getWidgetMaxRect(
+      attachRect: attachRect,
+      safeArea: style.safeArea,
+      boundedPadding: style.boundedPadding,
+      direction: style.direction,
+      alignmentPoint: alignmentPoint,
     );
 
     if (maxRect.isEmpty) {
@@ -520,48 +521,73 @@ class Popup {
   }
 
   /// 取得元件最大可以放置的 rect
-  static Rect _getWidgetMaxRect(
-    Rect attachRect,
-    bool safeArea,
-    AxisDirection direction,
-    Point alignmentPoint,
-  ) {
+  /// [attachRect] 元件的 rect
+  /// [safeArea] 是否需要限制在安全區域
+  /// [boundedPadding] 彈出視窗與邊界的距離
+  /// [direction] 彈窗顯示的方向(相對於attachRect)
+  /// [alignmentPoint] 代表 [attachRect] 的對齊點
+  static Rect _getWidgetMaxRect({
+    required Rect attachRect,
+    required bool safeArea,
+    required EdgeInsets? boundedPadding,
+    required AxisDirection direction,
+    required Point alignmentPoint,
+  }) {
+    final paddingTop = boundedPadding?.top ?? 0;
+    final paddingBottom = boundedPadding?.bottom ?? 0;
+    final paddingLeft = boundedPadding?.left ?? 0;
+    final paddingRight = boundedPadding?.right ?? 0;
+
     Rect maxRect;
     switch (direction) {
       case AxisDirection.up:
+        // 在目標元件上方
+
         maxRect = Rect.fromLTWH(
-          0,
-          Screen.statusBarHeight,
-          Screen.width,
-          alignmentPoint.y.toDouble(),
+          paddingLeft,
+          safeArea ? Screen.statusBarHeight + paddingTop : paddingTop,
+          Screen.width - paddingLeft - paddingRight,
+
+          // 因為下方接著目標元件, 因此不適用boundedPadding.bottom
+          alignmentPoint.y.toDouble() - paddingTop,
         );
         break;
       case AxisDirection.right:
+        // 在目標元件右側
+
         maxRect = Rect.fromLTWH(
+          // 因為左方接著目標元件, 因此不適用boundedPadding.left
           alignmentPoint.x.toDouble(),
-          safeArea ? Screen.statusBarHeight : 0,
-          Screen.width - alignmentPoint.x,
+          safeArea ? Screen.statusBarHeight + paddingTop : paddingTop,
+          Screen.width - alignmentPoint.x - paddingRight,
           safeArea
-              ? Screen.contentHeight
-              : Screen.height - Screen.bottomBarHeight,
+              ? Screen.contentHeight - paddingTop - paddingBottom
+              : Screen.height - paddingTop - paddingBottom,
         );
         break;
       case AxisDirection.down:
+        // 在目標元件下方
+
         maxRect = Rect.fromLTWH(
-          0,
+          paddingLeft,
+
+          // 因為上方接著目標元件, 因此不適用boundedPadding.top
           alignmentPoint.y.toDouble(),
-          Screen.width,
-          (Screen.contentHeight) - alignmentPoint.y,
+          Screen.width - paddingLeft - paddingRight,
+          safeArea
+              ? Screen.height - Screen.bottomBarHeight - paddingBottom
+              : Screen.height - paddingBottom,
         );
         break;
       case AxisDirection.left:
+        // 在目標元件左側
         maxRect = Rect.fromLTWH(
-          0,
-          safeArea ? Screen.statusBarHeight : 0,
-          alignmentPoint.x.toDouble(),
+          paddingLeft,
+          safeArea ? Screen.statusBarHeight + paddingTop : paddingTop,
+          alignmentPoint.x.toDouble() - paddingLeft,
           safeArea
-              ? Screen.contentHeight
-              : Screen.height - Screen.bottomBarHeight,
+              ? Screen.contentHeight - paddingTop - paddingBottom
+              : Screen.height - paddingTop - paddingBottom,
         );
 //      print("螢幕寬度: ${screenWidth}, 最大寬度: ${maxRect.width}");
         break;

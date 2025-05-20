@@ -52,8 +52,11 @@ class ArrowPopupStyle {
   /// 彈出視窗的展開動畫類型
   final PopupScale popupScale;
 
-  /// 彈出視窗是否需要限制空間(不突出導航欄)
+  /// 彈出視窗是否需要限制空間(不突出導航欄或邊界)
   final bool safeArea;
+
+  /// 彈出視窗與邊界的距離
+  final EdgeInsets? boundedPadding;
 
   const ArrowPopupStyle({
     this.strokeWidth = 2,
@@ -72,5 +75,6 @@ class ArrowPopupStyle {
     this.offset = Offset.zero,
     this.popupScale = PopupScale.all,
     this.safeArea = true,
+    this.boundedPadding,
   });
 }
