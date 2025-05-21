@@ -8,6 +8,7 @@ import 'package:mx_core/ui/widget/animated_comb/animated_comb.dart';
 import 'package:mx_core/ui/widget/arrow_container.dart';
 import 'package:mx_core/ui/widget/navigator_provider.dart';
 import 'package:mx_core/util/screen_util.dart';
+import 'package:mx_core/util/widget_rect.dart';
 
 import 'arrow_style.dart';
 import 'layout_option.dart';
@@ -255,14 +256,35 @@ class Popup {
     OverlayEntry? below,
     OverlayEntry? above,
   }) {
-    // 先取得要 attach 到的 widget context
-    final attachRect = _getRect(context);
-
-    // 初始化螢幕資訊, 防止在此之前沒有初始化過
-    Screen.init();
+    // 取得元件在螢幕上的位置
+    final rectResult = WidgetRectUtils.rectOnScreen(context);
+    final attachRect = rectResult.visibleRect;
 
     // 只有當元件的 rect 不為空值時才可以彈窗
-    if (attachRect == Rect.zero) return null;
+    if (attachRect == null || attachRect.isEmpty) return null;
+
+    return showArrowWithRect(
+      attachRect: attachRect,
+      builder: builder,
+      style: style,
+      maskColor: maskColor,
+      onTapSpace: onTapSpace,
+      below: below,
+      above: above,
+    );
+  }
+
+  static PopupController<OverlayEntry?>? showArrowWithRect({
+    required Rect attachRect,
+    required PopupWidgetBuilder<OverlayEntry?> builder,
+    ArrowPopupStyle style = const ArrowPopupStyle(),
+    Color? maskColor,
+    void Function(PopupController<OverlayEntry?> controller)? onTapSpace,
+    OverlayEntry? below,
+    OverlayEntry? above,
+  }) {
+    // 初始化螢幕資訊, 防止在此之前沒有初始化過
+    Screen.init();
 
     // 取得對其的點
     final alignmentPoint = _getAlignmentPoint(
@@ -593,18 +615,6 @@ class Popup {
         break;
     }
     return maxRect;
-  }
-
-  /// 取得元件 Rect
-  static Rect _getRect(BuildContext context) {
-    var box = context.findRenderObject() as RenderBox?;
-    if (box != null) {
-      var offset = box.localToGlobal(Offset.zero);
-      return Rect.fromLTWH(
-          offset.dx, offset.dy, box.size.width, box.size.height);
-    } else {
-      return Rect.zero;
-    }
   }
 }
 

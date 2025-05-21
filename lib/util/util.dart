@@ -8,3 +8,4 @@ export 'num_util/num_util.dart';
 export 'screen_util.dart';
 export 'uri_util.dart';
 export 'web_socket_util.dart';
+export 'widget_rect.dart';

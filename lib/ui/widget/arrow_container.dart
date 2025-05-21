@@ -44,8 +44,9 @@ class ArrowContainer extends SingleChildRenderObjectWidget {
   /// 元件 Size callback
   final void Function(Size size)? onSized;
 
-  const ArrowContainer({Key? key,
-    required Widget child,
+  const ArrowContainer({
+    super.key,
+    required Widget super.child,
     this.shiftLeafPercent = 0,
     this.shiftRootPercent = 0,
     this.direction = AxisDirection.up,
@@ -59,7 +60,7 @@ class ArrowContainer extends SingleChildRenderObjectWidget {
     this.gradient,
     this.strokeGradient,
     this.onSized,
-  }) : super(key: key, child: child);
+  });
 
   @override
   RenderObject createRenderObject(BuildContext context) => _ArrowShiftBox(
@@ -77,6 +78,26 @@ class ArrowContainer extends SingleChildRenderObjectWidget {
         strokeGradient: strokeGradient,
         onSized: onSized,
       );
+
+  @override
+  void updateRenderObject(
+      BuildContext context, covariant RenderObject renderObject) {
+    (renderObject as _ArrowShiftBox)
+      ..shiftLeafPercent = shiftLeafPercent
+      ..shiftRootPercent = shiftRootPercent
+      ..direction = direction
+      ..arrowSize = arrowSize
+      ..arrowSide = arrowSide
+      ..arrowRootSize = arrowRootSize
+      ..radius = radius
+      ..color = color
+      ..strokeWidth = strokeWidth
+      ..strokeColor = strokeColor
+      ..gradient = gradient
+      ..strokeGradient = strokeGradient
+      ..onSized = onSized;
+    super.updateRenderObject(context, renderObject);
+  }
 }
 
 class _ArrowShiftBox extends RenderShiftedBox {
@@ -87,25 +108,25 @@ class _ArrowShiftBox extends RenderShiftedBox {
   Paint? _strokePaint;
 
   /// 箭頭尖端偏移
-  final double shiftLeafPercent;
+  double shiftLeafPercent;
 
   /// 箭頭根部偏移
-  final double shiftRootPercent;
+  double shiftRootPercent;
 
   /// 箭頭方向
-  final AxisDirection direction;
+  AxisDirection direction;
 
   /// 箭頭偏移(箭頭的長度)
-  final double arrowSize;
+  double arrowSize;
 
   /// 箭頭類型
-  final ArrowSide arrowSide;
+  ArrowSide arrowSide;
 
   /// 箭頭根部寬度, 只在 [arrowSide] 為 [ArrowSide.line] 時有效
-  final double arrowRootSize;
+  double arrowRootSize;
 
   /// 方形 radius
-  final double radius;
+  double radius;
 
   /// 箭頭方向是橫向
   bool get isArrowHorizontal =>
@@ -115,19 +136,19 @@ class _ArrowShiftBox extends RenderShiftedBox {
   Offset get childOffset => (child!.parentData as BoxParentData).offset;
 
   /// 框內顏色
-  final Color? color;
+  Color? color;
 
   /// 框內漸變顏色
-  final Gradient? gradient;
+  Gradient? gradient;
 
   /// 外框漸變
-  final Gradient? strokeGradient;
+  Gradient? strokeGradient;
 
   /// 外框顏色
-  final Color? strokeColor;
+  Color? strokeColor;
 
   /// 外框size
-  final double strokeWidth;
+  double strokeWidth;
 
   void Function(Size size)? onSized;
 
