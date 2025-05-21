@@ -492,13 +492,13 @@ class Popup {
         dy = alignmentPoint.y - widgetSize.height;
         if (dx < maxRect.left) {
           // 左邊超出邊界, 需要修正
-//        print("左邊超出邊界, 需要修正");
+          // print("左邊超出邊界, 需要修正");
           dx = maxRect.left;
           widgetOffset.arrowLeafPercent =
               (alignmentPoint.x - dx) / widgetSize.width;
         } else if (dx + widgetSize.width > maxRect.right) {
           // 右邊超出邊界, 需要修正
-//        print("右邊超出邊界, 需要修正");
+          // print("右邊超出邊界, 需要修正");
           dx = Screen.width - widgetSize.width;
           widgetOffset.arrowLeafPercent =
               (alignmentPoint.x - dx) / widgetSize.width;
@@ -526,12 +526,15 @@ class Popup {
         dy = alignmentPoint.y.toDouble();
         if (dx < maxRect.left) {
           // 左邊超出邊界, 需要修正
-//        print("左邊超出邊界, 需要修正");
+          // print("左邊超出邊界, 需要修正");
+          final xPercentValue =
+              (widgetSize.width * arrowLeafPercent) - (maxRect.left - dx);
+          final xPercent = (xPercentValue) / widgetSize.width;
           dx = maxRect.left;
-          widgetOffset.arrowLeafPercent = alignmentPoint.x / widgetSize.width;
+          widgetOffset.arrowLeafPercent = xPercent;
         } else if (dx + widgetSize.width > maxRect.right) {
           // 右邊超出邊界, 需要修正
-//        print("右邊超出邊界, 需要修正");
+          // print("右邊超出邊界, 需要修正");
           dx = maxRect.right - widgetSize.width;
           widgetOffset.arrowLeafPercent =
               (alignmentPoint.x - dx) / widgetSize.width;
