@@ -393,7 +393,12 @@ class Popup {
                     arrowSide: style.arrowSide,
                     arrowRootSize: style.arrowRootSize,
                     direction: _getArrowDirection(style.direction),
-                    onSized: (size) => childSizeStreamController.add(size),
+                    onSized: (size) {
+                      if (childSizeStreamController.isClosed) {
+                        return;
+                      }
+                      childSizeStreamController.add(size);
+                    },
                     child: child,
                   ),
                 ),
