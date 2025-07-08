@@ -38,7 +38,7 @@ class Popup {
 
   /// 彈出所有彈窗
   static Future<void> removeAll() async {
-    var allRemove = <Future<void>>[];
+    final allRemove = <Future<void>>[];
     for (var element in _allShowPopup) {
       allRemove.add(element.remove());
     }
@@ -73,27 +73,27 @@ class Popup {
       ];
     }
 
-    var backgroundSync = AnimatedSyncTick.identity(
+    final backgroundSync = AnimatedSyncTick.identity(
       type: AnimatedType.toggle,
       initToggle: true,
     );
 
-    var childSync = AnimatedSyncTick.identity(
+    final childSync = AnimatedSyncTick.identity(
       type: AnimatedType.toggle,
       initToggle: true,
     );
 
-    var controller = RouteController();
+    final controller = RouteController();
     _allShowPopup.add(controller);
 
-    var child = builder(controller);
+    final child = builder(controller);
 
-    var childGesture = GestureDetector(
+    final childGesture = GestureDetector(
       onTap: () {},
       child: child,
     );
 
-    var layout = _PopupLayout(
+    final layout = _PopupLayout(
       settings: routeSettings,
       maintainState: routeOption.maintainState,
       opaque: routeOption.opaque,
@@ -114,14 +114,14 @@ class Popup {
               begin: Colors.transparent,
               end: option?.maskColor ?? Colors.transparent,
             ),
-            child: WillPopScope(
-              onWillPop: () async {
+            child: PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) {
                 if (onTapBack != null) {
                   onTapBack(controller);
                 } else {
                   controller.remove();
                 }
-                return false;
               },
               child: Container(
                 padding: option?.getOverlayPadding(child is ShiftAnimation),
@@ -174,13 +174,13 @@ class Popup {
       ];
     }
 
-    var controller = OverlayController();
+    final controller = OverlayController();
     _allShowPopup.add(controller);
-    var backgroundSync = AnimatedSyncTick.identity(
+    final backgroundSync = AnimatedSyncTick.identity(
       type: AnimatedType.toggle,
       initToggle: true,
     );
-    var childSync = AnimatedSyncTick.identity(
+    final childSync = AnimatedSyncTick.identity(
       type: AnimatedType.toggle,
       initToggle: true,
     );
@@ -193,14 +193,14 @@ class Popup {
       }
     }
 
-    var child = builder(controller);
+    final child = builder(controller);
 
-    var childGesture = GestureDetector(
+    final childGesture = GestureDetector(
       onTap: () {},
       child: child,
     );
 
-    var entry = OverlayEntry(
+    final entry = OverlayEntry(
       builder: (context) {
         return _TapWidget(
           hitRule: hitRule,
@@ -326,9 +326,9 @@ class Popup {
 //==== ～～～～～～ ====
 //    ''');
 
-    var childSizeStreamController = StreamController<Size>();
+    final childSizeStreamController = StreamController<Size>();
 
-    var popupController = Popup.showOverlay(
+    final popupController = Popup.showOverlay(
       animated: [
         Comb.parallel(
           animatedList: [
@@ -344,11 +344,11 @@ class Popup {
       hitRule: HitRule.intercept,
       onTapSpace: onTapSpace,
       builder: (controller) {
-        var child = builder(controller);
+        final child = builder(controller);
         return StreamBuilder<Size>(
           stream: childSizeStreamController.stream,
           builder: (context, snapshot) {
-            var widgetOffset = snapshot.hasData && !snapshot.data!.isEmpty
+            final widgetOffset = snapshot.hasData && !snapshot.data!.isEmpty
                 ? _getWidgetOffset(
                     alignmentPoint: alignmentPoint,
                     widgetSize: snapshot.data!,
@@ -366,6 +366,7 @@ class Popup {
 //==== ～～～～～～ ====
 //              ''');
 //            }
+
             return Container(
               transform: widgetOffset == null
                   ? null
@@ -423,8 +424,8 @@ class Popup {
   /// 傳入 Rect, 取得 Alignment 再其中的絕對位置
   static Point<double> _getAlignmentPoint(
       Rect rect, Alignment alignment, Offset offset) {
-    var alignmentX = (rect.width / 2) * (1 + alignment.x);
-    var alignmentY = (rect.height / 2) * (1 + alignment.y);
+    final alignmentX = (rect.width / 2) * (1 + alignment.x);
+    final alignmentY = (rect.height / 2) * (1 + alignment.y);
 
     return Point(
       rect.left + alignmentX + offset.dx,
@@ -573,13 +574,15 @@ class Popup {
       case AxisDirection.up:
         // 在目標元件上方
 
+      final top = safeArea ? Screen.statusBarHeight + paddingTop : paddingTop;
+
         maxRect = Rect.fromLTWH(
           paddingLeft,
           safeArea ? Screen.statusBarHeight + paddingTop : paddingTop,
           Screen.width - paddingLeft - paddingRight,
 
           // 因為下方接著目標元件, 因此不適用boundedPadding.bottom
-          alignmentPoint.y.toDouble() - paddingTop,
+          alignmentPoint.y.toDouble() - top,
         );
         break;
       case AxisDirection.right:
