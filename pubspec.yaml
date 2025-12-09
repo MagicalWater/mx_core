@@ -1,6 +1,6 @@
 name: mx_core
 description: 通用基底
-version: 7.4.3+4
+version: 7.5.1+1
 homepage: https://github.com/MagicalWater
 
 environment:
@@ -23,7 +23,7 @@ dependencies:
   shared_preferences: ^2.3.2
 
   # 時間/數字格式化
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   # android 的返回按鈕攔截
   back_button_interceptor: 7.0.3
